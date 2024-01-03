@@ -32,14 +32,14 @@ class Megaphone {
 Megaphone::Megaphone() {
     size_ = 0;
     voice_ = NULL;
-    std::cerr << "(call default constructor)" << std::endl;
+    // std::cerr << "(call default constructor)" << std::endl;
 }
 
 Megaphone::Megaphone(const size_t size, const std::string *voice) {
     size_ = size;
     copy_voice_(voice);
     convert_voice_to_uppercase_();
-    std::cerr << "(call constructor with argument)" << std::endl;
+    // std::cerr << "(call constructor with argument)" << std::endl;
 }
 
 Megaphone::Megaphone(const Megaphone& m) {
@@ -49,12 +49,12 @@ Megaphone::Megaphone(const Megaphone& m) {
     } else {
         copy_voice_(m.voice_);
     }
-    std::cerr << "(call copy constructor)" << std::endl;
+    // std::cerr << "(call copy constructor)" << std::endl;
 }
 
 Megaphone::~Megaphone(void) {
     destroy_voice_();
-    std::cerr << "(call destructor)" << std::endl;
+    // std::cerr << "(call destructor)" << std::endl;
 }
 
 const Megaphone& Megaphone::operator=(const Megaphone& m) {
@@ -69,7 +69,7 @@ const Megaphone& Megaphone::operator=(const Megaphone& m) {
             copy_voice_(m.voice_);
         }
     }
-    std::cerr << "(call copy assignment operator)" << std::endl;
+    // std::cerr << "(call copy assignment operator)" << std::endl;
     return *this;
 }
 
@@ -118,29 +118,29 @@ int main(int argc, char *argv[]) {
 
     std::string *voice = convert_args(argc - 1, (const char **)&argv[1]);
 
-    std::cout << "-------------" << std::endl;
-    {
-        Megaphone m1;
-        m1.print_voice();
-    }
-    std::cout << "-------------" << std::endl;
+    // std::cout << "-------------" << std::endl;
+    // {
+    //     Megaphone m1;
+    //     m1.print_voice();
+    // }
+    // std::cout << "-------------" << std::endl;
     {
 
         Megaphone m2(argc - 1, voice);
         m2.print_voice();
 
     }
-    std::cout << "-------------" << std::endl;
-    {
-        Megaphone m3, m4(argc - 1, voice);
-        m3 = m4;
-        m3.print_voice();
-        m4.print_voice();
+    // std::cout << "-------------" << std::endl;
+    // {
+    //     Megaphone m3, m4(argc - 1, voice);
+    //     m3 = m4;
+    //     m3.print_voice();
+    //     m4.print_voice();
 
-        Megaphone m5 = m3;
-        m5.print_voice();
-    }
-    std::cout << "-------------" << std::endl;
+    //     Megaphone m5 = m3;
+    //     m5.print_voice();
+    // }
+    // std::cout << "-------------" << std::endl;
 
     delete[] voice;
     return EXIT_SUCCESS;
