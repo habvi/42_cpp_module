@@ -2,18 +2,17 @@
 #include <cstring>
 #include <iostream>
 #include <string>
-#include <vector>
 
 class Megaphone {
     public:
         // default constructor
         Megaphone();
         // constructor with argument
-        explicit Megaphone(const std::vector<std::string>& voice);
+        Megaphone(const size_t size, const std::string *voice);
         // copy constructor
         Megaphone(const Megaphone& m);
         // destructor
-        ~Megaphone(void);
+        ~Megaphone();
         // copy assignment operator
         const Megaphone& operator=(const Megaphone& m);
 
@@ -21,26 +20,35 @@ class Megaphone {
         void print_voice();
 
     private:
-        void copy_voice_(const std::vector<std::string>& voice);
+        void copy_voice_(const std::string *voice);
         void convert_voice_to_uppercase_();
         void destroy_voice_();
 
     private:
-        std::vector<std::string> voice_;
+        size_t size_;
+        std::string *voice_;
 };
 
 Megaphone::Megaphone() {
+    size_ = 0;
+    voice_ = NULL;
     std::cerr << "(call default constructor)" << std::endl;
 }
 
-Megaphone::Megaphone(const std::vector<std::string>& voice) {
+Megaphone::Megaphone(const size_t size, const std::string *voice) {
+    size_ = size;
     copy_voice_(voice);
     convert_voice_to_uppercase_();
     std::cerr << "(call constructor with argument)" << std::endl;
 }
 
 Megaphone::Megaphone(const Megaphone& m) {
-    copy_voice_(m.voice_);
+    size_ = m.size_;
+    if (m.voice_ == NULL) {
+        voice_ = NULL;
+    } else {
+        copy_voice_(m.voice_);
+    }
     std::cerr << "(call copy constructor)" << std::endl;
 }
 
@@ -53,28 +61,37 @@ const Megaphone& Megaphone::operator=(const Megaphone& m) {
     // prevent self-assignment
     if (this != &m) {
         destroy_voice_();
-        copy_voice_(m.voice_);
+
+        size_ = m.size_;
+        if (m.voice_ == NULL) {
+            voice_ = NULL;
+        } else {
+            copy_voice_(m.voice_);
+        }
     }
     std::cerr << "(call copy assignment operator)" << std::endl;
     return *this;
 }
 
 void Megaphone::print_voice() {
-    if (voice_.empty()) {
+    if (voice_ == NULL) {
         return ;
     }
-    for (size_t i = 0; i < voice_.size(); i++) {
+    for (size_t i = 0; i < size_; i++) {
         std::cout << voice_[i] << " ";
     }
     std::cout << std::endl;
 }
 
-void Megaphone::copy_voice_(const std::vector<std::string>& src) {
-    voice_ = src;
+void Megaphone::copy_voice_(const std::string *src) {
+    voice_ = new std::string[size_];
+    for (size_t i = 0; i < size_; i++) {
+        voice_[i] = src[i];
+    }
 }
 
 void Megaphone::convert_voice_to_uppercase_() {
-    for (size_t i = 0; i < voice_.size(); i++) {
+    for (size_t i = 0; i < size_; i++) {
         for (size_t j = 0; j < voice_[i].size(); j++) {
             voice_[i][j] = std::toupper(voice_[i][j]);
         }
@@ -82,7 +99,15 @@ void Megaphone::convert_voice_to_uppercase_() {
 }
 
 void Megaphone::destroy_voice_() {
-    voice_.clear();
+    delete[] voice_;
+}
+
+static std::string *convert_args(const size_t size, const char **argv) {
+    std::string *voice = new std::string[size];
+    for (size_t i = 0; i < size; i++) {
+        voice[i] = argv[i];
+    }
+    return voice;
 }
 
 int main(int argc, char *argv[]) {
@@ -90,6 +115,9 @@ int main(int argc, char *argv[]) {
         std::cerr << "* LOUD AND UNBEARABLE FEEDBACK NOISE *" << std::endl;
         return EXIT_FAILURE;
     }
+
+    std::string *voice = convert_args(argc - 1, (const char **)&argv[1]);
+
     std::cout << "-------------" << std::endl;
     {
         Megaphone m1;
@@ -97,16 +125,14 @@ int main(int argc, char *argv[]) {
     }
     std::cout << "-------------" << std::endl;
     {
-        std::vector<std::string> args(argv + 1, argv + argc);
-        Megaphone m2(args);
+
+        Megaphone m2(argc - 1, voice);
         m2.print_voice();
+
     }
     std::cout << "-------------" << std::endl;
     {
-        std::vector<std::string> args;
-        args.push_back("aaa");
-
-        Megaphone m3, m4(args);
+        Megaphone m3, m4(argc - 1, voice);
         m3 = m4;
         m3.print_voice();
         m4.print_voice();
@@ -115,5 +141,7 @@ int main(int argc, char *argv[]) {
         m5.print_voice();
     }
     std::cout << "-------------" << std::endl;
+
+    delete[] voice;
     return EXIT_SUCCESS;
 }
