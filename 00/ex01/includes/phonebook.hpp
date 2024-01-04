@@ -12,11 +12,11 @@ class Phonebook {
 
   public:
 	void save_contact(const Contact &contact);
-	void print_all();
+	void display_all();
 
   private:
-	void print_name_data_in_contact_(const unsigned int index);
-	void print_specific_contact_(const unsigned int index);
+	void display_name_data_in_contact_(const unsigned int index);
+	void display_specific_contact_(const unsigned int index);
 
   private:
 	Contact phonebook_[LIMIT_REGISTER_COUNT];
