@@ -21,6 +21,7 @@ static t_command set_command(const std::string &command) {
 int main(void) {
 	t_command command = CMD_INVALID;
 	t_contact data;
+	Contact   contact;
 
 	while (command != CMD_EXIT) {
 		std::cout << "----------------------------------------" << std::endl
@@ -37,6 +38,7 @@ int main(void) {
 		switch (command) {
 		case CMD_ADD:
 			input_contact_date(data);
+			contact = Contact(data);
 			break;
 		case CMD_SEARCH:
 			// todo: impl search
