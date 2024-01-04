@@ -17,16 +17,7 @@ void Phonebook::save_contact(const Contact &contact) {
 	index++;
 }
 
-// todo: set limit 10 width
-void Phonebook::print_name_data_in_contact_(const unsigned int index) {
-	const Contact &contact = phonebook_[index];
-
-	std::cout << "│         " << index << "│         " << contact.first_name()
-			  << "│         " << contact.last_name() << "│         "
-			  << contact.nick_name() << "│" << std::endl;
-}
-
-void Phonebook::print_phonebook_all() {
+void Phonebook::print_all() {
 	std::cout << "┌──────────┬──────────┬──────────┬──────────┐" << std::endl;
 	std::cout << "│       No.│first name│ last name│ nick name│" << std::endl;
 
@@ -36,6 +27,15 @@ void Phonebook::print_phonebook_all() {
 		print_name_data_in_contact_(index);
 	}
 	std::cout << "└──────────┴──────────┴──────────┴──────────┘" << std::endl;
+}
+
+// todo: set limit 10 width
+void Phonebook::print_name_data_in_contact_(const unsigned int index) {
+	const Contact &contact = phonebook_[index];
+
+	std::cout << "│         " << index << "│         " << contact.first_name()
+			  << "│         " << contact.last_name() << "│         "
+			  << contact.nick_name() << "│" << std::endl;
 }
 
 void Phonebook::print_specific_contact_(const unsigned int index) {
