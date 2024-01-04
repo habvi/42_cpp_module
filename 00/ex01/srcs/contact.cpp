@@ -12,14 +12,14 @@ Contact::Contact(const t_contact_dto &data) {
 
 Contact::~Contact() {}
 
-std::string Contact::first_name() const {
+const std::string Contact::first_name() const {
 	return first_name_;
 }
 
-std::string Contact::last_name() const {
+const std::string Contact::last_name() const {
 	return last_name_;
 }
 
-std::string Contact::nick_name() const {
+const std::string Contact::nick_name() const {
 	return nick_name_;
 }

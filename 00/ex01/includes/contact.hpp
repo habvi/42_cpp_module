@@ -18,9 +18,9 @@ class Contact {
 	~Contact();
 
   public:
-	std::string first_name() const;
-	std::string last_name() const;
-	std::string nick_name() const;
+	const std::string first_name() const;
+	const std::string last_name() const;
+	const std::string nick_name() const;
 
   private:
 	std::string first_name_;

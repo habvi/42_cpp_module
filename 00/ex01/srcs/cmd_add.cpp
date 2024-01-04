@@ -10,7 +10,7 @@ static void input(const std::string &title, std::string &dst) {
 }
 
 // todo: not allow empty input
-static t_contact_dto input_data() {
+static const t_contact_dto input_data() {
 	t_contact_dto data;
 
 	input(FIRST_NAME, data.first_name);
