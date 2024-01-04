@@ -2,6 +2,7 @@ NAME		:=	phonebook
 
 SRCS_DIR	:=	srcs
 SRCS		:=	cmd_add.cpp \
+				cmd_search.cpp \
 				contact.cpp \
 				main.cpp \
 				phonebook.cpp

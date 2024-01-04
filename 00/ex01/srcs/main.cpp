@@ -39,7 +39,7 @@ int main(void) {
 			exec_add(phonebook);
 			break;
 		case CMD_SEARCH:
-			phonebook.print_all();
+			exec_search(phonebook);
 			break;
 		case CMD_EXIT:
 			break;

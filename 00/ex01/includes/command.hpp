@@ -15,5 +15,6 @@ typedef enum e_command {
 } t_command;
 
 void exec_add(Phonebook &phonebook);
+void exec_search(Phonebook &phonebook);
 
 #endif
