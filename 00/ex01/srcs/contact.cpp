@@ -3,7 +3,6 @@
 Contact::Contact() {}
 
 Contact::Contact(const t_contact &data) {
-	// todo: throw error with empty contact member?
 	first_name_     = data.first_name;
 	last_name_      = data.last_name;
 	nick_name_      = data.nick_name;
@@ -24,4 +23,3 @@ std::string Contact::last_name() const {
 std::string Contact::nick_name() const {
 	return nick_name_;
 }
-

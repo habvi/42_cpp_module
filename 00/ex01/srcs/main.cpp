@@ -21,7 +21,6 @@ static t_command set_command(const std::string &command) {
 
 int main(void) {
 	t_command command = CMD_INVALID;
-	t_contact data;
 	Contact   contact;
 	Phonebook phonebook;
 
@@ -39,8 +38,7 @@ int main(void) {
 		command = set_command(input);
 		switch (command) {
 		case CMD_ADD:
-			input_contact_date(data);
-			contact = Contact(data);
+			input_contact_date(contact);
 			phonebook.save_contact(contact);
 			break;
 		case CMD_SEARCH:
