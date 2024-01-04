@@ -1,21 +1,23 @@
+#include "command.hpp"
 #include "contact.hpp"
 #include "phonebook.hpp"
+#include <iomanip>
 #include <iostream>
+
+static void input(const std::string &title, std::string &dst) {
+	std::cout << std::setw(INPUT_WIDTH) << std::left << title << ": ";
+	std::cin >> dst;
+}
 
 // todo: not allow empty input
 static t_contact_dto input_data() {
 	t_contact_dto data;
 
-	std::cout << "fitst name     : ";
-	std::cin >> data.first_name;
-	std::cout << "last name      : ";
-	std::cin >> data.last_name;
-	std::cout << "nickname       : ";
-	std::cin >> data.nick_name;
-	std::cout << "phone number   : ";
-	std::cin >> data.phone_number;
-	std::cout << "darkest secret : ";
-	std::cin >> data.darkest_secret;
+	input(FIRST_NAME, data.first_name);
+	input(LAST_NAME, data.last_name);
+	input(NICK_NAME, data.nick_name);
+	input(PHONE_NUMBER, data.phone_number);
+	input(DARKEST_SECRET, data.darkest_secret);
 	return data;
 }
 

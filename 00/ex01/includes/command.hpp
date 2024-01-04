@@ -3,9 +3,19 @@
 
 #include "phonebook.hpp"
 
+/* command */
 #define STR_ADD "ADD"
 #define STR_EARCH "SEARCH"
 #define STR_EXIT "EXIT"
+
+/* ADD */
+#define INPUT_WIDTH 15
+
+#define FIRST_NAME "first name"
+#define LAST_NAME "last name"
+#define NICK_NAME "nickname"
+#define PHONE_NUMBER "phone number"
+#define DARKEST_SECRET "darkest secret"
 
 typedef enum e_command {
 	CMD_ADD,
