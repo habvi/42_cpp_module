@@ -1,4 +1,5 @@
 #include "phonebook.hpp"
+#include "contact.hpp"
 #include <iostream>
 
 Phonebook::Phonebook() {}
@@ -17,7 +18,13 @@ void Phonebook::save_contact(const Contact &contact) {
 }
 
 // todo: set limit 10 width
-void Phonebook::print_name_data_in_contact_(const unsigned int index) {}
+void Phonebook::print_name_data_in_contact_(const unsigned int index) {
+	const Contact &contact = phonebook_[index];
+
+	std::cout << "│         " << index << "│         " << contact.first_name()
+			  << "│         " << contact.last_name() << "│         "
+			  << contact.nick_name() << "│" << std::endl;
+}
 
 void Phonebook::print_specific_contact_(const unsigned int index) {
 	std::cout << "┌──────────┬──────────┬──────────┬──────────┐" << std::endl;
