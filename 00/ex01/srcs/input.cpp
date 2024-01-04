@@ -2,8 +2,8 @@
 #include <iostream>
 
 // todo: not allow empty input
-static t_contact input_data() {
-	t_contact data;
+static t_contact_dto input_data() {
+	t_contact_dto data;
 
 	std::cout << "fitst name     : ";
 	std::cin >> data.first_name;
@@ -18,12 +18,12 @@ static t_contact input_data() {
 	return data;
 }
 
-static void convert_data_to_contact(Contact &contact, const t_contact &data) {
+static void convert_data_to_contact(Contact &contact, const t_contact_dto &data) {
 	contact = Contact(data);
 }
 
 void input_contact_date(Contact &contact) {
-	const t_contact data = input_data();
+	const t_contact_dto data = input_data();
 
 	convert_data_to_contact(contact, data);
 }

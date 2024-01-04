@@ -3,18 +3,18 @@
 
 #include <string>
 
-typedef struct s_contact {
+typedef struct s_contact_dto {
 	std::string first_name;
 	std::string last_name;
 	std::string nick_name;
 	std::string phone_number;
 	std::string darkest_secret;
-} t_contact;
+} t_contact_dto;
 
 class Contact {
   public:
 	Contact();
-	explicit Contact(const t_contact &data);
+	explicit Contact(const t_contact_dto &data);
 	~Contact();
 
   public:

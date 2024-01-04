@@ -2,7 +2,7 @@
 
 Contact::Contact() {}
 
-Contact::Contact(const t_contact &data) {
+Contact::Contact(const t_contact_dto &data) {
 	first_name_     = data.first_name;
 	last_name_      = data.last_name;
 	nick_name_      = data.nick_name;
