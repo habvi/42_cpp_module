@@ -1,4 +1,5 @@
 #include "contact.hpp"
+#include "phonebook.hpp"
 #include <iostream>
 
 // todo: not allow empty input
@@ -22,8 +23,15 @@ static void convert_data_to_contact(Contact &contact, const t_contact_dto &data)
 	contact = Contact(data);
 }
 
-void input_contact_date(Contact &contact) {
+static void input_contact_date(Contact &contact) {
 	const t_contact_dto data = input_data();
 
 	convert_data_to_contact(contact, data);
+}
+
+void exec_add(Phonebook &phonebook) {
+	Contact contact;
+
+	input_contact_date(contact);
+	phonebook.save_contact(contact);
 }

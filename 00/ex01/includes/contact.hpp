@@ -30,6 +30,4 @@ class Contact {
 	std::string darkest_secret_;
 };
 
-void input_contact_date(Contact &contact);
-
 #endif /*__CONTACT_H__*/

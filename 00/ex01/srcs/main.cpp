@@ -1,5 +1,4 @@
 #include "command.hpp"
-#include "contact.hpp"
 #include "phonebook.hpp"
 #include <cstdlib>
 #include <iostream>
@@ -21,7 +20,6 @@ static t_command set_command(const std::string &command) {
 
 int main(void) {
 	t_command command = CMD_INVALID;
-	Contact   contact;
 	Phonebook phonebook;
 
 	while (command != CMD_EXIT) {
@@ -38,8 +36,7 @@ int main(void) {
 		command = set_command(input);
 		switch (command) {
 		case CMD_ADD:
-			input_contact_date(contact);
-			phonebook.save_contact(contact);
+			exec_add(phonebook);
 			break;
 		case CMD_SEARCH:
 			phonebook.print_all();

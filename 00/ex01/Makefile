@@ -1,8 +1,8 @@
 NAME		:=	phonebook
 
 SRCS_DIR	:=	srcs
-SRCS		:=	contact.cpp \
-				input.cpp \
+SRCS		:=	cmd_add.cpp \
+				contact.cpp \
 				main.cpp \
 				phonebook.cpp
 
