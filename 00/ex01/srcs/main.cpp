@@ -1,4 +1,5 @@
 #include "command.hpp"
+#include "contact.hpp"
 #include <cstdlib>
 #include <iostream>
 
@@ -19,6 +20,7 @@ static t_command set_command(const std::string &command) {
 
 int main(void) {
 	t_command command = CMD_INVALID;
+	t_contact data;
 
 	while (command != CMD_EXIT) {
 		std::cout << "----------------------------------------" << std::endl
@@ -34,8 +36,7 @@ int main(void) {
 		command = set_command(input);
 		switch (command) {
 		case CMD_ADD:
-			// todo: impl add
-			std::cout << input << std::endl;
+			input_contact_date(data);
 			break;
 		case CMD_SEARCH:
 			// todo: impl search

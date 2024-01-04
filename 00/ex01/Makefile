@@ -2,6 +2,7 @@ NAME		:=	phonebook
 
 SRCS_DIR	:=	srcs
 SRCS		:=	contact.cpp \
+				input.cpp \
 				main.cpp
 
 OBJ_DIR		:=	objs

@@ -27,4 +27,6 @@ class Contact {
 	std::string darkest_secret_;
 };
 
+void input_contact_date(t_contact &data);
+
 #endif /*__CONTACT_H__*/
