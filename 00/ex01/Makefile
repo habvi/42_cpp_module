@@ -41,7 +41,7 @@ re: fclean all
 
 .PHONE	: check
 check:
-	cppcheck --enable=all $(SRCS)
+	cppcheck --enable=all $$(find . -type f -name "*.cpp" | tr '\n' ' ')
 
 #--------------------------------------------
 
