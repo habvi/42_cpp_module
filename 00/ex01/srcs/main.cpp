@@ -42,6 +42,7 @@ int main(void) {
 			input_contact_date(data);
 			contact = Contact(data);
 			phonebook.save_contact(contact);
+			phonebook.print_phonebook_all();
 			break;
 		case CMD_SEARCH:
 			// todo: impl search

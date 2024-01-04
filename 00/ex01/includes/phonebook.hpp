@@ -12,6 +12,7 @@ class Phonebook {
 
   public:
 	void save_contact(const Contact &contact);
+	void print_phonebook_all();
 
   private:
 	void print_name_data_in_contact_(const unsigned int index);

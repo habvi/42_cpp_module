@@ -26,6 +26,18 @@ void Phonebook::print_name_data_in_contact_(const unsigned int index) {
 			  << contact.nick_name() << "│" << std::endl;
 }
 
+void Phonebook::print_phonebook_all() {
+	std::cout << "┌──────────┬──────────┬──────────┬──────────┐" << std::endl;
+	std::cout << "│       No.│first name│ last name│ nick name│" << std::endl;
+
+	for (size_t index = 0; index < LIMIT_REGISTER_COUNT; index++) {
+		std::cout << "├──────────┼──────────┼──────────┼──────────┤"
+				  << std::endl;
+		print_name_data_in_contact_(index);
+	}
+	std::cout << "└──────────┴──────────┴──────────┴──────────┘" << std::endl;
+}
+
 void Phonebook::print_specific_contact_(const unsigned int index) {
 	std::cout << "┌──────────┬──────────┬──────────┬──────────┐" << std::endl;
 	std::cout << "│       No.│first name│ last name│ nick name│" << std::endl;
