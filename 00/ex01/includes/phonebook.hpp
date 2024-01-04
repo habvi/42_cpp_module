@@ -14,6 +14,10 @@ class Phonebook {
 	void save_contact(const Contact &contact);
 
   private:
+	void print_name_data_in_contact_(const unsigned int index);
+	void print_specific_contact_(const unsigned int index);
+
+  private:
 	Contact phonebook_[LIMIT_REGISTER_COUNT];
 };
 
