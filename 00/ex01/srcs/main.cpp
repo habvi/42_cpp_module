@@ -3,6 +3,15 @@
 #include <cstdlib>
 #include <iostream>
 
+static void display_command_guide() {
+	std::cout << "----------------------------------------" << std::endl
+			  << " Enter one of the commands below:" << std::endl
+			  << "  - ADD    : save a new contact" << std::endl
+			  << "  - SEARCH : display a specific contact" << std::endl
+			  << "  - EXIT   : exit the program" << std::endl
+			  << "----------------------------------------" << std::endl;
+}
+
 static t_command set_command(const std::string &command) {
 	t_command ret;
 
@@ -23,12 +32,7 @@ int main(void) {
 	Phonebook phonebook;
 
 	while (command != CMD_EXIT) {
-		std::cout << "----------------------------------------" << std::endl
-				  << " Enter one of the commands below:" << std::endl
-				  << "  - ADD    : save a new contact" << std::endl
-				  << "  - SEARCH : display a specific contact" << std::endl
-				  << "  - EXIT   : exit the program" << std::endl
-				  << "----------------------------------------" << std::endl;
+		display_command_guide();
 
 		std::string input;
 		std::cin >> input;
