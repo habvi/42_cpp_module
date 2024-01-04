@@ -34,5 +34,9 @@ fclean: clean
 .PHONY	: re
 re: fclean all
 
+.PHONE	: check
+check:
+	cppcheck --enable=all $(SRCS)
+
 #--------------------------------------------
 -include $(DEPS)
