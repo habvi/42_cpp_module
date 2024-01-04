@@ -17,7 +17,10 @@ class Contact {
 	explicit Contact(const t_contact &data);
 	~Contact();
 
-	// destructor
+  public:
+	std::string first_name() const;
+	std::string last_name() const;
+	std::string nick_name() const;
 
   private:
 	std::string first_name_;
