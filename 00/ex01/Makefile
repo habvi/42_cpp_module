@@ -3,7 +3,8 @@ NAME		:=	phonebook
 SRCS_DIR	:=	srcs
 SRCS		:=	contact.cpp \
 				input.cpp \
-				main.cpp
+				main.cpp \
+				phonebook.cpp
 
 OBJ_DIR		:=	objs
 OBJS		:=	$(SRCS:%.cpp=$(OBJ_DIR)/%.o)
