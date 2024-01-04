@@ -19,11 +19,10 @@ void Phonebook::save_contact(const Contact &contact) {
 
 void Phonebook::print_all() {
 	std::cout << "┌──────────┬──────────┬──────────┬──────────┐" << std::endl;
-	std::cout << "│       No.│first name│ last name│ nick name│" << std::endl;
+	std::cout << "│       No.│first name│ last name│  nickname│" << std::endl;
 
 	for (size_t index = 0; index < LIMIT_REGISTER_COUNT; index++) {
-		std::cout << "├──────────┼──────────┼──────────┼──────────┤"
-				  << std::endl;
+		std::cout << "├──────────┼──────────┼──────────┼──────────┤" << std::endl;
 		print_name_data_in_contact_(index);
 	}
 	std::cout << "└──────────┴──────────┴──────────┴──────────┘" << std::endl;

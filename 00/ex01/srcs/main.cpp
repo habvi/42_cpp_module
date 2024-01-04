@@ -45,8 +45,6 @@ int main(void) {
 			phonebook.print_all();
 			break;
 		case CMD_EXIT:
-			// todo: impl exit
-			std::cout << input << std::endl;
 			break;
 		default:
 			break;
