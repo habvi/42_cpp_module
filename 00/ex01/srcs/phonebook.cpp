@@ -99,6 +99,5 @@ void Phonebook::display_contact_detail_by_index(const unsigned int index) const 
 		std::cout << MSG_INVALID_INDEX << std::endl;
 		return;
 	}
-	// todo: impl
-	// contact.display_all();
+	contact.display_all();
 }

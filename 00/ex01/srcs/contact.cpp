@@ -1,4 +1,5 @@
 #include "contact.hpp"
+#include "utils.hpp"
 
 Contact::Contact() {}
 
@@ -22,4 +23,14 @@ const std::string Contact::last_name() const {
 
 const std::string Contact::nick_name() const {
 	return nick_name_;
+}
+
+void Contact::display_all() const {
+	static const int output_width = CONTACT_FIELD_MAX_WIDTH;
+
+	output_left_align(FIRST_NAME, first_name_, output_width);
+	output_left_align(LAST_NAME, last_name_, output_width);
+	output_left_align(NICK_NAME, nick_name_, output_width);
+	output_left_align(PHONE_NUMBER, phone_number_, output_width);
+	output_left_align(DARKEST_SECRET, darkest_secret_, output_width);
 }
