@@ -4,9 +4,9 @@
 #include "phonebook.hpp"
 
 /* command */
-#define STR_ADD "ADD"
+#define STR_ADD   "ADD"
 #define STR_EARCH "SEARCH"
-#define STR_EXIT "EXIT"
+#define STR_EXIT  "EXIT"
 
 /* SEARCH */
 #define SEARCH_INPUT_WIDTH 0

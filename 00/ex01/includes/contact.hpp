@@ -3,14 +3,14 @@
 
 #include <string>
 
-// field title
+/* field title */
 #define FIRST_NAME     "First Name"
 #define LAST_NAME      "Last Name"
 #define NICK_NAME      "Nickname"
 #define PHONE_NUMBER   "Phone Number"
 #define DARKEST_SECRET "Darkest Secret"
 
-// display
+/* display */
 #define CONTACT_FIELD_MAX_WIDTH 15
 
 typedef struct s_contact_dto {
