@@ -91,3 +91,14 @@ void Phonebook::display_specific_contact_(const unsigned int index) const {
 	display_table_row(index, phonebook_[index]);
 	display_table_end();
 }
+
+void Phonebook::display_contact_detail_by_index(const unsigned int index) const {
+	const Contact &contact = phonebook_[index];
+
+	if (index >= LIMIT_REGISTER_COUNT) {
+		std::cout << MSG_INVALID_INDEX << std::endl;
+		return;
+	}
+	// todo: impl
+	// contact.display_all();
+}

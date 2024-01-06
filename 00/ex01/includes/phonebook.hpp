@@ -7,6 +7,8 @@
 #define LIMIT_REGISTER_COUNT 8
 #define COLUMN_WIDTH         10
 #define TRUNCATED_LAST_CHAR  '.'
+#define MSG_INVALID_INDEX                                                           \
+	"Error: Invalid index. Please enter a value within the range 0-7."
 
 class Phonebook {
   public:
@@ -16,6 +18,7 @@ class Phonebook {
   public:
 	void save_contact(const Contact &contact);
 	void display_all() const;
+	void display_contact_detail_by_index(const unsigned int index_of_contact) const;
 
   private:
 	void display_specific_contact_(const unsigned int index) const;
