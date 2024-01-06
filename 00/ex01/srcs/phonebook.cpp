@@ -32,6 +32,10 @@ static void display_table_end() {
 	std::cout << "└──────────┴──────────┴──────────┴──────────┘" << std::endl;
 }
 
+static bool is_not_registered(const Contact &contact) {
+	return (contact.first_name() == "");
+}
+
 static const std::string
 truncate_str(const std::string &s, const unsigned int max_length) {
 	const size_t length = s.size();
@@ -72,6 +76,9 @@ static void display_table_row(const unsigned int index, const Contact &contact) 
 void Phonebook::display_all() const {
 	display_table_header();
 	for (size_t index = 0; index < LIMIT_REGISTER_COUNT; index++) {
+		if (is_not_registered(phonebook_[index])) {
+			break;
+		}
 		display_table_middle();
 		display_table_row(index, phonebook_[index]);
 	}
