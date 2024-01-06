@@ -32,4 +32,5 @@ void exec_add(Phonebook &phonebook) {
 
 	input_contact_date(contact);
 	phonebook.save_contact(contact);
+	std::cout << MSG_SAVE_SUCCESS << std::endl;
 }

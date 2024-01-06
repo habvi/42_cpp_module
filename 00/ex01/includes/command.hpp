@@ -8,6 +8,9 @@
 #define STR_EARCH "SEARCH"
 #define STR_EXIT  "EXIT"
 
+/* ADD */
+#define MSG_SAVE_SUCCESS "ADD Success!"
+
 /* SEARCH */
 #define SEARCH_INPUT_WIDTH 0
 #define MSG_SEARCH         "Enter the index of the contact to display details"
