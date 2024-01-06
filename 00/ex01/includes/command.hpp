@@ -8,6 +8,10 @@
 #define STR_EARCH "SEARCH"
 #define STR_EXIT "EXIT"
 
+/* SEARCH */
+#define SEARCH_INPUT_WIDTH 0
+#define MSG_SEARCH         "Enter the index of the contact to display details"
+
 typedef enum e_command {
 	CMD_ADD,
 	CMD_SEARCH,
