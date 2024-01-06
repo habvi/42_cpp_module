@@ -14,7 +14,7 @@ void Phonebook::save_contact(const Contact &contact) {
 	index %= LIMIT_REGISTER_COUNT;
 	phonebook_[index] = contact;
 
-	std::cout << "\nADD success!" << std::endl;
+	std::cout << std::endl << MSG_SAVE_SUCCESS << std::endl;
 	display_specific_contact_(index);
 	index++;
 }

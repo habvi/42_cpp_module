@@ -3,6 +3,7 @@
 
 #include "contact.hpp"
 
+#define MSG_SAVE_SUCCESS     "ADD Success!"
 #define LIMIT_REGISTER_COUNT 8
 #define COLUMN_WIDTH         10
 #define TRUNCATED_LAST_CHAR  '.'
