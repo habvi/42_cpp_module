@@ -5,7 +5,8 @@ SRCS		:=	cmd_add.cpp \
 				cmd_search.cpp \
 				contact.cpp \
 				main.cpp \
-				phonebook.cpp
+				phonebook.cpp \
+				utils.cpp
 
 OBJ_DIR		:=	objs
 OBJS		:=	$(SRCS:%.cpp=$(OBJ_DIR)/%.o)
