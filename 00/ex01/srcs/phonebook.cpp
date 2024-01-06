@@ -17,18 +17,28 @@ void Phonebook::save_contact(const Contact &contact) {
 	index++;
 }
 
-void Phonebook::display_all() const {
-	std::cout << "┌──────────┬──────────┬──────────┬──────────┐" << std::endl;
-	std::cout << "│       No.│first name│ last name│  nickname│" << std::endl;
+static void display_table_header() {
+	std::cout << "┌──────────┬──────────┬──────────┬──────────┐" << std::endl
+			  << "│       No.│First Name│ Last Name│  Nickname│" << std::endl;
+}
 
-	for (size_t index = 0; index < LIMIT_REGISTER_COUNT; index++) {
-		std::cout << "├──────────┼──────────┼──────────┼──────────┤" << std::endl;
-		display_name_data_in_contact_(index);
-	}
+static void display_table_middle() {
+	std::cout << "├──────────┼──────────┼──────────┼──────────┤" << std::endl;
+}
+
+static void display_table_end() {
 	std::cout << "└──────────┴──────────┴──────────┴──────────┘" << std::endl;
 }
 
-// todo: set limit 10 width
+void Phonebook::display_all() const {
+	display_table_header();
+	for (size_t index = 0; index < LIMIT_REGISTER_COUNT; index++) {
+		display_table_middle();
+		display_name_data_in_contact_(index);
+	}
+	display_table_end();
+}
+
 void Phonebook::display_name_data_in_contact_(const unsigned int index) const {
 	const Contact &contact = phonebook_[index];
 
@@ -38,9 +48,8 @@ void Phonebook::display_name_data_in_contact_(const unsigned int index) const {
 }
 
 void Phonebook::display_specific_contact_(const unsigned int index) const {
-	std::cout << "┌──────────┬──────────┬──────────┬──────────┐" << std::endl;
-	std::cout << "│       No.│first name│ last name│ nick name│" << std::endl;
-	std::cout << "├──────────┼──────────┼──────────┼──────────┤" << std::endl;
+	display_table_header();
+	display_table_middle();
 	display_name_data_in_contact_(index);
-	std::cout << "└──────────┴──────────┴──────────┴──────────┘" << std::endl;
+	display_table_end();
 }
