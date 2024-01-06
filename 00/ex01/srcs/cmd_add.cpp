@@ -6,14 +6,14 @@
 
 // todo: not allow empty input
 static const t_contact_dto input_data() {
-	t_contact_dto      data;
-	const unsigned int width = INPUT_WIDTH;
+	t_contact_dto    data;
+	static const int input_width = CONTACT_FIELD_MAX_WIDTH;
 
-	input_left_align(FIRST_NAME, data.first_name, width);
-	input_left_align(LAST_NAME, data.last_name, width);
-	input_left_align(NICK_NAME, data.nick_name, width);
-	input_left_align(PHONE_NUMBER, data.phone_number, width);
-	input_left_align(DARKEST_SECRET, data.darkest_secret, width);
+	input_left_align(FIRST_NAME, data.first_name, input_width);
+	input_left_align(LAST_NAME, data.last_name, input_width);
+	input_left_align(NICK_NAME, data.nick_name, input_width);
+	input_left_align(PHONE_NUMBER, data.phone_number, input_width);
+	input_left_align(DARKEST_SECRET, data.darkest_secret, input_width);
 	return data;
 }
 
