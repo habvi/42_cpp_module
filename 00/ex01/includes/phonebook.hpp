@@ -4,6 +4,8 @@
 #include "contact.hpp"
 
 #define LIMIT_REGISTER_COUNT 8
+#define COLUMN_WIDTH         10
+#define TRUNCATED_LAST_CHAR  '.'
 
 class Phonebook {
   public:
@@ -15,7 +17,6 @@ class Phonebook {
 	void display_all() const;
 
   private:
-	void display_name_data_in_contact_(const unsigned int index) const;
 	void display_specific_contact_(const unsigned int index) const;
 
   private:
