@@ -8,17 +8,6 @@ Phonebook::Phonebook() {}
 
 Phonebook::~Phonebook() {}
 
-void Phonebook::save_contact(const Contact &contact) {
-	static unsigned int index = 0;
-
-	index %= LIMIT_REGISTER_COUNT;
-	phonebook_[index] = contact;
-
-	std::cout << std::endl << MSG_SAVE_SUCCESS << std::endl;
-	display_specific_contact_(index);
-	index++;
-}
-
 static void display_table_header() {
 	std::cout << "┌──────────┬──────────┬──────────┬──────────┐" << std::endl
 			  << "│       No.│First Name│ Last Name│  Nickname│" << std::endl;
@@ -73,6 +62,24 @@ static void display_table_row(const unsigned int index, const Contact &contact) 
 	std::cout << "│" << std::endl;
 }
 
+static void
+display_specific_contact_(const unsigned int index, const Contact &contact) {
+	display_table_header();
+	display_table_middle();
+	display_table_row(index, contact);
+	display_table_end();
+}
+
+void Phonebook::save_contact(const Contact &contact) {
+	static unsigned int index = 0;
+
+	index %= LIMIT_REGISTER_COUNT;
+	phonebook_[index] = contact;
+
+	display_specific_contact_(index, phonebook_[index]);
+	index++;
+}
+
 void Phonebook::display_all() const {
 	display_table_header();
 	for (size_t index = 0; index < LIMIT_REGISTER_COUNT; index++) {
@@ -82,13 +89,6 @@ void Phonebook::display_all() const {
 		display_table_middle();
 		display_table_row(index, phonebook_[index]);
 	}
-	display_table_end();
-}
-
-void Phonebook::display_specific_contact_(const unsigned int index) const {
-	display_table_header();
-	display_table_middle();
-	display_table_row(index, phonebook_[index]);
 	display_table_end();
 }
 

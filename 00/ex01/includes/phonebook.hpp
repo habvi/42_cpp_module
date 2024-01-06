@@ -20,9 +20,6 @@ class Phonebook {
 	void display_contact_detail_by_index(const unsigned int index_of_contact) const;
 
   private:
-	void display_specific_contact_(const unsigned int index) const;
-
-  private:
 	Contact phonebook_[LIMIT_REGISTER_COUNT];
 };
 
