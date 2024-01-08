@@ -81,13 +81,16 @@ void Phonebook::save_contact(const Contact &contact) {
 }
 
 void Phonebook::display_all() const {
+	Contact contact;
+
 	display_table_header();
 	for (size_t index = 0; index < LIMIT_REGISTER_COUNT; index++) {
-		if (is_not_registered(phonebook_[index])) {
+		contact = phonebook_[index];
+		if (is_not_registered(contact)) {
 			break;
 		}
 		display_table_middle();
-		display_table_row(index, phonebook_[index]);
+		display_table_row(index, contact);
 	}
 	display_table_end();
 }
