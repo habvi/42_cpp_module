@@ -7,7 +7,7 @@
 #define COLUMN_WIDTH         10
 #define TRUNCATED_LAST_CHAR  '.'
 #define MSG_INVALID_INDEX                                                           \
-	"Error: Invalid index. Please enter a value within the range 0-7."
+	"Error: Invalid index. Please enter the registerd contact index."
 
 class Phonebook {
   public:

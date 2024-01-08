@@ -92,10 +92,11 @@ void Phonebook::display_all() const {
 	display_table_end();
 }
 
+// allow only registered contact index.
 void Phonebook::display_contact_detail_by_index(const unsigned int index) const {
 	const Contact &contact = phonebook_[index];
 
-	if (index >= LIMIT_REGISTER_COUNT) {
+	if (index >= LIMIT_REGISTER_COUNT || is_not_registered(contact)) {
 		std::cout << MSG_INVALID_INDEX << std::endl;
 		return;
 	}
