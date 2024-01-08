@@ -22,7 +22,7 @@ static void display_table_end() {
 }
 
 static bool is_not_registered(const Contact &contact) {
-	return (contact.first_name() == "");
+	return (contact.get_first_name() == "");
 }
 
 static const std::string
@@ -54,11 +54,11 @@ static void display_table_row(const unsigned int index, const Contact &contact) 
 	std::cout << "│";
 	display_specific_width(index, column_width);
 	std::cout << "│";
-	display_specific_width(contact.first_name(), column_width);
+	display_specific_width(contact.get_first_name(), column_width);
 	std::cout << "│";
-	display_specific_width(contact.last_name(), column_width);
+	display_specific_width(contact.get_last_name(), column_width);
 	std::cout << "│";
-	display_specific_width(contact.nick_name(), column_width);
+	display_specific_width(contact.get_nick_name(), column_width);
 	std::cout << "│" << std::endl;
 }
 
