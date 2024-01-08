@@ -13,6 +13,27 @@ Contact::Contact(const t_contact_dto &data) {
 
 Contact::~Contact() {}
 
+// It's not necessary to implement this explicitly. they are handled automatically.
+Contact::Contact(const Contact &c) {
+	first_name_     = c.first_name_;
+	last_name_      = c.last_name_;
+	nick_name_      = c.nick_name_;
+	phone_number_   = c.phone_number_;
+	darkest_secret_ = c.darkest_secret_;
+}
+
+// It's not necessary to implement this explicitly. they are handled automatically.
+const Contact &Contact::operator=(const Contact &c) {
+	if (this != &c) {
+		first_name_     = c.first_name_;
+		last_name_      = c.last_name_;
+		nick_name_      = c.nick_name_;
+		phone_number_   = c.phone_number_;
+		darkest_secret_ = c.darkest_secret_;
+	}
+	return *this;
+}
+
 const std::string Contact::get_first_name() const {
 	return first_name_;
 }
