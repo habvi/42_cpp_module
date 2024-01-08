@@ -73,11 +73,10 @@ display_specific_contact_(const unsigned int index, const Contact &contact) {
 void Phonebook::save_contact(const Contact &contact) {
 	static unsigned int index = 0;
 
-	index %= LIMIT_REGISTER_COUNT;
 	phonebook_[index] = contact;
-
 	display_specific_contact_(index, phonebook_[index]);
 	index++;
+	index %= LIMIT_REGISTER_COUNT;
 }
 
 void Phonebook::display_all() const {
