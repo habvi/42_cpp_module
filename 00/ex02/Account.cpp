@@ -23,7 +23,7 @@ Account::Account(void) {
 	_nbDeposits    = 0;
 	_nbWithdrawals = 0;
 	_displayTimestamp();
-	put_log_account(_nbAccounts, _amount, MSG_CREATED);
+	put_log_account(_accountIndex, _amount, MSG_CREATED);
 
 	_nbAccounts++;
 }
@@ -34,7 +34,7 @@ Account::Account(int initial_deposit) {
 	_nbDeposits    = 0;
 	_nbWithdrawals = 0;
 	_displayTimestamp();
-	put_log_account(_nbAccounts, _amount, MSG_CREATED);
+	put_log_account(_accountIndex, _amount, MSG_CREATED);
 
 	_nbAccounts++;
 	_totalAmount += _amount;
