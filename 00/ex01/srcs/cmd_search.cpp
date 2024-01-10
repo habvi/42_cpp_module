@@ -9,8 +9,13 @@ static unsigned int input_index_of_entry() {
 	return index_of_contact;
 }
 
+static void display_contact_by_index(Phonebook &phonebook) {
+	const unsigned int index_of_contact = input_index_of_entry();
+
+	phonebook.display_contact_detail_by_index(index_of_contact);
+}
+
 void exec_search(Phonebook &phonebook) {
 	phonebook.display_all();
-	const unsigned int index_of_contact = input_index_of_entry();
-	phonebook.display_contact_detail_by_index(index_of_contact);
+	display_contact_by_index(phonebook);
 }
