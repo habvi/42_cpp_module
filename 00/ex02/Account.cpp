@@ -88,7 +88,23 @@ void Account::displayAccountsInfos(void) {
 }
 
 void Account::makeDeposit(int deposit) {
-	(void)deposit;
+	const int pre_amount = _amount;
+
+	_amount += deposit;
+	_nbDeposits++;
+
+	_totalAmount += deposit;
+	_totalNbDeposits++;
+
+	_displayTimestamp();
+	const t_info infos[] = {
+		{"index", _accountIndex},
+		{"p_amount", pre_amount},
+		{"deposits", deposit},
+		{"amount", _amount},
+		{"nb_deposits", _nbDeposits},
+	};
+	put_log_account(infos, sizeof(infos) / sizeof(infos[0]));
 }
 
 bool Account::makeWithdrawal(int withdrawal) {
