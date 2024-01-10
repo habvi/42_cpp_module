@@ -35,9 +35,14 @@ fclean: clean
 .PHONY	: re
 re: fclean all
 
-.PHONE	: check
+.PHONEY	: check
 check:
 	cppcheck --enable=all $$(find . -type f -name "*.cpp" | tr '\n' ' ')
+
+.PHONEY : diff
+diff: all
+	./$(NAME) > out
+	diff out no_timestamp_19920104_091532.log
 
 #--------------------------------------------
 
