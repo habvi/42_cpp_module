@@ -1,16 +1,20 @@
 #include "Account.hpp"
 #include <cstdlib>
 #include <iostream>
+#include <string>
+
+#define MSG_CREATED "created"
+#define MSG_CLOSED  "closed"
 
 int Account::_nbAccounts         = 0;
 int Account::_totalAmount        = 0;
 int Account::_totalNbDeposits    = 0;
 int Account::_totalNbWithdrawals = 0;
 
-static void put_log_account(const int index, const int amount) {
+static void
+put_log_account(const int index, const int amount, const std::string &message) {
 	std::cout << "index:" << index << ";"
-			  << "amount:" << amount << ";"
-			  << "created" << std::endl;
+			  << "amount:" << amount << ";" << message << std::endl;
 }
 
 Account::Account(void) {
@@ -19,7 +23,7 @@ Account::Account(void) {
 	_nbDeposits    = 0;
 	_nbWithdrawals = 0;
 	_displayTimestamp();
-	put_log_account(_nbAccounts, _amount);
+	put_log_account(_nbAccounts, _amount, MSG_CREATED);
 
 	_nbAccounts++;
 }
@@ -30,13 +34,16 @@ Account::Account(int initial_deposit) {
 	_nbDeposits    = 0;
 	_nbWithdrawals = 0;
 	_displayTimestamp();
-	put_log_account(_nbAccounts, _amount);
+	put_log_account(_nbAccounts, _amount, MSG_CREATED);
 
 	_nbAccounts++;
 	_totalAmount += _amount;
 }
 
-Account::~Account(void) {}
+Account::~Account(void) {
+	_displayTimestamp();
+	put_log_account(_accountIndex, _amount, MSG_CLOSED);
+}
 
 int Account::getNbAccounts(void) {
 	return _nbAccounts;
