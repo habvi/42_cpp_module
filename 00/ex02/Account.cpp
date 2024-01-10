@@ -61,7 +61,13 @@ int Account::getNbWithdrawals(void) {
 	return _totalNbWithdrawals;
 }
 
-void Account::displayAccountsInfos(void) {}
+void Account::displayAccountsInfos(void) {
+	_displayTimestamp();
+	std::cout << "accounts:" << _nbAccounts << ";"
+			  << "total:" << _totalAmount << ";"
+			  << "deposits:" << _totalNbDeposits << ";"
+			  << "withdrawals:" << _totalNbWithdrawals << std::endl;
+}
 
 void Account::makeDeposit(int deposit) {
 	(void)deposit;
@@ -76,7 +82,13 @@ int Account::checkAmount(void) const {
 	return 0;
 }
 
-void Account::displayStatus(void) const {}
+void Account::displayStatus(void) const {
+	_displayTimestamp();
+	std::cout << "index:" << _accountIndex << ";"
+			  << "amount:" << _amount << ";"
+			  << "deposits:" << _nbDeposits << ";"
+			  << "withdrawals:" << _nbWithdrawals << std::endl;
+}
 
 // todo: get current time like a sample log file
 void Account::_displayTimestamp(void) {
