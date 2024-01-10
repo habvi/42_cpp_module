@@ -5,6 +5,7 @@
 
 #define MSG_CREATED "created"
 #define MSG_CLOSED  "closed"
+#define MSG_REFUSED "refused"
 
 typedef struct info {
 	std::string name;
@@ -108,7 +109,31 @@ void Account::makeDeposit(int deposit) {
 }
 
 bool Account::makeWithdrawal(int withdrawal) {
-	(void)withdrawal;
+	const int pre_amount = _amount;
+
+	// todo: call checkAmount?
+	if (pre_amount - withdrawal < 0) {
+		_displayTimestamp();
+		// todo
+		std::cout << MSG_REFUSED << std::endl;
+		return false;
+	}
+
+	_amount -= withdrawal;
+	_nbWithdrawals++;
+
+	_totalAmount -= withdrawal;
+	_totalNbWithdrawals++;
+
+	_displayTimestamp();
+	const t_info infos[] = {
+		{"index", _accountIndex},
+		{"p_amount", pre_amount},
+		{"withdrawals", withdrawal},
+		{"amount", _amount},
+		{"nb_withdrawals", _nbWithdrawals},
+	};
+	put_log_account(infos, sizeof(infos) / sizeof(infos[0]));
 	return true;
 }
 
