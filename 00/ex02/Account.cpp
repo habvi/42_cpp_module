@@ -3,9 +3,11 @@
 #include <iostream>
 #include <string>
 
-#define MSG_CREATED "created"
-#define MSG_CLOSED  "closed"
-#define MSG_REFUSED "refused"
+#define MSG_CREATED    "created"
+#define MSG_CLOSED     "closed"
+#define MSG_REFUSED    "refused"
+#define AMOUNT_SUCCESS 0
+#define AMOUNT_ERROR   1
 
 typedef struct info {
 	std::string name;
@@ -110,15 +112,14 @@ void Account::makeDeposit(int deposit) {
 bool Account::makeWithdrawal(int withdrawal) {
 	const int pre_amount = _amount;
 
-	// todo: call checkAmount?
-	if (pre_amount - withdrawal < 0) {
+	_amount -= withdrawal;
+	if (checkAmount() == AMOUNT_ERROR) {
+		_amount += withdrawal;
 		_displayTimestamp();
 		// todo
 		std::cout << MSG_REFUSED << std::endl;
 		return false;
 	}
-
-	_amount -= withdrawal;
 	_nbWithdrawals++;
 
 	_totalAmount -= withdrawal;
@@ -137,7 +138,10 @@ bool Account::makeWithdrawal(int withdrawal) {
 }
 
 int Account::checkAmount(void) const {
-	return 0;
+	if (_amount < 0) {
+		return AMOUNT_ERROR;
+	}
+	return AMOUNT_SUCCESS;
 }
 
 void Account::displayStatus(void) const {
