@@ -80,7 +80,7 @@ void Account::displayAccountsInfos(void) {
 	_displayTimestamp();
 	const t_info infos[] = {
 		{"accounts", _nbAccounts},
-		{"total", _nbAccounts},
+		{"total", _totalAmount},
 		{"deposits", _totalNbDeposits},
 		{"withdrawals", _totalNbWithdrawals}
 	};
