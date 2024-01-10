@@ -17,13 +17,12 @@ int Account::_totalAmount        = 0;
 int Account::_totalNbDeposits    = 0;
 int Account::_totalNbWithdrawals = 0;
 
-static void
-put_log_account(const int index, const int amount, const std::string &message) {
+static void put_log(const int index, const int amount, const std::string &message) {
 	std::cout << "index:" << index << ";"
 			  << "amount:" << amount << ";" << message << std::endl;
 }
 
-static void put_log_account(const t_info (&info)[], const size_t size) {
+static void put_log(const t_info (&info)[], const size_t size) {
 	for (size_t i = 0; i < size; i++) {
 		std::cout << info[i].name << ":" << info[i].value;
 		if (i != size - 1) {
@@ -39,7 +38,7 @@ Account::Account(void) {
 	_nbDeposits    = 0;
 	_nbWithdrawals = 0;
 	_displayTimestamp();
-	put_log_account(_accountIndex, _amount, MSG_CREATED);
+	put_log(_accountIndex, _amount, MSG_CREATED);
 
 	_nbAccounts++;
 }
@@ -50,7 +49,7 @@ Account::Account(int initial_deposit) {
 	_nbDeposits    = 0;
 	_nbWithdrawals = 0;
 	_displayTimestamp();
-	put_log_account(_accountIndex, _amount, MSG_CREATED);
+	put_log(_accountIndex, _amount, MSG_CREATED);
 
 	_nbAccounts++;
 	_totalAmount += _amount;
@@ -58,7 +57,7 @@ Account::Account(int initial_deposit) {
 
 Account::~Account(void) {
 	_displayTimestamp();
-	put_log_account(_accountIndex, _amount, MSG_CLOSED);
+	put_log(_accountIndex, _amount, MSG_CLOSED);
 }
 
 int Account::getNbAccounts(void) {
@@ -85,7 +84,7 @@ void Account::displayAccountsInfos(void) {
 		{"deposits", _totalNbDeposits},
 		{"withdrawals", _totalNbWithdrawals}
 	};
-	put_log_account(infos, sizeof(infos) / sizeof(infos[0]));
+	put_log(infos, sizeof(infos) / sizeof(infos[0]));
 }
 
 void Account::makeDeposit(int deposit) {
@@ -105,7 +104,7 @@ void Account::makeDeposit(int deposit) {
 		{"amount", _amount},
 		{"nb_deposits", _nbDeposits},
 	};
-	put_log_account(infos, sizeof(infos) / sizeof(infos[0]));
+	put_log(infos, sizeof(infos) / sizeof(infos[0]));
 }
 
 bool Account::makeWithdrawal(int withdrawal) {
@@ -133,7 +132,7 @@ bool Account::makeWithdrawal(int withdrawal) {
 		{"amount", _amount},
 		{"nb_withdrawals", _nbWithdrawals},
 	};
-	put_log_account(infos, sizeof(infos) / sizeof(infos[0]));
+	put_log(infos, sizeof(infos) / sizeof(infos[0]));
 	return true;
 }
 
@@ -149,7 +148,7 @@ void Account::displayStatus(void) const {
 		{"deposits", _nbDeposits},
 		{"withdrawals", _nbWithdrawals}
 	};
-	put_log_account(infos, sizeof(infos) / sizeof(infos[0]));
+	put_log(infos, sizeof(infos) / sizeof(infos[0]));
 }
 
 // todo: get current time like a sample log file
