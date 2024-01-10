@@ -8,23 +8,6 @@ Phonebook::Phonebook() {}
 
 Phonebook::~Phonebook() {}
 
-static void display_table_header() {
-	std::cout << "┌──────────┬──────────┬──────────┬──────────┐" << std::endl
-			  << "│       No.│First Name│ Last Name│  Nickname│" << std::endl;
-}
-
-static void display_table_middle() {
-	std::cout << "├──────────┼──────────┼──────────┼──────────┤" << std::endl;
-}
-
-static void display_table_end() {
-	std::cout << "└──────────┴──────────┴──────────┴──────────┘" << std::endl;
-}
-
-static bool is_not_registered(const Contact &contact) {
-	return (contact.get_first_name() == "");
-}
-
 static const std::string
 truncate_str(const std::string &s, const unsigned int max_length) {
 	const size_t length = s.size();
@@ -41,25 +24,40 @@ truncate_str(const std::string &s, const unsigned int max_length) {
 static void display_specific_width(const std::string &s, const int column_width) {
 	const std::string truncated_str = truncate_str(s, column_width);
 
-	std::cout << std::setw(column_width) << std::right << truncated_str;
+	std::cout << SEPARATOR << std::setw(column_width) << std::right << truncated_str;
 }
 
 static void display_specific_width(const unsigned int num, const int column_width) {
-	std::cout << std::setw(column_width) << std::right << num;
+	std::cout << SEPARATOR << std::setw(column_width) << std::right << num;
+}
+
+static void display_table_header() {
+	static const int column_width = COLUMN_WIDTH;
+
+	std::cout << "┌──────────┬──────────┬──────────┬──────────┐" << std::endl;
+	display_specific_width(COLUMN_NO, column_width);
+	display_specific_width(FIRST_NAME, column_width);
+	display_specific_width(LAST_NAME, column_width);
+	display_specific_width(NICK_NAME, column_width);
+	std::cout << SEPARATOR << std::endl;
+}
+
+static void display_table_middle() {
+	std::cout << "├──────────┼──────────┼──────────┼──────────┤" << std::endl;
+}
+
+static void display_table_end() {
+	std::cout << "└──────────┴──────────┴──────────┴──────────┘" << std::endl;
 }
 
 static void display_table_row(const unsigned int index, const Contact &contact) {
 	static const int column_width = COLUMN_WIDTH;
 
-	std::cout << "│";
 	display_specific_width(index, column_width);
-	std::cout << "│";
 	display_specific_width(contact.get_first_name(), column_width);
-	std::cout << "│";
 	display_specific_width(contact.get_last_name(), column_width);
-	std::cout << "│";
 	display_specific_width(contact.get_nick_name(), column_width);
-	std::cout << "│" << std::endl;
+	std::cout << SEPARATOR << std::endl;
 }
 
 static void
@@ -77,6 +75,10 @@ void Phonebook::save_contact(const Contact &contact) {
 	display_specific_contact_(index, phonebook_[index]);
 	index++;
 	index %= LIMIT_REGISTER_COUNT;
+}
+
+static bool is_not_registered(const Contact &contact) {
+	return (contact.get_first_name() == "");
 }
 
 void Phonebook::display_all() const {

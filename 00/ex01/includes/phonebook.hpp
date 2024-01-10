@@ -5,6 +5,8 @@
 
 #define LIMIT_REGISTER_COUNT 8
 #define COLUMN_WIDTH         10
+#define COLUMN_NO            "No."
+#define SEPARATOR            "│"
 #define TRUNCATED_LAST_CHAR  '.'
 #define MSG_INVALID_INDEX                                                           \
 	"Error: Invalid index. Please enter the registerd contact index."
