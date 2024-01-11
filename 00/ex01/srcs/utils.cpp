@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <iostream>
 #include <limits>
+#include <string>
 
 void input_left_align(const std::string &title, std::string &dst, const int width) {
 	std::cout << std::setw(width) << std::left << title << ": ";

@@ -2,6 +2,7 @@
 #include "phonebook.hpp"
 #include <cstdlib>
 #include <iostream>
+#include <string>
 
 static void display_command_guide() {
 	std::cout << std::endl

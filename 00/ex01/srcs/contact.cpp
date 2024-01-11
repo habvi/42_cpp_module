@@ -1,5 +1,6 @@
 #include "contact.hpp"
 #include "utils.hpp"
+#include <string>
 
 Contact::Contact() {}
 
