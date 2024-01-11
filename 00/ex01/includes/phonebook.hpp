@@ -8,8 +8,7 @@
 #define COLUMN_NO            "No."
 #define SEPARATOR            "│"
 #define TRUNCATED_LAST_CHAR  '.'
-#define MSG_INVALID_INDEX                                                           \
-	"Error: Invalid index. Please enter the registerd contact index."
+#define MSG_INVALID_INDEX    "Error: Invalid index."
 
 class Phonebook {
   public:
@@ -20,6 +19,7 @@ class Phonebook {
 	void save_contact(const Contact &contact);
 	void display_all() const;
 	void display_contact_detail_by_index(const unsigned int index_of_contact) const;
+	bool is_valid_index(const unsigned int index) const;
 
   private:
 	Contact phonebook_[LIMIT_REGISTER_COUNT];

@@ -14,6 +14,8 @@
 /* SEARCH */
 #define SEARCH_INPUT_WIDTH 0
 #define MSG_SEARCH         "Enter the index of the contact to display details"
+#define MSG_RETRY_INPUT_INDEX                                                       \
+	"Error: Invalid index. Please enter the registerd contact index."
 
 typedef enum e_command {
 	CMD_ADD,
