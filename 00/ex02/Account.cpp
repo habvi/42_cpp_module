@@ -21,7 +21,7 @@ int Account::_totalAmount        = 0;
 int Account::_totalNbDeposits    = 0;
 int Account::_totalNbWithdrawals = 0;
 
-static void putLogWithNoEndl(const t_info (&info)[], const size_t size) {
+static void putLogWithNoEndl(const t_info *info, const size_t size) {
 	for (size_t i = 0; i < size; i++) {
 		std::cout << info[i].name << ":" << info[i].value;
 		if (i != size - 1) {
@@ -30,13 +30,13 @@ static void putLogWithNoEndl(const t_info (&info)[], const size_t size) {
 	}
 }
 
-static void putLog(const t_info (&info)[], const size_t size) {
+static void putLog(const t_info *info, const size_t size) {
 	putLogWithNoEndl(info, size);
 	std::cout << std::endl;
 }
 
 static void
-putLog(const t_info (&info)[], const size_t size, const std::string &message) {
+putLog(const t_info *info, const size_t size, const std::string &message) {
 	putLogWithNoEndl(info, size);
 	std::cout << message << std::endl;
 }
