@@ -166,7 +166,7 @@ bool Account::makeWithdrawal(int withdrawal) {
 
 	_amount -= withdrawal;
 	if (checkAmount() == AMOUNT_ERROR) {
-		_amount += withdrawal;
+		_amount = preAmount;
 		_displayTimestamp();
 		putLogForErrorWithdrawal(_accountIndex, preAmount);
 		return false;
