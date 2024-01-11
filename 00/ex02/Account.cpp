@@ -21,7 +21,7 @@ int Account::_totalAmount        = 0;
 int Account::_totalNbDeposits    = 0;
 int Account::_totalNbWithdrawals = 0;
 
-static void put_log_with_no_endl(const t_info (&info)[], const size_t size) {
+static void putLogWithNoEndl(const t_info (&info)[], const size_t size) {
 	for (size_t i = 0; i < size; i++) {
 		std::cout << info[i].name << ":" << info[i].value;
 		if (i != size - 1) {
@@ -30,21 +30,21 @@ static void put_log_with_no_endl(const t_info (&info)[], const size_t size) {
 	}
 }
 
-static void put_log(const t_info (&info)[], const size_t size) {
-	put_log_with_no_endl(info, size);
+static void putLog(const t_info (&info)[], const size_t size) {
+	putLogWithNoEndl(info, size);
 	std::cout << std::endl;
 }
 
 static void
-put_log(const t_info (&info)[], const size_t size, const std::string &message) {
-	put_log_with_no_endl(info, size);
+putLog(const t_info (&info)[], const size_t size, const std::string &message) {
+	putLogWithNoEndl(info, size);
 	std::cout << message << std::endl;
 }
 
-static void put_log_create(const int account_index, const int amount) {
-	const t_info infos[] = {{"index", account_index}, {"amount", amount}};
+static void putLogForCreate(const int accountIndex, const int amount) {
+	const t_info info[] = {{"index", accountIndex}, {"amount", amount}};
 
-	put_log(infos, sizeof(infos) / sizeof(infos[0]), ";" MSG_CREATED);
+	putLog(info, sizeof(info) / sizeof(info[0]), ";" MSG_CREATED);
 }
 
 Account::Account(void) {
@@ -53,7 +53,7 @@ Account::Account(void) {
 	_nbDeposits    = 0;
 	_nbWithdrawals = 0;
 	_displayTimestamp();
-	put_log_create(_accountIndex, _amount);
+	putLogForCreate(_accountIndex, _amount);
 
 	_nbAccounts++;
 }
@@ -64,21 +64,21 @@ Account::Account(int initial_deposit) {
 	_nbDeposits    = 0;
 	_nbWithdrawals = 0;
 	_displayTimestamp();
-	put_log_create(_accountIndex, _amount);
+	putLogForCreate(_accountIndex, _amount);
 
 	_nbAccounts++;
 	_totalAmount += _amount;
 }
 
-static void put_log_close(const int account_index, const int amount) {
-	const t_info infos[] = {{"index", account_index}, {"amount", amount}};
+static void putLogForClose(const int accountIndex, const int amount) {
+	const t_info info[] = {{"index", accountIndex}, {"amount", amount}};
 
-	put_log(infos, sizeof(infos) / sizeof(infos[0]), ";" MSG_CLOSED);
+	putLog(info, sizeof(info) / sizeof(info[0]), ";" MSG_CLOSED);
 }
 
 Account::~Account(void) {
 	_displayTimestamp();
-	put_log_close(_accountIndex, _amount);
+	putLogForClose(_accountIndex, _amount);
 }
 
 int Account::getNbAccounts(void) {
@@ -99,34 +99,34 @@ int Account::getNbWithdrawals(void) {
 
 void Account::displayAccountsInfos(void) {
 	_displayTimestamp();
-	const t_info infos[] = {
+	const t_info info[] = {
 		{"accounts", _nbAccounts},
 		{"total", _totalAmount},
 		{"deposits", _totalNbDeposits},
 		{"withdrawals", _totalNbWithdrawals}
 	};
-	put_log(infos, sizeof(infos) / sizeof(infos[0]));
+	putLog(info, sizeof(info) / sizeof(info[0]));
 }
 
-static void put_log_deposit(
-	const int account_index,
-	const int pre_amount,
+static void putLogForDeposit(
+	const int accountIndex,
+	const int preAmount,
 	const int deposit,
 	const int amount,
-	const int nb_deposits
+	const int nbDeposits
 ) {
-	const t_info infos[] = {
-		{"index", account_index},
-		{"p_amount", pre_amount},
+	const t_info info[] = {
+		{"index", accountIndex},
+		{"p_amount", preAmount},
 		{"deposit", deposit},
 		{"amount", amount},
-		{"nb_deposits", nb_deposits},
+		{"nb_deposits", nbDeposits},
 	};
-	put_log(infos, sizeof(infos) / sizeof(infos[0]));
+	putLog(info, sizeof(info) / sizeof(info[0]));
 }
 
 void Account::makeDeposit(int deposit) {
-	const int pre_amount = _amount;
+	const int preAmount = _amount;
 
 	_amount += deposit;
 	_nbDeposits++;
@@ -135,40 +135,40 @@ void Account::makeDeposit(int deposit) {
 	_totalNbDeposits++;
 
 	_displayTimestamp();
-	put_log_deposit(_accountIndex, pre_amount, deposit, _amount, _nbDeposits);
+	putLogForDeposit(_accountIndex, preAmount, deposit, _amount, _nbDeposits);
 }
 
-static void put_log_error_withdrawal(const int account_index, const int pre_amount) {
-	const t_info infos[] = {{"index", account_index}, {"p_amount", pre_amount}};
+static void putLogForErrorWithdrawal(const int accountIndex, const int preAmount) {
+	const t_info info[] = {{"index", accountIndex}, {"p_amount", preAmount}};
 
-	put_log(infos, sizeof(infos) / sizeof(infos[0]), ";withdrawal:" MSG_REFUSED);
+	putLog(info, sizeof(info) / sizeof(info[0]), ";withdrawal:" MSG_REFUSED);
 }
 
-static void put_log_withdrawals(
-	const int account_index,
-	const int pre_amount,
+static void putLogForWithdrawals(
+	const int accountIndex,
+	const int preAmount,
 	const int withdrawal,
 	const int amount,
-	const int nb_withdrawals
+	const int nbWithdrawals
 ) {
-	const t_info infos[] = {
-		{"index", account_index},
-		{"p_amount", pre_amount},
+	const t_info info[] = {
+		{"index", accountIndex},
+		{"p_amount", preAmount},
 		{"withdrawal", withdrawal},
 		{"amount", amount},
-		{"nb_withdrawals", nb_withdrawals},
+		{"nb_withdrawals", nbWithdrawals},
 	};
-	put_log(infos, sizeof(infos) / sizeof(infos[0]));
+	putLog(info, sizeof(info) / sizeof(info[0]));
 }
 
 bool Account::makeWithdrawal(int withdrawal) {
-	const int pre_amount = _amount;
+	const int preAmount = _amount;
 
 	_amount -= withdrawal;
 	if (checkAmount() == AMOUNT_ERROR) {
 		_amount += withdrawal;
 		_displayTimestamp();
-		put_log_error_withdrawal(_accountIndex, pre_amount);
+		putLogForErrorWithdrawal(_accountIndex, preAmount);
 		return false;
 	}
 	_nbWithdrawals++;
@@ -177,8 +177,8 @@ bool Account::makeWithdrawal(int withdrawal) {
 	_totalNbWithdrawals++;
 
 	_displayTimestamp();
-	put_log_withdrawals(
-		_accountIndex, pre_amount, withdrawal, _amount, _nbWithdrawals
+	putLogForWithdrawals(
+		_accountIndex, preAmount, withdrawal, _amount, _nbWithdrawals
 	);
 	return true;
 }
@@ -192,35 +192,35 @@ int Account::checkAmount(void) const {
 
 void Account::displayStatus(void) const {
 	_displayTimestamp();
-	const t_info infos[] = {
+	const t_info info[] = {
 		{"index", _accountIndex},
 		{"amount", _amount},
 		{"deposits", _nbDeposits},
 		{"withdrawals", _nbWithdrawals}
 	};
-	put_log(infos, sizeof(infos) / sizeof(infos[0]));
+	putLog(info, sizeof(info) / sizeof(info[0]));
 }
 
 #ifdef NO_TIMESTAMP
 void Account::_displayTimestamp(void) {}
 #else
 static void
-display_with_fill(const int num, const unsigned int width, const char fill_char) {
-	std::cout << std::setw(width) << std::setfill(fill_char) << num;
+displayWithFill(const int num, const unsigned int width, const char fillChar) {
+	std::cout << std::setw(width) << std::setfill(fillChar) << num;
 }
 
 void Account::_displayTimestamp(void) {
-	std::time_t       t         = std::time(NULL);
-	std::tm          *now       = std::localtime(&t);
-	static const char fill_char = '0';
+	std::time_t       t        = std::time(NULL);
+	std::tm          *now      = std::localtime(&t);
+	static const char fillChar = '0';
 
 	std::cout << "[" << (now->tm_year + 1900);
-	display_with_fill(now->tm_mon + 1, 2, fill_char);
-	display_with_fill(now->tm_mday, 2, fill_char);
+	displayWithFill(now->tm_mon + 1, 2, fillChar);
+	displayWithFill(now->tm_mday, 2, fillChar);
 	std::cout << "_";
-	display_with_fill(now->tm_hour, 2, fill_char);
-	display_with_fill(now->tm_min, 2, fill_char);
-	display_with_fill(now->tm_sec, 2, fill_char);
+	displayWithFill(now->tm_hour, 2, fillChar);
+	displayWithFill(now->tm_min, 2, fillChar);
+	displayWithFill(now->tm_sec, 2, fillChar);
 	std::cout << "] ";
 }
 #endif
