@@ -41,7 +41,7 @@ fclean: clean
 .PHONY	: re
 re: fclean all
 
-.PHONE	: check
+.PHONY	: check
 check:
 	cppcheck --enable=all $$(find . -type f -name "*.cpp" | tr '\n' ' ')
 
