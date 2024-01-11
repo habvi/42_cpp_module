@@ -1,5 +1,4 @@
 #include <cstdlib>
-#include <cstring>
 #include <iostream>
 #include <string>
 
@@ -52,7 +51,7 @@ Megaphone::Megaphone(const Megaphone &m) {
 	// std::cerr << "(call copy constructor)" << std::endl;
 }
 
-Megaphone::~Megaphone(void) {
+Megaphone::~Megaphone() {
 	destroy_voice_();
 	// std::cerr << "(call destructor)" << std::endl;
 }
@@ -100,6 +99,7 @@ void Megaphone::convert_voice_to_uppercase_() {
 
 void Megaphone::destroy_voice_() {
 	delete[] voice_;
+	voice_ = NULL;
 }
 
 static std::string *convert_args(const size_t size, const char **argv) {
