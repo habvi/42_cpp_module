@@ -36,7 +36,7 @@ static void put_log(const t_info (&info)[], const size_t size) {
 }
 
 static void
-put_log(const t_info (&info)[], const size_t size, const std::string message) {
+put_log(const t_info (&info)[], const size_t size, const std::string &message) {
 	put_log_with_no_endl(info, size);
 	std::cout << message << std::endl;
 }
