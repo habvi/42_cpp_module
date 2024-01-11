@@ -1,5 +1,7 @@
 #include "Account.hpp"
 #include <cstdlib>
+#include <ctime>
+#include <iomanip>
 #include <iostream>
 #include <string>
 
@@ -199,7 +201,26 @@ void Account::displayStatus(void) const {
 	put_log(infos, sizeof(infos) / sizeof(infos[0]));
 }
 
-// todo: get current time like a sample log file
-void Account::_displayTimestamp(void) {
-	std::cout << "[time] ";
+#ifdef NO_TIMESTAMP
+void Account::_displayTimestamp(void) {}
+#else
+static void
+display_with_fill(const int num, const unsigned int width, const char fill_char) {
+	std::cout << std::setw(width) << std::setfill(fill_char) << num;
 }
+
+void Account::_displayTimestamp(void) {
+	std::time_t       t         = std::time(NULL);
+	std::tm          *now       = std::localtime(&t);
+	static const char fill_char = '0';
+
+	std::cout << "[" << (now->tm_year + 1900);
+	display_with_fill(now->tm_mon + 1, 2, fill_char);
+	display_with_fill(now->tm_mday, 2, fill_char);
+	std::cout << "_";
+	display_with_fill(now->tm_hour, 2, fill_char);
+	display_with_fill(now->tm_min, 2, fill_char);
+	display_with_fill(now->tm_sec, 2, fill_char);
+	std::cout << "] ";
+}
+#endif
