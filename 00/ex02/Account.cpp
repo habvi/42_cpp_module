@@ -48,6 +48,7 @@ static void putLogForCreate(const int accountIndex, const int amount) {
 }
 
 Account::Account(void) {
+	// customer
 	_accountIndex  = _nbAccounts;
 	_amount        = 0;
 	_nbDeposits    = 0;
@@ -55,10 +56,12 @@ Account::Account(void) {
 	_displayTimestamp();
 	putLogForCreate(_accountIndex, _amount);
 
+	// bank
 	_nbAccounts++;
 }
 
 Account::Account(int initial_deposit) {
+	// customer
 	_accountIndex  = _nbAccounts;
 	_amount        = initial_deposit;
 	_nbDeposits    = 0;
@@ -66,6 +69,7 @@ Account::Account(int initial_deposit) {
 	_displayTimestamp();
 	putLogForCreate(_accountIndex, _amount);
 
+	// bank
 	_nbAccounts++;
 	_totalAmount += _amount;
 }
@@ -125,12 +129,16 @@ static void putLogForDeposit(
 	putLog(info, sizeof(info) / sizeof(info[0]));
 }
 
+// Due to the restriction of not being able to return a bool,
+// overflow check isn't performed.
 void Account::makeDeposit(int deposit) {
 	const int preAmount = _amount;
 
+	// customer
 	_amount += deposit;
 	_nbDeposits++;
 
+	// bank
 	_totalAmount += deposit;
 	_totalNbDeposits++;
 
@@ -164,6 +172,7 @@ static void putLogForWithdrawals(
 bool Account::makeWithdrawal(int withdrawal) {
 	const int preAmount = _amount;
 
+	// customer
 	_amount -= withdrawal;
 	if (checkAmount() == AMOUNT_ERROR) {
 		_amount = preAmount;
@@ -173,6 +182,7 @@ bool Account::makeWithdrawal(int withdrawal) {
 	}
 	_nbWithdrawals++;
 
+	// bank
 	_totalAmount -= withdrawal;
 	_totalNbWithdrawals++;
 
