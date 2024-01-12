@@ -214,23 +214,13 @@ void Account::displayStatus(void) const {
 #ifdef NO_TIMESTAMP
 void Account::_displayTimestamp(void) {}
 #else
-static void
-displayWithFill(const int num, const unsigned int width, const char fillChar) {
-	std::cout << std::setw(width) << std::setfill(fillChar) << num;
-}
-
 void Account::_displayTimestamp(void) {
-	std::time_t       t        = std::time(NULL);
-	std::tm          *now      = std::localtime(&t);
-	static const char fillChar = '0';
+	std::time_t t   = std::time(NULL);
+	std::tm    *now = std::localtime(&t);
+	char        buf[16];
 
-	std::cout << "[" << (now->tm_year + 1900);
-	displayWithFill(now->tm_mon + 1, 2, fillChar);
-	displayWithFill(now->tm_mday, 2, fillChar);
-	std::cout << "_";
-	displayWithFill(now->tm_hour, 2, fillChar);
-	displayWithFill(now->tm_min, 2, fillChar);
-	displayWithFill(now->tm_sec, 2, fillChar);
-	std::cout << "] ";
+	if (std::strftime(buf, sizeof(buf), "%Y%m%d_%H%M%S", now)) {
+		std::cout << "[" << buf << "] ";
+	}
 }
 #endif
