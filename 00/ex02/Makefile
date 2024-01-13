@@ -48,7 +48,7 @@ check:
 no_time:
 	make re NO_TIMESTAMP=1
 
-.PHONEY : diff
+.PHONY : diff
 diff: no_time
 	./$(NAME) > out
 	diff out no_timestamp_19920104_091532.log
