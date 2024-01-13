@@ -1,5 +1,6 @@
 #include "command.hpp"
 #include "phonebook.hpp"
+#include "utils.hpp"
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -34,11 +35,13 @@ int main(void) {
 	t_command command = CMD_INVALID;
 	Phonebook phonebook;
 
-	while (command != CMD_EXIT) {
+	while (command != CMD_EXIT && !std::cin.eof()) {
 		display_command_guide();
 
 		std::string input;
-		std::cin >> input;
+		if (input_line(input) == FAILURE) {
+			break;
+		}
 
 		command = set_command(input);
 		switch (command) {

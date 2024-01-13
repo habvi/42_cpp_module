@@ -5,7 +5,7 @@
 #include <sstream>
 #include <string>
 
-static t_result input_line(std::string &dst) {
+t_result input_line(std::string &dst) {
 	if (!std::getline(std::cin, dst)) {
 		std::cout << std::endl;
 		return EOF;

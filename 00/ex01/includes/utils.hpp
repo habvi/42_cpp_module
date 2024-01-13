@@ -9,7 +9,7 @@ typedef enum e_result {
 	EOF,
 } t_result;
 
-void input_left_align(const std::string &title, std::string &dst, const int width);
+t_result input_line(std::string &dst);
 t_result
 input_left_align(const std::string &title, std::string &dst, const int width);
 t_result input_left_align(const std::string &title, int &dst, const int width);
