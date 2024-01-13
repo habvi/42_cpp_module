@@ -18,4 +18,6 @@ void output_left_align(
 	const std::string &title, const std::string &s, const int width
 );
 
+void put_error(const std::string &message);
+
 #endif /*__IO_H__*/

@@ -14,7 +14,7 @@ static t_result input_each_data(const std::string &title, std::string &dst) {
 		return result;
 	}
 	if (dst.empty()) {
-		std::cerr << RED MSG_EMPTY_CONTACT_INFO END << std::endl;
+		put_error(MSG_EMPTY_CONTACT_INFO);
 		return FAILURE;
 	}
 	return (SUCCESS);
@@ -62,7 +62,7 @@ void exec_add(Phonebook &phonebook) {
 		return;
 	}
 	if (result == FAILURE) {
-		std::cerr << RED MSG_SAVE_FAIL END << std::endl;
+		put_error(MSG_SAVE_FAIL);
 		return;
 	}
 	phonebook.save_contact(contact);

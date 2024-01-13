@@ -56,3 +56,7 @@ void output_left_align(
 ) {
 	std::cout << std::setw(width) << std::left << title << ": " << s << std::endl;
 }
+
+void put_error(const std::string &message) {
+	std::cerr << RED << message << END << std::endl;
+}

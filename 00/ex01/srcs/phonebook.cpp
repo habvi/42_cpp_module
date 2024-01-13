@@ -1,6 +1,7 @@
 #include "phonebook.hpp"
 #include "color.hpp"
 #include "contact.hpp"
+#include "io.hpp"
 #include <iomanip>
 #include <iostream>
 #include <string>
@@ -108,7 +109,7 @@ void Phonebook::display_contact_detail_by_index(const unsigned int index) const 
 	const Contact &contact = phonebook_[index];
 
 	if (!is_valid_index(index)) {
-		std::cerr << RED MSG_INVALID_INDEX END << std::endl;
+		put_error(MSG_INVALID_INDEX);
 		return;
 	}
 	contact.display_all();

@@ -14,7 +14,7 @@ static t_result input_positive_integer(unsigned int &index_of_contact) {
 		return EOF;
 	}
 	if (result == FAILURE || tmp_num < 0) {
-		std::cerr << RED MSG_RETRY_INPUT_INDEX END << std::endl;
+		put_error(MSG_RETRY_INPUT_INDEX);
 		return FAILURE;
 	}
 	index_of_contact = static_cast<unsigned int>(tmp_num);
@@ -36,7 +36,7 @@ static void display_contact_by_index(const Phonebook &phonebook) {
 		return;
 	}
 	if (!phonebook.is_valid_index(index_of_contact)) {
-		std::cerr << RED MSG_RETRY_INPUT_INDEX END << std::endl;
+		put_error(MSG_RETRY_INPUT_INDEX);
 		return;
 	}
 	phonebook.display_contact_detail_by_index(index_of_contact);
