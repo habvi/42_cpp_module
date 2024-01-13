@@ -78,7 +78,7 @@ void Phonebook::save_contact(const Contact &contact) {
 }
 
 static bool is_not_registered(const Contact &contact) {
-	return (contact.get_first_name() == "");
+	return (contact.get_first_name().empty());
 }
 
 void Phonebook::display_all() const {
