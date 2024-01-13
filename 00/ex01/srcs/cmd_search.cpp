@@ -1,3 +1,4 @@
+#include "color.hpp"
 #include "command.hpp"
 #include "io.hpp"
 #include "phonebook.hpp"
@@ -13,7 +14,7 @@ static t_result input_positive_integer(unsigned int &index_of_contact) {
 		return EOF;
 	}
 	if (result == FAILURE || tmp_num < 0) {
-		std::cerr << MSG_RETRY_INPUT_INDEX << std::endl;
+		std::cerr << RED MSG_RETRY_INPUT_INDEX END << std::endl;
 		return FAILURE;
 	}
 	index_of_contact = static_cast<unsigned int>(tmp_num);
@@ -35,7 +36,7 @@ static void display_contact_by_index(const Phonebook &phonebook) {
 		return;
 	}
 	if (!phonebook.is_valid_index(index_of_contact)) {
-		std::cerr << MSG_RETRY_INPUT_INDEX << std::endl;
+		std::cerr << RED MSG_RETRY_INPUT_INDEX END << std::endl;
 		return;
 	}
 	phonebook.display_contact_detail_by_index(index_of_contact);

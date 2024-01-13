@@ -1,3 +1,4 @@
+#include "color.hpp"
 #include "command.hpp"
 #include "io.hpp"
 #include "phonebook.hpp"
@@ -8,7 +9,7 @@
 static void display_command_guide() {
 	std::cout << std::endl
 			  << "----------------------------------------" << std::endl
-			  << " Enter one of the commands below:" << std::endl
+			  << GREEN " Enter one of the commands below:" END << std::endl
 			  << "  - ADD    : save a new contact" << std::endl
 			  << "  - SEARCH : display a specific contact" << std::endl
 			  << "  - EXIT   : exit the program" << std::endl

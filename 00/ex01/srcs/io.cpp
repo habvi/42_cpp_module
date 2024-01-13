@@ -1,4 +1,5 @@
 #include "io.hpp"
+#include "color.hpp"
 #include <iomanip>
 #include <iostream>
 #include <limits>
@@ -36,7 +37,7 @@ input_left_align(const std::string &title, std::string &dst, const int width) {
 
 // input string -> int &dst
 t_result input_left_align(const std::string &title, int &dst, const int width) {
-	std::cout << std::setw(width) << std::left << title << ": ";
+	std::cout << std::setw(width) << std::left << GREEN + title << ": " END;
 
 	std::string tmp_dst;
 	t_result    result = input_line(tmp_dst);

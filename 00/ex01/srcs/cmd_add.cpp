@@ -1,3 +1,4 @@
+#include "color.hpp"
 #include "command.hpp"
 #include "contact.hpp"
 #include "io.hpp"
@@ -13,7 +14,7 @@ static t_result input_each_data(const std::string &title, std::string &dst) {
 		return result;
 	}
 	if (dst.empty()) {
-		std::cerr << MSG_EMPTY_CONTACT_INFO << std::endl;
+		std::cerr << RED MSG_EMPTY_CONTACT_INFO END << std::endl;
 		return FAILURE;
 	}
 	return (SUCCESS);
@@ -61,9 +62,9 @@ void exec_add(Phonebook &phonebook) {
 		return;
 	}
 	if (result == FAILURE) {
-		std::cerr << MSG_SAVE_FAIL << std::endl;
+		std::cerr << RED MSG_SAVE_FAIL END << std::endl;
 		return;
 	}
 	phonebook.save_contact(contact);
-	std::cerr << MSG_SAVE_SUCCESS << std::endl;
+	std::cerr << GREEN MSG_SAVE_SUCCESS END << std::endl;
 }
