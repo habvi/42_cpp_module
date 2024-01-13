@@ -6,7 +6,7 @@
 typedef enum e_result {
 	SUCCESS,
 	FAILURE,
-	EOF,
+	INPUT_EOF,
 } t_result;
 
 t_result input_line(std::string &dst);

@@ -9,9 +9,9 @@ static t_result input_positive_integer(unsigned int &index_of_contact) {
 	const t_result result =
 		input_left_align(MSG_SEARCH, tmp_num, SEARCH_INPUT_WIDTH);
 
-	if (result == EOF) {
+	if (result == INPUT_EOF) {
 		std::cout << std::endl;
-		return EOF;
+		return INPUT_EOF;
 	}
 	if (result == FAILURE || tmp_num < 0) {
 		put_error(MSG_RETRY_INPUT_INDEX);
@@ -32,7 +32,7 @@ static void display_contact_by_index(const Phonebook &phonebook) {
 	t_result           result           = SUCCESS;
 	const unsigned int index_of_contact = input_index_of_entry(result);
 
-	if (result == EOF || result == FAILURE) {
+	if (result == INPUT_EOF || result == FAILURE) {
 		return;
 	}
 	if (!phonebook.is_valid_index(index_of_contact)) {

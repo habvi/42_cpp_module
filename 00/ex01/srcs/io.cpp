@@ -9,7 +9,7 @@
 t_result input_line(std::string &dst) {
 	if (!std::getline(std::cin, dst)) {
 		std::cout << std::endl;
-		return EOF;
+		return INPUT_EOF;
 	}
 	if (std::cin.fail()) {
 		std::cin.clear();
@@ -42,7 +42,7 @@ t_result input_left_align(const std::string &title, int &dst, const int width) {
 	std::string tmp_dst;
 	t_result    result = input_line(tmp_dst);
 
-	if (result == EOF || result == FAILURE) {
+	if (result == INPUT_EOF || result == FAILURE) {
 		return result;
 	}
 	if (!convert_to_integer(tmp_dst, dst)) {

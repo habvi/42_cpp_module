@@ -10,7 +10,7 @@
 static t_result input_each_data(const std::string &title, std::string &dst) {
 	const t_result result = input_left_align(title, dst, CONTACT_FIELD_MAX_WIDTH);
 
-	if (result == EOF || result == FAILURE) {
+	if (result == INPUT_EOF || result == FAILURE) {
 		return result;
 	}
 	if (dst.empty()) {
@@ -32,7 +32,7 @@ static t_result input_data(t_contact_dto &data) {
 
 	for (size_t i = 0; i < size; i++) {
 		t_result result = input_each_data(fields[i].title, fields[i].dst);
-		if (result == EOF || result == FAILURE) {
+		if (result == INPUT_EOF || result == FAILURE) {
 			return result;
 		}
 	}
@@ -47,7 +47,7 @@ static t_result input_contact_date(Contact &contact) {
 	t_contact_dto  data;
 	const t_result result = input_data(data);
 
-	if (result == EOF || result == FAILURE) {
+	if (result == INPUT_EOF || result == FAILURE) {
 		return result;
 	}
 	convert_data_to_contact(contact, data);
@@ -58,7 +58,7 @@ void exec_add(Phonebook &phonebook) {
 	Contact        contact;
 	const t_result result = input_contact_date(contact);
 
-	if (result == EOF) {
+	if (result == INPUT_EOF) {
 		return;
 	}
 	if (result == FAILURE) {
