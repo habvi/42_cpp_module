@@ -1,5 +1,5 @@
-#ifndef __UTILS_H__
-#define __UTILS_H__
+#ifndef __IO_H__
+#define __IO_H__
 
 #include <string>
 
@@ -18,4 +18,4 @@ void output_left_align(
 	const std::string &title, const std::string &s, const int width
 );
 
-#endif /*__UTILS_H__*/
+#endif /*__IO_H__*/
