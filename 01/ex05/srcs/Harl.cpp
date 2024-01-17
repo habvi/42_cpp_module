@@ -1,5 +1,4 @@
 #include "Harl.hpp"
-#include "color.hpp"
 #include <iostream>
 #include <string>
 

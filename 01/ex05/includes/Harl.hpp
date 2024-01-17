@@ -12,6 +12,11 @@
 // error
 #define ERR_INVALID_LEVEL "invalid level"
 
+// color
+#define COLOR_RED   "\033[31m"
+#define COLOR_GREEN "\033[32m"
+#define COLOR_END   "\033[0m"
+
 class Harl {
   public:
 	Harl();
