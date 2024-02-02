@@ -12,9 +12,27 @@ File::File(const std::string &filename, const std::string &s1, const std::string
 
 File::~File() {}
 
+static bool open_file_(std::ifstream &in_file, const std::string &filename) {
+	in_file.open(filename.c_str());
+	if (!in_file) {
+		put_error(ERR_OPEN);
+		return false;
+	}
+	return true;
+}
+
+static bool create_file_(std::ofstream &out_file, const std::string &new_filename) {
+	out_file.open(new_filename.c_str());
+	if (!out_file) {
+		put_error(ERR_CREATE);
+		return false;
+	}
+	return true;
+}
+
 bool File::create_replaced_file() const {
 	std::ifstream in_file;
-	if (!open_file_(in_file)) {
+	if (!open_file_(in_file, filename_)) {
 		return false;
 	}
 
@@ -29,25 +47,6 @@ bool File::create_replaced_file() const {
 
 	in_file.close();
 	out_file.close();
-	return true;
-}
-
-bool File::open_file_(std::ifstream &in_file) const {
-	in_file.open(filename_.c_str());
-	if (!in_file) {
-		put_error(ERR_OPEN);
-		return false;
-	}
-	return true;
-}
-
-bool File::create_file_(std::ofstream &out_file, const std::string &new_filename)
-	const {
-	out_file.open(new_filename.c_str());
-	if (!out_file) {
-		put_error(ERR_CREATE);
-		return false;
-	}
 	return true;
 }
 

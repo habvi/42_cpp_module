@@ -17,9 +17,6 @@ class File {
 	bool create_replaced_file() const;
 
   private:
-	bool open_file_(std::ifstream &in_file) const;
-	bool
-	create_file_(std::ofstream &out_file, const std::string &new_filename) const;
 	bool
 	write_replaced_s1_to_s2_(std::ifstream &in_file, std::ofstream &out_file) const;
 
