@@ -1,4 +1,3 @@
-#include "color.hpp"
 #include "error.hpp"
 #include <cstdlib>
 #include <iostream>
@@ -6,10 +5,6 @@
 
 static bool is_valid_argc(const int argc) {
 	return argc == 4;
-}
-
-static void put_error(const std::string &message) {
-	std::cerr << COLOR_RED << "Error: " << message << COLOR_END << std::endl;
 }
 
 int main(int argc, char *argv[]) {

@@ -1,7 +1,8 @@
 NAME		:=	sed
 
 SRCS_DIR	:=	srcs
-SRCS		:=	file.cpp \
+SRCS		:=	error.cpp \
+				file.cpp \
 				main.cpp
 
 OBJ_DIR		:=	objs
