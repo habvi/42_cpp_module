@@ -43,11 +43,10 @@ bool File::create_replaced_file() const {
 		return false;
 	}
 
-	write_replaced_s1_to_s2_(in_file, out_file);
-
+	const bool result = write_replaced_s1_to_s2_(in_file, out_file);
 	in_file.close();
 	out_file.close();
-	return true;
+	return result;
 }
 
 // todo: replace s1 to s2 & handle error
