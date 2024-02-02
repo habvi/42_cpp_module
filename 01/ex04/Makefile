@@ -1,7 +1,8 @@
 NAME		:=	sed
 
 SRCS_DIR	:=	srcs
-SRCS		:=	main.cpp
+SRCS		:=	file.cpp \
+				main.cpp
 
 OBJ_DIR		:=	objs
 OBJS		:=	$(SRCS:%.cpp=$(OBJ_DIR)/%.o)
