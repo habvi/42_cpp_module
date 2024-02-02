@@ -43,15 +43,16 @@ bool File::create_replaced_file() const {
 		return false;
 	}
 
-	const bool result = write_replaced_s1_to_s2_(in_file, out_file);
+	const bool result = write_replaced_s1_with_s2_(in_file, out_file);
 	in_file.close();
 	out_file.close();
 	return result;
 }
 
 // todo: replace s1 to s2 & handle error
-bool File::write_replaced_s1_to_s2_(std::ifstream &in_file, std::ofstream &out_file)
-	const {
+bool File::write_replaced_s1_with_s2_(
+	std::ifstream &in_file, std::ofstream &out_file
+) const {
 	out_file << in_file.rdbuf();
 	return true;
 }

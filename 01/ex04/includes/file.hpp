@@ -17,8 +17,8 @@ class File {
 	bool create_replaced_file() const;
 
   private:
-	bool
-	write_replaced_s1_to_s2_(std::ifstream &in_file, std::ofstream &out_file) const;
+	bool write_replaced_s1_with_s2_(std::ifstream &in_file, std::ofstream &out_file)
+		const;
 
   private:
 	const std::string filename_;
