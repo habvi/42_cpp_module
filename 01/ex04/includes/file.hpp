@@ -19,6 +19,7 @@ class File {
   private:
 	bool write_replaced_s1_with_s2_(std::ifstream &in_file, std::ofstream &out_file)
 		const;
+	void write_each_line_(const std::string &line, std::ofstream &out_file) const;
 
   private:
 	const std::string filename_;
