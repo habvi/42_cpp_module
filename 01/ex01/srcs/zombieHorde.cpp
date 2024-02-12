@@ -1,5 +1,6 @@
 #include "Zombie.hpp"
 #include <iostream>
+#include <new>
 #include <string>
 
 static void put_error(const std::string &message) {
@@ -12,7 +13,10 @@ Zombie *zombieHorde(int numOfZombies, std::string name) {
 		return NULL;
 	}
 
-	Zombie *zombies = new Zombie[numOfZombies];
+	Zombie *zombies = new (std::nothrow) Zombie[numOfZombies];
+	if (zombies == NULL) {
+		return (NULL);
+	}
 
 	// call copy_constructor -> call destructor
 	for (int i = 0; i < numOfZombies; i++) {
