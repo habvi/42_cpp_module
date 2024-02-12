@@ -1,6 +1,7 @@
 #ifndef FILE_REPLACE_H
 #define FILE_REPLACE_H
 
+#include "file.hpp"
 #include <string>
 
 class FileReplace {
@@ -14,9 +15,8 @@ class FileReplace {
 	void create_replaced_file() const;
 
   private:
-	void write_replaced_s1_with_s2_(std::ifstream &in_file, std::ofstream &out_file)
-		const;
-	void write_each_line_(const std::string &line, std::ofstream &out_file) const;
+	void write_replaced_s1_with_s2_(File &file) const;
+	void write_each_line_(const std::string &line, File &file) const;
 
   private:
 	FileReplace();

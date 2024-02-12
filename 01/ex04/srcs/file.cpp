@@ -1,8 +1,6 @@
 #include "file.hpp"
 #include "error.hpp"
 #include <cstdlib>
-#include <fstream>
-#include <iostream>
 #include <string>
 
 File::File() {}
@@ -16,12 +14,16 @@ File::~File() {
 	out_file_.close();
 }
 
-std::ifstream &File::get_in_file() {
-	return in_file_;
+void File::read_in_file(std::string &line) {
+	std::getline(in_file_, line);
 }
 
-std::ofstream &File::get_out_file() {
-	return out_file_;
+bool File::is_in_file_eof() {
+	return in_file_.eof();
+}
+
+void File::write_out_file(const std::string &line) {
+	out_file_ << line;
 }
 
 void File::open_files(

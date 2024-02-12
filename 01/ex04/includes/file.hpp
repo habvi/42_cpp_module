@@ -13,8 +13,9 @@ class File {
 	~File();
 
   public:
-	std::ifstream &get_in_file();
-	std::ofstream &get_out_file();
+	void read_in_file(std::string &line);
+	bool is_in_file_eof();
+	void write_out_file(const std::string &line);
 
   private:
 	void open_files(const std::string &in_filename, const std::string &out_filename);
