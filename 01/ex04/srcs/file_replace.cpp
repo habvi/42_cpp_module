@@ -1,5 +1,7 @@
 #include "file_replace.hpp"
+#include "error.hpp"
 #include "file.hpp"
+#include <cstdlib>
 #include <string>
 
 FileReplace::FileReplace() {}
@@ -28,6 +30,10 @@ void FileReplace::write_replaced_s1_with_s2_(File &file) const {
 			line += "\n";
 		}
 		write_each_line_(line, file);
+	}
+	if (file.is_in_file_error()) {
+		put_error(ERR_GETLINE);
+		exit(EXIT_FAILURE);
 	}
 }
 

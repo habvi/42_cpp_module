@@ -14,12 +14,17 @@ File::~File() {
 	out_file_.close();
 }
 
+// The user should check errors in getline()
 void File::read_in_file(std::string &line) {
 	std::getline(in_file_, line);
 }
 
-bool File::is_in_file_eof() {
+bool File::is_in_file_eof() const {
 	return in_file_.eof();
+}
+
+bool File::is_in_file_error() const {
+	return in_file_.bad();
 }
 
 void File::write_out_file(const std::string &line) {
