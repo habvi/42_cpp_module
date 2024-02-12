@@ -2,6 +2,7 @@ NAME		:=	sed
 
 SRCS_DIR	:=	srcs
 SRCS		:=	error.cpp \
+				file_replace.cpp \
 				file.cpp \
 				main.cpp
 

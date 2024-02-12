@@ -1,5 +1,5 @@
 #include "error.hpp"
-#include "file.hpp"
+#include "file_replace.hpp"
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -17,12 +17,12 @@ static bool is_valid_string(const std::string &filename, const std::string &s1) 
 	return !(filename.empty() || s1.empty());
 }
 
-static bool create_replaced_file(
+static void create_replaced_file(
 	const std::string &filename, const std::string &s1, const std::string &s2
 ) {
-	File file(filename, s1, s2);
+	FileReplace file_replace(filename, s1, s2);
 
-	return file.create_replaced_file();
+	file_replace.create_replaced_file();
 }
 
 int main(int argc, const char *argv[]) {
@@ -40,8 +40,6 @@ int main(int argc, const char *argv[]) {
 		return EXIT_FAILURE;
 	}
 
-	if (!create_replaced_file(filename, s1, s2)) {
-		return EXIT_FAILURE;
-	}
+	create_replaced_file(filename, s1, s2);
 	return EXIT_SUCCESS;
 }

@@ -1,78 +1,41 @@
 #include "file.hpp"
 #include "error.hpp"
+#include <cstdlib>
 #include <fstream>
 #include <iostream>
 #include <string>
 
-// todo: need?
 File::File() {}
 
-File::File(const std::string &filename, const std::string &s1, const std::string &s2)
-	: filename_(filename), s1_(s1), s2_(s2) {}
+File::File(const std::string &in_filename, const std::string &out_filename) {
+	open_files(in_filename, out_filename);
+}
 
-File::~File() {}
+File::~File() {
+	in_file_.close();
+	out_file_.close();
+}
 
-static bool open_file_(std::ifstream &in_file, const std::string &filename) {
-	in_file.open(filename.c_str());
-	if (!in_file) {
+std::ifstream &File::get_in_file() {
+	return in_file_;
+}
+
+std::ofstream &File::get_out_file() {
+	return out_file_;
+}
+
+void File::open_files(
+	const std::string &in_filename, const std::string &out_filename
+) {
+	in_file_.open(in_filename.c_str());
+	if (!in_file_) {
 		put_error(ERR_OPEN);
-		return false;
+		exit(EXIT_FAILURE);
 	}
-	return true;
-}
 
-static bool create_file_(std::ofstream &out_file, const std::string &new_filename) {
-	out_file.open(new_filename.c_str());
-	if (!out_file) {
+	out_file_.open(out_filename.c_str());
+	if (!out_file_) {
 		put_error(ERR_CREATE);
-		return false;
+		exit(EXIT_FAILURE);
 	}
-	return true;
-}
-
-bool File::create_replaced_file() const {
-	std::ifstream in_file;
-	if (!open_file_(in_file, filename_)) {
-		return false;
-	}
-
-	std::ofstream     out_file;
-	const std::string new_filename = filename_ + REPLACED_EXTENSION;
-	if (!create_file_(out_file, new_filename)) {
-		in_file.close();
-		return false;
-	}
-
-	const bool result = write_replaced_s1_with_s2_(in_file, out_file);
-	in_file.close();
-	out_file.close();
-	return result;
-}
-
-bool File::write_replaced_s1_with_s2_(
-	std::ifstream &in_file, std::ofstream &out_file
-) const {
-	std::string line;
-	while (std::getline(in_file, line)) {
-		if (!in_file.eof()) {
-			line += "\n";
-		}
-		write_each_line_(line, out_file);
-	}
-	// todo: getline error
-	return true;
-}
-
-void File::write_each_line_(const std::string &line, std::ofstream &out_file) const {
-	std::string::size_type head      = 0;
-	std::string::size_type pos       = 0;
-	const size_t           s1_length = s1_.length();
-
-	while ((pos = line.find(s1_, head)) != std::string::npos) {
-		out_file << line.substr(head, pos - head);
-		out_file << s2_;
-		pos += s1_length;
-		head = pos;
-	}
-	out_file << line.substr(head);
 }
