@@ -10,6 +10,10 @@ Zombie::Zombie(const std::string &name) {
 	name_ = name;
 }
 
+Zombie::Zombie(const Zombie &z) {
+	name_ = z.name_;
+}
+
 Zombie::~Zombie() {
 	std::cerr << COLOR_PINK << name_ << ZOMBIE_DEAD << COLOR_END << std::endl;
 }
