@@ -9,6 +9,7 @@ class Weapon {
 	~Weapon();
 
   public:
+	// Following the instructions, not camelcase.
 	const std::string &getType() const;
 	void               setType(const std::string &newType);
 

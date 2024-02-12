@@ -10,6 +10,7 @@ class HumanA {
 	~HumanA();
 
   public:
+	// Following the instructions, not camelcase.
 	void attack() const;
 
   private:

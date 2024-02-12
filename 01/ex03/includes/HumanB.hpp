@@ -14,6 +14,7 @@ class HumanB {
 	~HumanB();
 
   public:
+	// Following the instructions, not camelcase.
 	void setWeapon(Weapon &weapon);
 	void attack() const;
 
