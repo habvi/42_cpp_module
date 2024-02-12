@@ -9,18 +9,19 @@ static bool is_valid_argc(const int argc) {
 }
 
 static void put_guide() {
-	static const std::string message = "./sed [filename] [s1: before] [s2: after]";
+	static const std::string message =
+		"./sed [filename] [src: before] [replaced: after]";
 	std::cerr << message << std::endl;
 }
 
-static bool is_valid_string(const std::string &filename, const std::string &s1) {
-	return !(filename.empty() || s1.empty());
+static bool is_valid_string(const std::string &filename, const std::string &src) {
+	return !(filename.empty() || src.empty());
 }
 
 static void create_replaced_file(
-	const std::string &filename, const std::string &s1, const std::string &s2
+	const std::string &filename, const std::string &src, const std::string &replaced
 ) {
-	FileReplace file_replace(filename, s1, s2);
+	FileReplace file_replace(filename, src, replaced);
 
 	file_replace.create_replaced_file();
 }
@@ -33,13 +34,13 @@ int main(int argc, const char *argv[]) {
 	}
 
 	const std::string filename = argv[1];
-	const std::string s1       = argv[2];
-	const std::string s2       = argv[3];
-	if (!is_valid_string(filename, s1)) {
+	const std::string src      = argv[2];
+	const std::string replaced = argv[3];
+	if (!is_valid_string(filename, src)) {
 		put_error(ERR_INVALID_ARGS);
 		return EXIT_FAILURE;
 	}
 
-	create_replaced_file(filename, s1, s2);
+	create_replaced_file(filename, src, replaced);
 	return EXIT_SUCCESS;
 }

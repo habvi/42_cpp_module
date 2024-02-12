@@ -7,7 +7,9 @@
 class FileReplace {
   public:
 	FileReplace(
-		const std::string &filename, const std::string &s1, const std::string &s2
+		const std::string &filename,
+		const std::string &src,
+		const std::string &replaced
 	);
 	~FileReplace();
 
@@ -15,7 +17,7 @@ class FileReplace {
 	void create_replaced_file() const;
 
   private:
-	void write_replaced_s1_with_s2_(File &file) const;
+	void write_replaced_to_newfile(File &file) const;
 	void write_each_line_(const std::string &line, File &file) const;
 
   private:
@@ -23,8 +25,8 @@ class FileReplace {
 
   private:
 	const std::string filename_;
-	const std::string s1_;
-	const std::string s2_;
+	const std::string src_;
+	const std::string replaced_;
 };
 
 #endif /* FILE_REPLACE_H */
