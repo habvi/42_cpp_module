@@ -2,9 +2,7 @@
 #include <iostream>
 #include <string>
 
-Zombie::Zombie() {
-	name_ = "";
-}
+Zombie::Zombie() {}
 
 Zombie::Zombie(const std::string &name) {
 	name_ = name;
