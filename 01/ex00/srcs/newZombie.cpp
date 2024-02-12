@@ -1,9 +1,9 @@
 #include "Zombie.hpp"
+#include <new>
 #include <string>
 
-// todo: throw error?
 Zombie *newZombie(std::string name) {
-	Zombie *zombie = new Zombie(name);
+	Zombie *zombie = new (std::nothrow) Zombie(name);
 
 	return zombie;
 }
