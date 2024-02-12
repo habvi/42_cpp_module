@@ -2,7 +2,7 @@
 #include <string>
 
 Weapon::Weapon() {
-	type_ = "";
+	type_.clear();
 }
 
 Weapon::Weapon(const std::string &type) {
