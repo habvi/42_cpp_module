@@ -9,7 +9,8 @@
 
 #define ZOMBIE_SOUND       "BraiiiiiiinnnzzzZ..."
 #define ZOMBIE_DEAD        " is dead."
-#define ERR_NUM_OF_ZOMBIES "Error: invalid number of zombies"
+#define ERR_NUM_OF_ZOMBIES "invalid number of zombies"
+#define ERR_ALLOCATE       "allocation failed"
 
 class Zombie {
   public:

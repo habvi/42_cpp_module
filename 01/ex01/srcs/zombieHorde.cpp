@@ -4,7 +4,8 @@
 #include <string>
 
 static void put_error(const std::string &message) {
-	std::cerr << COLOR_RED << message << COLOR_END << std::endl << std::endl;
+	std::cerr << COLOR_RED << "Error: " << message << COLOR_END << std::endl
+			  << std::endl;
 }
 
 Zombie *zombieHorde(int numOfZombies, std::string name) {
@@ -15,6 +16,7 @@ Zombie *zombieHorde(int numOfZombies, std::string name) {
 
 	Zombie *zombies = new (std::nothrow) Zombie[numOfZombies];
 	if (zombies == NULL) {
+		put_error(ERR_ALLOCATE);
 		return (NULL);
 	}
 
