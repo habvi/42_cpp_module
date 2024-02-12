@@ -3,6 +3,7 @@
 
 #include <string>
 
+#define COLOR_RED    "\033[31m"
 #define COLOR_PINK   "\033[35m"
 #define COLOR_END    "\033[0m"
 

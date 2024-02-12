@@ -26,6 +26,7 @@ static void testRandomChump() {
 static void callNewZombieAndAnnounce(const std::string &name) {
 	Zombie *zombie = newZombie(name);
 	if (zombie == NULL) {
+		std::cerr << COLOR_RED "Error: allocation failed" COLOR_END << std::endl;
 		exit(EXIT_FAILURE);
 	}
 	zombie->announce();
