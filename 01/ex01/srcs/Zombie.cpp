@@ -3,7 +3,7 @@
 #include <string>
 
 Zombie::Zombie() {
-	name_ = "";
+	name_.clear();
 }
 
 Zombie::Zombie(const std::string &name) {
