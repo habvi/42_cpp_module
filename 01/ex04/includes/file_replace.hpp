@@ -14,7 +14,7 @@ class FileReplace {
 	~FileReplace();
 
   public:
-	void CreateReplacedFile() const;
+	bool CreateReplacedFile() const;
 
   private:
 	void WriteReplacedToNewfile(const std::string &content, File &file) const;

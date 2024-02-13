@@ -4,9 +4,8 @@
 #include <fstream>
 #include <string>
 
-#define ERR_OPEN    "fail to open file"
-#define ERR_CREATE  "fail to create file"
-#define ERR_GETLINE "fail to getline"
+#define ERR_OPEN   "fail to open file"
+#define ERR_CREATE "fail to create file"
 
 class File {
   public:

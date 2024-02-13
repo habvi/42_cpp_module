@@ -1,7 +1,6 @@
 #include "file_replace.hpp"
 #include "error.hpp"
 #include "file.hpp"
-#include <cstdlib>
 #include <string>
 
 FileReplace::FileReplace() {}
@@ -13,7 +12,7 @@ FileReplace::FileReplace(
 
 FileReplace::~FileReplace() {}
 
-void FileReplace::CreateReplacedFile() const {
+bool FileReplace::CreateReplacedFile() const {
 	static const std::string kReplacedExtension = ".replace";
 	const std::string        new_filename       = filename_ + kReplacedExtension;
 	File                     file(filename_, new_filename);
@@ -21,11 +20,11 @@ void FileReplace::CreateReplacedFile() const {
 	std::string infile_content;
 	const bool  result = file.ReadInfileToBuf(infile_content);
 	if (!result) {
-		PutError(ERR_GETLINE);
-		exit(EXIT_FAILURE);
+		return false;
 	}
 
 	WriteReplacedToNewfile(infile_content, file);
+	return true;
 }
 
 void FileReplace::WriteReplacedToNewfile(const std::string &content, File &file)

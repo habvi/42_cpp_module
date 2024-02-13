@@ -23,7 +23,11 @@ static void CreateReplacedFile(
 ) {
 	FileReplace file_replace(filename, src, replaced);
 
-	file_replace.CreateReplacedFile();
+	const bool result = file_replace.CreateReplacedFile();
+	if (!result) {
+		PutError(ERR_REPLACE);
+		exit(EXIT_FAILURE);
+	}
 }
 
 int main(int argc, const char *argv[]) {
