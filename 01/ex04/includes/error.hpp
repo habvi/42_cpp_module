@@ -5,6 +5,6 @@
 
 #define ERR_INVALID_ARGS "invalid arguments"
 
-void put_error(const std::string &message);
+void PutError(const std::string &message);
 
 #endif /* ERROR_H */

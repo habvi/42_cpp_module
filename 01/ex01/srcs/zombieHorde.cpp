@@ -3,20 +3,20 @@
 #include <new>
 #include <string>
 
-static void put_error(const std::string &message) {
+static void PutError(const std::string &message) {
 	std::cerr << COLOR_RED << "Error: " << message << COLOR_END << std::endl
 			  << std::endl;
 }
 
 Zombie *zombieHorde(int numOfZombies, std::string name) {
 	if (numOfZombies < 0) {
-		put_error(ERR_NUM_OF_ZOMBIES);
+		PutError(ERR_NUM_OF_ZOMBIES);
 		return NULL;
 	}
 
 	Zombie *zombies = new (std::nothrow) Zombie[numOfZombies];
 	if (zombies == NULL) {
-		put_error(ERR_ALLOCATE);
+		PutError(ERR_ALLOCATE);
 		return (NULL);
 	}
 
