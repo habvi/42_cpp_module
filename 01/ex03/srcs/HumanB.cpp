@@ -15,7 +15,6 @@ void HumanB::setWeapon(Weapon &weapon) {
 }
 
 void HumanB::attack() const {
-	// necessary?
 	if (weapon_ == NULL) {
 		std::cerr << name_ << " has" COLOR_RED " no weapon" COLOR_END << std::endl;
 		return;
