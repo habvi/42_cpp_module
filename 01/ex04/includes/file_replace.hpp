@@ -14,11 +14,11 @@ class FileReplace {
 	~FileReplace();
 
   public:
-	void create_replaced_file() const;
+	void CreateReplacedFile() const;
 
   private:
-	void write_replaced_to_newfile(File &file) const;
-	void write_each_line_(const std::string &line, File &file) const;
+	void WriteReplacedToNewfile(File &file) const;
+	void WriteEachLine(const std::string &line, File &file) const;
 
   private:
 	FileReplace();

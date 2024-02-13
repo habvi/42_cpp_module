@@ -28,7 +28,7 @@ $(OBJ_DIR)/%.o: $(SRCS_DIR)/%.cpp
 	@$(MKDIR) $(dir $@)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME): $(OBJS) 
+$(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 .PHONY	: clean

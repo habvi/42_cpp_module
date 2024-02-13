@@ -2,25 +2,25 @@
 #include <cstdlib>
 #include <iostream>
 
-static void displayTitle(const std::string &title, const int numOfZombies) {
-	std::cout << "┃ test: " << title << numOfZombies << std::endl;
+static void DisplayTitle(const std::string &title, const int num_of_zombies) {
+	std::cout << "┃ test: " << title << num_of_zombies << std::endl;
 	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 }
 
-static void announceEachZombies(const Zombie *zombies, const int n) {
+static void AnnounceEachZombies(const Zombie *zombies, const int n) {
 	for (int i = 0; i < n; i++) {
 		zombies[i].announce();
 	}
 }
 
-static void run_test(const int numOfZombies) {
-	displayTitle("number of zombies = ", numOfZombies);
+static void RunTest(const int num_of_zombies) {
+	DisplayTitle("number of zombies = ", num_of_zombies);
 
-	Zombie *zombies = zombieHorde(numOfZombies, "abcd");
+	Zombie *zombies = zombieHorde(num_of_zombies, "abcd");
 	if (zombies == NULL) {
 		return;
 	}
-	announceEachZombies(zombies, numOfZombies);
+	AnnounceEachZombies(zombies, num_of_zombies);
 	// call destructor
 	delete[] zombies;
 
@@ -29,13 +29,13 @@ static void run_test(const int numOfZombies) {
 
 int main() {
 	/* normal case */
-	run_test(4);
-	run_test(0);
-	run_test(2);
+	RunTest(4);
+	RunTest(0);
+	RunTest(2);
 
 	/* error case (N = minus) */
-	run_test(-5);
-	run_test(-100);
+	RunTest(-5);
+	RunTest(-100);
 
 	return EXIT_SUCCESS;
 }

@@ -2,28 +2,28 @@
 #include <cstdlib>
 #include <iostream>
 
-static void displayTitle(const std::string &title) {
+static void DisplayTitle(const std::string &title) {
 	std::cout << "┃ test: " << title << std::endl;
 	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 }
 
-static void line() {
+static void Line() {
 	std::cout << "--------------------------------" << std::endl;
 }
 
-static void testRandomChump() {
-	displayTitle("randomChump()");
+static void TestRandomChump() {
+	DisplayTitle("randomChump()");
 
 	randomChump("a");
-	line();
+	Line();
 	randomChump("");
-	line();
+	Line();
 	randomChump("bb");
 
 	std::cout << std::endl;
 }
 
-static void callNewZombieAndAnnounce(const std::string &name) {
+static void CallNewZombieAndAnnounce(const std::string &name) {
 	Zombie *zombie = newZombie(name);
 	if (zombie == NULL) {
 		std::cerr << COLOR_RED "Error: allocation failed" COLOR_END << std::endl;
@@ -33,18 +33,18 @@ static void callNewZombieAndAnnounce(const std::string &name) {
 	delete zombie;
 }
 
-static void testNewZombie() {
-	displayTitle("newZombie(), announce()");
+static void TestNewZombie() {
+	DisplayTitle("newZombie(), announce()");
 
-	callNewZombieAndAnnounce("ccc");
-	line();
-	callNewZombieAndAnnounce("");
-	line();
-	callNewZombieAndAnnounce("abcdefghijk");
+	CallNewZombieAndAnnounce("ccc");
+	Line();
+	CallNewZombieAndAnnounce("");
+	Line();
+	CallNewZombieAndAnnounce("abcdefghijk");
 }
 
 int main() {
-	testRandomChump();
-	testNewZombie();
+	TestRandomChump();
+	TestNewZombie();
 	return EXIT_SUCCESS;
 }

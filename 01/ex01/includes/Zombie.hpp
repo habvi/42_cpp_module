@@ -20,12 +20,14 @@ class Zombie {
 	~Zombie();
 
   public:
+	// Following the instructions, not camelcase.
 	void announce(void) const;
 
   private:
 	std::string name_;
 };
 
+// Following the instructions, not camelcase.
 Zombie *zombieHorde(int numOfZombies, std::string name);
 
 #endif /* ZOMBIE_H */

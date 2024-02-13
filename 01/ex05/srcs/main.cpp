@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 
-static void put(const std::string &level) {
+static void Put(const std::string &level) {
 	std::cout << std::endl << COLOR_GREEN << level << COLOR_END << std::endl;
 }
 
@@ -11,38 +11,38 @@ int main() {
 	Harl harl_1;
 
 	/* normal case */
-	put("DEBUG");
+	Put("DEBUG");
 	harl_1.complain(DEBUG);
-	put("INFO");
+	Put("INFO");
 	harl_1.complain(INFO);
-	put("WARNING");
+	Put("WARNING");
 	harl_1.complain(WARNING);
-	put("ERROR");
+	Put("ERROR");
 	harl_1.complain(ERROR);
-	put("INFO");
+	Put("INFO");
 	harl_1.complain(INFO);
-	put("WARNING");
+	Put("WARNING");
 	harl_1.complain(WARNING);
 
 	/* error case */
-	put("NOT EXIST");
+	Put("NOT EXIST");
 	harl_1.complain("not_exist");
-	put("EMPTY");
+	Put("EMPTY");
 	harl_1.complain("");
 
 	// -----------------------------------
 	Harl harl_2;
 
 	/* normal case */
-	put("DEBUG");
+	Put("DEBUG");
 	harl_2.complain(DEBUG);
-	put("ERROR");
+	Put("ERROR");
 	harl_2.complain(ERROR);
 
 	/* error case */
-	put("EMPTY");
+	Put("EMPTY");
 	harl_2.complain("");
-	put("NOT EXIST");
+	Put("NOT EXIST");
 	harl_2.complain("not_exist");
 
 	return EXIT_SUCCESS;

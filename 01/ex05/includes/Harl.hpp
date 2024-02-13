@@ -23,9 +23,11 @@ class Harl {
 	~Harl();
 
   public:
+	// Following the instructions, not camelcase.
 	void complain(std::string level);
 
   private:
+	// Following the instructions, not camelcase and const qualifier isn't used.
 	void debug(void);
 	void info(void);
 	void warning(void);

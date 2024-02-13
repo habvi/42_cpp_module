@@ -6,7 +6,7 @@ Harl::Harl() {}
 
 Harl::~Harl() {}
 
-static void put_error(const std::string &message) {
+static void PutError(const std::string &message) {
 	std::cout << COLOR_RED << "Error: " << message << COLOR_END << std::endl;
 }
 
@@ -27,28 +27,28 @@ void Harl::complain(std::string level) {
 			return;
 		}
 	}
-	put_error(ERR_INVALID_LEVEL);
+	PutError(ERR_INVALID_LEVEL);
 }
 
-static void put(const std::string &message) {
+static void Put(const std::string &message) {
 	std::cout << message << std::endl;
 }
 
 void Harl::debug(void) {
-	put("I love having extra bacon for my "
+	Put("I love having extra bacon for my "
 		"7XL-double-cheese-triple-pickle-specialketchup burger. I really do!");
 }
 
 void Harl::info(void) {
-	put("I cannot believe adding extra bacon costs more money. You didn’t put "
+	Put("I cannot believe adding extra bacon costs more money. You didn’t Put "
 		"enough bacon in my burger! If you did, I wouldn’t be asking for more!");
 }
 
 void Harl::warning(void) {
-	put("I think I deserve to have some extra bacon for free. I’ve been coming for "
+	Put("I think I deserve to have some extra bacon for free. I’ve been coming for "
 		"years whereas you started working here since last month.");
 }
 
 void Harl::error(void) {
-	put("This is unacceptable! I want to speak to the manager now.");
+	Put("This is unacceptable! I want to speak to the manager now.");
 }

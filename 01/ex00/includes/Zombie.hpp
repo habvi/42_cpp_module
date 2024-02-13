@@ -16,6 +16,7 @@ class Zombie {
 	~Zombie();
 
   public:
+	// Following the instructions, not camelcase.
 	void announce(void) const;
 
   private:
@@ -25,6 +26,7 @@ class Zombie {
 	std::string name_;
 };
 
+// Following the instructions, not camelcase.
 Zombie *newZombie(std::string name);
 void    randomChump(std::string name);
 
