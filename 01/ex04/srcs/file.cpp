@@ -9,10 +9,7 @@ File::File(const std::string &in_filename, const std::string &out_filename) {
 	OpenFiles(in_filename, out_filename);
 }
 
-File::~File() {
-	in_file_.close();
-	out_file_.close();
-}
+File::~File() {}
 
 bool File::ReadInfileToBuf(std::string &buf) {
 	std::string line;
