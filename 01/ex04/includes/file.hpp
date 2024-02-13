@@ -14,7 +14,7 @@ class File {
 
   public:
 	bool ReadInfileToBuf(std::string &buf);
-	void WriteOutfile(const std::string &line);
+	void WriteToOutfile(const std::string &line);
 
   private:
 	bool IsInfileEof() const;

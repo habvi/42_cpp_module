@@ -27,7 +27,7 @@ bool File::ReadInfileToBuf(std::string &buf) {
 	return true;
 }
 
-void File::WriteOutfile(const std::string &line) {
+void File::WriteToOutfile(const std::string &line) {
 	out_file_ << line;
 }
 
