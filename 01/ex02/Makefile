@@ -23,7 +23,7 @@ $(OBJ_DIR)/%.o: %.cpp
 	@$(MKDIR) $(dir $@)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(NAME): $(OBJS) 
+$(NAME): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 
 .PHONY	: clean

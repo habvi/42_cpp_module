@@ -17,7 +17,7 @@ Zombie *zombieHorde(int num_of_zombies, std::string name) {
 	Zombie *zombies = new (std::nothrow) Zombie[num_of_zombies];
 	if (zombies == NULL) {
 		PutError(ERR_ALLOCATE);
-		return (NULL);
+		return NULL;
 	}
 
 	// call copy_constructor -> call destructor
