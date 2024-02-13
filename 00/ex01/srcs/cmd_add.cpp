@@ -17,7 +17,7 @@ static t_result input_each_data(const std::string &title, std::string &dst) {
 		put_error(MSG_EMPTY_CONTACT_INFO);
 		return FAILURE;
 	}
-	return (SUCCESS);
+	return SUCCESS;
 }
 
 static t_result input_data(t_contact_dto &data) {

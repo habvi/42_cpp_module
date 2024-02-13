@@ -32,7 +32,7 @@ static bool convert_to_integer(const std::string &dst, int &num) {
 t_result
 input_left_align(const std::string &title, std::string &dst, const int width) {
 	std::cout << std::setw(width) << std::left << title << ": ";
-	return (input_line(dst));
+	return input_line(dst);
 }
 
 // input string -> int &dst
