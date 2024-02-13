@@ -17,8 +17,7 @@ class FileReplace {
 	void CreateReplacedFile() const;
 
   private:
-	void WriteReplacedToNewfile(File &file) const;
-	void WriteEachLine(const std::string &line, File &file) const;
+	void WriteReplacedToNewfile(const std::string &content, File &file) const;
 
   private:
 	FileReplace();

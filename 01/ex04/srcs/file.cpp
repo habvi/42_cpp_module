@@ -14,9 +14,24 @@ File::~File() {
 	out_file_.close();
 }
 
-// The user should check errors in getline()
-void File::ReadInfile(std::string &line) {
-	std::getline(in_file_, line);
+bool File::ReadInfileToBuf(std::string &buf) {
+	std::string line;
+
+	while (!IsInfileEof()) {
+		std::getline(in_file_, line);
+		if (IsInfileError()) {
+			return false;
+		}
+		if (!IsInfileEof()) {
+			line += "\n";
+		}
+		buf += line;
+	}
+	return true;
+}
+
+void File::WriteOutfile(const std::string &line) {
+	out_file_ << line;
 }
 
 bool File::IsInfileEof() const {
@@ -25,10 +40,6 @@ bool File::IsInfileEof() const {
 
 bool File::IsInfileError() const {
 	return in_file_.bad();
-}
-
-void File::WriteOutfile(const std::string &line) {
-	out_file_ << line;
 }
 
 void File::OpenFiles(

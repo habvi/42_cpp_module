@@ -14,12 +14,12 @@ class File {
 	~File();
 
   public:
-	void ReadInfile(std::string &line);
-	bool IsInfileEof() const;
-	bool IsInfileError() const;
+	bool ReadInfileToBuf(std::string &buf);
 	void WriteOutfile(const std::string &line);
 
   private:
+	bool IsInfileEof() const;
+	bool IsInfileError() const;
 	void OpenFiles(const std::string &in_filename, const std::string &out_filename);
 
   private:
