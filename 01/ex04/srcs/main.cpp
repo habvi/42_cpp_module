@@ -9,9 +9,9 @@ static bool IsValidArgc(const int argc) {
 }
 
 static void PutUsage() {
-	static const std::string message =
+	static const std::string kMessage =
 		"    ./sed [filename] [src: before] [replaced: after]";
-	std::cerr << "Usage:\n" << message << std::endl;
+	std::cerr << "Usage:\n" << kMessage << std::endl;
 }
 
 static bool IsValidString(const std::string &filename, const std::string &src) {

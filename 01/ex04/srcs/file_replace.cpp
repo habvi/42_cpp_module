@@ -14,8 +14,8 @@ FileReplace::FileReplace(
 FileReplace::~FileReplace() {}
 
 void FileReplace::CreateReplacedFile() const {
-	static const std::string replaced_extension = ".replace";
-	const std::string        new_filename       = filename_ + replaced_extension;
+	static const std::string kReplacedExtension = ".replace";
+	const std::string        new_filename       = filename_ + kReplacedExtension;
 	File                     file(filename_, new_filename);
 
 	WriteReplacedToNewfile(file);
