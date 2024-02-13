@@ -8,10 +8,10 @@ static void PutErrorArgs() {
 	std::cerr << COLOR_RED << "Error: " << kMessage << COLOR_END << std::endl;
 }
 
-static void PutGuide() {
+static void PutUsage() {
 	static const std::string kMessage =
-		"Select one of [ DEBUG, INFO, WARNING, or ERROR ] as an argument.";
-	std::cerr << kMessage << std::endl;
+		"    ./harlFilter [ DEBUG, INFO, WARNING, or ERROR ]";
+	std::cerr << "Usage:\n" << kMessage << std::endl;
 }
 
 static bool IsValidArgs(const int argc) {
@@ -21,7 +21,7 @@ static bool IsValidArgs(const int argc) {
 int main(int argc, const char *argv[]) {
 	if (!IsValidArgs(argc)) {
 		PutErrorArgs();
-		PutGuide();
+		PutUsage();
 		return EXIT_FAILURE;
 	}
 

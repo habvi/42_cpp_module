@@ -8,10 +8,10 @@ static bool IsValidArgc(const int argc) {
 	return argc == 4;
 }
 
-static void PutGuide() {
+static void PutUsage() {
 	static const std::string message =
-		"./sed [filename] [src: before] [replaced: after]";
-	std::cerr << message << std::endl;
+		"    ./sed [filename] [src: before] [replaced: after]";
+	std::cerr << "Usage:\n" << message << std::endl;
 }
 
 static bool IsValidString(const std::string &filename, const std::string &src) {
@@ -29,7 +29,7 @@ static void CreateReplacedFile(
 int main(int argc, const char *argv[]) {
 	if (!IsValidArgc(argc)) {
 		PutError(ERR_INVALID_ARGS);
-		PutGuide();
+		PutUsage();
 		return EXIT_FAILURE;
 	}
 
