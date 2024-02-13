@@ -4,9 +4,8 @@
 #include <fstream>
 #include <string>
 
-#define ERR_OPEN    "fail to open file"
-#define ERR_CREATE  "fail to create file"
-#define ERR_GETLINE "fail to getline"
+#define ERR_OPEN   "fail to open file"
+#define ERR_CREATE "fail to create file"
 
 class File {
   public:
@@ -14,12 +13,12 @@ class File {
 	~File();
 
   public:
-	void ReadInfile(std::string &line);
-	bool IsInfileEof() const;
-	bool IsInfileError() const;
-	void WriteOutfile(const std::string &line);
+	bool ReadInfileToBuf(std::string &buf);
+	void WriteToOutfile(const std::string &line);
 
   private:
+	bool IsInfileEof() const;
+	bool IsInfileError() const;
 	void OpenFiles(const std::string &in_filename, const std::string &out_filename);
 
   private:
