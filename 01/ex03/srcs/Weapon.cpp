@@ -1,9 +1,7 @@
 #include "Weapon.hpp"
 #include <string>
 
-Weapon::Weapon() {
-	type_.clear();
-}
+Weapon::Weapon() {}
 
 Weapon::Weapon(const std::string &type) {
 	type_ = type;
