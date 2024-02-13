@@ -33,6 +33,10 @@ void FileReplace::WriteReplacedToNewfile(const std::string &content, File &file)
 	std::string::size_type pos        = 0;
 	const size_t           src_length = src_.length();
 
+	if (src_ == replaced_) {
+		file.WriteToOutfile(content);
+		return;
+	}
 	while ((pos = content.find(src_, head)) != std::string::npos) {
 		file.WriteToOutfile(content.substr(head, pos - head));
 		file.WriteToOutfile(replaced_);
