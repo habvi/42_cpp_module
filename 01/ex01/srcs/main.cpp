@@ -2,8 +2,8 @@
 #include <cstdlib>
 #include <iostream>
 
-static void DisplayTitle(const std::string &title, const int numOfZombies) {
-	std::cout << "┃ test: " << title << numOfZombies << std::endl;
+static void DisplayTitle(const std::string &title, const int num_of_zombies) {
+	std::cout << "┃ test: " << title << num_of_zombies << std::endl;
 	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 }
 
@@ -13,14 +13,14 @@ static void AnnounceEachZombies(const Zombie *zombies, const int n) {
 	}
 }
 
-static void RunTest(const int numOfZombies) {
-	DisplayTitle("number of zombies = ", numOfZombies);
+static void RunTest(const int num_of_zombies) {
+	DisplayTitle("number of zombies = ", num_of_zombies);
 
-	Zombie *zombies = zombieHorde(numOfZombies, "abcd");
+	Zombie *zombies = zombieHorde(num_of_zombies, "abcd");
 	if (zombies == NULL) {
 		return;
 	}
-	AnnounceEachZombies(zombies, numOfZombies);
+	AnnounceEachZombies(zombies, num_of_zombies);
 	// call destructor
 	delete[] zombies;
 
