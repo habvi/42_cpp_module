@@ -12,6 +12,8 @@ class Fixed {
 
   public:
 	// Following the instructions, not camelcase.
+	float toFloat(void) const;
+	int   toInt(void) const;
 	int   getRawBits(void) const;
 	void  setRawBits(const int raw);
 

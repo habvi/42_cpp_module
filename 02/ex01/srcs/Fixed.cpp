@@ -40,6 +40,16 @@ Fixed::~Fixed() {
 	std::cout << "Destructor called" << std::endl;
 }
 
+// \New!/
+float Fixed::toFloat(void) const {
+	return static_cast<float>(fixed_point_number_) / (1 << kNumOfFractionalBits_);
+}
+
+// \New!/
+int Fixed::toInt(void) const {
+	return fixed_point_number_ >> kNumOfFractionalBits_;
+}
+
 int Fixed::getRawBits(void) const {
 	return fixed_point_number_;
 }
