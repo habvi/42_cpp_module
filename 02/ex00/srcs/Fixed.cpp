@@ -2,15 +2,13 @@
 #include <iostream>
 
 // default constructor
-Fixed::Fixed() {
+Fixed::Fixed() : fixed_point_number_(0) {
 	std::cout << "Default constructor called" << std::endl;
-	fixed_point_number_ = 0;
 }
 
 // copy constructor
-Fixed::Fixed(const Fixed &f) {
+Fixed::Fixed(const Fixed &f) : fixed_point_number_(f.getRawBits()) {
 	std::cout << "Copy constructor called" << std::endl;
-	setRawBits(f.getRawBits());
 }
 
 // copy assignment operator overload
