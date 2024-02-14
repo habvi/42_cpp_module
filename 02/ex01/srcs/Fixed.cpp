@@ -58,3 +58,8 @@ void Fixed::setRawBits(const int raw) {
 	fixed_point_number_ = raw;
 }
 
+// \New!/ insertion operator overload
+std::ostream &operator<<(std::ostream &out, const Fixed &f) {
+	out << f.toFloat();
+	return out;
+}

@@ -1,6 +1,8 @@
 #ifndef FIXED_H
 #define FIXED_H
 
+#include <ostream>
+
 class Fixed {
   public:
 	Fixed();
@@ -21,5 +23,7 @@ class Fixed {
 	int              fixed_point_number_;
 	static const int kNumOfFractionalBits_ = 8;
 };
+
+std::ostream &operator<<(std::ostream &out, const Fixed &f);
 
 #endif /* FIXED_H */
