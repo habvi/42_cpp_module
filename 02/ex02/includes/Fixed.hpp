@@ -10,6 +10,14 @@ class Fixed {
 	Fixed(const float number);
 	Fixed(const Fixed &f);
 	const Fixed &operator=(const Fixed &f);
+	Fixed        operator+(const Fixed &f) const;
+	Fixed        operator-(const Fixed &f) const;
+	Fixed        operator*(const Fixed &f) const;
+	Fixed        operator/(const Fixed &f) const;
+	Fixed        operator+=(const Fixed &f);
+	Fixed        operator-=(const Fixed &f);
+	Fixed        operator*=(const Fixed &f);
+	Fixed        operator/=(const Fixed &f);
 	~Fixed();
 
   public:

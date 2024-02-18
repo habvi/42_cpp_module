@@ -35,6 +35,60 @@ const Fixed &Fixed::operator=(const Fixed &f) {
 	return *this;
 }
 
+// \New!/ arithmetic operator "+" overload
+Fixed Fixed::operator+(const Fixed &f) const {
+	Fixed tmp(*this);
+	tmp += f;
+	return tmp;
+}
+
+// \New!/ arithmetic operator "-" overload
+Fixed Fixed::operator-(const Fixed &f) const {
+	Fixed tmp(*this);
+	tmp -= f;
+	return tmp;
+}
+
+// \New!/ arithmetic operator "*" overload
+Fixed Fixed::operator*(const Fixed &f) const {
+	Fixed tmp(*this);
+	tmp *= f;
+	return tmp;
+}
+
+// \New!/ arithmetic operator "/" overload
+Fixed Fixed::operator/(const Fixed &f) const {
+	Fixed tmp(*this);
+	tmp /= f;
+	return tmp;
+}
+
+// \New!(not required)/ arithmetic operator "+=" overload
+Fixed Fixed::operator+=(const Fixed &f) {
+	fixed_point_number_value_ += f.getRawBits();
+	return *this;
+}
+
+// \New!(not required)/ arithmetic operator "-=" overload
+Fixed Fixed::operator-=(const Fixed &f) {
+	fixed_point_number_value_ -= f.getRawBits();
+	return *this;
+}
+
+// \New!(not required)/ arithmetic operator "*=" overload
+Fixed Fixed::operator*=(const Fixed &f) {
+	fixed_point_number_value_ =
+		fixed_point_number_value_ * f.getRawBits() >> kNumOfFractionalBits_;
+	return *this;
+}
+
+// \New!(not required)/ arithmetic operator "/=" overload
+Fixed Fixed::operator/=(const Fixed &f) {
+	fixed_point_number_value_ = fixed_point_number_value_ / f.getRawBits()
+								<< kNumOfFractionalBits_;
+	return *this;
+}
+
 // destructor
 Fixed::~Fixed() {
 	std::cout << "Destructor called" << std::endl;
