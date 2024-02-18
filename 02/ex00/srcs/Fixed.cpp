@@ -2,12 +2,12 @@
 #include <iostream>
 
 // default constructor
-Fixed::Fixed() : fixed_point_number_(0) {
+Fixed::Fixed() : fixed_point_number_value_(0) {
 	std::cout << "Default constructor called" << std::endl;
 }
 
 // copy constructor
-Fixed::Fixed(const Fixed &f) : fixed_point_number_(f.getRawBits()) {
+Fixed::Fixed(const Fixed &f) : fixed_point_number_value_(f.getRawBits()) {
 	std::cout << "Copy constructor called" << std::endl;
 }
 
@@ -27,9 +27,9 @@ Fixed::~Fixed() {
 
 int Fixed::getRawBits(void) const {
 	std::cout << "getRawBits member function called" << std::endl;
-	return fixed_point_number_;
+	return fixed_point_number_value_;
 }
 
 void Fixed::setRawBits(int const raw) {
-	fixed_point_number_ = raw;
+	fixed_point_number_value_ = raw;
 }
