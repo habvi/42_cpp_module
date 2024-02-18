@@ -35,6 +35,36 @@ const Fixed &Fixed::operator=(const Fixed &f) {
 	return *this;
 }
 
+// \New!/ comparison operator ">" overload
+bool Fixed::operator>(const Fixed &f) const {
+	return fixed_point_number_value_ > f.getRawBits();
+}
+
+// \New!/ comparison operator "<" overload
+bool Fixed::operator<(const Fixed &f) const {
+	return fixed_point_number_value_ < f.getRawBits();
+}
+
+// \New!/ comparison operator ">=" overload
+bool Fixed::operator>=(const Fixed &f) const {
+	return fixed_point_number_value_ >= f.getRawBits();
+}
+
+// \New!/ comparison operator "<=" overload
+bool Fixed::operator<=(const Fixed &f) const {
+	return fixed_point_number_value_ <= f.getRawBits();
+}
+
+// \New!/ comparison operator "==" overload
+bool Fixed::operator==(const Fixed &f) const {
+	return fixed_point_number_value_ == f.getRawBits();
+}
+
+// \New!/ comparison operator "!=" overload
+bool Fixed::operator!=(const Fixed &f) const {
+	return fixed_point_number_value_ != f.getRawBits();
+}
+
 // \New!/ arithmetic operator "+" overload
 Fixed Fixed::operator+(const Fixed &f) const {
 	Fixed tmp(*this);
