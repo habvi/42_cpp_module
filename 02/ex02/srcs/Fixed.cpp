@@ -94,26 +94,26 @@ Fixed Fixed::operator/(const Fixed &f) const {
 }
 
 // \New!(not required)/ arithmetic operator "+=" overload
-Fixed Fixed::operator+=(const Fixed &f) {
+const Fixed &Fixed::operator+=(const Fixed &f) {
 	fixed_point_number_value_ += f.getRawBits();
 	return *this;
 }
 
 // \New!(not required)/ arithmetic operator "-=" overload
-Fixed Fixed::operator-=(const Fixed &f) {
+const Fixed &Fixed::operator-=(const Fixed &f) {
 	fixed_point_number_value_ -= f.getRawBits();
 	return *this;
 }
 
 // \New!(not required)/ arithmetic operator "*=" overload
-Fixed Fixed::operator*=(const Fixed &f) {
+const Fixed &Fixed::operator*=(const Fixed &f) {
 	fixed_point_number_value_ =
 		fixed_point_number_value_ * f.getRawBits() >> kNumOfFractionalBits_;
 	return *this;
 }
 
 // \New!(not required)/ arithmetic operator "/=" overload
-Fixed Fixed::operator/=(const Fixed &f) {
+const Fixed &Fixed::operator/=(const Fixed &f) {
 	fixed_point_number_value_ = fixed_point_number_value_ / f.getRawBits()
 								<< kNumOfFractionalBits_;
 	return *this;
