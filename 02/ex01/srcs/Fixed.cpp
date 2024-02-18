@@ -3,26 +3,26 @@
 #include <iostream>
 
 // default constructor
-Fixed::Fixed() : fixed_point_number_(0) {
+Fixed::Fixed() : fixed_point_number_value_(0) {
 	std::cout << "Default constructor called" << std::endl;
 }
 
 // \New!/ Int constructor
 Fixed::Fixed(const int number)
-	: fixed_point_number_(number << kNumOfFractionalBits_) {
+	: fixed_point_number_value_(number << kNumOfFractionalBits_) {
 	std::cout << "Int constructor called" << std::endl;
 }
 
 // \New!/ Float constructor
 Fixed::Fixed(const float number)
-	: fixed_point_number_(
+	: fixed_point_number_value_(
 		  static_cast<int>(roundf(number * (1 << kNumOfFractionalBits_)))
 	  ) {
 	std::cout << "Float constructor called" << std::endl;
 }
 
 // copy constructor
-Fixed::Fixed(const Fixed &f) : fixed_point_number_(f.getRawBits()) {
+Fixed::Fixed(const Fixed &f) : fixed_point_number_value_(f.getRawBits()) {
 	std::cout << "Copy constructor called" << std::endl;
 }
 
@@ -42,20 +42,21 @@ Fixed::~Fixed() {
 
 // \New!/
 float Fixed::toFloat(void) const {
-	return static_cast<float>(fixed_point_number_) / (1 << kNumOfFractionalBits_);
+	return static_cast<float>(fixed_point_number_value_) /
+		   (1 << kNumOfFractionalBits_);
 }
 
 // \New!/
 int Fixed::toInt(void) const {
-	return fixed_point_number_ >> kNumOfFractionalBits_;
+	return fixed_point_number_value_ >> kNumOfFractionalBits_;
 }
 
 int Fixed::getRawBits(void) const {
-	return fixed_point_number_;
+	return fixed_point_number_value_;
 }
 
 void Fixed::setRawBits(const int raw) {
-	fixed_point_number_ = raw;
+	fixed_point_number_value_ = raw;
 }
 
 // \New!/ insertion operator overload

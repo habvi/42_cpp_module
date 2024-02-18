@@ -20,7 +20,7 @@ class Fixed {
 	void  setRawBits(const int raw);
 
   private:
-	int              fixed_point_number_;
+	int              fixed_point_number_value_;
 	static const int kNumOfFractionalBits_ = 8;
 };
 
