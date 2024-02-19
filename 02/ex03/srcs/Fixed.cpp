@@ -3,32 +3,23 @@
 #include <iostream>
 
 // default constructor
-Fixed::Fixed() : fixed_point_number_value_(0) {
-	// std::cout << "Default constructor called" << std::endl;
-}
+Fixed::Fixed() : fixed_point_number_value_(0) {}
 
 // Int constructor
 Fixed::Fixed(const int number)
-	: fixed_point_number_value_(number << kNumOfFractionalBits_) {
-	// std::cout << "Int constructor called" << std::endl;
-}
+	: fixed_point_number_value_(number << kNumOfFractionalBits_) {}
 
 // Float constructor
 Fixed::Fixed(const float number)
 	: fixed_point_number_value_(
 		  static_cast<int>(roundf(number * (1 << kNumOfFractionalBits_)))
-	  ) {
-	// std::cout << "Float constructor called" << std::endl;
-}
+	  ) {}
 
 // copy constructor
-Fixed::Fixed(const Fixed &f) : fixed_point_number_value_(f.getRawBits()) {
-	// std::cout << "Copy constructor called" << std::endl;
-}
+Fixed::Fixed(const Fixed &f) : fixed_point_number_value_(f.getRawBits()) {}
 
 // copy assignment operator overload
 const Fixed &Fixed::operator=(const Fixed &f) {
-	// std::cout << "Copy assignment operator called" << std::endl;
 	if (this != &f) {
 		setRawBits(f.getRawBits());
 	}
@@ -186,9 +177,7 @@ const Fixed &Fixed::max(const Fixed &a, const Fixed &b) {
 }
 
 // destructor
-Fixed::~Fixed() {
-	// std::cout << "Destructor called" << std::endl;
-}
+Fixed::~Fixed() {}
 
 float Fixed::toFloat(void) const {
 	return static_cast<float>(fixed_point_number_value_) /
