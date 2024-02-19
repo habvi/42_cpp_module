@@ -4,13 +4,17 @@
 
 // default constructor
 Fixed::Fixed() : fixed_point_number_value_(0) {
+#ifndef NO_DEBUG
 	std::cout << "Default constructor called" << std::endl;
+#endif
 }
 
 // Int constructor
 Fixed::Fixed(const int number)
 	: fixed_point_number_value_(number << kNumOfFractionalBits_) {
+#ifndef NO_DEBUG
 	std::cout << "Int constructor called" << std::endl;
+#endif
 }
 
 // Float constructor
@@ -18,17 +22,23 @@ Fixed::Fixed(const float number)
 	: fixed_point_number_value_(
 		  static_cast<int>(roundf(number * (1 << kNumOfFractionalBits_)))
 	  ) {
+#ifndef NO_DEBUG
 	std::cout << "Float constructor called" << std::endl;
+#endif
 }
 
 // copy constructor
 Fixed::Fixed(const Fixed &f) : fixed_point_number_value_(f.getRawBits()) {
+#ifndef NO_DEBUG
 	std::cout << "Copy constructor called" << std::endl;
+#endif
 }
 
 // copy assignment operator overload
 const Fixed &Fixed::operator=(const Fixed &f) {
+#ifndef NO_DEBUG
 	std::cout << "Copy assignment operator called" << std::endl;
+#endif
 	if (this != &f) {
 		setRawBits(f.getRawBits());
 	}
@@ -187,7 +197,9 @@ const Fixed &Fixed::max(const Fixed &a, const Fixed &b) {
 
 // destructor
 Fixed::~Fixed() {
+#ifndef NO_DEBUG
 	std::cout << "Destructor called" << std::endl;
+#endif
 }
 
 float Fixed::toFloat(void) const {

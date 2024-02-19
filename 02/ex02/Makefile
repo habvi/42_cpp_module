@@ -16,6 +16,9 @@ UNAME 		:= $(shell uname)
 ifeq ($(UNAME), Linux)
 	CXXFLAGS += -pedantic
 endif
+ifdef NO_DEBUG
+	CXXFLAGS += -DNO_DEBUG
+endif
 
 DEPS		:=	$(OBJS:.o=.d)
 MKDIR		:=	mkdir -p
@@ -54,6 +57,10 @@ val: all
 .PHONY	: check
 check:
 	cppcheck --enable=all $$(find . -type f -name "*.cpp" | tr '\n' ' ')
+
+.PHONY	: no_debug
+no_debug: re
+	make re NO_DEBUG=1
 
 #--------------------------------------------
 
