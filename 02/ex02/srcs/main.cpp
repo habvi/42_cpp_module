@@ -2,9 +2,11 @@
 #include <iomanip>
 #include <iostream>
 
-#define COLOR_RED   "\033[31m"
-#define COLOR_GREEN "\033[32m"
-#define COLOR_END   "\033[0m"
+#define COLOR_RED              "\033[31m"
+#define COLOR_GREEN            "\033[32m"
+#define COLOR_END              "\033[0m"
+
+#define NUM_OF_FRACTIONAL_BITS 8
 
 static void DisplayTitle(const std::string &title) {
 	std::cout << std::endl;
@@ -16,7 +18,9 @@ static void Line() {
 	std::cout << "--------------------------------" << std::endl;
 }
 
-static void JudgeIsEqual(const bool x, const bool y) {
+template <typename T, typename U>
+static void JudgeIsEqual(T x, U y) {
+	std::cout << "(x: " << x << ") (y: " << y << ") ";
 	std::cout << (x == y ? COLOR_GREEN "OK" : COLOR_RED "NG") << COLOR_END
 			  << std::endl;
 }
@@ -52,6 +56,52 @@ static void RunComparisonOperatorsTest(T x, U y) {
 	JudgeIsEqual((Fixed(x) != Fixed(y)), (x != y));
 }
 
+template <typename T>
+static void RunIncrementDecrementOperatorsTest(T x) {
+	T tmp_x = x;
+	T tmp_y = x;
+
+	static const float kMinRepresentableFloat = 1.f / (1 << NUM_OF_FRACTIONAL_BITS);
+
+	std::cout << std::fixed << std::setprecision(8);
+
+	std::cout << "Fixed(" << tmp_x << ")++" << std::endl;
+	Fixed f(tmp_x);
+	std::cout << "  -> before: ";
+	JudgeIsEqual(f, tmp_y);
+	std::cout << "  -> ++    : ";
+	JudgeIsEqual(f++, tmp_y);
+	std::cout << "  -> after : ";
+	JudgeIsEqual(f, tmp_y + kMinRepresentableFloat);
+
+	f = Fixed(tmp_x);
+	std::cout << "++Fixed(" << tmp_x << ")" << std::endl;
+	std::cout << "  -> before: ";
+	JudgeIsEqual(f, tmp_y);
+	std::cout << "  -> ++    : ";
+	JudgeIsEqual(++f, tmp_y + kMinRepresentableFloat);
+	std::cout << "  -> after : ";
+	JudgeIsEqual(f, tmp_y + kMinRepresentableFloat);
+
+	f = Fixed(tmp_x);
+	std::cout << "Fixed(" << tmp_x << ")--" << std::endl;
+	std::cout << "  -> before: ";
+	JudgeIsEqual(f, tmp_y);
+	std::cout << "  -> --    : ";
+	JudgeIsEqual(f--, tmp_y);
+	std::cout << "  -> after : ";
+	JudgeIsEqual(f, tmp_y - kMinRepresentableFloat);
+
+	f = Fixed(tmp_x);
+	std::cout << "--Fixed(" << tmp_x << ")" << std::endl;
+	std::cout << "  -> before: ";
+	JudgeIsEqual(f, tmp_y);
+	std::cout << "  -> --    : ";
+	JudgeIsEqual(--f, tmp_y - kMinRepresentableFloat);
+	std::cout << "  -> after : ";
+	JudgeIsEqual(f, tmp_y - kMinRepresentableFloat);
+}
+
 static void RunOriginalTest() {
 	std::cout << "\n------------ original ------------" << std::endl;
 
@@ -72,6 +122,14 @@ static void RunOriginalTest() {
 	RunComparisonOperatorsTest(5.0f, 5.0f);
 	RunComparisonOperatorsTest(1, 500);
 	RunComparisonOperatorsTest(123456, 123456);
+
+	// increment/decrement "x++,++x,x--,--x" overload
+	DisplayTitle("increment/decrement operators");
+	RunIncrementDecrementOperatorsTest(0);
+	RunIncrementDecrementOperatorsTest(2);
+	RunIncrementDecrementOperatorsTest(-12345);
+	RunIncrementDecrementOperatorsTest(5.05f);
+	RunIncrementDecrementOperatorsTest(-123.45f);
 }
 
 int main() {
@@ -79,10 +137,10 @@ int main() {
 	Fixed const b(Fixed(5.05f) * Fixed(2));
 
 	std::cout << a << std::endl;
-	// std::cout << ++a << std::endl;
-	// std::cout << a << std::endl;
-	// std::cout << a++ << std::endl;
-	// std::cout << a << std::endl;
+	std::cout << ++a << std::endl;
+	std::cout << a << std::endl;
+	std::cout << a++ << std::endl;
+	std::cout << a << std::endl;
 
 	std::cout << b << std::endl;
 
