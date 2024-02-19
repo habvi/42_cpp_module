@@ -2,7 +2,8 @@ NAME		:=	a.out
 
 SRCS_DIR	:=	srcs
 SRCS		:=	Fixed.cpp \
-				main.cpp
+				main.cpp \
+				Point.cpp
 
 OBJ_DIR		:=	objs
 OBJS		:=	$(SRCS:%.cpp=$(OBJ_DIR)/%.o)
