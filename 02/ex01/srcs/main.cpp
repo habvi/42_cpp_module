@@ -3,23 +3,13 @@
 #include <iomanip>
 #include <iostream>
 
-static void RunInt(const int number) {
+template <typename T>
+static void RunFixed(T x) {
 	std::cout << "-------------------------" << std::endl;
-	const Fixed f(number);
+	const Fixed f(x);
 
 	std::cout << std::fixed << std::setprecision(8);
-	std::cout << "number : " << number << std::endl;
-	std::cout << "rawbit : " << f.getRawBits() << std::endl;
-	std::cout << "float  : " << f << std::endl;
-	std::cout << "int    : " << f.toInt() << std::endl;
-}
-
-static void RunFloat(const float number) {
-	std::cout << "-------------------------" << std::endl;
-	const Fixed f(number);
-
-	std::cout << std::fixed << std::setprecision(8);
-	std::cout << "number : " << number << std::endl;
+	std::cout << "number : " << x << std::endl;
 	std::cout << "rawbit : " << f.getRawBits() << std::endl;
 	std::cout << "float  : " << f << std::endl;
 	std::cout << "int    : " << f.toInt() << std::endl;
@@ -31,38 +21,38 @@ static void RunOriginalTest() {
 	static const float MinRepresentableFloat = 1.f / (1 << kNumOfFractionalBits);
 
 	// int
-	RunInt(0);
-	RunInt(12345);
-	RunInt(INT_MAX);
-	RunInt(INT_MIN);
-	RunInt(-12345);
-	RunInt(INT_MAX >> kNumOfFractionalBits);
-	RunInt((INT_MAX >> kNumOfFractionalBits) + 1);
-	RunInt(INT_MIN >> kNumOfFractionalBits);
-	RunInt((INT_MIN >> kNumOfFractionalBits) - 1);
+	RunFixed(0);
+	RunFixed(12345);
+	RunFixed(INT_MAX);
+	RunFixed(INT_MIN);
+	RunFixed(-12345);
+	RunFixed(INT_MAX >> kNumOfFractionalBits);
+	RunFixed((INT_MAX >> kNumOfFractionalBits) + 1);
+	RunFixed(INT_MIN >> kNumOfFractionalBits);
+	RunFixed((INT_MIN >> kNumOfFractionalBits) - 1);
 
 	// float
-	RunFloat(0.0f);
-	RunFloat(0.123f);
-	RunFloat(123.0f);
-	RunFloat(1.23456789f);
-	RunFloat(1234567.89f);
-	RunFloat(123456789.0f);
-	RunFloat(-0.123456789f);
-	RunFloat(0.123456789f);
+	RunFixed(0.0f);
+	RunFixed(0.123f);
+	RunFixed(123.0f);
+	RunFixed(1.23456789f);
+	RunFixed(1234567.89f);
+	RunFixed(123456789.0f);
+	RunFixed(-0.123456789f);
+	RunFixed(0.123456789f);
 
 	// 0000 0000 0000 0000 0000 0000 0111 1011.1111 1111
-	RunFloat(123.99609375f);
+	RunFixed(123.99609375f);
 	// 0000 0000 0000 0000 0000 0000 0111 1011.1111 1110   (123.9921875)
-	RunFloat(123.99609375f - MinRepresentableFloat);
+	RunFixed(123.99609375f - MinRepresentableFloat);
 	// 0000 0000 0000 0000 0000 0000 0111 1011.1111 1110 1 (123.994140625)
-	RunFloat(123.99609375f - MinRepresentableFloat / 2);
+	RunFixed(123.99609375f - MinRepresentableFloat / 2);
 	// 0000 0000 0111 1111 1111 1111 1111 1111.1111 1111
-	RunFloat(8388607.99609375f);
+	RunFixed(8388607.99609375f);
 	// 0000 0000 0000 0000 1111 1111 1111 1111.1111 1111
-	RunFloat(65535.99609375f);
+	RunFixed(65535.99609375f);
 	// 0000 0000 0000 0001 0000 0000 0000 0000.0000 0000
-	RunFloat(65535.99609375f + MinRepresentableFloat);
+	RunFixed(65535.99609375f + MinRepresentableFloat);
 }
 
 int main() {
