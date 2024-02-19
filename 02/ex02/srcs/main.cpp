@@ -28,12 +28,17 @@ static void JudgeIsEqual(T x, U y) {
 template <typename T, typename U>
 static void RunArithmeticOperatorsTest(T x, U y) {
 	std::cout << std::fixed << std::setprecision(8);
+
+	// operator "+"
 	std::cout << x << " + " << y << " = " << (Fixed(x) + Fixed(y)) << std::endl;
 	std::cout << x << " + " << y << " = " << x + y << std::endl;
+	// operator "-"
 	std::cout << x << " - " << y << " = " << (Fixed(x) - Fixed(y)) << std::endl;
 	std::cout << x << " - " << y << " = " << x - y << std::endl;
+	// operator "*"
 	std::cout << x << " * " << y << " = " << (Fixed(x) * Fixed(y)) << std::endl;
 	std::cout << x << " * " << y << " = " << x * y << std::endl;
+	// operator "/"
 	std::cout << x << " / " << y << " = " << (Fixed(x) / Fixed(y)) << std::endl;
 	std::cout << x << " / " << y << " = " << x / y << std::endl;
 	Line();
@@ -42,18 +47,26 @@ static void RunArithmeticOperatorsTest(T x, U y) {
 template <typename T, typename U>
 static void RunComparisonOperatorsTest(T x, U y) {
 	std::cout << std::fixed << std::setprecision(8);
+
+	// operator "<"
 	std::cout << x << " < " << y << " -> ";
 	JudgeIsEqual((Fixed(x) < Fixed(y)), (x < y));
+	// operator ">"
 	std::cout << x << " > " << y << " -> ";
 	JudgeIsEqual((Fixed(x) > Fixed(y)), (x > y));
+	// operator "<="
 	std::cout << x << " <= " << y << " -> ";
 	JudgeIsEqual((Fixed(x) <= Fixed(y)), (x <= y));
+	// operator ">="
 	std::cout << x << " >= " << y << " -> ";
 	JudgeIsEqual((Fixed(x) >= Fixed(y)), (x >= y));
+	// operator "=="
 	std::cout << x << " == " << y << " -> ";
 	JudgeIsEqual((Fixed(x) == Fixed(y)), (x == y));
+	// operator "!="
 	std::cout << x << " != " << y << " -> ";
 	JudgeIsEqual((Fixed(x) != Fixed(y)), (x != y));
+	Line();
 }
 
 template <typename T>
@@ -65,16 +78,8 @@ static void RunIncrementDecrementOperatorsTest(T x) {
 
 	std::cout << std::fixed << std::setprecision(8);
 
-	std::cout << "Fixed(" << tmp_x << ")++" << std::endl;
+	// pre-increment
 	Fixed f(tmp_x);
-	std::cout << "  -> before: ";
-	JudgeIsEqual(f, tmp_y);
-	std::cout << "  -> ++    : ";
-	JudgeIsEqual(f++, tmp_y);
-	std::cout << "  -> after : ";
-	JudgeIsEqual(f, tmp_y + kMinRepresentableFloat);
-
-	f = Fixed(tmp_x);
 	std::cout << "++Fixed(" << tmp_x << ")" << std::endl;
 	std::cout << "  -> before: ";
 	JudgeIsEqual(f, tmp_y);
@@ -83,15 +88,17 @@ static void RunIncrementDecrementOperatorsTest(T x) {
 	std::cout << "  -> after : ";
 	JudgeIsEqual(f, tmp_y + kMinRepresentableFloat);
 
+	// post-increment
+	std::cout << "Fixed(" << tmp_x << ")++" << std::endl;
 	f = Fixed(tmp_x);
-	std::cout << "Fixed(" << tmp_x << ")--" << std::endl;
 	std::cout << "  -> before: ";
 	JudgeIsEqual(f, tmp_y);
-	std::cout << "  -> --    : ";
-	JudgeIsEqual(f--, tmp_y);
+	std::cout << "  -> ++    : ";
+	JudgeIsEqual(f++, tmp_y);
 	std::cout << "  -> after : ";
-	JudgeIsEqual(f, tmp_y - kMinRepresentableFloat);
+	JudgeIsEqual(f, tmp_y + kMinRepresentableFloat);
 
+	// pre-decrement
 	f = Fixed(tmp_x);
 	std::cout << "--Fixed(" << tmp_x << ")" << std::endl;
 	std::cout << "  -> before: ";
@@ -100,6 +107,17 @@ static void RunIncrementDecrementOperatorsTest(T x) {
 	JudgeIsEqual(--f, tmp_y - kMinRepresentableFloat);
 	std::cout << "  -> after : ";
 	JudgeIsEqual(f, tmp_y - kMinRepresentableFloat);
+
+	// post-decrement
+	f = Fixed(tmp_x);
+	std::cout << "Fixed(" << tmp_x << ")--" << std::endl;
+	std::cout << "  -> before: ";
+	JudgeIsEqual(f, tmp_y);
+	std::cout << "  -> --    : ";
+	JudgeIsEqual(f--, tmp_y);
+	std::cout << "  -> after : ";
+	JudgeIsEqual(f, tmp_y - kMinRepresentableFloat);
+	Line();
 }
 
 template <typename T, typename U>
@@ -121,17 +139,22 @@ static void RunMinMaxTest(T x, U y) {
 	const Fixed c(x);
 	const Fixed d(y);
 
+	// non-const min
 	std::cout << "min(Fixed(" << x << "), Fixed(" << y << "))\n  -> ";
 	JudgeIsEqual(Fixed::min(a, b), MinWithDifferentType(x, y));
 
+	// const min
 	std::cout << "min(const Fixed(" << x << "), const Fixed(" << y << "))\n  -> ";
 	JudgeIsEqual(Fixed::min(c, d), MinWithDifferentType(x, y));
 
+	// non-const max
 	std::cout << "max(Fixed(" << x << "), Fixed(" << y << "))\n  -> ";
 	JudgeIsEqual(Fixed::max(a, b), MaxWithDifferentType(x, y));
 
+	// const max
 	std::cout << "max(const Fixed(" << x << "), const Fixed(" << y << "))\n  -> ";
 	JudgeIsEqual(Fixed::max(c, d), MaxWithDifferentType(x, y));
+	Line();
 }
 
 static void RunOriginalTest() {
