@@ -58,5 +58,26 @@ check:
 	cppcheck --enable=all $$(find . -type f -name "*.cpp" | tr '\n' ' ')
 
 #--------------------------------------------
+PYTHON	:= python3
+VISU	:= visualize.py
+
+.PHONY	: test
+test: all test1 test2 test3
+# source /myenv/bin/activate
+# deactivate
+
+.PHONY	: test1
+test1: all
+	$(PYTHON) $(VISU) $@
+
+.PHONY	: test2
+test2: all
+	$(PYTHON) $(VISU) $@
+
+.PHONY	: test3
+test3: all
+	$(PYTHON) $(VISU) $@
+
+#--------------------------------------------
 
 -include $(DEPS)
