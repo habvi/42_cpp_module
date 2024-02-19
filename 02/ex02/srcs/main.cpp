@@ -23,7 +23,6 @@ static void JudgeIsEqual(const bool x, const bool y) {
 
 template <typename T, typename U>
 static void RunArithmeticOperatorsTest(T x, U y) {
-
 	std::cout << std::fixed << std::setprecision(8);
 	std::cout << x << " + " << y << " = " << (Fixed(x) + Fixed(y)) << std::endl;
 	std::cout << x << " + " << y << " = " << x + y << std::endl;

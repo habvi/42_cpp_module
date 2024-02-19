@@ -10,12 +10,15 @@ class Fixed {
 	Fixed(const float number);
 	Fixed(const Fixed &f);
 	const Fixed &operator=(const Fixed &f);
-	bool         operator>(const Fixed &f) const;
-	bool         operator<(const Fixed &f) const;
-	bool         operator>=(const Fixed &f) const;
-	bool         operator<=(const Fixed &f) const;
-	bool         operator==(const Fixed &f) const;
-	bool         operator!=(const Fixed &f) const;
+	~Fixed();
+
+	bool operator>(const Fixed &f) const;
+	bool operator<(const Fixed &f) const;
+	bool operator>=(const Fixed &f) const;
+	bool operator<=(const Fixed &f) const;
+	bool operator==(const Fixed &f) const;
+	bool operator!=(const Fixed &f) const;
+
 	Fixed        operator+(const Fixed &f) const;
 	Fixed        operator-(const Fixed &f) const;
 	Fixed        operator*(const Fixed &f) const;
@@ -24,11 +27,11 @@ class Fixed {
 	const Fixed &operator-=(const Fixed &f);
 	const Fixed &operator*=(const Fixed &f);
 	const Fixed &operator/=(const Fixed &f);
+
 	const Fixed &operator++();
 	Fixed        operator++(int);
 	const Fixed &operator--();
 	Fixed        operator--(int);
-	~Fixed();
 
   public:
 	// Following the instructions, not camelcase.
