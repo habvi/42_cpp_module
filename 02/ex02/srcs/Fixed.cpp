@@ -151,6 +151,40 @@ Fixed Fixed::operator--(int) {
 	return tmp;
 }
 
+// \New!/ min(non-const, non-const) overload
+// A static member function is not dependent on instances of the class and is shared
+// among all instances of that class. (therefore, const qualifiers cannot be
+// applied.)
+Fixed &Fixed::min(Fixed &a, Fixed &b) {
+	if (a < b) {
+		return a;
+	}
+	return b;
+}
+
+// \New!/ min(const, const) overload
+const Fixed &Fixed::min(const Fixed &a, const Fixed &b) {
+	if (a < b) {
+		return a;
+	}
+	return b;
+}
+
+// \New!/ max(non-const, non-const) overload
+Fixed &Fixed::max(Fixed &a, Fixed &b) {
+	if (a > b) {
+		return a;
+	}
+	return b;
+}
+// \New!/ max(const, const) overload
+const Fixed &Fixed::max(const Fixed &a, const Fixed &b) {
+	if (a > b) {
+		return a;
+	}
+	return b;
+}
+
 // destructor
 Fixed::~Fixed() {
 	std::cout << "Destructor called" << std::endl;
