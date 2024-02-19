@@ -8,7 +8,7 @@
 
 static const int   kNumOfFractionalBits   = 8;
 static const float kMinRepresentableFloat = 1.f / (1 << kNumOfFractionalBits);
-static const float kMaxRepresentableNum = (1 << 23) - 1;
+static const float kMaxRepresentableNum   = (1 << 23) - 1;
 
 static void DisplayTitle(const std::string &title) {
 	std::cout << std::endl;
