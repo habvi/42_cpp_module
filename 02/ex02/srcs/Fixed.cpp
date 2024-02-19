@@ -196,7 +196,7 @@ float Fixed::toFloat(void) const {
 }
 
 int Fixed::toInt(void) const {
-	return fixed_point_number_value_ >> kNumOfFractionalBits_;
+	return fixed_point_number_value_ / (1 << kNumOfFractionalBits_);
 }
 
 int Fixed::getRawBits(void) const {
