@@ -1,7 +1,8 @@
 NAME		:=	a.out
 
 SRCS_DIR	:=	srcs
-SRCS		:=	Fixed.cpp \
+SRCS		:=	bsp.cpp \
+				Fixed.cpp \
 				main.cpp \
 				Point.cpp
 
