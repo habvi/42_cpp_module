@@ -119,6 +119,38 @@ const Fixed &Fixed::operator/=(const Fixed &f) {
 	return *this;
 }
 
+// \New!/ pre-increment operator "++x" overload
+const Fixed &Fixed::operator++() {
+	fixed_point_number_value_++;
+	return *this;
+}
+
+// \New!/ post-increment operator "x++" overload
+// The compiler distinguishes between the pre-increment operator and the
+// post-increment operator by having the post-increment operator take an int type
+// dummy argument.
+Fixed Fixed::operator++(int) {
+	Fixed tmp(*this);
+	++*this;
+	return tmp;
+}
+
+// \New!/ pre-decrement operator "--x" overload
+const Fixed &Fixed::operator--() {
+	fixed_point_number_value_--;
+	return *this;
+}
+
+// \New!/ post-decrement operator "x--" overload
+// The compiler distinguishes between the pre-decrement operator and the
+// post-decrement operator by having the post-decrement operator take an int type
+// dummy argument.
+Fixed Fixed::operator--(int) {
+	Fixed tmp(*this);
+	--*this;
+	return tmp;
+}
+
 // destructor
 Fixed::~Fixed() {
 	std::cout << "Destructor called" << std::endl;

@@ -24,6 +24,10 @@ class Fixed {
 	const Fixed &operator-=(const Fixed &f);
 	const Fixed &operator*=(const Fixed &f);
 	const Fixed &operator/=(const Fixed &f);
+	const Fixed &operator++();
+	Fixed        operator++(int);
+	const Fixed &operator--();
+	Fixed        operator--(int);
 	~Fixed();
 
   public:
