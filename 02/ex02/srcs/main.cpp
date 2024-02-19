@@ -102,6 +102,38 @@ static void RunIncrementDecrementOperatorsTest(T x) {
 	JudgeIsEqual(f, tmp_y - kMinRepresentableFloat);
 }
 
+template <typename T, typename U>
+static float MinWithDifferentType(T x, U y) {
+	return (x < y) ? static_cast<float>(x) : static_cast<float>(y);
+}
+
+template <typename T, typename U>
+static float MaxWithDifferentType(T x, U y) {
+	return (x > y) ? static_cast<float>(x) : static_cast<float>(y);
+}
+
+template <typename T, typename U>
+static void RunMinMaxTest(T x, U y) {
+	std::cout << std::fixed << std::setprecision(8);
+
+	Fixed       a = Fixed(x);
+	Fixed       b = Fixed(y);
+	const Fixed c(x);
+	const Fixed d(y);
+
+	std::cout << "min(Fixed(" << x << "), Fixed(" << y << "))\n  -> ";
+	JudgeIsEqual(Fixed::min(a, b), MinWithDifferentType(x, y));
+
+	std::cout << "min(const Fixed(" << x << "), const Fixed(" << y << "))\n  -> ";
+	JudgeIsEqual(Fixed::min(c, d), MinWithDifferentType(x, y));
+
+	std::cout << "max(Fixed(" << x << "), Fixed(" << y << "))\n  -> ";
+	JudgeIsEqual(Fixed::max(a, b), MaxWithDifferentType(x, y));
+
+	std::cout << "max(const Fixed(" << x << "), const Fixed(" << y << "))\n  -> ";
+	JudgeIsEqual(Fixed::max(c, d), MaxWithDifferentType(x, y));
+}
+
 static void RunOriginalTest() {
 	std::cout << "\n------------ original ------------" << std::endl;
 
@@ -130,6 +162,20 @@ static void RunOriginalTest() {
 	RunIncrementDecrementOperatorsTest(-12345);
 	RunIncrementDecrementOperatorsTest(5.05f);
 	RunIncrementDecrementOperatorsTest(-123.45f);
+
+	// min/max overloaded member functions
+	DisplayTitle("min/max overloaded member functions");
+	RunMinMaxTest(0, 0);
+	RunMinMaxTest(0, 5.05f);
+	RunMinMaxTest(5.05f, 2);
+	RunMinMaxTest(5.05f, -2);
+	RunMinMaxTest(-5.05f, 2);
+	RunMinMaxTest(-5.05f, -2);
+	RunMinMaxTest(-5.05f, -5);
+	RunMinMaxTest(1, 500);
+	RunMinMaxTest(1, -500);
+	RunMinMaxTest(-1, 500);
+	RunMinMaxTest(-1, -500);
 }
 
 int main() {
