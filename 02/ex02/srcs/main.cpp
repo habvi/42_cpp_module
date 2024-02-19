@@ -2,11 +2,13 @@
 #include <iomanip>
 #include <iostream>
 
-#define COLOR_RED              "\033[31m"
-#define COLOR_GREEN            "\033[32m"
-#define COLOR_END              "\033[0m"
+#define COLOR_RED   "\033[31m"
+#define COLOR_GREEN "\033[32m"
+#define COLOR_END   "\033[0m"
 
-#define NUM_OF_FRACTIONAL_BITS 8
+static const int   kNumOfFractionalBits   = 8;
+static const float kMinRepresentableFloat = 1.f / (1 << kNumOfFractionalBits);
+static const float kMaxRepresentableNum = (1 << 23) - 1;
 
 static void DisplayTitle(const std::string &title) {
 	std::cout << std::endl;
@@ -73,8 +75,6 @@ template <typename T>
 static void RunIncrementDecrementOperatorsTest(T x) {
 	T tmp_x = x;
 	T tmp_y = x;
-
-	static const float kMinRepresentableFloat = 1.f / (1 << NUM_OF_FRACTIONAL_BITS);
 
 	std::cout << std::fixed << std::setprecision(8);
 
@@ -163,20 +163,31 @@ static void RunOriginalTest() {
 	// arithmetic operators "+, -, *, /" overload
 	DisplayTitle("arithmetic operators");
 	RunArithmeticOperatorsTest(5.05f, 2);
-	RunArithmeticOperatorsTest(5.05f, 20);
-	RunArithmeticOperatorsTest(5, 2.123f);
-	RunArithmeticOperatorsTest(5, 20.123f);
+	RunArithmeticOperatorsTest(5.05f, -2);
+	RunArithmeticOperatorsTest(5.05f, 2.f);
+	RunArithmeticOperatorsTest(-5.05f, 2.f);
+	RunArithmeticOperatorsTest(5, 200);
+	RunArithmeticOperatorsTest(-5, -200);
 	RunArithmeticOperatorsTest(1, 0.0123f);
-	RunArithmeticOperatorsTest(2147483647 / 2, 2147483647.f / 2);
+	RunArithmeticOperatorsTest(1, -0.0123f);
 
 	// comparison operators ">, <, >=, <=, ==, !=" overload
 	DisplayTitle("comparison operators");
+	RunComparisonOperatorsTest(0, 0);
+	RunComparisonOperatorsTest(0, 0.f);
 	RunComparisonOperatorsTest(5.05f, 2);
+	RunComparisonOperatorsTest(5.05f, -2);
 	RunComparisonOperatorsTest(5, 5.0f);
+	RunComparisonOperatorsTest(5, -5.0f);
 	RunComparisonOperatorsTest(5.0f, 1234.000f);
+	RunComparisonOperatorsTest(5.0f, -1234.000f);
 	RunComparisonOperatorsTest(5.0f, 5.0f);
+	RunComparisonOperatorsTest(-5.0f, 5.0f);
+	RunComparisonOperatorsTest(-5.0f, -5.0f);
 	RunComparisonOperatorsTest(1, 500);
+	RunComparisonOperatorsTest(-1, -500);
 	RunComparisonOperatorsTest(123456, 123456);
+	RunComparisonOperatorsTest(kMaxRepresentableNum / 2.f, 2);
 
 	// increment/decrement "x++,++x,x--,--x" overload
 	DisplayTitle("increment/decrement operators");
@@ -185,6 +196,7 @@ static void RunOriginalTest() {
 	RunIncrementDecrementOperatorsTest(-12345);
 	RunIncrementDecrementOperatorsTest(5.05f);
 	RunIncrementDecrementOperatorsTest(-123.45f);
+	RunIncrementDecrementOperatorsTest(65535.99609375f - kMinRepresentableFloat);
 
 	// min/max overloaded member functions
 	DisplayTitle("min/max overloaded member functions");
@@ -213,7 +225,7 @@ int main() {
 
 	std::cout << b << std::endl;
 
-	// std::cout << Fixed::max(a, b) << std::endl;
+	std::cout << Fixed::max(a, b) << std::endl;
 
 	RunOriginalTest();
 
