@@ -1,0 +1,6 @@
+# ignore
+myenv
+
+# include
+!requirements.txt
+!visualize.py
