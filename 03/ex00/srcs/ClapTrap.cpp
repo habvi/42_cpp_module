@@ -44,19 +44,18 @@ bool ClapTrap::IsActionPossible() const {
 }
 
 void ClapTrap::attack(const std::string &target) {
-	if (IsActionPossible()) {
-		std::cout << COLOR_GREEN "ClapTrap " << name_ << " attacks " << target
-				  << ", causing " << attack_damage_ << " points of damage!" COLOR_END
-				  << std::endl;
-	} else {
-		std::cout << COLOR_RED "ClapTrap " << name_
-				  << " attacks failed due to lack of my hit points or energy "
-					 "points." COLOR_END
-				  << std::endl;
+	if (!IsActionPossible()) {
+		return;
 	}
+	std::cout << COLOR_GREEN "ClapTrap " << name_ << " attacks " << target
+			  << ", causing " << attack_damage_ << " points of damage!" COLOR_END
+			  << std::endl;
 }
 
 void ClapTrap::takeDamage(unsigned int amount) {
+	if (!IsActionPossible()) {
+		return;
+	}
 	if (hit_points_ < amount) {
 		std::cout << COLOR_GREEN "ClapTrap " << name_ << " takes damages "
 				  << hit_points_
@@ -72,16 +71,13 @@ void ClapTrap::takeDamage(unsigned int amount) {
 }
 
 void ClapTrap::LoseEnergyPoint() {
-	if (energy_points_ > 0) {
-		energy_points_--;
-		std::cout << COLOR_GREEN "ClapTrap " << name_
-				  << " successfully attacked, losing 1 energy point, leaving "
-				  << energy_points_ << " remaining " COLOR_END << std::endl;
-	} else {
-		std::cout << COLOR_RED "ClapTrap " << name_
-				  << "'s energy points are no longer remaining." COLOR_END
-				  << std::endl;
+	if (!IsActionPossible()) {
+		return;
 	}
+	energy_points_--;
+	std::cout << COLOR_GREEN "ClapTrap " << name_
+			  << " successfully attacked, losing 1 energy point, leaving "
+			  << energy_points_ << " remaining " COLOR_END << std::endl;
 }
 
 void ClapTrap::btRepaired(unsigned int amount) {
