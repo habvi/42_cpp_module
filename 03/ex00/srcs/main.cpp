@@ -32,13 +32,24 @@ static void AttackAtoB(
 }
 
 static void RunOriginalTest() {
-	ClapTrap          alice("Alice");
-	const std::string target = "Bob";
-	ClapTrap          bob(target);
+	ClapTrap    alice("Alice");
+	std::string target = "Bob";
+	ClapTrap    bob(target);
 
 	PutStatusAandB(alice, bob);
 	// Alice attacks Bob normal
 	AttackAtoB(alice, bob, target, 4);
+	PutStatusAandB(alice, bob);
+	// damages >= hit_points
+	AttackAtoB(alice, bob, target, 8);
+	PutStatusAandB(alice, bob);
+	// 0 damages
+	AttackAtoB(alice, bob, target, 0);
+	PutStatusAandB(alice, bob);
+
+	// Bob -> Alice. Bob has no hit_points
+	target = "Alice";
+	AttackAtoB(bob, alice, target, 5);
 	PutStatusAandB(alice, bob);
 }
 
