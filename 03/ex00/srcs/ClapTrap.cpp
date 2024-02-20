@@ -105,6 +105,20 @@ void ClapTrap::beRepaired(unsigned int amount) {
 			  << " remaining " COLOR_END << std::endl;
 }
 
+void ClapTrap::AttackToDefender(
+	ClapTrap &defender, const std::string &target, const unsigned int damages
+) {
+	if (!IsActionPossible() || !defender.IsActionPossible()) {
+		std::cerr << COLOR_RED "ClapTrap " << name_ << " failed to attack to "
+				  << target << COLOR_END << std::endl;
+		return;
+	}
+	SetAttackDamage(damages);
+	attack(target);
+	defender.takeDamage(damages);
+	LoseEnergyPoint();
+}
+
 const std::string &ClapTrap::GetName() const {
 	return name_;
 }

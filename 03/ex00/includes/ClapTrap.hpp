@@ -18,6 +18,9 @@ class ClapTrap {
 	void beRepaired(unsigned int amount);
 
   public:
+	void AttackToDefender(
+		ClapTrap &defender, const std::string &target, const unsigned int damages
+	);
 	void PutStatus() const;
 	bool IsActionPossible() const;
 	void LoseEnergyPoint();
