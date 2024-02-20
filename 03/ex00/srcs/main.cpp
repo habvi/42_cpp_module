@@ -30,7 +30,7 @@ static void AttackAtoB(
 		attacker.SetAttackDamage(damages);
 		attacker.attack(target);
 		defender.takeDamage(damages);
-		// attacker.LostEnergyPoint();
+		attacker.LoseEnergyPoint();
 	} else {
 		std::cout << COLOR_RED "Attack failed." COLOR_END << std::endl;
 	}

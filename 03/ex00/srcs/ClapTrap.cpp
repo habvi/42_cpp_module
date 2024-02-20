@@ -1,6 +1,7 @@
 #include "ClapTrap.hpp"
 #include <iostream>
 
+#define COLOR_RED   "\033[31m"
 #define COLOR_GREEN "\033[32m"
 #define COLOR_END   "\033[0m"
 
@@ -55,6 +56,19 @@ void ClapTrap::takeDamage(unsigned int amount) {
 		std::cout << COLOR_GREEN "ClapTrap " << name_ << " takes " << amount
 				  << " damages. Hit points are left with " << hit_points_
 				  << "." COLOR_END << std::endl;
+	}
+}
+
+void ClapTrap::LoseEnergyPoint() {
+	if (energy_points_ > 0) {
+		energy_points_--;
+		std::cout << COLOR_GREEN "ClapTrap " << name_
+				  << " successfully attacked, losing 1 energy point, leaving "
+				  << energy_points_ << " remaining " COLOR_END << std::endl;
+	} else {
+		std::cout << COLOR_RED "ClapTrap " << name_
+				  << "'s energy points are no longer remaining." COLOR_END
+				  << std::endl;
 	}
 }
 

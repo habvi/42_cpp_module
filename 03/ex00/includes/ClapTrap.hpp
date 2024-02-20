@@ -18,6 +18,7 @@ class ClapTrap {
 
   public:
 	void PutStatus() const;
+	void LoseEnergyPoint();
 
   public:
 	const std::string &GetName() const;
