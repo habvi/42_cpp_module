@@ -1,4 +1,5 @@
 #include "ClapTrap.hpp"
+#include <climits>
 #include <iostream>
 
 #define COLOR_RED   "\033[31m"
@@ -85,8 +86,23 @@ void ClapTrap::LoseEnergyPoint() {
 			  << energy_points_ << " remaining " COLOR_END << std::endl;
 }
 
-void ClapTrap::btRepaired(unsigned int amount) {
-	(void)amount;
+void ClapTrap::beRepaired(unsigned int amount) {
+	if (!IsActionPossible()) {
+		return;
+	}
+	unsigned int repaired_amount;
+	if (hit_points_ >= UINT_MAX - amount) {
+		repaired_amount = UINT_MAX - hit_points_;
+	} else {
+		repaired_amount = amount;
+	}
+	hit_points_ += repaired_amount;
+	energy_points_--;
+	std::cout << COLOR_GREEN "ClapTrap " << name_
+			  << " successfully repaired itself + " << repaired_amount
+			  << " Hit points. New Hit points is " << hit_points_
+			  << ", losing 1 energy point, leaving " << energy_points_
+			  << " remaining " COLOR_END << std::endl;
 }
 
 const std::string &ClapTrap::GetName() const {
