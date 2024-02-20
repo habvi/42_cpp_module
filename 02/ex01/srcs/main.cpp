@@ -2,6 +2,8 @@
 #include <climits>
 #include <iomanip>
 #include <iostream>
+#include <limits>
+#include <math.h>
 
 template <typename T>
 static void RunFixed(T x) {
@@ -53,6 +55,15 @@ static void RunOriginalTest() {
 	RunFixed(65535.99609375f);
 	// 0000 0000 0000 0001 0000 0000 0000 0000.0000 0000
 	RunFixed(65535.99609375f + MinRepresentableFloat);
+
+	// exception
+	// nan
+	static const float nan = NAN;
+	RunFixed(nan);
+
+	// inf
+	static const float inf = std::numeric_limits<float>::infinity();
+	RunFixed(inf);
 }
 
 int main() {
