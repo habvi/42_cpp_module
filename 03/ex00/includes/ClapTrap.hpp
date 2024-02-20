@@ -17,6 +17,9 @@ class ClapTrap {
 	void btRepaired(unsigned int amount);
 
   public:
+	void PutStatus() const;
+
+  public:
 	const std::string &GetName() const;
 	unsigned int       GetHitPoints() const;
 	unsigned int       GetEnergyPoints() const;

@@ -61,3 +61,12 @@ unsigned int ClapTrap::GetEnergyPoints() const {
 unsigned int ClapTrap::GetAttackDamage() const {
 	return attack_damage_;
 }
+
+void ClapTrap::PutStatus() const {
+	std::cout << "----------------------" << std::endl;
+	std::cout << "Name          : " << name_ << std::endl;
+	std::cout << "Hit points    : " << hit_points_ << std::endl;
+	std::cout << "Energy points : " << energy_points_ << std::endl;
+	std::cout << "Attack damege : " << attack_damage_ << std::endl;
+	std::cout << "----------------------" << std::endl;
+}
