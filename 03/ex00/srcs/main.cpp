@@ -27,7 +27,7 @@ static void AttackAtoB(
 	const unsigned int damages
 ) {
 	if (IsEnergyPointsLeft(attacker) && AreBothHitPointsLeft(attacker, defender)) {
-		// attacker.SetAttackDamage(damages);
+		attacker.SetAttackDamage(damages);
 		attacker.attack(target);
 		// defender.takeDamage(damages);
 		// attacker.LostEnergyPoint();

@@ -24,6 +24,7 @@ class ClapTrap {
 	unsigned int       GetHitPoints() const;
 	unsigned int       GetEnergyPoints() const;
 	unsigned int       GetAttackDamage() const;
+	void               SetAttackDamage(unsigned int damages);
 
   private:
 	ClapTrap();

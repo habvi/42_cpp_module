@@ -67,6 +67,10 @@ unsigned int ClapTrap::GetAttackDamage() const {
 	return attack_damage_;
 }
 
+void ClapTrap::SetAttackDamage(unsigned int damages) {
+	attack_damage_ = damages;
+}
+
 void ClapTrap::PutStatus() const {
 	std::cout << "----------------------" << std::endl;
 	std::cout << "Name          : " << name_ << std::endl;
