@@ -38,10 +38,22 @@ const ClapTrap &ClapTrap::operator=(const ClapTrap &c) {
 	return *this;
 }
 
+// action : attack or defence
+bool ClapTrap::IsActionPossible() const {
+	return (hit_points_ > 0) && (energy_points_ > 0);
+}
+
 void ClapTrap::attack(const std::string &target) {
-	std::cout << COLOR_GREEN "ClapTrap " << name_ << " attacks " << target
-			  << ", causing " << attack_damage_ << " points of damage!" COLOR_END
-			  << std::endl;
+	if (IsActionPossible()) {
+		std::cout << COLOR_GREEN "ClapTrap " << name_ << " attacks " << target
+				  << ", causing " << attack_damage_ << " points of damage!" COLOR_END
+				  << std::endl;
+	} else {
+		std::cout << COLOR_RED "ClapTrap " << name_
+				  << " attacks failed due to lack of my hit points or energy "
+					 "points." COLOR_END
+				  << std::endl;
+	}
 }
 
 void ClapTrap::takeDamage(unsigned int amount) {

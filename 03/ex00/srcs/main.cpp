@@ -11,13 +11,8 @@ static void PutStatusAandB(const ClapTrap &attacker, const ClapTrap &defender) {
 	defender.PutStatus();
 }
 
-static bool IsEnergyPointsLeft(const ClapTrap &c) {
-	return c.GetEnergyPoints() > 0;
-}
-
-static bool
-AreBothHitPointsLeft(const ClapTrap &attacker, const ClapTrap &defender) {
-	return (attacker.GetHitPoints() > 0) && (defender.GetHitPoints() > 0);
+static bool IsAttackableAtoB(const ClapTrap &attacker, const ClapTrap &defender) {
+	return attacker.IsActionPossible() && defender.IsActionPossible();
 }
 
 static void AttackAtoB(
@@ -26,7 +21,7 @@ static void AttackAtoB(
 	const std::string &target,
 	const unsigned int damages
 ) {
-	if (IsEnergyPointsLeft(attacker) && AreBothHitPointsLeft(attacker, defender)) {
+	if (IsAttackableAtoB(attacker, defender)) {
 		attacker.SetAttackDamage(damages);
 		attacker.attack(target);
 		defender.takeDamage(damages);

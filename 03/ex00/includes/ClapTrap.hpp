@@ -18,6 +18,7 @@ class ClapTrap {
 
   public:
 	void PutStatus() const;
+	bool IsActionPossible() const;
 	void LoseEnergyPoint();
 
   public:
