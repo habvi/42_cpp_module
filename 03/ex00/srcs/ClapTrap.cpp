@@ -1,6 +1,9 @@
 #include "ClapTrap.hpp"
 #include <iostream>
 
+#define COLOR_GREEN "\033[32m"
+#define COLOR_END   "\033[0m"
+
 ClapTrap::ClapTrap() {
 	std::cout << "Default constructor called" << std::endl;
 }
@@ -35,7 +38,9 @@ const ClapTrap &ClapTrap::operator=(const ClapTrap &c) {
 }
 
 void ClapTrap::attack(const std::string &target) {
-	(void)target;
+	std::cout << COLOR_GREEN "ClapTrap " << name_ << " attacks " << target
+			  << ", causing " << attack_damage_ << " points of damage!" COLOR_END
+			  << std::endl;
 }
 
 void ClapTrap::takeDamage(unsigned int amount) {
