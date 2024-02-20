@@ -41,8 +41,16 @@ static void RunArithmeticOperatorsTest(T x, U y) {
 	std::cout << x << " * " << y << " = " << (Fixed(x) * Fixed(y)) << std::endl;
 	std::cout << x << " * " << y << " = " << x * y << std::endl;
 	// operator "/"
-	std::cout << x << " / " << y << " = " << (Fixed(x) / Fixed(y)) << std::endl;
-	std::cout << x << " / " << y << " = " << x / y << std::endl;
+	std::cout << x << " / " << y << " = ";
+	try {
+		if (y == 0) {
+			throw std::runtime_error(COLOR_RED "Division by zero" COLOR_END);
+		}
+		std::cout << (Fixed(x) / Fixed(y)) << std::endl;
+		std::cout << x << " / " << y << " = " << x / y << std::endl;
+	} catch (std::exception &e) {
+		std::cerr << e.what() << std::endl;
+	}
 	Line();
 }
 
@@ -170,6 +178,8 @@ static void RunOriginalTest() {
 	RunArithmeticOperatorsTest(-5, -200);
 	RunArithmeticOperatorsTest(1, 0.0123f);
 	RunArithmeticOperatorsTest(1, -0.0123f);
+	// exception : division by zero
+	RunArithmeticOperatorsTest(10, 0);
 
 	// comparison operators ">, <, >=, <=, ==, !=" overload
 	DisplayTitle("comparison operators");
