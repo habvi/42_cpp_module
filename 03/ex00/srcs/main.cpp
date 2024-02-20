@@ -29,7 +29,7 @@ static void AttackAtoB(
 	if (IsEnergyPointsLeft(attacker) && AreBothHitPointsLeft(attacker, defender)) {
 		attacker.SetAttackDamage(damages);
 		attacker.attack(target);
-		// defender.takeDamage(damages);
+		defender.takeDamage(damages);
 		// attacker.LostEnergyPoint();
 	} else {
 		std::cout << COLOR_RED "Attack failed." COLOR_END << std::endl;

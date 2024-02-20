@@ -44,7 +44,18 @@ void ClapTrap::attack(const std::string &target) {
 }
 
 void ClapTrap::takeDamage(unsigned int amount) {
-	(void)amount;
+	if (hit_points_ < amount) {
+		std::cout << COLOR_GREEN "ClapTrap " << name_ << " takes damages "
+				  << hit_points_
+				  << ", since hit points were not remaining that much." COLOR_END
+				  << std::endl;
+		hit_points_ = 0;
+	} else {
+		hit_points_ -= amount;
+		std::cout << COLOR_GREEN "ClapTrap " << name_ << " takes " << amount
+				  << " damages. Hit points are left with " << hit_points_
+				  << "." COLOR_END << std::endl;
+	}
 }
 
 void ClapTrap::btRepaired(unsigned int amount) {
