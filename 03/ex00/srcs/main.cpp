@@ -131,11 +131,38 @@ static void RunTest4() {
 	alice.PutStatus();
 }
 
+// same behavior test1
+static void RunTest5() {
+	DisplayTitle("Attack A to B in ClapTrap class");
+
+	ClapTrap    alice("Alice");
+	std::string target = "Bob";
+	ClapTrap    bob(target);
+
+	PutStatusAandB(alice, bob);
+
+	// Alice -> Bob. Success.
+	alice.AttackToDefender(bob, target, 4);
+	PutStatusAandB(alice, bob);
+	// damages >= hit_points
+	alice.AttackToDefender(bob, target, 8);
+	PutStatusAandB(alice, bob);
+	// 0 damages. Nothing happend.
+	alice.AttackToDefender(bob, target, 0);
+	PutStatusAandB(alice, bob);
+
+	// Bob -> Alice. Bob has no hit_points. Nothing happend.
+	target = "Alice";
+	bob.AttackToDefender(alice, target, 5);
+	PutStatusAandB(alice, bob);
+}
+
 static void RunOriginalTest() {
 	RunTest1();
 	RunTest2();
 	RunTest3();
 	RunTest4();
+	RunTest5();
 }
 
 int main() {
