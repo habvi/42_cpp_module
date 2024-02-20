@@ -65,8 +65,30 @@ static void RunTest1() {
 	PutStatusAandB(alice, bob);
 }
 
+static void RunTest2() {
+	DisplayTitle("No Energy points");
+
+	ClapTrap    alice("Alice", 10);
+	std::string target = "Bob";
+	ClapTrap    bob(target, 20);
+
+	PutStatusAandB(alice, bob);
+
+	// Alice -> Bob. 10 attacks.
+	for (unsigned int i = 0; i < 10; i++) {
+		AttackAtoB(alice, bob, target, 1);
+		Line();
+	}
+	PutStatusAandB(alice, bob);
+
+	// Alice -> Bob. Alice has no energy points. Nothing happend.
+	AttackAtoB(alice, bob, target, 1);
+	PutStatusAandB(alice, bob);
+}
+
 static void RunOriginalTest() {
 	RunTest1();
+	RunTest2();
 }
 
 int main() {
