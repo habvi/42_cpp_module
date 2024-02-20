@@ -105,7 +105,7 @@ unsigned int ClapTrap::GetAttackDamage() const {
 	return attack_damage_;
 }
 
-void ClapTrap::SetAttackDamage(unsigned int damages) {
+void ClapTrap::SetAttackDamage(const unsigned int damages) {
 	attack_damage_ = damages;
 }
 
