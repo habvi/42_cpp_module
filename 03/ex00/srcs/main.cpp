@@ -37,7 +37,7 @@ static void AttackAtoB(
 		defender.takeDamage(damages);
 		attacker.LoseEnergyPoint();
 	} else {
-		std::cerr << COLOR_RED "Attack failed." COLOR_END << std::endl;
+		std::cerr << COLOR_RED "(main) Attack failed." COLOR_END << std::endl;
 	}
 }
 
@@ -49,7 +49,7 @@ static void Repaire(ClapTrap &c, const unsigned int points) {
 	if (IsRepaireable(c)) {
 		c.beRepaired(points);
 	} else {
-		std::cerr << COLOR_RED "Repair failed." COLOR_END << std::endl;
+		std::cerr << COLOR_RED "(main) Repair failed." COLOR_END << std::endl;
 	}
 }
 
