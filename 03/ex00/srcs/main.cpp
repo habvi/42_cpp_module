@@ -1,4 +1,5 @@
 #include "ClapTrap.hpp"
+#include <climits>
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -40,6 +41,18 @@ static void AttackAtoB(
 	}
 }
 
+static bool IsRepaireable(const ClapTrap &c) {
+	return c.IsActionPossible();
+}
+
+static void Repaire(ClapTrap &c, const unsigned int points) {
+	if (IsRepaireable(c)) {
+		c.beRepaired(points);
+	} else {
+		std::cerr << COLOR_RED "Repair failed." COLOR_END << std::endl;
+	}
+}
+
 static void RunTest1() {
 	DisplayTitle("No Hit Points");
 
@@ -66,7 +79,7 @@ static void RunTest1() {
 }
 
 static void RunTest2() {
-	DisplayTitle("No Energy points");
+	DisplayTitle("No Energy points for attack");
 
 	ClapTrap    alice("Alice", 10);
 	std::string target = "Bob";
@@ -86,9 +99,43 @@ static void RunTest2() {
 	PutStatusAandB(alice, bob);
 }
 
+static void RunTest3() {
+	DisplayTitle("No Energy points for Repaire");
+
+	ClapTrap alice("Alice");
+	alice.PutStatus();
+
+	// Alice repaires 10 times.
+	for (unsigned int i = 0; i < 10; i++) {
+		Repaire(alice, 1);
+		Line();
+	}
+	alice.PutStatus();
+
+	// Alice has no energy points. Nothing happend.
+	Repaire(alice, 1);
+	alice.PutStatus();
+}
+
+static void RunTest4() {
+	DisplayTitle("Repaire overflow");
+
+	ClapTrap alice("Alice", UINT_MAX - 10);
+	alice.PutStatus();
+
+	// Max Hit points.
+	Repaire(alice, 11);
+	alice.PutStatus();
+
+	Repaire(alice, 0);
+	alice.PutStatus();
+}
+
 static void RunOriginalTest() {
 	RunTest1();
 	RunTest2();
+	RunTest3();
+	RunTest4();
 }
 
 int main() {
