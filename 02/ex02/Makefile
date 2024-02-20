@@ -59,7 +59,7 @@ check:
 	cppcheck --enable=all $$(find . -type f -name "*.cpp" | tr '\n' ' ')
 
 .PHONY	: no_debug
-no_debug: re
+no_debug:
 	make re NO_DEBUG=1
 
 #--------------------------------------------
