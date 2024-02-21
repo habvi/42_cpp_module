@@ -8,7 +8,10 @@
 #define COLOR_END "\033[0m"
 
 static void DisplayTitle(const std::string &title) {
-	std::cout << "\n┃ test: " << title << std::endl;
+	static unsigned int number = 0;
+
+	number++;
+	std::cout << "\n┃ test " << number << ": " << title << std::endl;
 	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 }
 
