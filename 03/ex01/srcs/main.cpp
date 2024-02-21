@@ -172,6 +172,30 @@ static void RunTest6() {
 	// ScavTrap destructor called -> ClapTrap destructor called
 }
 
+static void RunTest7() {
+	DisplayTitle("ClapTrap & ScavTrap class");
+
+	ClapTrap    alice("alice");
+	std::string target = "Bob";
+	ScavTrap    bob("bob");
+
+	alice.beRepaired(20);
+	PutStatusAandB(alice, bob);
+
+	// Bob -> Alice. normal attack (default attack_damage)
+	target = "Alice";
+	bob.AttackToDefender(alice, target);
+	PutStatusAandB(alice, bob);
+
+	// Bob -> Alice. damages >= hit_points
+	bob.AttackToDefender(alice, target, 12);
+	PutStatusAandB(alice, bob);
+
+	// Bob -> Alice. Alice has no hit_points. Nothing happend.
+	bob.AttackToDefender(alice, target, 10);
+	PutStatusAandB(alice, bob);
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -182,6 +206,7 @@ static void RunOriginalTest() {
 
 	/* ex01 */
 	RunTest6();
+	RunTest7();
 }
 
 int main() {
