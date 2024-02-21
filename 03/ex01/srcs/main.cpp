@@ -196,6 +196,14 @@ static void RunTest7() {
 	PutStatusAandB(alice, bob);
 }
 
+static void RunTest8() {
+	DisplayTitle("ScavTrap guard Gate mode");
+
+	ScavTrap scav("alice");
+	scav.guardGate();
+	scav.PutStatus();
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -207,6 +215,7 @@ static void RunOriginalTest() {
 	/* ex01 */
 	RunTest6();
 	RunTest7();
+	RunTest8();
 }
 
 int main() {
