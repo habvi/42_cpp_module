@@ -13,6 +13,9 @@ class FragTrap : public ClapTrap {
 	void highFivesGuys(void);
 
   private:
+	FragTrap();
+
+  private:
 	static const unsigned int kInitialHitPoints    = 100;
 	static const unsigned int kInitialEnergyPoints = 100;
 	static const unsigned int kInitialAttackDamage = 30;

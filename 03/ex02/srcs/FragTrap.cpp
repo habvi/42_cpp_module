@@ -5,6 +5,8 @@
 #define COLOR_PINK "\033[35m"
 #define COLOR_END  "\033[0m"
 
+FragTrap::FragTrap() : ClapTrap() {}
+
 FragTrap::FragTrap(const std::string &name)
 	: ClapTrap(name, kInitialHitPoints, kInitialEnergyPoints, kInitialAttackDamage) {
 	std::cout << "Constructor called (FragTrap)" << std::endl;

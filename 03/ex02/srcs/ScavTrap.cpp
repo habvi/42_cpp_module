@@ -5,6 +5,8 @@
 #define COLOR_PINK "\033[35m"
 #define COLOR_END  "\033[0m"
 
+ScavTrap::ScavTrap() : ClapTrap() {}
+
 ScavTrap::ScavTrap(const std::string &name)
 	: ClapTrap(name, kInitialHitPoints, kInitialEnergyPoints, kInitialAttackDamage) {
 	std::cout << "Constructor called (ScavTrap)" << std::endl;

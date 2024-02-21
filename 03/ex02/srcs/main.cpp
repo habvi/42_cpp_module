@@ -1,4 +1,5 @@
 #include "ClapTrap.hpp"
+#include "FragTrap.hpp"
 #include "ScavTrap.hpp"
 #include <climits>
 #include <cstdlib>
@@ -228,6 +229,68 @@ static void RunTest9() {
 	PutStatusAandB(alice, bob);
 }
 
+static void RunTest10() {
+	DisplayTitle("FragTrap class");
+
+	// ClapTrap constructor called -> FragTrap constructor called
+	FragTrap scav(ALICE);
+	scav.PutStatus();
+	// FragTrap destructor called -> ClapTrap destructor called
+}
+
+static void RunTest11() {
+	DisplayTitle("ClapTrap & FragTrap class");
+
+	ClapTrap                 alice(ALICE);
+	FragTrap                 bob(BOB);
+	static const std::string target = ALICE;
+
+	alice.beRepaired(50);
+	PutStatusAandB(alice, bob);
+
+	// Bob -> Alice. normal attack (default attack_damage)
+	bob.AttackToDefender(alice, target);
+	PutStatusAandB(alice, bob);
+
+	// Bob -> Alice. damages >= hit_points
+	bob.AttackToDefender(alice, target, 120);
+	PutStatusAandB(alice, bob);
+
+	// Bob -> Alice. Alice has no hit_points. Nothing happend.
+	bob.AttackToDefender(alice, target, 10);
+	PutStatusAandB(alice, bob);
+}
+
+static void RunTest12() {
+	DisplayTitle("FragTrap highFivesGuys()");
+
+	FragTrap scav(ALICE);
+	scav.highFivesGuys();
+	scav.PutStatus();
+}
+
+static void RunTest13() {
+	DisplayTitle("FragTrap & FragTrap class");
+
+	FragTrap          alice(ALICE);
+	FragTrap          bob(BOB);
+	const std::string target = BOB;
+
+	PutStatusAandB(alice, bob);
+
+	// Alice -> Bob. normal attack (default attack_damage)
+	alice.AttackToDefender(bob, target);
+	PutStatusAandB(alice, bob);
+
+	// Alice -> Bob. damages >= hit_points
+	alice.AttackToDefender(bob, target, 88);
+	PutStatusAandB(alice, bob);
+
+	// Alice -> Bob. Alice has no hit_points. Nothing happend.
+	alice.AttackToDefender(bob, target, 10);
+	PutStatusAandB(alice, bob);
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -241,6 +304,12 @@ static void RunOriginalTest() {
 	RunTest7();
 	RunTest8();
 	RunTest9();
+
+	/* ex02 same bihavior Test6-9*/
+	RunTest10();
+	RunTest11();
+	RunTest12();
+	RunTest13();
 }
 
 int main() {
