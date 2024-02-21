@@ -8,6 +8,9 @@
 #define COLOR_RED "\033[31m"
 #define COLOR_END "\033[0m"
 
+#define ALICE     "Alice"
+#define BOB       "Bob"
+
 static void DisplayTitle(const std::string &title) {
 	static unsigned int number = 0;
 
@@ -60,9 +63,9 @@ static void Repaire(ClapTrap &c, const unsigned int points) {
 static void RunTest1() {
 	DisplayTitle("No Hit Points");
 
-	ClapTrap    alice("Alice");
-	std::string target = "Bob";
-	ClapTrap    bob(target);
+	ClapTrap    alice(ALICE);
+	ClapTrap    bob(BOB);
+	std::string target = BOB;
 
 	PutStatusAandB(alice, bob);
 
@@ -77,7 +80,7 @@ static void RunTest1() {
 	PutStatusAandB(alice, bob);
 
 	// Bob -> Alice. Bob has no hit_points. Nothing happend.
-	target = "Alice";
+	target = ALICE;
 	AttackAtoB(bob, alice, target, 5);
 	PutStatusAandB(alice, bob);
 }
@@ -85,9 +88,9 @@ static void RunTest1() {
 static void RunTest2() {
 	DisplayTitle("No Energy points for attack");
 
-	ClapTrap    alice("Alice");
-	std::string target = "Bob";
-	ClapTrap    bob(target);
+	ClapTrap          alice(ALICE);
+	ClapTrap          bob(BOB);
+	const std::string target = BOB;
 
 	bob.beRepaired(10);
 	PutStatusAandB(alice, bob);
@@ -107,7 +110,7 @@ static void RunTest2() {
 static void RunTest3() {
 	DisplayTitle("No Energy points for Repaire");
 
-	ClapTrap alice("Alice");
+	ClapTrap alice(ALICE);
 	alice.PutStatus();
 
 	// Alice repaires 10 times.
@@ -125,7 +128,7 @@ static void RunTest3() {
 static void RunTest4() {
 	DisplayTitle("Repaire overflow");
 
-	ClapTrap alice("Alice");
+	ClapTrap alice(ALICE);
 	alice.beRepaired(UINT_MAX - 20);
 	alice.PutStatus();
 
@@ -141,9 +144,9 @@ static void RunTest4() {
 static void RunTest5() {
 	DisplayTitle("Attack A to B in ClapTrap class");
 
-	ClapTrap    alice("Alice");
-	std::string target = "Bob";
-	ClapTrap    bob(target);
+	ClapTrap    alice(ALICE);
+	ClapTrap    bob(BOB);
+	std::string target = BOB;
 
 	PutStatusAandB(alice, bob);
 
@@ -158,7 +161,7 @@ static void RunTest5() {
 	PutStatusAandB(alice, bob);
 
 	// Bob -> Alice. Bob has no hit_points. Nothing happend.
-	target = "Alice";
+	target = ALICE;
 	bob.AttackToDefender(alice, target, 5);
 	PutStatusAandB(alice, bob);
 }
@@ -167,7 +170,7 @@ static void RunTest6() {
 	DisplayTitle("ScavTrap class");
 
 	// ClapTrap constructor called -> ScavTrap constructor called
-	ScavTrap scav("alice");
+	ScavTrap scav(ALICE);
 	scav.PutStatus();
 	// ScavTrap destructor called -> ClapTrap destructor called
 }
@@ -175,15 +178,14 @@ static void RunTest6() {
 static void RunTest7() {
 	DisplayTitle("ClapTrap & ScavTrap class");
 
-	ClapTrap    alice("alice");
-	std::string target = "Bob";
-	ScavTrap    bob("bob");
+	ClapTrap                 alice(ALICE);
+	ScavTrap                 bob(BOB);
+	static const std::string target = ALICE;
 
 	alice.beRepaired(20);
 	PutStatusAandB(alice, bob);
 
 	// Bob -> Alice. normal attack (default attack_damage)
-	target = "Alice";
 	bob.AttackToDefender(alice, target);
 	PutStatusAandB(alice, bob);
 
@@ -199,7 +201,7 @@ static void RunTest7() {
 static void RunTest8() {
 	DisplayTitle("ScavTrap guard Gate mode");
 
-	ScavTrap scav("alice");
+	ScavTrap scav(ALICE);
 	scav.guardGate();
 	scav.PutStatus();
 }
@@ -207,9 +209,9 @@ static void RunTest8() {
 static void RunTest9() {
 	DisplayTitle("ScavTrap & ScavTrap class");
 
-	ScavTrap          alice("alice");
-	const std::string target = "Bob";
-	ScavTrap          bob(target);
+	ScavTrap          alice(ALICE);
+	ScavTrap          bob(BOB);
+	const std::string target = BOB;
 
 	PutStatusAandB(alice, bob);
 
