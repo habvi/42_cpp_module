@@ -8,6 +8,10 @@ class ScavTrap : public ClapTrap {
 	explicit ScavTrap(const std::string &name);
 	~ScavTrap();
 
+  public:
+	// Following the instructions, not camelcase.
+	void guardGate() const;
+
   private:
 	static const unsigned int kInitialHitPoints    = 100;
 	static const unsigned int kInitialEnergyPoints = 50;
