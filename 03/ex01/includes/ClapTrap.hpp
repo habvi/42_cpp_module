@@ -6,6 +6,12 @@
 class ClapTrap {
   public:
 	explicit ClapTrap(const std::string &name);
+	ClapTrap(
+		const std::string &name,
+		const unsigned int hit_points,
+		const unsigned int energy_points,
+		const unsigned int attack_damege
+	);
 	ClapTrap(const ClapTrap &c);
 	~ClapTrap();
 	const ClapTrap &operator=(const ClapTrap &c);

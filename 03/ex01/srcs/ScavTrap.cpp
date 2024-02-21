@@ -2,7 +2,8 @@
 #include <iostream>
 #include <string>
 
-ScavTrap::ScavTrap(const std::string &name) : ClapTrap(name) {
+ScavTrap::ScavTrap(const std::string &name)
+	: ClapTrap(name, kInitialHitPoints, kInitialEnergyPoints, kInitialAttackDamage) {
 	std::cout << "Constructor called (ScavTrap)" << std::endl;
 }
 
