@@ -1,4 +1,5 @@
 #include "ClapTrap.hpp"
+#include "ScavTrap.hpp"
 #include <climits>
 #include <cstdlib>
 #include <iostream>
@@ -161,6 +162,16 @@ static void RunTest5() {
 	bob.AttackToDefender(alice, target, 5);
 	PutStatusAandB(alice, bob);
 }
+
+static void RunTest6() {
+	DisplayTitle("ScavTrap class");
+
+	// ClapTrap constructor called -> ScavTrap constructor called
+	ScavTrap scav("alice");
+	scav.PutStatus();
+	// ScavTrap destructor called -> ClapTrap destructor called
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -170,6 +181,7 @@ static void RunOriginalTest() {
 	RunTest5();
 
 	/* ex01 */
+	RunTest6();
 }
 
 int main() {
