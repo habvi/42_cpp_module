@@ -204,6 +204,28 @@ static void RunTest8() {
 	scav.PutStatus();
 }
 
+static void RunTest9() {
+	DisplayTitle("ScavTrap & ScavTrap class");
+
+	ScavTrap          alice("alice");
+	const std::string target = "Bob";
+	ScavTrap          bob(target);
+
+	PutStatusAandB(alice, bob);
+
+	// Alice -> Bob. normal attack (default attack_damage)
+	alice.AttackToDefender(bob, target);
+	PutStatusAandB(alice, bob);
+
+	// Alice -> Bob. damages >= hit_points
+	alice.AttackToDefender(bob, target, 88);
+	PutStatusAandB(alice, bob);
+
+	// Alice -> Bob. Alice has no hit_points. Nothing happend.
+	alice.AttackToDefender(bob, target, 10);
+	PutStatusAandB(alice, bob);
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -216,6 +238,7 @@ static void RunOriginalTest() {
 	RunTest6();
 	RunTest7();
 	RunTest8();
+	RunTest9();
 }
 
 int main() {
