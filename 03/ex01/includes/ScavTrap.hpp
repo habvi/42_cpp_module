@@ -7,6 +7,11 @@ class ScavTrap : public ClapTrap {
   public:
 	explicit ScavTrap(const std::string &name);
 	~ScavTrap();
+
+  private:
+	static const unsigned int kInitialHitPoints    = 100;
+	static const unsigned int kInitialEnergyPoints = 50;
+	static const unsigned int kInitialAttackDamage = 20;
 };
 
 #endif /* SCAV_TRAP_H */
