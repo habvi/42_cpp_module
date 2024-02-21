@@ -81,10 +81,11 @@ static void RunTest1() {
 static void RunTest2() {
 	DisplayTitle("No Energy points for attack");
 
-	ClapTrap    alice("Alice", 10);
+	ClapTrap    alice("Alice");
 	std::string target = "Bob";
-	ClapTrap    bob(target, 20);
+	ClapTrap    bob(target);
 
+	bob.beRepaired(10);
 	PutStatusAandB(alice, bob);
 
 	// Alice -> Bob. 10 attacks.
@@ -120,7 +121,8 @@ static void RunTest3() {
 static void RunTest4() {
 	DisplayTitle("Repaire overflow");
 
-	ClapTrap alice("Alice", UINT_MAX - 10);
+	ClapTrap alice("Alice");
+	alice.beRepaired(UINT_MAX - 20);
 	alice.PutStatus();
 
 	// Max Hit points.

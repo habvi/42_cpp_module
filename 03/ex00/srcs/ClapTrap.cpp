@@ -15,11 +15,6 @@ ClapTrap::ClapTrap(const std::string &name)
 	std::cout << "Constructor called" << std::endl;
 }
 
-ClapTrap::ClapTrap(const std::string &name, const unsigned int hit_point)
-	: name_(name), hit_points_(hit_point), energy_points_(10), attack_damage_(0) {
-	std::cout << "Constructor called" << std::endl;
-}
-
 // copy constructor
 ClapTrap::ClapTrap(const ClapTrap &c)
 	: name_(c.GetName()),
