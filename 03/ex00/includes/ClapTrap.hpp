@@ -39,6 +39,10 @@ class ClapTrap {
 	unsigned int hit_points_;
 	unsigned int energy_points_;
 	unsigned int attack_damage_;
+
+	static const unsigned int kInitialHitPoints    = 10;
+	static const unsigned int kInitialEnergyPoints = 10;
+	static const unsigned int kInitialAttackDamage = 0;
 };
 
 #endif /* CLAP_TRAP_H */
