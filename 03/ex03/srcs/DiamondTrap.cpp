@@ -5,7 +5,9 @@
 #define COLOR_PINK "\033[35m"
 #define COLOR_END  "\033[0m"
 
-DiamondTrap::DiamondTrap() : ClapTrap() {}
+DiamondTrap::DiamondTrap() : ClapTrap(), ScavTrap(), FragTrap() {
+	std::cout << "Default constructor called (DiamondTrap)" << std::endl;
+}
 
 DiamondTrap::DiamondTrap(const std::string &name)
 	: ClapTrap(name + nama_surfix), name_(name) {
