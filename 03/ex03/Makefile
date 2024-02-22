@@ -2,6 +2,7 @@ NAME		:=	a.out
 
 SRCS_DIR	:=	srcs
 SRCS		:=	ClapTrap.cpp \
+				DiamondTrap.cpp \
 				FragTrap.cpp \
 				main.cpp \
 				ScavTrap.cpp
