@@ -14,6 +14,14 @@ ScavTrap::ScavTrap(const std::string &name) : ClapTrap(name) {
 	SetAttackDamage(kInitialAttackDamage);
 }
 
+// copy constructor
+ScavTrap::ScavTrap(const ScavTrap &s) : ClapTrap(s) {
+	std::cout << "Copy constructor called (ScavTrap)" << std::endl;
+	SetHitPoints(kInitialHitPoints);
+	SetEnergyPoints(kInitialEnergyPoints);
+	SetAttackDamage(kInitialAttackDamage);
+}
+
 ScavTrap::~ScavTrap() {
 	std::cout << "Destructor called (ScavTrap)" << std::endl;
 }
