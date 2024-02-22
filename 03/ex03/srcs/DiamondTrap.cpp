@@ -10,7 +10,7 @@ DiamondTrap::DiamondTrap() : ClapTrap(), ScavTrap(), FragTrap() {
 }
 
 DiamondTrap::DiamondTrap(const std::string &name)
-	: ClapTrap(name + nama_surfix), name_(name) {
+	: ClapTrap(name + nama_surfix), ScavTrap(), FragTrap(), name_(name) {
 	std::cout << "Constructor called (DiamondTrap)" << std::endl;
 	SetHitPoints(FragTrap::kInitialHitPoints);
 	SetEnergyPoints(ScavTrap::kInitialEnergyPoints);
