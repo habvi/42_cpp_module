@@ -228,6 +228,26 @@ static void RunTest9() {
 	PutStatusAandB(alice, bob);
 }
 
+static void RunTest14() {
+	DisplayTitle("ScavTrap copy constructor");
+
+	ScavTrap s(ALICE);
+	s.PutStatus();
+
+	ScavTrap s2(s);
+	s2.PutStatus();
+}
+
+static void RunTest16() {
+	DisplayTitle("ScavTrap copy assignment operator overload");
+
+	ScavTrap s(ALICE);
+	s.PutStatus();
+
+	ScavTrap s2 = s;
+	s2.PutStatus();
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -241,6 +261,9 @@ static void RunOriginalTest() {
 	RunTest7();
 	RunTest8();
 	RunTest9();
+
+	RunTest14();
+	RunTest16();
 }
 
 int main() {
