@@ -14,7 +14,7 @@ INCLUDE_DIR	:=	includes
 INCLUDES	:=	-I./$(INCLUDE_DIR)/
 
 CXX			:=	c++
-CXXFLAGS	:=	-std=c++98 -Wall -Wextra -Werror -MMD -MP
+CXXFLAGS	:=	-std=c++98 -Wall -Wextra -Werror -Wshadow -MMD -MP
 UNAME 		:= $(shell uname)
 ifeq ($(UNAME), Linux)
 	CXXFLAGS += -pedantic
