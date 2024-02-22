@@ -8,6 +8,7 @@ class ScavTrap : public ClapTrap {
 	explicit ScavTrap(const std::string &name);
 	ScavTrap(const ScavTrap &s);
 	~ScavTrap();
+	const ScavTrap &operator=(const ScavTrap &s);
 
   public:
 	// Following the instructions, not camelcase.
