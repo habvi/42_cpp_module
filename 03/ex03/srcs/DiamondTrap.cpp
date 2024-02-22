@@ -48,3 +48,7 @@ void DiamondTrap::whoAmI() {
 const std::string &DiamondTrap::GetName() const {
 	return name_;
 }
+
+void DiamondTrap::attack(const std::string &target) {
+	ScavTrap::attack(target);
+}

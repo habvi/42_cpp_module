@@ -16,6 +16,7 @@ class DiamondTrap : public ScavTrap, public FragTrap {
   public:
 	// Following the instructions, not camelcase and const qualifier isn't used.
 	void whoAmI(void);
+	void attack(const std::string &target);
 
   public:
 	const std::string &GetName() const;
