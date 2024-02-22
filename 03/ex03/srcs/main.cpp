@@ -1,4 +1,5 @@
 #include "ClapTrap.hpp"
+#include "DiamondTrap.hpp"
 #include "FragTrap.hpp"
 #include "ScavTrap.hpp"
 #include <climits>
@@ -404,6 +405,57 @@ static void RunTest17() {
 	JudgeIsEqual(" - Alice Init", f2, 100, 100, 30);
 }
 
+static void RunTest18() {
+	DisplayTitle("DiamondTrap basic");
+
+	DiamondTrap alice(ALICE);
+	alice.PutStatus();
+	JudgeIsEqual(" - Alice Init", alice, 100, 50, 30);
+
+	// DiamondTrap member function
+	alice.whoAmI();
+
+	// ClapTrap member function
+	alice.attack(BOB);
+	// ScavTrap member function
+	alice.ScavTrap::attack(BOB);
+
+	alice.SetAttackDamage(50);
+	alice.attack(BOB);
+	alice.ScavTrap::attack(BOB);
+	JudgeIsEqual(" - Alice Init", alice, 100, 50, 50);
+
+	alice.PutStatus();
+}
+
+static void RunTest19() {
+	DisplayTitle("DiamondTrap copy constructor");
+
+	DiamondTrap d(ALICE);
+	d.whoAmI();
+	d.PutStatus();
+	JudgeIsEqual(" - Alice Init", d, 100, 50, 30);
+
+	DiamondTrap d2(d);
+	d.whoAmI();
+	d2.PutStatus();
+	JudgeIsEqual(" - Alice Init", d, 100, 50, 30);
+}
+
+static void RunTest20() {
+	DisplayTitle("DiamondTrap copy assignment operator overload");
+
+	DiamondTrap d(ALICE);
+	d.PutStatus();
+	d.whoAmI();
+	JudgeIsEqual(" - Alice Init", d, 100, 50, 30);
+
+	DiamondTrap d2 = d;
+	d2.PutStatus();
+	d.whoAmI();
+	JudgeIsEqual(" - Alice Init", d2, 100, 50, 30);
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -427,6 +479,11 @@ static void RunOriginalTest() {
 	RunTest15();
 	RunTest16();
 	RunTest17();
+
+	/* ex03 */
+	RunTest18();
+	RunTest19();
+	RunTest20();
 }
 
 int main() {
