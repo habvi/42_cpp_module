@@ -300,6 +300,15 @@ static void RunTest14() {
 	s2.PutStatus();
 }
 
+static void RunTest15() {
+	DisplayTitle("FragTrap copy constructor");
+
+	FragTrap f(ALICE);
+	FragTrap f2(f);
+	f.PutStatus();
+	f2.PutStatus();
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -320,6 +329,7 @@ static void RunOriginalTest() {
 	RunTest12();
 	RunTest13();
 	RunTest14();
+	RunTest15();
 }
 
 int main() {
