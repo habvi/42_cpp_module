@@ -17,7 +17,6 @@ class ClapTrap {
 	void beRepaired(unsigned int amount);
 
   public:
-	void AttackToDefender(ClapTrap &defender, const std::string &target);
 	void AttackToDefender(
 		ClapTrap &defender, const std::string &target, const unsigned int damages
 	);
