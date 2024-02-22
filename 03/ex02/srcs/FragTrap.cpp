@@ -26,6 +26,14 @@ FragTrap::~FragTrap() {
 	std::cout << "Destructor called (FragTrap)" << std::endl;
 }
 
+// copy assignment operator overload
+const FragTrap &FragTrap::operator=(const FragTrap &f) {
+	if (this != &f) {
+		ClapTrap::operator=(f);
+	}
+	return *this;
+}
+
 void FragTrap::highFivesGuys() {
 	std::cout << COLOR_PINK "FragTrap " << GetName()
 			  << " requests positive high fives." COLOR_END << std::endl;
