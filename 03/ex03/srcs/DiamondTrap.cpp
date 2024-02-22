@@ -39,6 +39,12 @@ const DiamondTrap &DiamondTrap::operator=(const DiamondTrap &d) {
 	return *this;
 }
 
+void DiamondTrap::whoAmI() {
+	std::cout << COLOR_PINK "My (DiamondTrap) name is " << name_ << "." << std::endl;
+	std::cout << "My parent (ClapTrap) name is " << ClapTrap::GetName() << COLOR_END
+			  << std::endl;
+}
+
 const std::string &DiamondTrap::GetName() const {
 	return name_;
 }

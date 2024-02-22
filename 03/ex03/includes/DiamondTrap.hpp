@@ -14,6 +14,10 @@ class DiamondTrap : public ScavTrap, public FragTrap {
 	const DiamondTrap &operator=(const DiamondTrap &d);
 
   public:
+	// Following the instructions, not camelcase and const qualifier isn't used.
+	void whoAmI(void);
+
+  public:
 	const std::string &GetName() const;
 
   private:
