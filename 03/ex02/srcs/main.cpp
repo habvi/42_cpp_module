@@ -291,6 +291,15 @@ static void RunTest13() {
 	PutStatusAandB(alice, bob);
 }
 
+static void RunTest14() {
+	DisplayTitle("ScavTrap copy constructor");
+
+	ScavTrap s(ALICE);
+	ScavTrap s2(s);
+	s.PutStatus();
+	s2.PutStatus();
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -310,6 +319,7 @@ static void RunOriginalTest() {
 	RunTest11();
 	RunTest12();
 	RunTest13();
+	RunTest14();
 }
 
 int main() {
