@@ -13,11 +13,7 @@ INCLUDE_DIR	:=	includes
 INCLUDES	:=	-I./$(INCLUDE_DIR)/
 
 CXX			:=	c++
-CXXFLAGS	:=	-std=c++98 -Wall -Wextra -Werror -MMD -MP
-UNAME 		:= $(shell uname)
-ifeq ($(UNAME), Linux)
-	CXXFLAGS += -pedantic
-endif
+CXXFLAGS	:=	-std=c++98 -Wall -Wextra -Werror -MMD -MP -pedantic
 
 DEPS		:=	$(OBJS:.o=.d)
 MKDIR		:=	mkdir -p
