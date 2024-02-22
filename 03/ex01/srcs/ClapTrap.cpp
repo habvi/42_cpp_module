@@ -103,18 +103,6 @@ void ClapTrap::beRepaired(unsigned int amount) {
 			  << " remaining " COLOR_END << std::endl;
 }
 
-// attack_damage = default value
-void ClapTrap::AttackToDefender(ClapTrap &defender, const std::string &target) {
-	if (!IsActionPossible() || !defender.IsActionPossible()) {
-		std::cerr << COLOR_RED "ClapTrap " << name_ << " failed to attack to "
-				  << target << COLOR_END << std::endl;
-		return;
-	}
-	attack(target);
-	defender.takeDamage(attack_damage_);
-	LoseEnergyPoint();
-}
-
 // able to specify the attack_damage
 void ClapTrap::AttackToDefender(
 	ClapTrap &defender, const std::string &target, const unsigned int damages

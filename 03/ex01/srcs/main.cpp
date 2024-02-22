@@ -228,8 +228,8 @@ static void RunTest7() {
 	JudgeIsEqual(" - Alice Init", alice, 30, 9, 0);
 	JudgeIsEqual(" - Bob Init  ", bob, 100, 50, 20);
 
-	// Bob -> Alice. normal attack (default attack_damage)
-	bob.AttackToDefender(alice, target);
+	// Bob -> Alice. normal attack
+	bob.AttackToDefender(alice, target, 20);
 	JudgeIsEqual(" - Alice", alice, 10, 9, 0);
 	JudgeIsEqual(" - Bob  ", bob, 100, 49, 20);
 
@@ -264,8 +264,8 @@ static void RunTest9() {
 	JudgeIsEqual(" - Alice Init", alice, 100, 50, 20);
 	JudgeIsEqual(" - Bob Init  ", bob, 100, 50, 20);
 
-	// Alice -> Bob. normal attack (default attack_damage)
-	alice.AttackToDefender(bob, target);
+	// Alice -> Bob. normal attack
+	alice.AttackToDefender(bob, target, 20);
 	JudgeIsEqual(" - Alice", alice, 100, 49, 20);
 	JudgeIsEqual(" - Bob  ", bob, 80, 50, 20);
 
