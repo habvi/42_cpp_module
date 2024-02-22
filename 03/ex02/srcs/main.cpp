@@ -295,8 +295,9 @@ static void RunTest14() {
 	DisplayTitle("ScavTrap copy constructor");
 
 	ScavTrap s(ALICE);
-	ScavTrap s2(s);
 	s.PutStatus();
+
+	ScavTrap s2(s);
 	s2.PutStatus();
 }
 
@@ -304,7 +305,27 @@ static void RunTest15() {
 	DisplayTitle("FragTrap copy constructor");
 
 	FragTrap f(ALICE);
+	f.PutStatus();
+
 	FragTrap f2(f);
+	f2.PutStatus();
+}
+
+static void RunTest16() {
+	DisplayTitle("ScavTrap copy assignment operator overload");
+
+	ScavTrap s(ALICE);
+	s.PutStatus();
+
+	ScavTrap s2 = s;
+	s2.PutStatus();
+}
+
+static void RunTest17() {
+	DisplayTitle("FragTrap copy assignment operator overload");
+
+	FragTrap f(ALICE);
+	FragTrap f2 = f;
 	f.PutStatus();
 	f2.PutStatus();
 }
@@ -330,6 +351,8 @@ static void RunOriginalTest() {
 	RunTest13();
 	RunTest14();
 	RunTest15();
+	RunTest16();
+	RunTest17();
 }
 
 int main() {
