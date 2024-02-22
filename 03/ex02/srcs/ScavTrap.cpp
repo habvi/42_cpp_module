@@ -7,9 +7,11 @@
 
 ScavTrap::ScavTrap() : ClapTrap() {}
 
-ScavTrap::ScavTrap(const std::string &name)
-	: ClapTrap(name, kInitialHitPoints, kInitialEnergyPoints, kInitialAttackDamage) {
+ScavTrap::ScavTrap(const std::string &name) : ClapTrap(name) {
 	std::cout << "Constructor called (ScavTrap)" << std::endl;
+	SetHitPoints(kInitialHitPoints);
+	SetEnergyPoints(kInitialEnergyPoints);
+	SetAttackDamage(kInitialAttackDamage);
 }
 
 ScavTrap::~ScavTrap() {

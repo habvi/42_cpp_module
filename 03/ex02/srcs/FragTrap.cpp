@@ -7,9 +7,11 @@
 
 FragTrap::FragTrap() : ClapTrap() {}
 
-FragTrap::FragTrap(const std::string &name)
-	: ClapTrap(name, kInitialHitPoints, kInitialEnergyPoints, kInitialAttackDamage) {
+FragTrap::FragTrap(const std::string &name) : ClapTrap(name) {
 	std::cout << "Constructor called (FragTrap)" << std::endl;
+	SetHitPoints(kInitialHitPoints);
+	SetEnergyPoints(kInitialEnergyPoints);
+	SetAttackDamage(kInitialAttackDamage);
 }
 
 FragTrap::~FragTrap() {
