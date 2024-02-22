@@ -51,6 +51,7 @@ const std::string &DiamondTrap::GetName() const {
 	return name_;
 }
 
+// override the parent class's attack().
 void DiamondTrap::attack(const std::string &target) {
 	ScavTrap::attack(target);
 }
