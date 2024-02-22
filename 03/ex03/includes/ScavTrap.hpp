@@ -14,12 +14,12 @@ class ScavTrap : public virtual ClapTrap {
 	// Following the instructions, not camelcase.
 	void guardGate() const;
 
-  private:
+  protected:
 	ScavTrap();
+	static const unsigned int kInitialEnergyPoints = 50;
 
   private:
 	static const unsigned int kInitialHitPoints    = 100;
-	static const unsigned int kInitialEnergyPoints = 50;
 	static const unsigned int kInitialAttackDamage = 20;
 };
 

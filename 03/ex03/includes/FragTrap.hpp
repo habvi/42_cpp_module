@@ -14,13 +14,13 @@ class FragTrap : public virtual ClapTrap {
 	// Following the instructions, not camelcase and const qualifier isn't used.
 	void highFivesGuys(void);
 
-  private:
+  protected:
 	FragTrap();
+	static const unsigned int kInitialHitPoints    = 100;
+	static const unsigned int kInitialAttackDamage = 30;
 
   private:
-	static const unsigned int kInitialHitPoints    = 100;
 	static const unsigned int kInitialEnergyPoints = 100;
-	static const unsigned int kInitialAttackDamage = 30;
 };
 
 #endif /* FLAG_TRAP_H */
