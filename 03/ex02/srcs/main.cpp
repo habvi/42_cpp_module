@@ -6,22 +6,42 @@
 #include <iostream>
 #include <string>
 
-#define COLOR_RED "\033[31m"
-#define COLOR_END "\033[0m"
+#define COLOR_RED   "\033[31m"
+#define COLOR_GREEN "\033[32m"
+#define COLOR_END   "\033[0m"
 
-#define ALICE     "Alice"
-#define BOB       "Bob"
+#define ALICE       "Alice"
+#define BOB         "Bob"
 
 static void DisplayTitle(const std::string &title) {
 	static unsigned int number = 0;
 
 	number++;
-	std::cout << "\n┃ test " << number << ": " << title << std::endl;
+	std::cout << "\n\n┃ test " << number << ": " << title << std::endl;
 	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 }
 
 static void Line() {
 	std::cout << "----------------------" << std::endl;
+}
+
+template <typename T>
+static void JudgeIsEqual(
+	const std::string &message,
+	T                 &target,
+	const unsigned int expected_hit_points,
+	const unsigned int expected_energy_points,
+	const unsigned int expected_attack_damage
+) {
+	std::cout << message << ": ";
+	if (target.GetHitPoints() == expected_hit_points &&
+		target.GetEnergyPoints() == expected_energy_points &&
+		target.GetAttackDamage() == expected_attack_damage) {
+		std::cout << COLOR_GREEN "OK" << COLOR_END << std::endl;
+	} else {
+		std::cout << COLOR_RED "NG" << COLOR_END << std::endl;
+		exit(EXIT_FAILURE);
+	}
 }
 
 static void PutStatusAandB(const ClapTrap &attacker, const ClapTrap &defender) {
@@ -69,21 +89,27 @@ static void RunTest1() {
 	std::string target = BOB;
 
 	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice Init", alice, 10, 10, 0);
+	JudgeIsEqual(" - Bob Init  ", bob, 10, 10, 0);
 
 	// Alice -> Bob. Success.
 	AttackAtoB(alice, bob, target, 4);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 10, 9, 4);
+	JudgeIsEqual(" - Bob  ", bob, 6, 10, 0);
 	// damages >= hit_points
 	AttackAtoB(alice, bob, target, 8);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 10, 8, 8);
+	JudgeIsEqual(" - Bob  ", bob, 0, 10, 0);
 	// 0 damages. Nothing happend.
 	AttackAtoB(alice, bob, target, 0);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 10, 8, 8);
+	JudgeIsEqual(" - Bob  ", bob, 0, 10, 0);
 
 	// Bob -> Alice. Bob has no hit_points. Nothing happend.
 	target = ALICE;
 	AttackAtoB(bob, alice, target, 5);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 10, 8, 8);
+	JudgeIsEqual(" - Bob  ", bob, 0, 10, 0);
 }
 
 static void RunTest2() {
@@ -95,16 +121,22 @@ static void RunTest2() {
 
 	bob.beRepaired(10);
 	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice Init", alice, 10, 10, 0);
+	JudgeIsEqual(" - Bob Init  ", bob, 20, 9, 0);
 
 	// Alice -> Bob. 10 attacks.
 	for (unsigned int i = 0; i < 10; i++) {
 		AttackAtoB(alice, bob, target, 1);
+		JudgeIsEqual(" - Alice", alice, 10, 10 - i - 1, 1);
+		JudgeIsEqual(" - Bob  ", bob, 20 - i - 1, 9, 0);
 		Line();
 	}
-	PutStatusAandB(alice, bob);
 
 	// Alice -> Bob. Alice has no energy points. Nothing happend.
 	AttackAtoB(alice, bob, target, 1);
+	JudgeIsEqual(" - Alice", alice, 10, 0, 1);
+	JudgeIsEqual(" - Bob  ", bob, 10, 9, 0);
+
 	PutStatusAandB(alice, bob);
 }
 
@@ -113,17 +145,18 @@ static void RunTest3() {
 
 	ClapTrap alice(ALICE);
 	alice.PutStatus();
+	JudgeIsEqual(" - Alice Init", alice, 10, 10, 0);
 
 	// Alice repaires 10 times.
 	for (unsigned int i = 0; i < 10; i++) {
 		Repaire(alice, 1);
+		JudgeIsEqual(" - Alice", alice, 10 + i + 1, 10 - i - 1, 0);
 		Line();
 	}
-	alice.PutStatus();
 
 	// Alice has no energy points. Nothing happend.
 	Repaire(alice, 1);
-	alice.PutStatus();
+	JudgeIsEqual(" - Alice", alice, 20, 0, 0);
 }
 
 static void RunTest4() {
@@ -132,13 +165,14 @@ static void RunTest4() {
 	ClapTrap alice(ALICE);
 	alice.beRepaired(UINT_MAX - 20);
 	alice.PutStatus();
+	JudgeIsEqual(" - Alice Init", alice, UINT_MAX - 10, 9, 0);
 
 	// Max Hit points.
 	Repaire(alice, 11);
-	alice.PutStatus();
+	JudgeIsEqual(" - Alice", alice, UINT_MAX, 8, 0);
 
 	Repaire(alice, 0);
-	alice.PutStatus();
+	JudgeIsEqual(" - Alice", alice, UINT_MAX, 7, 0);
 }
 
 // same behavior test1
@@ -150,21 +184,29 @@ static void RunTest5() {
 	std::string target = BOB;
 
 	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice Init", alice, 10, 10, 0);
+	JudgeIsEqual(" - Bob Init  ", bob, 10, 10, 0);
 
 	// Alice -> Bob. Success.
 	alice.AttackToDefender(bob, target, 4);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 10, 9, 4);
+	JudgeIsEqual(" - Bob  ", bob, 6, 10, 0);
+
 	// damages >= hit_points
 	alice.AttackToDefender(bob, target, 8);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 10, 8, 8);
+	JudgeIsEqual(" - Bob  ", bob, 0, 10, 0);
+
 	// 0 damages. Nothing happend.
 	alice.AttackToDefender(bob, target, 0);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 10, 8, 8);
+	JudgeIsEqual(" - Bob  ", bob, 0, 10, 0);
 
 	// Bob -> Alice. Bob has no hit_points. Nothing happend.
 	target = ALICE;
 	bob.AttackToDefender(alice, target, 5);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 10, 8, 8);
+	JudgeIsEqual(" - Bob  ", bob, 0, 10, 0);
 }
 
 static void RunTest6() {
@@ -173,6 +215,7 @@ static void RunTest6() {
 	// ClapTrap constructor called -> ScavTrap constructor called
 	ScavTrap scav(ALICE);
 	scav.PutStatus();
+	JudgeIsEqual(" - Alice Init", scav, 100, 50, 20);
 	// ScavTrap destructor called -> ClapTrap destructor called
 }
 
@@ -185,18 +228,23 @@ static void RunTest7() {
 
 	alice.beRepaired(20);
 	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice Init", alice, 30, 9, 0);
+	JudgeIsEqual(" - Bob Init  ", bob, 100, 50, 20);
 
 	// Bob -> Alice. normal attack (default attack_damage)
 	bob.AttackToDefender(alice, target);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 10, 9, 0);
+	JudgeIsEqual(" - Bob  ", bob, 100, 49, 20);
 
 	// Bob -> Alice. damages >= hit_points
 	bob.AttackToDefender(alice, target, 12);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 0, 9, 0);
+	JudgeIsEqual(" - Bob  ", bob, 100, 48, 12);
 
 	// Bob -> Alice. Alice has no hit_points. Nothing happend.
 	bob.AttackToDefender(alice, target, 10);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 0, 9, 0);
+	JudgeIsEqual(" - Bob  ", bob, 100, 48, 12);
 }
 
 static void RunTest8() {
@@ -205,6 +253,7 @@ static void RunTest8() {
 	ScavTrap scav(ALICE);
 	scav.guardGate();
 	scav.PutStatus();
+	JudgeIsEqual(" - Alice Init", scav, 100, 50, 20);
 }
 
 static void RunTest9() {
@@ -215,26 +264,32 @@ static void RunTest9() {
 	const std::string target = BOB;
 
 	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice Init", alice, 100, 50, 20);
+	JudgeIsEqual(" - Bob Init  ", bob, 100, 50, 20);
 
 	// Alice -> Bob. normal attack (default attack_damage)
 	alice.AttackToDefender(bob, target);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 100, 49, 20);
+	JudgeIsEqual(" - Bob  ", bob, 80, 50, 20);
 
 	// Alice -> Bob. damages >= hit_points
 	alice.AttackToDefender(bob, target, 88);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 100, 48, 88);
+	JudgeIsEqual(" - Bob  ", bob, 0, 50, 20);
 
 	// Alice -> Bob. Alice has no hit_points. Nothing happend.
 	alice.AttackToDefender(bob, target, 10);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 100, 48, 88);
+	JudgeIsEqual(" - Bob  ", bob, 0, 50, 20);
 }
 
 static void RunTest10() {
 	DisplayTitle("FragTrap class");
 
 	// ClapTrap constructor called -> FragTrap constructor called
-	FragTrap scav(ALICE);
-	scav.PutStatus();
+	FragTrap f(ALICE);
+	f.PutStatus();
+	JudgeIsEqual(" - Alice Init", f, 100, 100, 30);
 	// FragTrap destructor called -> ClapTrap destructor called
 }
 
@@ -247,26 +302,32 @@ static void RunTest11() {
 
 	alice.beRepaired(50);
 	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice Init", alice, 60, 9, 0);
+	JudgeIsEqual(" - Bob Init  ", bob, 100, 100, 30);
 
 	// Bob -> Alice. normal attack (default attack_damage)
 	bob.AttackToDefender(alice, target);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 30, 9, 0);
+	JudgeIsEqual(" - Bob  ", bob, 100, 99, 30);
 
 	// Bob -> Alice. damages >= hit_points
 	bob.AttackToDefender(alice, target, 120);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 0, 9, 0);
+	JudgeIsEqual(" - Bob  ", bob, 100, 98, 120);
 
 	// Bob -> Alice. Alice has no hit_points. Nothing happend.
 	bob.AttackToDefender(alice, target, 10);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 0, 9, 0);
+	JudgeIsEqual(" - Bob  ", bob, 100, 98, 120);
 }
 
 static void RunTest12() {
 	DisplayTitle("FragTrap highFivesGuys()");
 
-	FragTrap scav(ALICE);
-	scav.highFivesGuys();
-	scav.PutStatus();
+	FragTrap f(ALICE);
+	f.highFivesGuys();
+	f.PutStatus();
+	JudgeIsEqual(" - Alice Init", f, 100, 100, 30);
 }
 
 static void RunTest13() {
@@ -277,18 +338,23 @@ static void RunTest13() {
 	const std::string target = BOB;
 
 	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice Init", alice, 100, 100, 30);
+	JudgeIsEqual(" - Bob Init  ", bob, 100, 100, 30);
 
 	// Alice -> Bob. normal attack (default attack_damage)
 	alice.AttackToDefender(bob, target);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 100, 99, 30);
+	JudgeIsEqual(" - Bob  ", bob, 70, 100, 30);
 
 	// Alice -> Bob. damages >= hit_points
 	alice.AttackToDefender(bob, target, 88);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 100, 98, 88);
+	JudgeIsEqual(" - Bob  ", bob, 0, 100, 30);
 
 	// Alice -> Bob. Alice has no hit_points. Nothing happend.
 	alice.AttackToDefender(bob, target, 10);
-	PutStatusAandB(alice, bob);
+	JudgeIsEqual(" - Alice", alice, 100, 98, 88);
+	JudgeIsEqual(" - Bob  ", bob, 0, 100, 30);
 }
 
 static void RunTest14() {
@@ -296,9 +362,11 @@ static void RunTest14() {
 
 	ScavTrap s(ALICE);
 	s.PutStatus();
+	JudgeIsEqual(" - Alice Init", s, 100, 50, 20);
 
 	ScavTrap s2(s);
 	s2.PutStatus();
+	JudgeIsEqual(" - Alice Init", s2, 100, 50, 20);
 }
 
 static void RunTest15() {
@@ -306,9 +374,11 @@ static void RunTest15() {
 
 	FragTrap f(ALICE);
 	f.PutStatus();
+	JudgeIsEqual(" - Alice Init", f, 100, 100, 30);
 
 	FragTrap f2(f);
 	f2.PutStatus();
+	JudgeIsEqual(" - Alice Init", f, 100, 100, 30);
 }
 
 static void RunTest16() {
@@ -316,18 +386,22 @@ static void RunTest16() {
 
 	ScavTrap s(ALICE);
 	s.PutStatus();
+	JudgeIsEqual(" - Alice Init", s, 100, 50, 20);
 
 	ScavTrap s2 = s;
 	s2.PutStatus();
+	JudgeIsEqual(" - Alice Init", s2, 100, 50, 20);
 }
-
 static void RunTest17() {
 	DisplayTitle("FragTrap copy assignment operator overload");
 
 	FragTrap f(ALICE);
-	FragTrap f2 = f;
 	f.PutStatus();
+	JudgeIsEqual(" - Alice Init", f, 100, 100, 30);
+
+	FragTrap f2 = f;
 	f2.PutStatus();
+	JudgeIsEqual(" - Alice Init", f2, 100, 100, 30);
 }
 
 static void RunOriginalTest() {
