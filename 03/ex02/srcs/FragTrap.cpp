@@ -14,6 +14,14 @@ FragTrap::FragTrap(const std::string &name) : ClapTrap(name) {
 	SetAttackDamage(kInitialAttackDamage);
 }
 
+// copy constructor
+FragTrap::FragTrap(const FragTrap &f) : ClapTrap(f) {
+	std::cout << "Copy constructor called (FragTrap)" << std::endl;
+	SetHitPoints(kInitialHitPoints);
+	SetEnergyPoints(kInitialEnergyPoints);
+	SetAttackDamage(kInitialAttackDamage);
+}
+
 FragTrap::~FragTrap() {
 	std::cout << "Destructor called (FragTrap)" << std::endl;
 }
