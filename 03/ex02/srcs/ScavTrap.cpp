@@ -26,6 +26,14 @@ ScavTrap::~ScavTrap() {
 	std::cout << "Destructor called (ScavTrap)" << std::endl;
 }
 
+// copy assignment operator overload
+const ScavTrap &ScavTrap::operator=(const ScavTrap &s) {
+	if (this != &s) {
+		ClapTrap::operator=(s);
+	}
+	return *this;
+}
+
 void ScavTrap::guardGate() const {
 	std::cout << COLOR_PINK "ScavTrap " << GetName()
 			  << " is now in Gate keeper mode" COLOR_END << std::endl;
