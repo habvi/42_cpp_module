@@ -13,6 +13,9 @@ class ScavTrap : public ClapTrap {
 	void guardGate() const;
 
   private:
+	ScavTrap();
+
+  private:
 	static const unsigned int kInitialHitPoints    = 100;
 	static const unsigned int kInitialEnergyPoints = 50;
 	static const unsigned int kInitialAttackDamage = 20;

@@ -32,7 +32,7 @@ class ClapTrap {
 	unsigned int       GetAttackDamage() const;
 	void               SetAttackDamage(const unsigned int damages);
 
-  private:
+  protected:
 	ClapTrap();
 
   protected:
