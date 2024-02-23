@@ -33,8 +33,6 @@ class ClapTrap {
 
   protected:
 	ClapTrap();
-
-  protected:
 	void SetHitPoints(const unsigned int hit_points);
 	void SetEnergyPoints(const unsigned int energy_points);
 
