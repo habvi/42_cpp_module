@@ -2,16 +2,19 @@
 #include <iostream>
 #include <string>
 
-#define COLOR_PINK "\033[35m"
-#define COLOR_END  "\033[0m"
+#define COLOR_PINK       "\033[35m"
+#define COLOR_END        "\033[0m"
+
+#define CLAPNAME_SURFIX  "_clap_name"
+#define NAME_DIAMONDTRAP "DaimondTrap"
 
 DiamondTrap::DiamondTrap() : ClapTrap(), ScavTrap(), FragTrap() {
-	std::cout << "Default constructor called (DiamondTrap)" << std::endl;
+	std::cout << "Default constructor called (" NAME_DIAMONDTRAP ")" << std::endl;
 }
 
 DiamondTrap::DiamondTrap(const std::string &name)
-	: ClapTrap(name + nama_surfix), ScavTrap(), FragTrap(), name_(name) {
-	std::cout << "Constructor called (DiamondTrap)" << std::endl;
+	: ClapTrap(name + CLAPNAME_SURFIX), ScavTrap(), FragTrap(), name_(name) {
+	std::cout << "Constructor called (" NAME_DIAMONDTRAP ")" << std::endl;
 	SetHitPoints(FragTrap::kInitialHitPoints);
 	SetEnergyPoints(ScavTrap::kInitialEnergyPoints);
 	SetAttackDamage(FragTrap::kInitialAttackDamage);
@@ -20,14 +23,14 @@ DiamondTrap::DiamondTrap(const std::string &name)
 // copy constructor
 DiamondTrap::DiamondTrap(const DiamondTrap &d)
 	: ClapTrap(d), ScavTrap(d), FragTrap(d), name_(d.GetName()) {
-	std::cout << "Copy constructor called (DiamondTrap)" << std::endl;
+	std::cout << "Copy constructor called (" NAME_DIAMONDTRAP ")" << std::endl;
 	SetHitPoints(d.GetHitPoints());
 	SetEnergyPoints(d.GetEnergyPoints());
 	SetAttackDamage(d.GetAttackDamage());
 }
 
 DiamondTrap::~DiamondTrap() {
-	std::cout << "Destructor called (DiamondTrap)" << std::endl;
+	std::cout << "Destructor called (" NAME_DIAMONDTRAP ")" << std::endl;
 }
 
 // copy assignment operator overload
@@ -42,8 +45,9 @@ const DiamondTrap &DiamondTrap::operator=(const DiamondTrap &d) {
 }
 
 void DiamondTrap::whoAmI() {
-	std::cout << COLOR_PINK "My (DiamondTrap) name is " << name_ << "." << std::endl;
-	std::cout << "My parent (ClapTrap) name is " << ClapTrap::GetName() << COLOR_END
+	std::cout << COLOR_PINK "My (" NAME_DIAMONDTRAP ") name is " << name_ << "."
+			  << std::endl;
+	std::cout << "My parent name is " << ClapTrap::GetName() << COLOR_END
 			  << std::endl;
 }
 
