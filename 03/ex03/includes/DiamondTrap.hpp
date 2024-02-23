@@ -3,6 +3,7 @@
 
 #include "FragTrap.hpp"
 #include "ScavTrap.hpp"
+#include <string>
 
 class DiamondTrap : public ScavTrap, public FragTrap {
   public:

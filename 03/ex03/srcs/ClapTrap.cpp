@@ -105,6 +105,7 @@ void ClapTrap::beRepaired(unsigned int amount) {
 			  << " remaining " COLOR_END << std::endl;
 }
 
+// able to specify the attack_damage
 void ClapTrap::AttackToDefender(
 	ClapTrap &defender, const std::string &target, const unsigned int damages
 ) {

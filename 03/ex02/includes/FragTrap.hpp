@@ -2,6 +2,7 @@
 #define FLAG_TRAP_H
 
 #include "ClapTrap.hpp"
+#include <string>
 
 class FragTrap : public ClapTrap {
   public:
