@@ -2,6 +2,7 @@
 #define SCAV_TRAP_H
 
 #include "ClapTrap.hpp"
+#include <string>
 
 class ScavTrap : public ClapTrap {
   public:
@@ -12,6 +13,7 @@ class ScavTrap : public ClapTrap {
 
   public:
 	// Following the instructions, not camelcase.
+	void attack(const std::string &target);
 	void guardGate() const;
 
   private:

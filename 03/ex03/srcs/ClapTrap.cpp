@@ -2,9 +2,11 @@
 #include <climits>
 #include <iostream>
 
-#define COLOR_RED   "\033[31m"
-#define COLOR_GREEN "\033[32m"
-#define COLOR_END   "\033[0m"
+#define COLOR_RED     "\033[31m"
+#define COLOR_GREEN   "\033[32m"
+#define COLOR_END     "\033[0m"
+
+#define NAME_CLAPTRAP "ClapTrap"
 
 ClapTrap::ClapTrap() {
 	std::cout << "Default constructor called" << std::endl;
@@ -51,7 +53,7 @@ void ClapTrap::attack(const std::string &target) {
 	if (!IsActionPossible()) {
 		return;
 	}
-	std::cout << COLOR_GREEN "ClapTrap " << name_ << " attacks " << target
+	std::cout << COLOR_GREEN NAME_CLAPTRAP " " << name_ << " attacks " << target
 			  << ", causing " << attack_damage_ << " points of damage!" COLOR_END
 			  << std::endl;
 }
@@ -61,14 +63,14 @@ void ClapTrap::takeDamage(unsigned int amount) {
 		return;
 	}
 	if (hit_points_ < amount) {
-		std::cout << COLOR_GREEN "ClapTrap " << name_ << " takes damages "
+		std::cout << COLOR_GREEN NAME_CLAPTRAP " " << name_ << " takes damages "
 				  << hit_points_
 				  << ", since hit points were not remaining that much." COLOR_END
 				  << std::endl;
 		hit_points_ = 0;
 	} else {
 		hit_points_ -= amount;
-		std::cout << COLOR_GREEN "ClapTrap " << name_ << " takes " << amount
+		std::cout << COLOR_GREEN NAME_CLAPTRAP " " << name_ << " takes " << amount
 				  << " damages. Hit points are left with " << hit_points_
 				  << "." COLOR_END << std::endl;
 	}
@@ -79,7 +81,7 @@ void ClapTrap::LoseEnergyPoint() {
 		return;
 	}
 	energy_points_--;
-	std::cout << COLOR_GREEN "ClapTrap " << name_
+	std::cout << COLOR_GREEN NAME_CLAPTRAP " " << name_
 			  << " successfully attacked, losing 1 energy point, leaving "
 			  << energy_points_ << " remaining " COLOR_END << std::endl;
 }
@@ -96,18 +98,19 @@ void ClapTrap::beRepaired(unsigned int amount) {
 	}
 	hit_points_ += repaired_amount;
 	energy_points_--;
-	std::cout << COLOR_GREEN "ClapTrap " << name_
+	std::cout << COLOR_GREEN NAME_CLAPTRAP " " << name_
 			  << " successfully repaired itself + " << repaired_amount
 			  << " Hit points. New Hit points is " << hit_points_
 			  << ", losing 1 energy point, leaving " << energy_points_
 			  << " remaining " COLOR_END << std::endl;
 }
 
+// able to specify the attack_damage
 void ClapTrap::AttackToDefender(
 	ClapTrap &defender, const std::string &target, const unsigned int damages
 ) {
 	if (!IsActionPossible() || !defender.IsActionPossible()) {
-		std::cerr << COLOR_RED "ClapTrap " << name_ << " failed to attack to "
+		std::cerr << COLOR_RED NAME_CLAPTRAP " " << name_ << " failed to attack to "
 				  << target << COLOR_END << std::endl;
 		return;
 	}

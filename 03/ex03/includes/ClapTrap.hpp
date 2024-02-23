@@ -12,9 +12,9 @@ class ClapTrap {
 
   public:
 	// Following the instructions, not camelcase.
-	void attack(const std::string &target);
-	void takeDamage(unsigned int amount);
-	void beRepaired(unsigned int amount);
+	virtual void attack(const std::string &target);
+	void         takeDamage(unsigned int amount);
+	void         beRepaired(unsigned int amount);
 
   public:
 	void AttackToDefender(
@@ -33,8 +33,6 @@ class ClapTrap {
 
   protected:
 	ClapTrap();
-
-  protected:
 	void SetHitPoints(const unsigned int hit_points);
 	void SetEnergyPoints(const unsigned int energy_points);
 

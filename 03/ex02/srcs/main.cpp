@@ -44,20 +44,20 @@ static void JudgeIsEqual(
 	}
 }
 
-static void PutStatusAandB(const ClapTrap &attacker, const ClapTrap &defender) {
+template <typename T, typename U>
+static void PutStatusAandB(const T &attacker, const U &defender) {
 	attacker.PutStatus();
 	defender.PutStatus();
 }
 
-static bool IsAttackableAtoB(const ClapTrap &attacker, const ClapTrap &defender) {
+template <typename T, typename U>
+static bool IsAttackableAtoB(const T &attacker, const U &defender) {
 	return attacker.IsActionPossible() && defender.IsActionPossible();
 }
 
+template <typename T, typename U>
 static void AttackAtoB(
-	ClapTrap          &attacker,
-	ClapTrap          &defender,
-	const std::string &target,
-	const unsigned int damages
+	T &attacker, U &defender, const std::string &target, const unsigned int damages
 ) {
 	if (IsAttackableAtoB(attacker, defender)) {
 		attacker.SetAttackDamage(damages);
@@ -69,13 +69,15 @@ static void AttackAtoB(
 	}
 }
 
-static bool IsRepaireable(const ClapTrap &c) {
-	return c.IsActionPossible();
+template <typename T>
+static bool IsRepaireable(const T &trap) {
+	return trap.IsActionPossible();
 }
 
-static void Repaire(ClapTrap &c, const unsigned int points) {
-	if (IsRepaireable(c)) {
-		c.beRepaired(points);
+template <typename T>
+static void Repaire(T &trap, const unsigned int points) {
+	if (IsRepaireable(trap)) {
+		trap.beRepaired(points);
 	} else {
 		std::cerr << COLOR_RED "(main) Repair failed." COLOR_END << std::endl;
 	}
@@ -251,6 +253,7 @@ static void RunTest8() {
 	DisplayTitle("ScavTrap guard Gate mode");
 
 	ScavTrap scav(ALICE);
+	scav.attack(BOB);
 	scav.guardGate();
 	scav.PutStatus();
 	JudgeIsEqual(" - Alice Init", scav, 100, 50, 20);

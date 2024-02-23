@@ -2,15 +2,17 @@
 #include <iostream>
 #include <string>
 
-#define COLOR_PINK "\033[35m"
-#define COLOR_END  "\033[0m"
+#define COLOR_PINK    "\033[35m"
+#define COLOR_END     "\033[0m"
+
+#define NAME_FRAGTRAP "FragTrap"
 
 FragTrap::FragTrap() : ClapTrap() {
-	std::cout << "Default constructor called (FragTrap)" << std::endl;
+	std::cout << "Default constructor called (" NAME_FRAGTRAP ")" << std::endl;
 }
 
 FragTrap::FragTrap(const std::string &name) : ClapTrap(name) {
-	std::cout << "Constructor called (FragTrap)" << std::endl;
+	std::cout << "Constructor called (" NAME_FRAGTRAP ")" << std::endl;
 	SetHitPoints(kInitialHitPoints);
 	SetEnergyPoints(kInitialEnergyPoints);
 	SetAttackDamage(kInitialAttackDamage);
@@ -18,14 +20,14 @@ FragTrap::FragTrap(const std::string &name) : ClapTrap(name) {
 
 // copy constructor
 FragTrap::FragTrap(const FragTrap &f) : ClapTrap(f) {
-	std::cout << "Copy constructor called (FragTrap)" << std::endl;
+	std::cout << "Copy constructor called (" NAME_FRAGTRAP ")" << std::endl;
 	SetHitPoints(kInitialHitPoints);
 	SetEnergyPoints(kInitialEnergyPoints);
 	SetAttackDamage(kInitialAttackDamage);
 }
 
 FragTrap::~FragTrap() {
-	std::cout << "Destructor called (FragTrap)" << std::endl;
+	std::cout << "Destructor called (" NAME_FRAGTRAP ")" << std::endl;
 }
 
 // copy assignment operator overload
@@ -37,6 +39,6 @@ const FragTrap &FragTrap::operator=(const FragTrap &f) {
 }
 
 void FragTrap::highFivesGuys() {
-	std::cout << COLOR_PINK "FragTrap " << GetName()
+	std::cout << COLOR_PINK NAME_FRAGTRAP " " << GetName()
 			  << " requests positive high fives." COLOR_END << std::endl;
 }

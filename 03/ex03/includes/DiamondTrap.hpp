@@ -3,8 +3,7 @@
 
 #include "FragTrap.hpp"
 #include "ScavTrap.hpp"
-
-static const std::string nama_surfix = "_clap_name";
+#include <string>
 
 class DiamondTrap : public ScavTrap, public FragTrap {
   public:
