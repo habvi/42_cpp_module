@@ -2,8 +2,9 @@
 #include <iostream>
 #include <string>
 
-#define COLOR_PINK "\033[35m"
-#define COLOR_END  "\033[0m"
+#define COLOR_GREEN "\033[32m"
+#define COLOR_PINK  "\033[35m"
+#define COLOR_END   "\033[0m"
 
 ScavTrap::ScavTrap() : ClapTrap() {
 	std::cout << "Default constructor called (ScavTrap)" << std::endl;
@@ -34,6 +35,16 @@ const ScavTrap &ScavTrap::operator=(const ScavTrap &s) {
 		ClapTrap::operator=(s);
 	}
 	return *this;
+}
+
+// override ClapTrap's attack()
+void ScavTrap::attack(const std::string &target) {
+	if (!IsActionPossible()) {
+		return;
+	}
+	std::cout << COLOR_GREEN "ScavTrap " << GetName() << " attacks " << target
+			  << ", causing " << GetAttackDamage() << " points of damage!" COLOR_END
+			  << std::endl;
 }
 
 void ScavTrap::guardGate() const {

@@ -12,6 +12,7 @@ class ScavTrap : public ClapTrap {
 
   public:
 	// Following the instructions, not camelcase.
+	void attack(const std::string &target);
 	void guardGate() const;
 
   private:
