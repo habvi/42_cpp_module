@@ -2,6 +2,7 @@ NAME		:=	a.out
 
 SRCS_DIR	:=	srcs
 SRCS		:=	Animal.cpp \
+				Brain.cpp \
 				Cat.cpp \
 				Dog.cpp \
 				main.cpp \
