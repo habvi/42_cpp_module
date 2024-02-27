@@ -21,15 +21,24 @@ Cat::Cat(const std::string &name) : Animal() {
 	brain_ = new Brain;
 }
 
+void Cat::CopyBrain(const Cat &c) {
+	// todo: for new fail, throw exception
+	brain_ = new Brain(c.GetBrain());
+}
+
 Cat::Cat(const Cat &c) : Animal(c) {
 	std::cerr << "Coppy constructor called (" TYPE_CAT ")" << std::endl;
 	SetType(c.getType());
+	CopyBrain(c);
 }
 
 const Cat &Cat::operator=(const Cat &c) {
 	std::cerr << "Copy assignment operator= called (" TYPE_CAT ")" << std::endl;
 	if (this != &c) {
 		SetType(c.getType());
+
+		delete brain_;
+		CopyBrain(c);
 	}
 	return *this;
 }

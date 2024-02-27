@@ -18,6 +18,9 @@ class Cat : virtual public Animal {
 	void makeSound() const;
 
   private:
+	void CopyBrain(const Cat &c);
+
+  private:
 	Brain *brain_;
 };
 
