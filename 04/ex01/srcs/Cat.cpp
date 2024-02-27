@@ -1,4 +1,5 @@
 #include "Cat.hpp"
+#include "Brain.hpp"
 #include "color.hpp"
 #include <iostream>
 #include <string>
@@ -9,11 +10,15 @@
 Cat::Cat() : Animal() {
 	std::cerr << "Default constructor called (" TYPE_CAT ")" << std::endl;
 	SetType(TYPE_CAT);
+	// todo: for new fail, throw exception
+	brain_ = new Brain;
 }
 
 Cat::Cat(const std::string &name) : Animal() {
 	std::cerr << "Constructor called (" TYPE_CAT ")" << std::endl;
 	SetType(name);
+	// todo: for new fail, throw exception
+	brain_ = new Brain;
 }
 
 Cat::Cat(const Cat &c) : Animal(c) {
@@ -31,6 +36,7 @@ const Cat &Cat::operator=(const Cat &c) {
 
 Cat::~Cat() {
 	std::cerr << "Destructor called (" TYPE_CAT ")" << std::endl;
+	delete brain_;
 }
 
 // override

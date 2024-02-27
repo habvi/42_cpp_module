@@ -1,4 +1,5 @@
 #include "Dog.hpp"
+#include "Brain.hpp"
 #include "color.hpp"
 #include <iostream>
 #include <string>
@@ -9,11 +10,15 @@
 Dog::Dog() : Animal() {
 	std::cerr << "Default constructor called (" TYPE_DOG ")" << std::endl;
 	SetType(TYPE_DOG);
+	// todo: for new fail, throw exception
+	brain_ = new Brain;
 }
 
 Dog::Dog(const std::string &name) : Animal() {
 	std::cerr << "Constructor called (" TYPE_DOG ")" << std::endl;
 	SetType(name);
+	// todo: for new fail, throw exception
+	brain_ = new Brain;
 }
 
 Dog::Dog(const Dog &d) : Animal(d) {
@@ -31,6 +36,7 @@ const Dog &Dog::operator=(const Dog &d) {
 
 Dog::~Dog() {
 	std::cerr << "Destructor called (" TYPE_DOG ")" << std::endl;
+	delete brain_;
 }
 
 // override
