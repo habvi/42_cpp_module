@@ -3,7 +3,8 @@
 #include <iostream>
 #include <string>
 
-#define TYPE_CAT "Cat"
+#define TYPE_CAT  "Cat"
+#define SOUND_CAT "meow meow"
 
 Cat::Cat() : Animal() {
 	std::cerr << "Default constructor called (" TYPE_CAT ")" << std::endl;
@@ -34,5 +35,6 @@ Cat::~Cat() {
 
 // override
 void Cat::makeSound() const {
-	std::cout << COLOR_PINK "(" TYPE_CAT ") \\ meow meow /" COLOR_END << std::endl;
+	std::cout << COLOR_PINK "(" TYPE_CAT ") \\ " SOUND_CAT " /" COLOR_END
+			  << std::endl;
 }

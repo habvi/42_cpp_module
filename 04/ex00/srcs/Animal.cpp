@@ -3,7 +3,8 @@
 #include <iostream>
 #include <string>
 
-#define TYPE_ANIMAL "Animal"
+#define TYPE_ANIMAL  "Animal"
+#define SOUND_ANIMAL "..."
 
 Animal::Animal() : type(TYPE_ANIMAL) {
 	std::cerr << "Default constructor called (" TYPE_ANIMAL ")" << std::endl;
@@ -34,5 +35,6 @@ void Animal::SetType(const std::string &name) {
 }
 
 void Animal::makeSound() const {
-	std::cout << COLOR_BLUE "(" TYPE_ANIMAL ") ..." COLOR_END << std::endl;
+	std::cout << COLOR_BLUE "(" TYPE_ANIMAL ") \\ " SOUND_ANIMAL " /" COLOR_END
+			  << std::endl;
 }
