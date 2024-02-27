@@ -1,8 +1,11 @@
 #include "Animal.hpp"
+#include "Brain.hpp"
 #include "Cat.hpp"
 #include "Dog.hpp"
 #include "WrongAnimal.hpp"
 #include "WrongCat.hpp"
+#include "color.hpp"
+#include <cassert>
 #include <cstdlib>
 #include <iostream>
 
@@ -12,6 +15,35 @@ static void DisplayTitle(const std::string &title) {
 	std::cout << "\n\n┃ test " << number << ": " << title << std::endl;
 	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 	number++;
+}
+
+static void SetIdeas(Brain &brain) {
+	for (unsigned int i = 0; i < brain.GetNumOfIdeas(); i++) {
+		std::string idea;
+		idea.push_back('a' + i % 26);
+		idea.push_back('a' + (i + 1) % 26);
+		brain.SetIthIdea(i, idea);
+	}
+}
+
+static bool IsDeepCopyBrainMemberArray(const Brain &a, const Brain &b) {
+	assert(a.GetNumOfIdeas() == b.GetNumOfIdeas());
+	for (unsigned int i = 0; i < a.GetNumOfIdeas(); i++) {
+		// std::cerr << a.GetIthIdea(i) << "|" << b.GetIthIdea(i) << std::endl;
+		if (a.GetIthIdea(i) != b.GetIthIdea(i)) {
+			return false;
+		}
+	}
+	return true;
+}
+
+static void JudgeIsEqualBrain(const Brain &a, const Brain &b) {
+	if (IsDeepCopyBrainMemberArray(a, b)) {
+		std::cout << COLOR_GREEN "[OK]" << COLOR_END << std::endl;
+	} else {
+		std::cout << COLOR_RED "[NG]" << COLOR_END << std::endl;
+		exit(EXIT_FAILURE);
+	}
 }
 
 /* === Expect ===
@@ -177,21 +209,58 @@ static void RunTest6() {
 }
 
 /* === Expect ===
-type: CopyDog
-(Dog) \ woof woof /
-type: CopyDog
-(Dog) \ woof woof /
-type: CopyDog
-(Dog) \ woof woof /
-type: CopyDog
-(Dog) \ woof woof /
-type: CopyDog
-(Dog) \ woof woof /
-*/
+ */
 static void RunTest7() {
-	DisplayTitle("Dog Copy consrtuctor");
+	DisplayTitle("Dog & Cat construct/destruct *Brain");
+
+	const Dog *dog = new Dog();
+	delete dog;
+
+	const Cat *cat = new Cat();
+	delete cat;
+}
+
+/* === Expect ===
+[OK]
+[OK]
+*/
+static void RunTest8() {
+	DisplayTitle("Brain constructor / deepcopy");
+
+	Brain *brain = new Brain();
+	SetIdeas(*brain);
+
+	const Brain copy_brain(*brain);
+	JudgeIsEqualBrain(*brain, copy_brain);
+
+	const Brain copy_brain2 = *brain;
+	JudgeIsEqualBrain(*brain, copy_brain2);
+
+	delete brain;
+}
+
+/* === Expect ===
+type: CopyDog
+(Dog) \ woof woof /
+[OK]
+type: CopyDog
+(Dog) \ woof woof /
+[OK]
+type: CopyDog
+(Dog) \ woof woof /
+[OK]
+type: CopyDog
+(Dog) \ woof woof /
+[OK]
+type: CopyDog
+(Dog) \ woof woof /
+[OK]
+*/
+static void RunTest9() {
+	DisplayTitle("Dog Copy consrtuctor / deepcopy");
 
 	const Dog *dog = new Dog("CopyDog");
+	SetIdeas(dog->GetBrain());
 
 	const Dog  copy_dog(*dog);
 	const Dog *copy_dog2 = dog;
@@ -201,18 +270,23 @@ static void RunTest7() {
 
 	std::cout << "type: " << copy_dog.getType() << std::endl;
 	copy_dog.makeSound();
+	JudgeIsEqualBrain(dog->GetBrain(), copy_dog.GetBrain());
 
 	std::cout << "type: " << copy_dog2->getType() << std::endl;
 	copy_dog2->makeSound();
+	JudgeIsEqualBrain(dog->GetBrain(), copy_dog2->GetBrain());
 
 	std::cout << "type: " << copy_dog3.getType() << std::endl;
 	copy_dog3.makeSound();
+	JudgeIsEqualBrain(dog->GetBrain(), copy_dog3.GetBrain());
 
 	std::cout << "type: " << copy_dog4->getType() << std::endl;
 	copy_dog4->makeSound();
+	JudgeIsEqualBrain(dog->GetBrain(), copy_dog4->GetBrain());
 
 	std::cout << "type: " << copy_dog5->getType() << std::endl;
 	copy_dog5->makeSound();
+	JudgeIsEqualBrain(dog->GetBrain(), copy_dog5->GetBrain());
 
 	delete copy_dog4;
 	delete dog;
@@ -221,19 +295,25 @@ static void RunTest7() {
 /* === Expect ===
 type: CopyCat
 (Cat) \ meow meow /
+[OK]
 type: CopyCat
 (Cat) \ meow meow /
+[OK]
 type: CopyCat
 (Cat) \ meow meow /
+[OK]
 type: CopyCat
 (Cat) \ meow meow /
+[OK]
 type: CopyCat
 (Cat) \ meow meow /
+[OK]
 */
-static void RunTest8() {
-	DisplayTitle("Cat Copy consrtuctor");
+static void RunTest10() {
+	DisplayTitle("Cat Copy consrtuctor / deepcopy");
 
 	const Cat *cat = new Cat("CopyCat");
+	SetIdeas(cat->GetBrain());
 
 	const Cat  copy_cat(*cat);
 	const Cat *copy_cat2 = cat;
@@ -243,32 +323,42 @@ static void RunTest8() {
 
 	std::cout << "type: " << copy_cat.getType() << std::endl;
 	copy_cat.makeSound();
+	JudgeIsEqualBrain(cat->GetBrain(), copy_cat.GetBrain());
 
 	std::cout << "type: " << copy_cat2->getType() << std::endl;
 	copy_cat2->makeSound();
+	JudgeIsEqualBrain(cat->GetBrain(), copy_cat2->GetBrain());
 
 	std::cout << "type: " << copy_cat3.getType() << std::endl;
 	copy_cat3.makeSound();
+	JudgeIsEqualBrain(cat->GetBrain(), copy_cat3.GetBrain());
 
 	std::cout << "type: " << copy_cat4->getType() << std::endl;
 	copy_cat4->makeSound();
+	JudgeIsEqualBrain(cat->GetBrain(), copy_cat4->GetBrain());
 
 	std::cout << "type: " << copy_cat5->getType() << std::endl;
 	copy_cat5->makeSound();
+	JudgeIsEqualBrain(cat->GetBrain(), copy_cat5->GetBrain());
 
 	delete copy_cat4;
 	delete cat;
 }
 
 static void RunOriginalTest() {
+	/* ex00 */
 	RunTest1();
 	RunTest2();
 	RunTest3();
 	RunTest4();
 	RunTest5();
 	RunTest6();
+
+	/* ex01 */
 	RunTest7();
 	RunTest8();
+	RunTest9();
+	RunTest10();
 }
 
 int main() {
