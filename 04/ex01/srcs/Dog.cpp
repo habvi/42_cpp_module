@@ -21,15 +21,24 @@ Dog::Dog(const std::string &name) : Animal() {
 	brain_ = new Brain;
 }
 
+void Dog::CopyBrain(const Dog &d) {
+	// todo: for new fail, throw exception
+	brain_ = new Brain(d.GetBrain());
+}
+
 Dog::Dog(const Dog &d) : Animal(d) {
 	std::cerr << "Coppy constructor called (" TYPE_DOG ")" << std::endl;
 	SetType(d.getType());
+	CopyBrain(d);
 }
 
 const Dog &Dog::operator=(const Dog &d) {
 	std::cerr << "Copy assignment operator= called (" TYPE_DOG ")" << std::endl;
 	if (this != &d) {
 		SetType(d.getType());
+
+		delete brain_;
+		CopyBrain(d);
 	}
 	return *this;
 }
