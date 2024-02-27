@@ -4,7 +4,9 @@ SRCS_DIR	:=	srcs
 SRCS		:=	Animal.cpp \
 				Cat.cpp \
 				Dog.cpp \
-				main.cpp
+				main.cpp \
+				WrongAnimal.cpp \
+				WrongCat.cpp
 
 OBJ_DIR		:=	objs
 OBJS		:=	$(SRCS:%.cpp=$(OBJ_DIR)/%.o)
@@ -54,5 +56,9 @@ check:
 	cppcheck --enable=all $$(find . -type f -name "*.cpp" | tr '\n' ' ')
 
 #--------------------------------------------
+.PHONY	: test
+test:
+	
+
 
 -include $(DEPS)
