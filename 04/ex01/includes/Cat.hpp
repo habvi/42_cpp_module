@@ -17,6 +17,9 @@ class Cat : virtual public Animal {
 	// Following the instructions, not camelcase.
 	void makeSound() const;
 
+  public:
+	Brain &GetBrain() const;
+
   private:
 	void CopyBrain(const Cat &c);
 

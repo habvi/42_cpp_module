@@ -53,3 +53,7 @@ void Dog::makeSound() const {
 	std::cout << COLOR_GREEN "(" TYPE_DOG ") \\ " SOUND_DOG " /" COLOR_END
 			  << std::endl;
 }
+
+Brain &Dog::GetBrain() const {
+	return *brain_;
+}

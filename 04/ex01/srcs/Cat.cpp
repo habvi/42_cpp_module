@@ -53,3 +53,7 @@ void Cat::makeSound() const {
 	std::cout << COLOR_PINK "(" TYPE_CAT ") \\ " SOUND_CAT " /" COLOR_END
 			  << std::endl;
 }
+
+Brain &Cat::GetBrain() const {
+	return *brain_;
+}
