@@ -345,37 +345,65 @@ static void RunTest10() {
 	delete cat;
 }
 
-// static void RunTest11() {
-// 	DisplayTitle("Dog's Brain GetIthIdea() index out of range");
+/* === Expect ===
+Error: index out of range
+*/
+static void RunTest11() {
+	DisplayTitle("Dog's Brain GetIthIdea() index out of range");
 
-// 	const Dog *dog = new Dog();
-// 	dog->GetBrain().GetIthIdea(10000);
-// 	delete dog;
-// }
+	const Dog *dog = new Dog();
+	try {
+		dog->GetBrain().GetIthIdea(10000);
+	} catch (const std::exception &e) {
+		std::cout << e.what() << std::endl;
+	}
+	delete dog;
+}
 
-// static void RunTest12() {
-// 	DisplayTitle("Cat's Brain GetIthIdea() index out of range");
+/* === Expect ===
+Error: index out of range
+*/
+static void RunTest12() {
+	DisplayTitle("Cat's Brain GetIthIdea() index out of range");
 
-// 	const Cat *cat = new Cat();
-// 	cat->GetBrain().GetIthIdea(10000);
-// 	delete cat;
-// }
+	const Cat *cat = new Cat();
+	try {
+		cat->GetBrain().GetIthIdea(10000);
+	} catch (const std::exception &e) {
+		std::cout << e.what() << std::endl;
+	}
+	delete cat;
+}
 
-// static void RunTest13() {
-// 	DisplayTitle("Dog's Brain SetIthIdea() index out of range");
+/* === Expect ===
+Error: index out of range
+*/
+static void RunTest13() {
+	DisplayTitle("Dog's Brain SetIthIdea() index out of range");
 
-// 	const Dog *dog = new Dog();
-// 	dog->GetBrain().SetIthIdea(10000, "out of range");
-// 	delete dog;
-// }
+	const Dog *dog = new Dog();
+	try {
+		dog->GetBrain().SetIthIdea(10000, "out of range");
+	} catch (const std::exception &e) {
+		std::cout << e.what() << std::endl;
+	}
+	delete dog;
+}
 
-// static void RunTest14() {
-// 	DisplayTitle("Cat's Brain SetIthIdea() index out of range");
+/* === Expect ===
+Error: index out of range
+*/
+static void RunTest14() {
+	DisplayTitle("Cat's Brain SetIthIdea() index out of range");
 
-// 	const Cat *cat = new Cat();
-// 	cat->GetBrain().SetIthIdea(10000, "out of range");
-// 	delete cat;
-// }
+	const Cat *cat = new Cat();
+	try {
+		cat->GetBrain().SetIthIdea(10000, "out of range");
+	} catch (const std::exception &e) {
+		std::cout << e.what() << std::endl;
+	}
+	delete cat;
+}
 
 /* === Expect ===
 (Dog) \ woof woof /
@@ -452,10 +480,10 @@ static void RunOriginalTest() {
 	RunTest8();
 	RunTest9();
 	RunTest10();
-	// RunTest11();
-	// RunTest12();
-	// RunTest13();
-	// RunTest14();
+	RunTest11();
+	RunTest12();
+	RunTest13();
+	RunTest14();
 	RunTest15();
 }
 
