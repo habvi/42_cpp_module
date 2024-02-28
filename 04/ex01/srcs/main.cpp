@@ -345,6 +345,99 @@ static void RunTest10() {
 	delete cat;
 }
 
+// static void RunTest11() {
+// 	DisplayTitle("Dog's Brain GetIthIdea() index out of range");
+
+// 	const Dog *dog = new Dog();
+// 	dog->GetBrain().GetIthIdea(10000);
+// 	delete dog;
+// }
+
+// static void RunTest12() {
+// 	DisplayTitle("Cat's Brain GetIthIdea() index out of range");
+
+// 	const Cat *cat = new Cat();
+// 	cat->GetBrain().GetIthIdea(10000);
+// 	delete cat;
+// }
+
+// static void RunTest13() {
+// 	DisplayTitle("Dog's Brain SetIthIdea() index out of range");
+
+// 	const Dog *dog = new Dog();
+// 	dog->GetBrain().SetIthIdea(10000, "out of range");
+// 	delete dog;
+// }
+
+// static void RunTest14() {
+// 	DisplayTitle("Cat's Brain SetIthIdea() index out of range");
+
+// 	const Cat *cat = new Cat();
+// 	cat->GetBrain().SetIthIdea(10000, "out of range");
+// 	delete cat;
+// }
+
+/* === Expect ===
+(Dog) \ woof woof /
+(Dog) \ woof woof /
+(Dog) \ woof woof /
+(Cat) \ meow meow /
+(Cat) \ meow meow /
+(Cat) \ meow meow /
+(Dog) \ woof woof /
+(Dog) \ woof woof /
+(Dog) \ woof woof /
+(Cat) \ meow meow /
+(Cat) \ meow meow /
+(Cat) \ meow meow /
+set 5 from pointer
+set 88 from pointer
+[OK]
+*/
+static void RunTest15() {
+	DisplayTitle("subject test: array of Animal (half Dog, half Cat)");
+
+	static const unsigned int array_size = 6;
+	Animal                   *animals[array_size];
+
+	// half Dog, half Cat
+	for (unsigned int i = 0; i < array_size; i++) {
+		if (i < array_size / 2) {
+			animals[i] = new Dog();
+		} else {
+			animals[i] = new Cat();
+		}
+	}
+	// makeSound()
+	for (unsigned int i = 0; i < array_size; i++) {
+		animals[i]->makeSound();
+	}
+	// set ideas
+	Dog *dog = dynamic_cast<Dog *>(animals[1]);
+	dog->GetBrain().SetIthIdea(5, "set 5 from pointer");
+	dog->GetBrain().SetIthIdea(88, "set 88 from pointer");
+
+	// copy Animal array
+	Animal *copy_animals[array_size];
+	for (unsigned int i = 0; i < array_size; i++) {
+		copy_animals[i] = animals[i];
+	}
+	// makeSound()
+	for (unsigned int i = 0; i < array_size; i++) {
+		copy_animals[i]->makeSound();
+	}
+	// check copy Brain's Ideas. (deepcopy)
+	Dog *copy_dog = dynamic_cast<Dog *>(copy_animals[1]);
+	std::cout << copy_dog->GetBrain().GetIthIdea(5) << std::endl;
+	std::cout << copy_dog->GetBrain().GetIthIdea(88) << std::endl;
+	JudgeIsEqualBrain(dog->GetBrain(), copy_dog->GetBrain());
+
+	// delete Animal array
+	for (unsigned int i = 0; i < array_size; i++) {
+		delete animals[i];
+	}
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -359,6 +452,11 @@ static void RunOriginalTest() {
 	RunTest8();
 	RunTest9();
 	RunTest10();
+	// RunTest11();
+	// RunTest12();
+	// RunTest13();
+	// RunTest14();
+	RunTest15();
 }
 
 int main() {
