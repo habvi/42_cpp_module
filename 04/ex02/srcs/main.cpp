@@ -51,22 +51,21 @@ Dog
 Cat
 (Cat) \ meow meow /
 (Dog) \ woof woof /
-(Animal) ...
 */
 static void RunSubjectTest() {
 	DisplayTitle("subject");
 
-	const Animal *meta = new Animal();
-	const Animal *j    = new Dog();
-	const Animal *i    = new Cat();
+	// const Animal *meta = new Animal();
+	const Animal *j = new Dog();
+	const Animal *i = new Cat();
 
 	std::cout << j->getType() << " " << std::endl;
 	std::cout << i->getType() << " " << std::endl;
 	i->makeSound();
 	j->makeSound();
-	meta->makeSound();
+	// meta->makeSound();
 
-	delete meta;
+	// delete meta;
 	delete j;
 	delete i;
 }
@@ -74,22 +73,21 @@ static void RunSubjectTest() {
 /* === Expect ===
 Dog
 Cat
-(Animal) ...
-(Animal) ...
-(Animal) ...
+(Cat) \ meow meow /
+(Dog) \ woof woof /
 */
 static void RunTest1() {
 	DisplayTitle("subject / not pointer");
 
-	const Animal meta = Animal();
-	const Animal j    = Dog();
-	const Animal i    = Cat();
+	// const Animal meta = Animal();
+	const Dog j = Dog();
+	const Cat i = Cat();
 
 	std::cout << j.getType() << " " << std::endl;
 	std::cout << i.getType() << " " << std::endl;
 	i.makeSound();
 	j.makeSound();
-	meta.makeSound();
+	// meta.makeSound();
 }
 
 /* === Expect ===
@@ -112,18 +110,16 @@ static void RunTest2() {
 }
 
 /* === Expect ===
-type: Animal
-(Animal) \ ... /
  */
 static void RunTest3() {
-	DisplayTitle("Animal class");
+	DisplayTitle("Animal class -> unusable");
 
-	const Animal *animal = new Animal();
+	// const Animal *animal = new Animal();
 
-	std::cout << "type: " << animal->getType() << std::endl;
-	animal->makeSound();
+	// std::cout << "type: " << animal->getType() << std::endl;
+	// animal->makeSound();
 
-	delete animal;
+	// delete animal;
 }
 
 /* === Expect ===
@@ -167,45 +163,35 @@ static void RunTest5() {
 }
 
 /* === Expect ===
-type: Animal
-(Animal) \ ... /
-type: Animal
-(Animal) \ ... /
-type: Animal
-(Animal) \ ... /
-type: Animal
-(Animal) \ ... /
-type: Animal
-(Animal) \ ... /
  */
 static void RunTest6() {
-	DisplayTitle("Animal Copy consrtuctor");
+	DisplayTitle("Animal Copy consrtuctor -> unusable");
 
-	const Animal *animal = new Animal();
+	// const Animal *animal = new Animal();
 
-	const Animal  copy_animal(*animal);
-	const Animal *copy_animal2 = animal;
-	const Animal  copy_animal3 = *animal;
-	const Animal *copy_animal4 = new Animal(*animal);
-	const Animal *copy_animal5 = &copy_animal;
+	// const Animal  copy_animal(*animal);
+	// const Animal *copy_animal2 = animal;
+	// const Animal  copy_animal3 = *animal;
+	// const Animal *copy_animal4 = new Animal(*animal);
+	// const Animal *copy_animal5 = &copy_animal;
 
-	std::cout << "type: " << copy_animal.getType() << std::endl;
-	copy_animal.makeSound();
+	// std::cout << "type: " << copy_animal.getType() << std::endl;
+	// copy_animal.makeSound();
 
-	std::cout << "type: " << copy_animal2->getType() << std::endl;
-	copy_animal2->makeSound();
+	// std::cout << "type: " << copy_animal2->getType() << std::endl;
+	// copy_animal2->makeSound();
 
-	std::cout << "type: " << copy_animal3.getType() << std::endl;
-	copy_animal3.makeSound();
+	// std::cout << "type: " << copy_animal3.getType() << std::endl;
+	// copy_animal3.makeSound();
 
-	std::cout << "type: " << copy_animal4->getType() << std::endl;
-	copy_animal4->makeSound();
+	// std::cout << "type: " << copy_animal4->getType() << std::endl;
+	// copy_animal4->makeSound();
 
-	std::cout << "type: " << copy_animal5->getType() << std::endl;
-	copy_animal5->makeSound();
+	// std::cout << "type: " << copy_animal5->getType() << std::endl;
+	// copy_animal5->makeSound();
 
-	delete copy_animal4;
-	delete animal;
+	// delete copy_animal4;
+	// delete animal;
 }
 
 /* === Expect ===
