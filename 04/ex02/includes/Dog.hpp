@@ -1,5 +1,5 @@
-#ifndef EX01_DOG_HPP
-#define EX01_DOG_HPP
+#ifndef EX02_DOG_HPP
+#define EX02_DOG_HPP
 
 #include "Animal.hpp"
 #include "Brain.hpp"
@@ -27,4 +27,4 @@ class Dog : virtual public Animal {
 	Brain *brain_;
 };
 
-#endif /* EX01_DOG_HPP */
+#endif /* EX02_DOG_HPP */
