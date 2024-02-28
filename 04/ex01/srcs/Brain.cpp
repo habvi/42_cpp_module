@@ -1,5 +1,5 @@
 #include "Brain.hpp"
-#include <cassert>
+#include "color.hpp"
 #include <iostream>
 #include <string>
 
@@ -38,13 +38,15 @@ unsigned int Brain::GetNumOfIdeas() const {
 }
 
 const std::string &Brain::GetIthIdea(const unsigned int index) const {
-	// todo: throw exception or return error
-	assert(index < kNumOfIdea);
+	if (index >= kNumOfIdea) {
+		throw std::out_of_range(COLOR_RED "Error: index out of range" COLOR_END);
+	}
 	return ideas[index];
 }
 
 void Brain::SetIthIdea(const unsigned int index, const std::string &idea) {
-	// todo: throw exception or return error
-	assert(index < kNumOfIdea);
+	if (index >= kNumOfIdea) {
+		throw std::out_of_range(COLOR_RED "Error: index out of range" COLOR_END);
+	}
 	ideas[index] = idea;
 }
