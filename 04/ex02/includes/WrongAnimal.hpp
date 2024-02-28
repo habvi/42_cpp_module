@@ -1,5 +1,5 @@
-#ifndef EX01_WRONG_ANIMAL_HPP
-#define EX01_WRONG_ANIMAL_HPP
+#ifndef EX02_WRONG_ANIMAL_HPP
+#define EX02_WRONG_ANIMAL_HPP
 
 #include <string>
 
@@ -22,4 +22,4 @@ class WrongAnimal {
 	std::string type;
 };
 
-#endif /* EX01_WRONG_ANIMAL_HPP */
+#endif /* EX02_WRONG_ANIMAL_HPP */

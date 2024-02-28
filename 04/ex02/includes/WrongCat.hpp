@@ -1,5 +1,5 @@
-#ifndef EX01_WRONG_CAT_HPP
-#define EX01_WRONG_CAT_HPP
+#ifndef EX02_WRONG_CAT_HPP
+#define EX02_WRONG_CAT_HPP
 
 #include "WrongAnimal.hpp"
 #include <string>
@@ -17,4 +17,4 @@ class WrongCat : virtual public WrongAnimal {
 	void makeSound() const;
 };
 
-#endif /* EX01_WRONG_CAT_HPP */
+#endif /* EX02_WRONG_CAT_HPP */
