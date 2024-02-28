@@ -5,18 +5,18 @@
 
 class Animal {
   public:
-	Animal();
-	Animal(const Animal &a);
-	const Animal &operator=(const Animal &a);
 	virtual ~Animal();
 
   public:
 	// Following the instructions, not camelcase.
 	std::string  getType() const;
-	virtual void makeSound() const;
+	virtual void makeSound() const = 0;
 
   protected:
-	void SetType(const std::string &name);
+	Animal();
+	Animal(const Animal &a);
+	const Animal &operator=(const Animal &a);
+	void          SetType(const std::string &name);
 
   protected:
 	std::string type;
