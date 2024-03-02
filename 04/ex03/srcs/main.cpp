@@ -3,6 +3,8 @@
 #include "Cure.hpp"
 #include "Ice.hpp"
 #include "MateriaSource.hpp"
+#include "cassert"
+#include "color.hpp"
 #include <cstdlib>
 #include <iostream>
 
@@ -12,6 +14,37 @@ static void DisplayTitle(const std::string &title) {
 	std::cout << "\n\n┃ test " << number << ": " << title << std::endl;
 	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 	number++;
+}
+
+static bool IsDeepCopyBrainMemberArray(const Character *a, const Character *b) {
+	assert(a->getLimitSlotNum() == b->getLimitSlotNum());
+	for (unsigned int i = 0; i < a->getLimitSlotNum(); i++) {
+		AMateria *tmp1 = a->getIthAMateria(i);
+		AMateria *tmp2 = b->getIthAMateria(i);
+		if (tmp1 && tmp2) {
+			if (tmp1->getType() != tmp2->getType()) {
+				return false;
+			}
+		};
+	}
+	return true;
+}
+
+static void JudgeIsEqualMaterias(const Character *a, const Character *b) {
+	if (IsDeepCopyBrainMemberArray(a, b)) {
+		std::cout << COLOR_GREEN "[deepcopy: OK]" << COLOR_END << std::endl;
+	} else {
+		std::cout << COLOR_RED "[deepcopy: NG]" << COLOR_END << std::endl;
+		exit(EXIT_FAILURE);
+	}
+}
+
+static void CallAllMateriasUse(Character *c) {
+	for (unsigned int i = 0; i < c->getLimitSlotNum(); i++) {
+		if (AMateria *m = c->getIthAMateria(i)) {
+			m->use(*c);
+		}
+	}
 }
 
 /* === Expect ===
@@ -43,7 +76,48 @@ static void RunSubjectTest() {
 	delete src;
 }
 
+/* === Expect ===
+* shoots an ice bolt at Alice *
+* heals Alice's wounds *
+* heals Alice's wounds *
+[deepcopy: OK]
+[deepcopy: OK]
+[deepcopy: OK]
+[deepcopy: OK]
+[deepcopy: OK]
+*/
+static void Test1() {
+	DisplayTitle("Character's deepcopy");
+
+	Character *alice = new Character("Alice");
+
+	alice->equip(new Ice());  // i: 0
+	alice->equip(new Cure()); // i: 1
+	alice->equip(new Cure()); // i: 2
+	CallAllMateriasUse(alice);
+
+	Character  bob1(*alice);
+	Character *bob2 = alice;
+	Character  bob3 = *alice;
+	Character *bob4 = new Character(*alice);
+	Character *bob5 = &bob1;
+
+	JudgeIsEqualMaterias(alice, &bob1);
+	JudgeIsEqualMaterias(alice, bob2);
+	JudgeIsEqualMaterias(alice, &bob3);
+	JudgeIsEqualMaterias(alice, bob4);
+	JudgeIsEqualMaterias(alice, bob5);
+
+	delete bob4;
+	delete alice;
+}
+
+static void RunOriginalTest() {
+	Test1();
+}
+
 int main() {
 	RunSubjectTest();
+	RunOriginalTest();
 	return EXIT_SUCCESS;
 }

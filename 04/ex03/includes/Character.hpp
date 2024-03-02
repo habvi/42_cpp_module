@@ -21,6 +21,8 @@ class Character : virtual public ICharacter {
 
   public:
 	std::string const &getName() const;
+	unsigned int       getLimitSlotNum() const;
+	AMateria          *getIthAMateria(const unsigned int index) const;
 
   private:
 	void initMaterias();

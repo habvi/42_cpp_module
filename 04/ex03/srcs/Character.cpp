@@ -86,3 +86,14 @@ void Character::use(int index, ICharacter &target) {
 const std::string &Character::getName() const {
 	return name_;
 }
+
+unsigned int Character::getLimitSlotNum() const {
+	return kLimitSlotNum;
+}
+
+AMateria *Character::getIthAMateria(const unsigned int index) const {
+	if (!isValidIndex(index)) {
+		return NULL;
+	}
+	return slot_[index];
+}
