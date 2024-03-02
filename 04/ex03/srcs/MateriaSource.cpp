@@ -12,7 +12,9 @@ void MateriaSource::copyMateriaSrcs(const MateriaSource &m) {
 	for (unsigned int i = 0; i < kLimitCharactersNum; i++) {
 		if (m.materia_srcs_[i]) {
 			materia_srcs_[i] = m.materia_srcs_[i]->clone();
-			// todo: throw exception
+			if (materia_srcs_[i] == NULL) {
+				throw std::bad_alloc();
+			}
 		} else {
 			materia_srcs_[i] = NULL;
 		}
@@ -21,8 +23,11 @@ void MateriaSource::copyMateriaSrcs(const MateriaSource &m) {
 
 MateriaSource::MateriaSource(const MateriaSource &m)
 	: num_of_srcs_(m.getNumOfSrcs()) {
-	// todo: try-catch
-	copyMateriaSrcs(m);
+	try {
+		copyMateriaSrcs(m);
+	} catch (const std::bad_alloc &e) {
+		throw;
+	}
 }
 
 const MateriaSource &MateriaSource::operator=(const MateriaSource &m) {
@@ -31,8 +36,11 @@ const MateriaSource &MateriaSource::operator=(const MateriaSource &m) {
 		for (unsigned int i = 0; i < kLimitCharactersNum; i++) {
 			delete materia_srcs_[i];
 		}
-		// todo: try-catch
-		copyMateriaSrcs(m);
+		try {
+			copyMateriaSrcs(m);
+		} catch (const std::bad_alloc &e) {
+			throw;
+		}
 	}
 	return *this;
 }
