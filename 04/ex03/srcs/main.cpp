@@ -14,29 +14,33 @@ static void DisplayTitle(const std::string &title) {
 	number++;
 }
 
+/* === Expect ===
+ * shoots an ice bolt at bob *
+ * heals bob's wounds *
+ */
 static void RunSubjectTest() {
 	DisplayTitle("subject");
 
-	// IMateriaSource *src = new MateriaSource();
-	// src->learnMateria(new Ice());
-	// src->learnMateria(new Cure());
+	IMateriaSource *src = new MateriaSource();
+	src->learnMateria(new Ice());
+	src->learnMateria(new Cure());
 
-	// ICharacter *me = new Character("me");
+	ICharacter *me = new Character("me");
 
-	// AMateria *tmp;
-	// tmp = src->createMateria("ice");
-	// me->equip(tmp);
-	// tmp = src->createMateria("cure");
-	// me->equip(tmp);
+	AMateria *tmp;
+	tmp = src->createMateria("ice");
+	me->equip(tmp);
+	tmp = src->createMateria("cure");
+	me->equip(tmp);
 
-	// ICharacter *bob = new Character("bob-0");
+	ICharacter *bob = new Character("bob");
 
-	// me->use(0, *bob); // cout ice's message
-	// me->use(1, *bob); // cout cure's message
+	me->use(0, *bob); // cout ice's message
+	me->use(1, *bob); // cout cure's message
 
-	// delete bob;
-	// delete me;
-	// delete src;
+	delete bob;
+	delete me;
+	delete src;
 }
 
 int main() {
