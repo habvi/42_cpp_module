@@ -6,7 +6,8 @@ SRCS		:=	AMateria.cpp \
 				Cure.cpp \
 				Ice.cpp \
 				main.cpp \
-				MateriaSource.cpp
+				MateriaSource.cpp \
+				MateriaSourceDammy.cpp
 
 OBJ_DIR		:=	objs
 OBJS		:=	$(SRCS:%.cpp=$(OBJ_DIR)/%.o)
