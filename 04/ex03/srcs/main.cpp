@@ -47,6 +47,14 @@ static void CallAllMateriasUse(Character *c) {
 	}
 }
 
+static void CallAllSlotUse(ICharacter *ic, ICharacter *c) {
+	const unsigned int kLimitSlotNum =
+		dynamic_cast<Character *>(ic)->getLimitSlotNum();
+	for (unsigned int i = 0; i < kLimitSlotNum; i++) {
+		ic->use(i, *c);
+	}
+}
+
 /* === Expect ===
  * shoots an ice bolt at bob *
  * heals bob's wounds *
@@ -136,8 +144,43 @@ static void Test2() {
 
 	ICharacter *bob = new Character("bob-2");
 
-	me->use(0, *bob); // ice -> empty (don’t do anything)
-	me->use(1, *bob); // cure
+	// me->use(0, *bob); // ice -> empty (don’t do anything)
+	// me->use(1, *bob); // cure
+	CallAllSlotUse(me, bob);
+
+	delete bob;
+	delete me;
+	delete src;
+}
+
+/* === Expect ===
+ * shoots an ice bolt at bob *
+ * heals bob's wounds *
+ */
+static void Test3() {
+	DisplayTitle("ICharacter->use(idx, ptr): idx out of range");
+	IMateriaSource *src = new MateriaSource();
+	src->learnMateria(new Ice());
+	src->learnMateria(new Cure());
+
+	ICharacter *me = new Character("me");
+
+	AMateria *materia0_ice = src->createMateria("ice");
+	me->equip(materia0_ice);
+	AMateria *materia1_cure = src->createMateria("cure");
+	me->equip(materia1_cure);
+
+	ICharacter *bob = new Character("bob-3");
+
+	// me->use(0, *bob); // ice
+	// me->use(1, *bob); // cure
+	// me->use(2, *bob); // empty (don’t do anything)
+	// me->use(3, *bob); // empty (don’t do anything)
+	CallAllSlotUse(me, bob);
+
+	const unsigned int kLimitSlotNum =
+		dynamic_cast<Character *>(me)->getLimitSlotNum();
+	me->use(kLimitSlotNum, *bob); // out of range (don’t do anything)
 
 	delete bob;
 	delete me;
@@ -147,6 +190,7 @@ static void Test2() {
 static void RunOriginalTest() {
 	Test1();
 	Test2();
+	Test3();
 }
 
 int main() {
