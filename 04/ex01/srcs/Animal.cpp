@@ -1,7 +1,6 @@
 #include "Animal.hpp"
 #include "color.hpp"
 #include <iostream>
-#include <string>
 
 #define TYPE_ANIMAL  "Animal"
 #define SOUND_ANIMAL "..."

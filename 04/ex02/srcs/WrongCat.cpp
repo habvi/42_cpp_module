@@ -1,7 +1,6 @@
 #include "WrongCat.hpp"
 #include "color.hpp"
 #include <iostream>
-#include <string>
 
 #define TYPE_WRONG_CAT  "WrongCat"
 #define SOUND_WRONG_CAT "wmeow wmeow"

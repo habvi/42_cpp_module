@@ -1,7 +1,6 @@
 #include "Cat.hpp"
 #include "color.hpp"
 #include <iostream>
-#include <string>
 
 #define TYPE_CAT  "Cat"
 #define SOUND_CAT "meow meow"
