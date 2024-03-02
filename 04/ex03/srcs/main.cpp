@@ -3,6 +3,7 @@
 #include "Cure.hpp"
 #include "Ice.hpp"
 #include "MateriaSource.hpp"
+#include "MateriaSourceDammy.hpp"
 #include "cassert"
 #include "color.hpp"
 #include <cstdlib>
@@ -282,12 +283,38 @@ static void Test5() {
 	delete src;
 }
 
+/* === Expect ===
+MateriaSourceDammy class: learnMateria()
+MateriaSourceDammy class: learnMateria()
+MateriaSourceDammy class: learnMateria()
+MateriaSourceDammy class: createMateria()
+*/
+static void Test6() {
+	DisplayTitle("MateriaSourceDammy class");
+
+	MateriaSourceDammy *src = new MateriaSourceDammy();
+
+	AMateria *ice = new Ice();
+	// learnMateria()
+	src->learnMateria(ice);
+	src->learnMateria(ice);
+	src->learnMateria(NULL);
+	delete ice;
+
+	// createMateria()
+	AMateria *target = src->createMateria("ice");
+	(void)target;
+
+	delete src;
+}
+
 static void RunOriginalTest() {
 	Test1();
 	Test2();
 	Test3();
 	Test4();
 	Test5();
+	Test6();
 }
 
 int main() {
