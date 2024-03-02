@@ -16,7 +16,8 @@ static void DisplayTitle(const std::string &title) {
 	number++;
 }
 
-static bool IsDeepCopyBrainMemberArray(const Character *a, const Character *b) {
+static bool
+IsDeepCopyMateriaArrayForCharacter(const Character *a, const Character *b) {
 	assert(a->getLimitSlotNum() == b->getLimitSlotNum());
 	for (unsigned int i = 0; i < a->getLimitSlotNum(); i++) {
 		AMateria *tmp1 = a->getIthAMateria(i);
@@ -30,8 +31,26 @@ static bool IsDeepCopyBrainMemberArray(const Character *a, const Character *b) {
 	return true;
 }
 
-static void JudgeIsEqualMaterias(const Character *a, const Character *b) {
-	if (IsDeepCopyBrainMemberArray(a, b)) {
+static bool IsDeepCopyMateriaArrayForMateriaSource(
+	const MateriaSource *a, const MateriaSource *b
+) {
+	assert(a->getNumOfSrcs() == b->getNumOfSrcs());
+	for (unsigned int i = 0; i < a->getNumOfSrcs(); i++) {
+		AMateria *tmp1 = a->getIthAMateria(i);
+		AMateria *tmp2 = b->getIthAMateria(i);
+		if (tmp1 && tmp2) {
+			if (tmp1->getType() != tmp2->getType()) {
+				return false;
+			}
+		};
+	}
+	return true;
+}
+
+template <typename T>
+static void
+JudgeIsEqualMaterias(const T *a, const T *b, bool IsEqual(const T *, const T *)) {
+	if (IsEqual(a, b)) {
 		std::cout << COLOR_GREEN "[deepcopy: OK]" << COLOR_END << std::endl;
 	} else {
 		std::cout << COLOR_RED "[deepcopy: NG]" << COLOR_END << std::endl;
@@ -110,11 +129,11 @@ static void Test1() {
 	Character *bob4 = new Character(*alice);
 	Character *bob5 = &bob1;
 
-	JudgeIsEqualMaterias(alice, &bob1);
-	JudgeIsEqualMaterias(alice, bob2);
-	JudgeIsEqualMaterias(alice, &bob3);
-	JudgeIsEqualMaterias(alice, bob4);
-	JudgeIsEqualMaterias(alice, bob5);
+	JudgeIsEqualMaterias(alice, &bob1, &IsDeepCopyMateriaArrayForCharacter);
+	JudgeIsEqualMaterias(alice, bob2, &IsDeepCopyMateriaArrayForCharacter);
+	JudgeIsEqualMaterias(alice, &bob3, &IsDeepCopyMateriaArrayForCharacter);
+	JudgeIsEqualMaterias(alice, bob4, &IsDeepCopyMateriaArrayForCharacter);
+	JudgeIsEqualMaterias(alice, bob5, &IsDeepCopyMateriaArrayForCharacter);
 
 	delete bob4;
 	delete alice;
@@ -187,10 +206,41 @@ static void Test3() {
 	delete src;
 }
 
+/* === Expect ===
+[deepcopy: OK]
+[deepcopy: OK]
+[deepcopy: OK]
+[deepcopy: OK]
+[deepcopy: OK]
+*/
+static void Test4() {
+	DisplayTitle("MateriaSource's deepcopy");
+
+	MateriaSource *src = new MateriaSource();
+	src->learnMateria(new Ice());
+	src->learnMateria(new Cure());
+
+	MateriaSource  copy_src1(*src);
+	MateriaSource *copy_src2 = src;
+	MateriaSource  copy_src3 = *src;
+	MateriaSource *copy_src4 = new MateriaSource(*src);
+	MateriaSource *copy_src5 = &copy_src1;
+
+	JudgeIsEqualMaterias(src, &copy_src1, &IsDeepCopyMateriaArrayForMateriaSource);
+	JudgeIsEqualMaterias(src, copy_src2, &IsDeepCopyMateriaArrayForMateriaSource);
+	JudgeIsEqualMaterias(src, &copy_src3, &IsDeepCopyMateriaArrayForMateriaSource);
+	JudgeIsEqualMaterias(src, copy_src4, &IsDeepCopyMateriaArrayForMateriaSource);
+	JudgeIsEqualMaterias(src, copy_src5, &IsDeepCopyMateriaArrayForMateriaSource);
+
+	delete copy_src4;
+	delete src;
+}
+
 static void RunOriginalTest() {
 	Test1();
 	Test2();
 	Test3();
+	Test4();
 }
 
 int main() {

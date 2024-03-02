@@ -64,3 +64,10 @@ AMateria *MateriaSource::createMateria(const std::string &materia_type) {
 unsigned int MateriaSource::getNumOfSrcs() const {
 	return num_of_srcs_;
 }
+
+AMateria *MateriaSource::getIthAMateria(const unsigned int index) const {
+	if (index >= num_of_srcs_) {
+		return NULL;
+	}
+	return materia_srcs_[index];
+}
