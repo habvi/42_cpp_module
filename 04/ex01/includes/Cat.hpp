@@ -2,8 +2,9 @@
 #define EX01_CAT_HPP
 
 #include "Animal.hpp"
-#include "Brain.hpp"
 #include <string>
+
+class Brain;
 
 class Cat : virtual public Animal {
   public:
