@@ -112,8 +112,41 @@ static void Test1() {
 	delete alice;
 }
 
+/* === Expect ===
+ * heals bob's wounds *
+ */
+static void Test2() {
+	DisplayTitle("subject + unequip()");
+
+	IMateriaSource *src = new MateriaSource();
+	src->learnMateria(new Ice());
+	src->learnMateria(new Cure());
+
+	ICharacter *me = new Character("me");
+
+	AMateria *materia0_ice = src->createMateria("ice");
+	me->equip(materia0_ice);
+	AMateria *materia1_cure = src->createMateria("cure");
+	me->equip(materia1_cure);
+
+	// Subject: Save the addresses before calling unequip(), or anything else, ...
+	// unequip materia0_ice
+	me->unequip(0);
+	delete materia0_ice;
+
+	ICharacter *bob = new Character("bob-2");
+
+	me->use(0, *bob); // ice -> empty (don’t do anything)
+	me->use(1, *bob); // cure
+
+	delete bob;
+	delete me;
+	delete src;
+}
+
 static void RunOriginalTest() {
 	Test1();
+	Test2();
 }
 
 int main() {
