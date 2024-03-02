@@ -1,4 +1,6 @@
 #include "AMateria.hpp"
+#include "Cure.hpp"
+#include "Ice.hpp"
 #include <cstdlib>
 #include <iostream>
 
