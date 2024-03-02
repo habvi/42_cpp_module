@@ -20,15 +20,20 @@ void Character::copyMaterias(const Character &c) {
 	for (unsigned int i = 0; i < kLimitSlotNum; i++) {
 		if (c.slot_[i]) {
 			slot_[i] = c.slot_[i]->clone();
-			// todo: throw exception
+			if (slot_[i] == NULL) {
+				throw std::bad_alloc();
+			}
 		} else {
 			slot_[i] = NULL;
 		}
 	}
 }
 Character::Character(const Character &c) : name_(c.getName()) {
-	// todo: try-catch
-	copyMaterias(c);
+	try {
+		copyMaterias(c);
+	} catch (const std::bad_alloc &e) {
+		throw;
+	}
 }
 
 const Character &Character::operator=(const Character &c) {
@@ -37,8 +42,11 @@ const Character &Character::operator=(const Character &c) {
 		for (unsigned int i = 0; i < kLimitSlotNum; i++) {
 			delete slot_[i];
 		}
-		// todo: try-catch
-		copyMaterias(c);
+		try {
+			copyMaterias(c);
+		} catch (const std::bad_alloc &e) {
+			throw;
+		}
 	}
 	return *this;
 }
