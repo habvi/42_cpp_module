@@ -1,7 +1,6 @@
 #include "Brain.hpp"
 #include "color.hpp"
 #include <iostream>
-#include <string>
 
 #define TYPE_BRAIN "Brain"
 

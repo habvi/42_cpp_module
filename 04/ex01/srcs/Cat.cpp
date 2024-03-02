@@ -3,7 +3,6 @@
 #include "color.hpp"
 #include <cstdlib>
 #include <iostream>
-#include <string>
 
 #define TYPE_CAT  "Cat"
 #define SOUND_CAT "meow meow"

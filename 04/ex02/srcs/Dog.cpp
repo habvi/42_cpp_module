@@ -3,7 +3,6 @@
 #include "color.hpp"
 #include <cstdlib>
 #include <iostream>
-#include <string>
 
 #define TYPE_DOG  "Dog"
 #define SOUND_DOG "woof woof"
