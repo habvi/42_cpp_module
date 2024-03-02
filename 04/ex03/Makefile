@@ -2,6 +2,7 @@ NAME		:=	a.out
 
 SRCS_DIR	:=	srcs
 SRCS		:=	AMateria.cpp \
+				Character.cpp \
 				Cure.cpp \
 				Ice.cpp \
 				main.cpp
