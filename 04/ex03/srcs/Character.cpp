@@ -16,7 +16,6 @@ Character::Character(const std::string &name) : name_(name) {
 }
 
 void Character::copyMaterias(const Character &c) {
-	// assert
 	for (unsigned int i = 0; i < kLimitSlotNum; i++) {
 		if (c.slot_[i]) {
 			slot_[i] = c.slot_[i]->clone();
@@ -75,7 +74,6 @@ bool Character::isValidIndex(const int index) const {
 
 void Character::unequip(int index) {
 	if (!isValidIndex(index)) {
-		// todo: cerr? (don’t do anything..)
 		return;
 	}
 	slot_[index] = NULL;

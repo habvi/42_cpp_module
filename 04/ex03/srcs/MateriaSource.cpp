@@ -8,7 +8,6 @@ MateriaSource::MateriaSource() : num_of_srcs_(0) {
 }
 
 void MateriaSource::copyMateriaSrcs(const MateriaSource &m) {
-	// assert
 	for (unsigned int i = 0; i < kLimitCharactersNum; i++) {
 		if (m.materia_srcs_[i]) {
 			materia_srcs_[i] = m.materia_srcs_[i]->clone();
