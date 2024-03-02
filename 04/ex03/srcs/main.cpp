@@ -47,6 +47,14 @@ static bool IsDeepCopyMateriaArrayForMateriaSource(
 	return true;
 }
 
+static bool
+IsLearnSameTypeForMateriaSource(const AMateria *a, const AMateria *expect) {
+	if (a == NULL || expect == NULL) {
+		return true;
+	}
+	return a->getType() == expect->getType();
+}
+
 template <typename T>
 static void
 JudgeIsEqualMaterias(const T *a, const T *b, bool IsEqual(const T *, const T *)) {
@@ -236,11 +244,50 @@ static void Test4() {
 	delete src;
 }
 
+/* === Expect ===
+[deepcopy: OK]
+[deepcopy: OK]
+[deepcopy: OK]
+*/
+static void Test5() {
+	DisplayTitle("MateriaSource's learnMateria() with same type");
+
+	MateriaSource *src = new MateriaSource();
+	src->learnMateria(new Ice());
+	src->learnMateria(new Cure());
+	src->learnMateria(new Ice());
+	src->learnMateria(NULL);
+
+	// create Ice
+	AMateria *target = src->createMateria("ice");
+	AMateria *expect = new Ice();
+	JudgeIsEqualMaterias(target, expect, &IsLearnSameTypeForMateriaSource);
+	delete target;
+	delete expect;
+
+	// create Cure
+	target = src->createMateria("cure");
+	expect = new Cure();
+	JudgeIsEqualMaterias(target, expect, &IsLearnSameTypeForMateriaSource);
+	delete target;
+	delete expect;
+
+	// try to create non-exist type
+	target = src->createMateria("no-exist");
+	expect = new Cure();
+	JudgeIsEqualMaterias(target, expect, &IsLearnSameTypeForMateriaSource);
+	delete target;
+	delete expect;
+
+	delete src;
+}
+
 static void RunOriginalTest() {
 	Test1();
 	Test2();
 	Test3();
 	Test4();
+	Test5();
 }
 
 int main() {
