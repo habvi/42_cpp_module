@@ -26,7 +26,9 @@ static void SetIdeas(Brain &brain) {
 	}
 }
 
+// The addresses of 'a' and 'b' must be different.
 static bool IsDeepCopyBrainMemberArray(const Brain &a, const Brain &b) {
+	assert(&a != &b);
 	assert(a.GetNumOfIdeas() == b.GetNumOfIdeas());
 	for (unsigned int i = 0; i < a.GetNumOfIdeas(); i++) {
 		// std::cerr << a.GetIthIdea(i) << "|" << b.GetIthIdea(i) << std::endl;
