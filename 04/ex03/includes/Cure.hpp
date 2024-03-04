@@ -5,7 +5,7 @@
 #include "ICharacter.hpp"
 #include <string>
 
-class Cure : virtual public AMateria {
+class Cure : public AMateria {
   public:
 	Cure();
 	explicit Cure(std::string const &type);
