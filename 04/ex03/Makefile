@@ -57,9 +57,5 @@ check:
 	cppcheck --enable=all $$(find . -type f -name "*.cpp" | tr '\n' ' ')
 
 #--------------------------------------------
-.PHONY	: test
-test:
-	
-
 
 -include $(DEPS)
