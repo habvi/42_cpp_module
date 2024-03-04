@@ -141,10 +141,6 @@ type: Animal
 (Animal) \ ... /
 type: Animal
 (Animal) \ ... /
-type: Animal
-(Animal) \ ... /
-type: Animal
-(Animal) \ ... /
  */
 static void RunTest6() {
 	DisplayTitle("Animal Copy consrtuctor");
@@ -152,35 +148,23 @@ static void RunTest6() {
 	const Animal *animal = new Animal();
 
 	const Animal  copy_animal(*animal);
-	const Animal *copy_animal2 = animal;
-	const Animal  copy_animal3 = *animal;
-	const Animal *copy_animal4 = new Animal(*animal);
-	const Animal *copy_animal5 = &copy_animal;
+	const Animal  copy_animal2 = *animal;
+	const Animal *copy_animal3 = new Animal(*animal);
 
 	std::cout << "type: " << copy_animal.getType() << std::endl;
 	copy_animal.makeSound();
 
-	std::cout << "type: " << copy_animal2->getType() << std::endl;
-	copy_animal2->makeSound();
+	std::cout << "type: " << copy_animal2.getType() << std::endl;
+	copy_animal2.makeSound();
 
-	std::cout << "type: " << copy_animal3.getType() << std::endl;
-	copy_animal3.makeSound();
+	std::cout << "type: " << copy_animal3->getType() << std::endl;
+	copy_animal3->makeSound();
 
-	std::cout << "type: " << copy_animal4->getType() << std::endl;
-	copy_animal4->makeSound();
-
-	std::cout << "type: " << copy_animal5->getType() << std::endl;
-	copy_animal5->makeSound();
-
-	delete copy_animal4;
+	delete copy_animal3;
 	delete animal;
 }
 
 /* === Expect ===
-type: CopyDog
-(Dog) \ woof woof /
-type: CopyDog
-(Dog) \ woof woof /
 type: CopyDog
 (Dog) \ woof woof /
 type: CopyDog
@@ -194,35 +178,23 @@ static void RunTest7() {
 	const Dog *dog = new Dog("CopyDog");
 
 	const Dog  copy_dog(*dog);
-	const Dog *copy_dog2 = dog;
-	const Dog  copy_dog3 = *dog;
-	const Dog *copy_dog4 = new Dog(*dog);
-	const Dog *copy_dog5 = &copy_dog;
+	const Dog  copy_dog2 = *dog;
+	const Dog *copy_dog3 = new Dog(*dog);
 
 	std::cout << "type: " << copy_dog.getType() << std::endl;
 	copy_dog.makeSound();
 
-	std::cout << "type: " << copy_dog2->getType() << std::endl;
-	copy_dog2->makeSound();
+	std::cout << "type: " << copy_dog2.getType() << std::endl;
+	copy_dog2.makeSound();
 
-	std::cout << "type: " << copy_dog3.getType() << std::endl;
-	copy_dog3.makeSound();
+	std::cout << "type: " << copy_dog3->getType() << std::endl;
+	copy_dog3->makeSound();
 
-	std::cout << "type: " << copy_dog4->getType() << std::endl;
-	copy_dog4->makeSound();
-
-	std::cout << "type: " << copy_dog5->getType() << std::endl;
-	copy_dog5->makeSound();
-
-	delete copy_dog4;
+	delete copy_dog3;
 	delete dog;
 }
 
 /* === Expect ===
-type: CopyCat
-(Cat) \ meow meow /
-type: CopyCat
-(Cat) \ meow meow /
 type: CopyCat
 (Cat) \ meow meow /
 type: CopyCat
@@ -236,27 +208,19 @@ static void RunTest8() {
 	const Cat *cat = new Cat("CopyCat");
 
 	const Cat  copy_cat(*cat);
-	const Cat *copy_cat2 = cat;
-	const Cat  copy_cat3 = *cat;
-	const Cat *copy_cat4 = new Cat(*cat);
-	const Cat *copy_cat5 = &copy_cat;
+	const Cat  copy_cat2 = *cat;
+	const Cat *copy_cat3 = new Cat(*cat);
 
 	std::cout << "type: " << copy_cat.getType() << std::endl;
 	copy_cat.makeSound();
 
-	std::cout << "type: " << copy_cat2->getType() << std::endl;
-	copy_cat2->makeSound();
+	std::cout << "type: " << copy_cat2.getType() << std::endl;
+	copy_cat2.makeSound();
 
-	std::cout << "type: " << copy_cat3.getType() << std::endl;
-	copy_cat3.makeSound();
+	std::cout << "type: " << copy_cat3->getType() << std::endl;
+	copy_cat3->makeSound();
 
-	std::cout << "type: " << copy_cat4->getType() << std::endl;
-	copy_cat4->makeSound();
-
-	std::cout << "type: " << copy_cat5->getType() << std::endl;
-	copy_cat5->makeSound();
-
-	delete copy_cat4;
+	delete copy_cat3;
 	delete cat;
 }
 
