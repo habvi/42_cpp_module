@@ -6,7 +6,7 @@
 
 class AMateria;
 
-class MateriaSourceDammy : virtual public IMateriaSource {
+class MateriaSourceDammy : public IMateriaSource {
   public:
 	MateriaSourceDammy();
 	MateriaSourceDammy(const MateriaSourceDammy &m);

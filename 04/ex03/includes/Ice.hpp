@@ -5,7 +5,7 @@
 #include "ICharacter.hpp"
 #include <string>
 
-class Ice : virtual public AMateria {
+class Ice : public AMateria {
   public:
 	Ice();
 	explicit Ice(std::string const &type);

@@ -4,7 +4,7 @@
 #include "WrongAnimal.hpp"
 #include <string>
 
-class WrongCat : virtual public WrongAnimal {
+class WrongCat : public WrongAnimal {
   public:
 	WrongCat();
 	WrongCat(const std::string &name);

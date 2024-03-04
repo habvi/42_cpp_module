@@ -4,7 +4,7 @@
 #include "Animal.hpp"
 #include <string>
 
-class Dog : virtual public Animal {
+class Dog : public Animal {
   public:
 	Dog();
 	Dog(const std::string &name);

@@ -32,8 +32,3 @@ std::string Animal::getType() const {
 void Animal::SetType(const std::string &name) {
 	type = name;
 }
-
-void Animal::makeSound() const {
-	std::cout << COLOR_BLUE "(" TYPE_ANIMAL ") \\ " SOUND_ANIMAL " /" COLOR_END
-			  << std::endl;
-}
