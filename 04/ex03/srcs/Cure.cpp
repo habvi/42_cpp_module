@@ -21,12 +21,12 @@ const Cure &Cure::operator=(const Cure &c) {
 
 Cure::~Cure() {}
 
+// override
 // if new failed, return NULL;
 Cure *Cure::clone() const {
 	return new (std::nothrow) Cure();
 }
 
-// override
 void Cure::use(ICharacter &target) {
 	std::cout << COLOR_PINK "* heals " << target.getName() << "'s wounds *" COLOR_END
 			  << std::endl;

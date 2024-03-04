@@ -21,12 +21,12 @@ const Ice &Ice::operator=(const Ice &i) {
 
 Ice::~Ice() {}
 
+// override
 // if new failed, return NULL;
 Ice *Ice::clone() const {
 	return new (std::nothrow) Ice();
 }
 
-// override
 void Ice::use(ICharacter &target) {
 	std::cout << COLOR_BLUE "* shoots an ice bolt at " << target.getName()
 			  << " *" COLOR_END << std::endl;
