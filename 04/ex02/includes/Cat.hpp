@@ -6,7 +6,7 @@
 
 class Brain;
 
-class Cat : virtual public Animal {
+class Cat : public Animal {
   public:
 	Cat();
 	Cat(const std::string &name);
