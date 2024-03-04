@@ -126,7 +126,6 @@ static void RunTest3() {
 
 /* === Expect ===
 type: Dog
-(Animal) \ ... /
 type: Dog
 (Dog) \ woof woof /
 */
@@ -136,7 +135,7 @@ static void RunTest4() {
 	const Dog *dog = new Dog();
 
 	std::cout << "type: " << dog->Animal::getType() << std::endl;
-	dog->Animal::makeSound();
+	// dog->Animal::makeSound();
 
 	std::cout << "type: " << dog->getType() << std::endl;
 	dog->makeSound();
@@ -146,7 +145,6 @@ static void RunTest4() {
 
 /* === Expect ===
 type: Cat
-(Animal) \ ... /
 type: Cat
 (Cat) \ meow meow /
 */
@@ -156,7 +154,7 @@ static void RunTest5() {
 	const Cat *cat = new Cat();
 
 	std::cout << "type: " << cat->Animal::getType() << std::endl;
-	cat->Animal::makeSound();
+	// cat->Animal::makeSound();
 
 	std::cout << "type: " << cat->getType() << std::endl;
 	cat->makeSound();
