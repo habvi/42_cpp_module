@@ -235,12 +235,6 @@ type: CopyDog
 type: CopyDog
 (Dog) \ woof woof /
 [OK]
-type: CopyDog
-(Dog) \ woof woof /
-[OK]
-type: CopyDog
-(Dog) \ woof woof /
-[OK]
 */
 static void RunTest9() {
 	DisplayTitle("Dog Copy consrtuctor / deepcopy");
@@ -249,42 +243,26 @@ static void RunTest9() {
 	SetIdeas(dog->GetBrain());
 
 	const Dog  copy_dog(*dog);
-	const Dog *copy_dog2 = dog;
-	const Dog  copy_dog3 = *dog;
-	const Dog *copy_dog4 = new Dog(*dog);
-	const Dog *copy_dog5 = &copy_dog;
+	const Dog  copy_dog2 = *dog;
+	const Dog *copy_dog3 = new Dog(*dog);
 
 	std::cout << "type: " << copy_dog.getType() << std::endl;
 	copy_dog.makeSound();
 	JudgeIsEqualBrain(dog->GetBrain(), copy_dog.GetBrain());
 
-	std::cout << "type: " << copy_dog2->getType() << std::endl;
-	copy_dog2->makeSound();
-	JudgeIsEqualBrain(dog->GetBrain(), copy_dog2->GetBrain());
+	std::cout << "type: " << copy_dog2.getType() << std::endl;
+	copy_dog2.makeSound();
+	JudgeIsEqualBrain(dog->GetBrain(), copy_dog2.GetBrain());
 
-	std::cout << "type: " << copy_dog3.getType() << std::endl;
-	copy_dog3.makeSound();
-	JudgeIsEqualBrain(dog->GetBrain(), copy_dog3.GetBrain());
+	std::cout << "type: " << copy_dog3->getType() << std::endl;
+	copy_dog3->makeSound();
+	JudgeIsEqualBrain(dog->GetBrain(), copy_dog3->GetBrain());
 
-	std::cout << "type: " << copy_dog4->getType() << std::endl;
-	copy_dog4->makeSound();
-	JudgeIsEqualBrain(dog->GetBrain(), copy_dog4->GetBrain());
-
-	std::cout << "type: " << copy_dog5->getType() << std::endl;
-	copy_dog5->makeSound();
-	JudgeIsEqualBrain(dog->GetBrain(), copy_dog5->GetBrain());
-
-	delete copy_dog4;
+	delete copy_dog3;
 	delete dog;
 }
 
 /* === Expect ===
-type: CopyCat
-(Cat) \ meow meow /
-[OK]
-type: CopyCat
-(Cat) \ meow meow /
-[OK]
 type: CopyCat
 (Cat) \ meow meow /
 [OK]
@@ -302,32 +280,22 @@ static void RunTest10() {
 	SetIdeas(cat->GetBrain());
 
 	const Cat  copy_cat(*cat);
-	const Cat *copy_cat2 = cat;
-	const Cat  copy_cat3 = *cat;
-	const Cat *copy_cat4 = new Cat(*cat);
-	const Cat *copy_cat5 = &copy_cat;
+	const Cat  copy_cat2 = *cat;
+	const Cat *copy_cat3 = new Cat(*cat);
 
 	std::cout << "type: " << copy_cat.getType() << std::endl;
 	copy_cat.makeSound();
 	JudgeIsEqualBrain(cat->GetBrain(), copy_cat.GetBrain());
 
-	std::cout << "type: " << copy_cat2->getType() << std::endl;
-	copy_cat2->makeSound();
-	JudgeIsEqualBrain(cat->GetBrain(), copy_cat2->GetBrain());
+	std::cout << "type: " << copy_cat2.getType() << std::endl;
+	copy_cat2.makeSound();
+	JudgeIsEqualBrain(cat->GetBrain(), copy_cat2.GetBrain());
 
-	std::cout << "type: " << copy_cat3.getType() << std::endl;
-	copy_cat3.makeSound();
-	JudgeIsEqualBrain(cat->GetBrain(), copy_cat3.GetBrain());
+	std::cout << "type: " << copy_cat3->getType() << std::endl;
+	copy_cat3->makeSound();
+	JudgeIsEqualBrain(cat->GetBrain(), copy_cat3->GetBrain());
 
-	std::cout << "type: " << copy_cat4->getType() << std::endl;
-	copy_cat4->makeSound();
-	JudgeIsEqualBrain(cat->GetBrain(), copy_cat4->GetBrain());
-
-	std::cout << "type: " << copy_cat5->getType() << std::endl;
-	copy_cat5->makeSound();
-	JudgeIsEqualBrain(cat->GetBrain(), copy_cat5->GetBrain());
-
-	delete copy_cat4;
+	delete copy_cat3;
 	delete cat;
 }
 
