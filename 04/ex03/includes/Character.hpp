@@ -6,7 +6,7 @@
 
 class AMateria;
 
-class Character : virtual public ICharacter {
+class Character : public ICharacter {
   public:
 	Character();
 	explicit Character(const std::string &name);
