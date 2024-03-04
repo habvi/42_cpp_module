@@ -409,10 +409,10 @@ static void RunTest15() {
 		copy_animals[i]->makeSound();
 	}
 	// check copy Brain's Ideas. (deepcopy)
-	Dog *copy_dog = dynamic_cast<Dog *>(copy_animals[1]);
-	std::cout << copy_dog->GetBrain().GetIthIdea(5) << std::endl;
-	std::cout << copy_dog->GetBrain().GetIthIdea(88) << std::endl;
-	JudgeIsEqualBrain(dog->GetBrain(), copy_dog->GetBrain());
+	Dog copy_dog = *dynamic_cast<Dog *>(copy_animals[1]);
+	std::cout << copy_dog.GetBrain().GetIthIdea(5) << std::endl;
+	std::cout << copy_dog.GetBrain().GetIthIdea(88) << std::endl;
+	JudgeIsEqualBrain(dog->GetBrain(), copy_dog.GetBrain());
 
 	// delete Animal array
 	for (unsigned int i = 0; i < array_size; i++) {
