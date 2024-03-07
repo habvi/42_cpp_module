@@ -5,7 +5,11 @@ Bureaucrat::Bureaucrat() {}
 
 Bureaucrat::Bureaucrat(const std::string &name, const unsigned int grade)
 	: name_(name) {
-	// todo: error throw
+	if (grade < kHighestGrade) {
+		throw GradeTooHighException();
+	} else if (grade > kLowestGrade) {
+		throw GradeTooLowException();
+	}
 	grade_ = grade;
 }
 
@@ -36,14 +40,14 @@ unsigned int Bureaucrat::getGrade() const {
 
 void Bureaucrat::IncrementGrade() {
 	if (grade_ - 1 < kHighestGrade) {
-		throw;
+		throw GradeTooHighException();
 	}
 	grade_--;
 }
 
 void Bureaucrat::DecrementGrade() {
 	if (grade_ + 1 > kLowestGrade) {
-		throw;
+		throw GradeTooLowException();
 	}
 	grade_++;
 }
