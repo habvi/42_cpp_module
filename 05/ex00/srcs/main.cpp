@@ -106,11 +106,38 @@ static void RunTest3() {
 	JudgeResult(alice3, ALICE, kGrade); // [OK]
 }
 
+/* === Expect ===
+Error: grade is too high
+*/
+static void RunTest4() {
+	DisplayTitle("constructor: throw exception / grade too high");
+
+	try {
+		Bureaucrat bob = Bureaucrat(BOB, 0);
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+}
+
+/* === Expect ===
+Error: grade is too low
+*/
+static void RunTest5() {
+	DisplayTitle("constructor: throw exception / grade too low");
+
+	try {
+		Bureaucrat bob = Bureaucrat(BOB, 151);
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+}
 
 static void RunOriginalTest() {
 	RunTest1();
 	RunTest2();
 	RunTest3();
+	RunTest4();
+	RunTest5();
 }
 
 int main() {
