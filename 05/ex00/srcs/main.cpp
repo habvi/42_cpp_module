@@ -86,9 +86,31 @@ static void RunTest2() {
 	JudgeResult(bob, BOB, grade + 1);                // [OK] nothing changed
 }
 
+/* === Expect ===
+[OK]
+[OK]
+[OK]
+*/
+static void RunTest3() {
+	DisplayTitle("Bureaucrat copy test");
+
+	static const unsigned int kGrade = 123;
+
+	Bureaucrat alice = Bureaucrat(ALICE, kGrade);
+	JudgeResult(alice, ALICE, kGrade); // [OK]
+
+	Bureaucrat alice2(alice);
+	JudgeResult(alice2, ALICE, kGrade); // [OK]
+
+	Bureaucrat alice3 = alice;
+	JudgeResult(alice3, ALICE, kGrade); // [OK]
+}
+
+
 static void RunOriginalTest() {
 	RunTest1();
 	RunTest2();
+	RunTest3();
 }
 
 int main() {
