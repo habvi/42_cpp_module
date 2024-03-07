@@ -1,6 +1,7 @@
 #ifndef EX00_BUREAUCRAT_HPP
 #define EX00_BUREAUCRAT_HPP
 
+#include <ostream>
 #include <string>
 
 class Bureaucrat {
@@ -31,5 +32,7 @@ class Bureaucrat {
 	const std::string         name_;
 	unsigned int              grade_;
 };
+
+std::ostream &operator<<(std::ostream &out, const Bureaucrat &b);
 
 #endif /* EX00_BUREAUCRAT_HPP */
