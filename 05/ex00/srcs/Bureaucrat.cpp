@@ -1,5 +1,6 @@
 #include "Bureaucrat.hpp"
 #include "GradeException.hpp"
+#include "color.hpp"
 
 Bureaucrat::Bureaucrat() {}
 
@@ -58,4 +59,10 @@ const char *Bureaucrat::GradeTooHighException() const {
 
 const char *Bureaucrat::GradeTooLowException() const {
 	throw GradeException("Error: Grade is too low");
+}
+
+std::ostream &operator<<(std::ostream &out, const Bureaucrat &b) {
+	out << COLOR_PINK << b.getName() << ", bureaucrat grade " << b.getGrade()
+		<< "." COLOR_END;
+	return out;
 }
