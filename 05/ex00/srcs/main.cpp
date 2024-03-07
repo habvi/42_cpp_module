@@ -132,12 +132,47 @@ static void RunTest5() {
 	}
 }
 
+/* === Expect ===
+Alice, bureaucrat grade 123.
+[OK]
+Alice, bureaucrat grade 122.
+[OK]
+Alice, bureaucrat grade 121.
+[OK]
+Alice, bureaucrat grade 120.
+[OK]
+Alice, bureaucrat grade 121.
+[OK]
+*/
+static void RunTest6() {
+	DisplayTitle("operator<< overload");
+
+	unsigned int grade = 123;
+
+	Bureaucrat alice(ALICE, grade);
+	std::cout << alice << std::endl;  // operator<<
+	JudgeResult(alice, ALICE, grade); // [OK]
+
+	// increment 3 times
+	for (unsigned int i = 0; i < 3; i++) {
+		ExecGradeTest(alice, &Bureaucrat::IncrementGrade);
+		std::cout << alice << std::endl;          // operator<<
+		JudgeResult(alice, ALICE, grade - i - 1); // [OK]
+	}
+
+	// decrement
+	ExecGradeTest(alice, &Bureaucrat::DecrementGrade);
+	std::cout << alice << std::endl;          // operator<<
+	JudgeResult(alice, ALICE, grade - 3 + 1); // [OK]
+}
+
 static void RunOriginalTest() {
 	RunTest1();
 	RunTest2();
 	RunTest3();
 	RunTest4();
 	RunTest5();
+	RunTest6();
 }
 
 int main() {
