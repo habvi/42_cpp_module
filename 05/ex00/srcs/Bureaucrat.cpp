@@ -1,4 +1,5 @@
 #include "Bureaucrat.hpp"
+#include "GradeException.hpp"
 
 Bureaucrat::Bureaucrat() {}
 
@@ -45,4 +46,12 @@ void Bureaucrat::DecrementGrade() {
 		throw;
 	}
 	grade_++;
+}
+
+const char *Bureaucrat::GradeTooHighException() const {
+	throw GradeException("Error: Grade is too high");
+}
+
+const char *Bureaucrat::GradeTooLowException() const {
+	throw GradeException("Error: Grade is too low");
 }

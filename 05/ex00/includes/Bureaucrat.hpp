@@ -22,6 +22,8 @@ class Bureaucrat {
 
   private:
 	Bureaucrat();
+	const char *GradeTooHighException() const;
+	const char *GradeTooLowException() const;
 
   private:
 	static const unsigned int kHighestGrade = 1;
