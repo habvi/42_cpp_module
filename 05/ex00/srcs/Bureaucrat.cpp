@@ -21,7 +21,6 @@ Bureaucrat::~Bureaucrat() {}
 
 const Bureaucrat &Bureaucrat::operator=(const Bureaucrat &b) {
 	if (this != &b) {
-		// setName(b.getName());
 		grade_ = b.getGrade();
 	}
 	return *this;
@@ -34,10 +33,6 @@ const std::string &Bureaucrat::getName() const {
 unsigned int Bureaucrat::getGrade() const {
 	return grade_;
 }
-
-// void Bureaucrat::setName(const std::string &name) {
-// 	name_ = name;
-// }
 
 void Bureaucrat::IncrementGrade() {
 	if (grade_ - 1 < kHighestGrade) {

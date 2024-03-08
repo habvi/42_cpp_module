@@ -15,7 +15,6 @@ class Bureaucrat {
 	// Following the instructions, not camelcase
 	const std::string &getName() const;
 	unsigned int       getGrade() const;
-	// void               setName(const std::string &name);
 
   public:
 	void IncrementGrade();
