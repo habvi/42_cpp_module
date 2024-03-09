@@ -167,6 +167,24 @@ static void RunTest6() {
 	JudgeResult(alice, ALICE, grade - 3 + 1); // [OK]
 }
 
+// -----------------------------------------------------------------------------
+
+static bool IsEqualNameAndGrade(const Form &target, const Form &expected) {
+	return target.GetName() == expected.GetName() &&
+		   target.GetIsSigned() == expected.GetIsSigned() &&
+		   target.GetGradeForSign() == expected.GetGradeForSign() &&
+		   target.GetGradeForExecute() == expected.GetGradeForExecute();
+}
+
+static void JudgeResult(const Form &target, const Form &expected) {
+	if (IsEqualNameAndGrade(target, expected)) {
+		std::cout << COLOR_GREEN "[OK]" << COLOR_END << std::endl;
+	} else {
+		std::cout << COLOR_RED "[NG]" << COLOR_END << std::endl;
+		exit(EXIT_FAILURE);
+	}
+}
+
 /* === Expect ===
 Error: Grade is too high
 Error: Grade is too high
@@ -222,6 +240,25 @@ static void RunTest8() {
 	}
 }
 
+/* === Expect ===
+[OK]
+[OK]
+*/
+static void RunTest9() {
+	DisplayTitle("Form copy test");
+
+	static const unsigned int kGradeForSign    = 5;   // normal
+	static const unsigned int kGradeForExecute = 123; // normal
+
+	Form alice = Form(ALICE, kGradeForSign, kGradeForExecute);
+
+	Form alice2(alice);
+	JudgeResult(alice2, alice); // [OK]
+
+	Form alice3 = alice;
+	JudgeResult(alice3, alice); // [OK]
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -234,6 +271,7 @@ static void RunOriginalTest() {
 	/* ex01 */
 	RunTest7();
 	RunTest8();
+	RunTest9();
 }
 
 int main() {
