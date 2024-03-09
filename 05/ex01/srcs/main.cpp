@@ -52,7 +52,7 @@ Error: grade is too high
 [OK]
 */
 static void RunTest1() {
-	DisplayTitle("IncrementGrade(), throw exception / too high");
+	DisplayTitle("Bureaucrat IncrementGrade(), throw exception / too high");
 
 	unsigned int grade = 2;
 
@@ -73,7 +73,7 @@ Error: grade is too low
 [OK]
 */
 static void RunTest2() {
-	DisplayTitle("DecrementGrade(), throw exception / too low");
+	DisplayTitle("Bureaucrat DecrementGrade(), throw exception / too low");
 
 	unsigned int grade = 149;
 
@@ -111,7 +111,7 @@ static void RunTest3() {
 Error: grade is too high
 */
 static void RunTest4() {
-	DisplayTitle("constructor: throw exception / grade too high");
+	DisplayTitle("Bureaucrat constructor: throw exception / grade too high");
 
 	try {
 		Bureaucrat bob = Bureaucrat(BOB, 0);
@@ -124,7 +124,7 @@ static void RunTest4() {
 Error: grade is too low
 */
 static void RunTest5() {
-	DisplayTitle("constructor: throw exception / grade too low");
+	DisplayTitle("Bureaucrat constructor: throw exception / grade too low");
 
 	try {
 		Bureaucrat bob = Bureaucrat(BOB, 151);
@@ -146,7 +146,7 @@ Alice, bureaucrat grade 121.
 [OK]
 */
 static void RunTest6() {
-	DisplayTitle("operator<< overload");
+	DisplayTitle("Bureaucrat operator<< overload");
 
 	unsigned int grade = 123;
 
