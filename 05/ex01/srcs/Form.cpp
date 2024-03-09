@@ -1,4 +1,5 @@
 #include "Form.hpp"
+#include "Bureaucrat.hpp"
 #include "GradeException.hpp"
 #include "color.hpp"
 
@@ -57,6 +58,17 @@ const char *Form::GradeTooHighException() const {
 
 const char *Form::GradeTooLowException() const {
 	throw GradeException("Error: Grade is too low");
+}
+
+bool Form::beSigned(const Bureaucrat &b) {
+	if (b.getGrade() > kLowestGrade) {
+		throw GradeTooLowException();
+	}
+	if (b.getGrade() <= grade_for_sign_) {
+		is_signed_ = true;
+		return true;
+	}
+	return false;
 }
 
 std::ostream &operator<<(std::ostream &out, const Form &f) {
