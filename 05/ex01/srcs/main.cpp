@@ -1,4 +1,5 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 #include "color.hpp"
 #include <cstdlib>
 #include <iostream>
@@ -166,13 +167,73 @@ static void RunTest6() {
 	JudgeResult(alice, ALICE, grade - 3 + 1); // [OK]
 }
 
+/* === Expect ===
+Error: Grade is too high
+Error: Grade is too high
+Error: Grade is too high
+*/
+static void RunTest7() {
+	DisplayTitle("Form constructor: throw exception / grade too high");
+
+	Form alice = Form(ALICE, 150, 1); // normal, normal
+
+	try {
+		Form alice = Form(ALICE, 0, 123); // too high, normal
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+	try {
+		Form alice = Form(ALICE, 123, 0); // normal, too high
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+	try {
+		Form alice = Form(ALICE, 0, 0); // too high, too high
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+}
+
+/* === Expect ===
+Error: grade is too low
+Error: grade is too low
+Error: grade is too low
+*/
+static void RunTest8() {
+	DisplayTitle("From constructor: throw exception / grade too low");
+
+	Form bob = Form(BOB, 1, 150); // normal, normal
+
+	try {
+		Form bob = Form(BOB, 151, 1); // too low, normal
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+	try {
+		Form bob = Form(BOB, 151, 1); // normal, too low
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+
+	try {
+		Form bob = Form(BOB, 151, 12345); // too low, too low
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+}
+
 static void RunOriginalTest() {
+	/* ex00 */
 	RunTest1();
 	RunTest2();
 	RunTest3();
 	RunTest4();
 	RunTest5();
 	RunTest6();
+
+	/* ex01 */
+	RunTest7();
+	RunTest8();
 }
 
 int main() {
