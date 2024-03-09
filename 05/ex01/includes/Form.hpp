@@ -4,6 +4,8 @@
 #include <ostream>
 #include <string>
 
+class Bureaucrat;
+
 class Form {
   public:
 	Form(
@@ -20,6 +22,8 @@ class Form {
 	bool               GetIsSigned() const;
 	unsigned int       GetGradeForSign() const;
 	unsigned int       GetGradeForExecute() const;
+	// Following the instructions, not camelcase
+	bool beSigned(const Bureaucrat &b);
 
   private:
 	Form();
