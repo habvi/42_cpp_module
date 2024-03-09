@@ -24,6 +24,7 @@ class AForm {
 	unsigned int       GetGradeForExecute() const;
 	// Following the instructions, not camelcase
 	bool beSigned(const Bureaucrat &b);
+	void execute(Bureaucrat const &executor) const;
 
   private:
 	AForm();
