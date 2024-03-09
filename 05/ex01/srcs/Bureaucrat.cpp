@@ -1,6 +1,8 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 #include "GradeException.hpp"
 #include "color.hpp"
+#include <iostream>
 
 Bureaucrat::Bureaucrat() {}
 
@@ -54,6 +56,26 @@ const char *Bureaucrat::GradeTooHighException() const {
 
 const char *Bureaucrat::GradeTooLowException() const {
 	throw GradeException("Error: Grade is too low");
+}
+
+void Bureaucrat::signForm(Form &form) {
+	try {
+		bool is_successful_sign = form.beSigned(*this);
+		if (is_successful_sign) {
+			std::cout << COLOR_PINK << getName() << COLOR_END " signed " COLOR_PINK
+					  << form.GetName() << COLOR_END << std::endl;
+		} else {
+			std::cout << COLOR_PINK << getName()
+					  << COLOR_END " couldn't sign " COLOR_PINK << form.GetName()
+					  << COLOR_END << " because lower than the required Form grade."
+					  << std::endl;
+		}
+	} catch (const std::exception &e) {
+		std::cout << COLOR_PINK << getName()
+				  << COLOR_END " couldn't sign " COLOR_PINK << form.GetName()
+				  << COLOR_END << " because the Grade is too low" << std::endl;
+		throw;
+	}
 }
 
 std::ostream &operator<<(std::ostream &out, const Bureaucrat &b) {

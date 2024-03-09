@@ -4,6 +4,8 @@
 #include <ostream>
 #include <string>
 
+class Form;
+
 class Bureaucrat {
   public:
 	Bureaucrat(const std::string &name, const unsigned int grade);
@@ -19,6 +21,8 @@ class Bureaucrat {
   public:
 	void IncrementGrade();
 	void DecrementGrade();
+	// Following the instructions, not camelcase
+	void signForm(Form &form);
 
   private:
 	Bureaucrat();
