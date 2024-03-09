@@ -26,8 +26,10 @@ class AForm {
 	bool beSigned(const Bureaucrat &b);
 	void execute(Bureaucrat const &executor) const;
 
-  private:
+  protected:
 	AForm();
+
+  private:
 	const char *GradeTooHighException() const;
 	const char *GradeTooLowException() const;
 
