@@ -63,6 +63,7 @@ const char *Form::GradeTooLowException() const {
 bool Form::beSigned(const Bureaucrat &b) {
 	if (b.getGrade() > kLowestGrade) {
 		throw GradeTooLowException();
+	}
 	if (b.getGrade() <= grade_for_sign_) {
 		is_signed_ = true;
 		return true;
