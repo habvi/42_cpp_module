@@ -259,6 +259,16 @@ static void RunTest9() {
 	JudgeResult(alice3, alice); // [OK]
 }
 
+/* === Expect ===
+Form Alice(not signed), grade for sign is 5, grade for execute is 123
+*/
+static void RunTest10() {
+	DisplayTitle("Form operator<< overload");
+
+	Form alice = Form(ALICE, 5, 123);
+	std::cout << alice << std::endl;
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -272,6 +282,7 @@ static void RunOriginalTest() {
 	RunTest7();
 	RunTest8();
 	RunTest9();
+	RunTest10();
 }
 
 int main() {
