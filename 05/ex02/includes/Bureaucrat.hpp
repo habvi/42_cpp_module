@@ -4,7 +4,7 @@
 #include <ostream>
 #include <string>
 
-// class Form;
+class AForm;
 
 class Bureaucrat {
   public:
@@ -22,7 +22,7 @@ class Bureaucrat {
 	void IncrementGrade();
 	void DecrementGrade();
 	// Following the instructions, not camelcase
-	// void signForm(Form &form);
+	void signForm(AForm &form);
 
   private:
 	Bureaucrat();
