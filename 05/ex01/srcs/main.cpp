@@ -269,6 +269,34 @@ static void RunTest10() {
 	std::cout << alice << std::endl;
 }
 
+/* === Expect ===
+Alice, bureaucrat grade 5.
+Form: F1(not signed), grade for sign is 4, grade for execute is 50
+Alice couldn't sign F1 because lower than the required Form grade.
+Form: F1(not signed), grade for sign is 4, grade for execute is 50
+Alice, bureaucrat grade 4.
+Alice signed F1
+Form: F1(signed), grade for sign is 4, grade for execute is 50
+*/
+static void RunTest11() {
+	DisplayTitle("Bureaucrat try to sign the Form");
+
+	Bureaucrat alice(ALICE, 5);
+	std::cout << alice << std::endl;
+
+	Form form("F1", 4, 50);
+	std::cout << form << std::endl;
+
+	alice.signForm(form);
+	std::cout << form << std::endl;
+
+	alice.IncrementGrade();
+	std::cout << alice << std::endl;
+
+	alice.signForm(form);
+	std::cout << form << std::endl;
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -283,6 +311,7 @@ static void RunOriginalTest() {
 	RunTest8();
 	RunTest9();
 	RunTest10();
+	RunTest11();
 }
 
 int main() {
