@@ -6,7 +6,8 @@ SRCS		:=	AForm.cpp \
 				GradeException.cpp \
 				main.cpp \
 				PresidentialPardonForm.cpp \
-				RobotomyRequestForm.cpp
+				RobotomyRequestForm.cpp \
+				ShrubberyCreationForm.cpp
 
 OBJ_DIR		:=	objs
 OBJS		:=	$(SRCS:%.cpp=$(OBJ_DIR)/%.o)
