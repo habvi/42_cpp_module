@@ -7,7 +7,7 @@
 // exception classes don’t have to be designed in Orthodox Canonical Form.
 class GradeException : public std::exception {
   public:
-	GradeException(const char *message);
+	explicit GradeException(const char *message);
 	~GradeException() throw();
 
   public:
