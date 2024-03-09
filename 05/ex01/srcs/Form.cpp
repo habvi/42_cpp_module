@@ -71,9 +71,10 @@ bool Form::beSigned(const Bureaucrat &b) {
 }
 
 std::ostream &operator<<(std::ostream &out, const Form &f) {
-	out << COLOR_PINK << "Form " << f.GetName() << "("
-		<< (f.GetIsSigned() ? "signed" : "not signed") << "), grade for sign is "
-		<< f.GetGradeForSign() << ", "
-		<< "grade for execute is " << f.GetGradeForExecute() << COLOR_END;
+	out << "Form: " COLOR_BLUE << f.GetName() << "("
+		<< (f.GetIsSigned() ? "signed" : "not signed")
+		<< ")," COLOR_END " grade for sign is " COLOR_BLUE << f.GetGradeForSign()
+		<< COLOR_END ", "
+		<< "grade for execute is " COLOR_BLUE << f.GetGradeForExecute() << COLOR_END;
 	return out;
 }
