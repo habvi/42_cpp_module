@@ -1,4 +1,6 @@
 #include "Form.hpp"
+#include "GradeException.hpp"
+
 Form::Form() : grade_for_sign_(kLowestGrade), grade_for_execute_(kLowestGrade) {}
 
 Form::Form(
@@ -10,6 +12,11 @@ Form::Form(
 	  is_signed_(false),
 	  grade_for_sign_(grade_for_sign),
 	  grade_for_execute_(grade_for_execute) {
+	if (grade_for_sign < kHighestGrade || grade_for_execute < kHighestGrade) {
+		throw GradeTooHighException();
+	} else if (grade_for_sign > kLowestGrade || grade_for_execute > kLowestGrade) {
+		throw GradeTooLowException();
+	}
 }
 
 Form::Form(const Form &f)
@@ -41,4 +48,12 @@ unsigned int Form::GetGradeForSign() const {
 
 unsigned int Form::GetGradeForExecute() const {
 	return grade_for_execute_;
+}
+
+const char *Form::GradeTooHighException() const {
+	throw GradeException("Error: Grade is too high");
+}
+
+const char *Form::GradeTooLowException() const {
+	throw GradeException("Error: Grade is too low");
 }
