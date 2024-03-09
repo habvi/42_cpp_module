@@ -4,7 +4,8 @@ SRCS_DIR	:=	srcs
 SRCS		:=	AForm.cpp \
 				Bureaucrat.cpp \
 				GradeException.cpp \
-				main.cpp
+				main.cpp \
+				PresidentialPardonForm.cpp
 
 OBJ_DIR		:=	objs
 OBJS		:=	$(SRCS:%.cpp=$(OBJ_DIR)/%.o)
