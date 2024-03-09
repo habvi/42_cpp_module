@@ -1,6 +1,7 @@
 #ifndef EX01_FORM_HPP
 #define EX01_FORM_HPP
 
+#include <ostream>
 #include <string>
 
 class Form {
@@ -33,5 +34,7 @@ class Form {
 	const unsigned int        grade_for_sign_;
 	const unsigned int        grade_for_execute_;
 };
+
+std::ostream &operator<<(std::ostream &out, const Form &b);
 
 #endif
