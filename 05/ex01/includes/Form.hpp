@@ -22,6 +22,11 @@ class Form {
 
   private:
 	Form();
+	const char *GradeTooHighException() const;
+	const char *GradeTooLowException() const;
+
+  private:
+	static const unsigned int kHighestGrade = 1;
 	static const unsigned int kLowestGrade  = 150;
 	const std::string         name_;
 	bool                      is_signed_;
