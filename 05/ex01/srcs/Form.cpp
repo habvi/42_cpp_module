@@ -1,5 +1,6 @@
 #include "Form.hpp"
 #include "GradeException.hpp"
+#include "color.hpp"
 
 Form::Form() : grade_for_sign_(kLowestGrade), grade_for_execute_(kLowestGrade) {}
 
@@ -56,4 +57,12 @@ const char *Form::GradeTooHighException() const {
 
 const char *Form::GradeTooLowException() const {
 	throw GradeException("Error: Grade is too low");
+}
+
+std::ostream &operator<<(std::ostream &out, const Form &f) {
+	out << COLOR_PINK << "Form " << f.GetName() << "("
+		<< (f.GetIsSigned() ? "signed" : "not signed") << "), grade for sign is "
+		<< f.GetGradeForSign() << ", "
+		<< "grade for execute is " << f.GetGradeForExecute() << COLOR_END;
+	return out;
 }
