@@ -20,9 +20,13 @@ class ShrubberyCreationForm : public AForm {
 	void execute(Bureaucrat const &executor) const;
 
   private:
+	void WriteTreeToFile() const;
+
+  private:
 	static const std::string  kFormName;
 	static const unsigned int kGradeForSign    = 145;
 	static const unsigned int kGradeForExecute = 137;
+	static const std::string  kFileSuffix;
 	std::string               target_;
 };
 
