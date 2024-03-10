@@ -348,10 +348,18 @@ static void RunTest12() {
 
 /* === Expect ===
 AForm: Robotomy Request(not signed), grade for sign is 72, grade for execute is 45
---------------------------------
+------------------------
 Error: not signed
---------------------------------
-executor(Bob): target(Robo_Alice) robotomized or not
+------------------------ // (change by current time's second.)
+Drrrrrrrrrrrrrrr....
+executor(Bob): target(Robo_Alice) has been robotomized successfully.
+Drrrrrrrrrrrrrrr....
+executor(Bob): target(Robo_Alice) Failed to robotomized.
+Drrrrrrrrrrrrrrr....
+executor(Bob): target(Robo_Alice) has been robotomized successfully.
+Drrrrrrrrrrrrrrr....
+executor(Bob): target(Robo_Alice) Failed to robotomized.
+------------------------
 Error: Grade is too low
 */
 static void RunTest13() {
@@ -363,7 +371,12 @@ static void RunTest13() {
 	Line();
 	ExecuteAFormWithNoSign(&r_form); // no sign
 	Line();
+	// execute 4 times for 50% success
 	ExecuteAFormWithSign(&r_form, 44); // as AForm*, able to execute
+	ExecuteAFormWithSign(&r_form, 44); // as AForm*, able to execute
+	ExecuteAFormWithSign(&r_form, 44); // as AForm*, able to execute
+	ExecuteAFormWithSign(&r_form, 44); // as AForm*, able to execute
+	Line();
 	ExecuteAFormWithSign(&r_form, 46); // as AForm*, unable to execute
 }
 
