@@ -73,7 +73,7 @@ bool AForm::beSigned(const Bureaucrat &b) {
 
 void AForm::execute(Bureaucrat const &executor) const {
 	if (!is_signed_) {
-		// todo: throw;
+		throw std::logic_error("Error: not signed");
 	}
 	if (executor.getGrade() > grade_for_execute_) {
 		throw GradeException("Error: Grade is too low");
