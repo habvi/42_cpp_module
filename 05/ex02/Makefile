@@ -34,6 +34,7 @@ $(NAME): $(OBJS)
 
 .PHONY	: clean
 clean:
+	$(RM) $(TEST_FILENAME)
 	$(RM) -r $(OBJ_DIR)
 
 .PHONY	: fclean
@@ -55,6 +56,20 @@ val: all
 .PHONY	: check
 check:
 	cppcheck --enable=all $$(find . -type f -name "*.cpp" | tr '\n' ' ')
+
+#--------------------------------------------
+# test for ShrubberyCreationForm's execute() fail
+TEST_FILENAME := Shru_Alice_shrubbery
+
+.PHONY	: chmod
+chmod:
+	@touch $(TEST_FILENAME)
+	@chmod 000 $(TEST_FILENAME)
+
+.PHONY	: back
+back:
+	@chmod 664 $(TEST_FILENAME)
+
 
 #--------------------------------------------
 
