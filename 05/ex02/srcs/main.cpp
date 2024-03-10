@@ -18,6 +18,10 @@ static void DisplayTitle(const std::string &title) {
 	testcase_number++;
 }
 
+static void Line() {
+	std::cout << "------------------------" << std::endl;
+}
+
 static bool IsEqualNameAndGrade(
 	const Bureaucrat  &target,
 	const std::string &expected_name,
@@ -300,8 +304,20 @@ static void RunTest11() {
 	std::cout << form << std::endl;
 }
 
-static void ExecuteAForm(const AForm *form, const unsigned int executor_grade) {
+static void ExecuteAFormWithNoSign(AForm *form) {
+	Bureaucrat bob(BOB, 1);
+	try {
+		form->execute(bob);
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+}
+
+static void ExecuteAFormWithSign(AForm *form, const unsigned int executor_grade) {
 	Bureaucrat bob(BOB, executor_grade);
+
+	// add sign
+	form->beSigned(bob);
 	try {
 		form->execute(bob);
 	} catch (const std::exception &e) {
@@ -311,6 +327,9 @@ static void ExecuteAForm(const AForm *form, const unsigned int executor_grade) {
 
 /* === Expect ===
 AForm: Presidential Pardon(not signed), grade for sign is 25, grade for execute is 5
+--------------------------------
+Error: not signed
+--------------------------------
 executor(Bob): target(Pre_Alice) has been pardoned by Zaphod Beeblebrox.
 Error: Grade is too low
 */
@@ -320,12 +339,18 @@ static void RunTest12() {
 	PresidentialPardonForm p_form("Pre_" ALICE); // 25, 5
 	std::cout << p_form << std::endl;            // AForm's operator<<
 
-	ExecuteAForm(&p_form, 4); // as AForm*, able to execute
-	ExecuteAForm(&p_form, 6); // as AForm*, unable to execute
+	Line();
+	ExecuteAFormWithNoSign(&p_form); // no sign
+	Line();
+	ExecuteAFormWithSign(&p_form, 4); // as AForm*, able to execute
+	ExecuteAFormWithSign(&p_form, 6); // as AForm*, unable to execute
 }
 
 /* === Expect ===
 AForm: Robotomy Request(not signed), grade for sign is 72, grade for execute is 45
+--------------------------------
+Error: not signed
+--------------------------------
 executor(Bob): target(Robo_Alice) robotomized or not
 Error: Grade is too low
 */
@@ -335,13 +360,21 @@ static void RunTest13() {
 	RobotomyRequestForm r_form("Robo_" ALICE); // 72, 45
 	std::cout << r_form << std::endl;          // AForm's operator<<
 
-	ExecuteAForm(&r_form, 44); // as AForm*, able to execute
-	ExecuteAForm(&r_form, 46); // as AForm*, unable to execute
+	Line();
+	ExecuteAFormWithNoSign(&r_form); // no sign
+	Line();
+	ExecuteAFormWithSign(&r_form, 44); // as AForm*, able to execute
+	ExecuteAFormWithSign(&r_form, 46); // as AForm*, unable to execute
 }
 
 /* === Expect ===
 AForm: Shrubbery Creation(not signed), grade for sign is 145, grade for execute is
-137 executor(Bob): target(Shru_Alice) write tree to file. Error: Grade is too low
+137
+--------------------------------
+Error: not signed
+--------------------------------
+executor(Bob): target(Shru_Alice) write tree to file. => Success
+Error: Grade is too low
 */
 static void RunTest14() {
 	DisplayTitle("ShrubberyCreationForm class's execute()");
@@ -349,8 +382,11 @@ static void RunTest14() {
 	ShrubberyCreationForm s_form("Shru_" ALICE); // 145, 137
 	std::cout << s_form << std::endl;            // AForm's operator<<
 
-	ExecuteAForm(&s_form, 136); // as AForm*, able to execute
-	ExecuteAForm(&s_form, 138); // as AForm*, unable to execute
+	Line();
+	ExecuteAFormWithNoSign(&s_form); // no sign
+	Line();
+	ExecuteAFormWithSign(&s_form, 136); // as AForm*, able to execute
+	ExecuteAFormWithSign(&s_form, 138); // as AForm*, unable to execute
 }
 
 static void RunOriginalTest() {
