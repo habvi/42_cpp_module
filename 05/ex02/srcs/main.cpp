@@ -1,5 +1,8 @@
 #include "AForm.hpp"
 #include "Bureaucrat.hpp"
+#include "PresidentialPardonForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 #include "color.hpp"
 #include <cstdlib>
 #include <iostream>
@@ -297,6 +300,59 @@ static void RunTest11() {
 	std::cout << form << std::endl;
 }
 
+static void ExecuteAForm(const AForm *form, const unsigned int executor_grade) {
+	Bureaucrat bob(BOB, executor_grade);
+	try {
+		form->execute(bob);
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+}
+
+/* === Expect ===
+AForm: Presidential Pardon(not signed), grade for sign is 25, grade for execute is 5
+executor(Bob): target(Pre_Alice) has been pardoned by Zaphod Beeblebrox.
+Error: Grade is too low
+*/
+static void RunTest12() {
+	DisplayTitle("PresidentialPardonForm class's execute()");
+
+	PresidentialPardonForm p_form("Pre_" ALICE); // 25, 5
+	std::cout << p_form << std::endl;            // AForm's operator<<
+
+	ExecuteAForm(&p_form, 4); // as AForm*, able to execute
+	ExecuteAForm(&p_form, 6); // as AForm*, unable to execute
+}
+
+/* === Expect ===
+AForm: Robotomy Request(not signed), grade for sign is 72, grade for execute is 45
+executor(Bob): target(Robo_Alice) robotomized or not
+Error: Grade is too low
+*/
+static void RunTest13() {
+	DisplayTitle("RobotomyRequestForm class's execute()");
+
+	RobotomyRequestForm r_form("Robo_" ALICE); // 72, 45
+	std::cout << r_form << std::endl;          // AForm's operator<<
+
+	ExecuteAForm(&r_form, 44); // as AForm*, able to execute
+	ExecuteAForm(&r_form, 46); // as AForm*, unable to execute
+}
+
+/* === Expect ===
+AForm: Shrubbery Creation(not signed), grade for sign is 145, grade for execute is
+137 executor(Bob): target(Shru_Alice) write tree to file. Error: Grade is too low
+*/
+static void RunTest14() {
+	DisplayTitle("ShrubberyCreationForm class's execute()");
+
+	ShrubberyCreationForm s_form("Shru_" ALICE); // 145, 137
+	std::cout << s_form << std::endl;            // AForm's operator<<
+
+	ExecuteAForm(&s_form, 136); // as AForm*, able to execute
+	ExecuteAForm(&s_form, 138); // as AForm*, unable to execute
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -314,6 +370,9 @@ static void RunOriginalTest() {
 	RunTest11();
 
 	/* ex02 */
+	RunTest12();
+	RunTest13();
+	RunTest14();
 }
 
 int main() {
