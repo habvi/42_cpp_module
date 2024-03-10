@@ -7,6 +7,8 @@
 const std::string ShrubberyCreationForm::kFormName   = "Shrubbery Creation";
 const std::string ShrubberyCreationForm::kFileSuffix = "_shrubbery";
 
+ShrubberyCreationForm::ShrubberyCreationForm() {}
+
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string &target)
 	: AForm(kFormName, kGradeForSign, kGradeForExecute), target_(target) {}
 

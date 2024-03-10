@@ -20,6 +20,7 @@ class ShrubberyCreationForm : public AForm {
 	void execute(Bureaucrat const &executor) const;
 
   private:
+	ShrubberyCreationForm();
 	void WriteTreeToFile() const;
 
   private:

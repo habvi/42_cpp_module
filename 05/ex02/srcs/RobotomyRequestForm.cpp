@@ -7,6 +7,8 @@
 
 const std::string RobotomyRequestForm::kFormName = "Robotomy Request";
 
+RobotomyRequestForm::RobotomyRequestForm() {}
+
 RobotomyRequestForm::RobotomyRequestForm(const std::string &target)
 	: AForm(kFormName, kGradeForSign, kGradeForExecute), target_(target) {}
 
