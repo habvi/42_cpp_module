@@ -1,3 +1,4 @@
+#include "AForm.hpp"
 #include "Bureaucrat.hpp"
 #include "color.hpp"
 #include <cstdlib>
@@ -168,133 +169,133 @@ static void RunTest6() {
 
 // // -----------------------------------------------------------------------------
 
-// static bool IsEqualNameAndGrade(const Form &target, const Form &expected) {
-// 	return target.GetName() == expected.GetName() &&
-// 		   target.GetIsSigned() == expected.GetIsSigned() &&
-// 		   target.GetGradeForSign() == expected.GetGradeForSign() &&
-// 		   target.GetGradeForExecute() == expected.GetGradeForExecute();
-// }
+static bool IsEqualNameAndGrade(const AForm &target, const AForm &expected) {
+	return target.GetName() == expected.GetName() &&
+		   target.GetIsSigned() == expected.GetIsSigned() &&
+		   target.GetGradeForSign() == expected.GetGradeForSign() &&
+		   target.GetGradeForExecute() == expected.GetGradeForExecute();
+}
 
-// static void JudgeResult(const Form &target, const Form &expected) {
-// 	if (IsEqualNameAndGrade(target, expected)) {
-// 		std::cout << COLOR_GREEN "[OK]" << COLOR_END << std::endl;
-// 	} else {
-// 		std::cout << COLOR_RED "[NG]" << COLOR_END << std::endl;
-// 		exit(EXIT_FAILURE);
-// 	}
-// }
+static void JudgeResult(const AForm &target, const AForm &expected) {
+	if (IsEqualNameAndGrade(target, expected)) {
+		std::cout << COLOR_GREEN "[OK]" << COLOR_END << std::endl;
+	} else {
+		std::cout << COLOR_RED "[NG]" << COLOR_END << std::endl;
+		exit(EXIT_FAILURE);
+	}
+}
 
-// /* === Expect ===
-// Error: Grade is too high
-// Error: Grade is too high
-// Error: Grade is too high
-// */
-// static void RunTest7() {
-// 	DisplayTitle("Form constructor: throw exception / grade too high");
+/* === Expect ===
+Error: Grade is too high
+Error: Grade is too high
+Error: Grade is too high
+*/
+static void RunTest7() {
+	DisplayTitle("AForm constructor: throw exception / grade too high");
 
-// 	Form alice = Form(ALICE, 150, 1); // normal, normal
+	AForm alice = AForm(ALICE, 150, 1); // normal, normal
 
-// 	try {
-// 		Form alice = Form(ALICE, 0, 123); // too high, normal
-// 	} catch (const std::exception &e) {
-// 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
-// 	}
-// 	try {
-// 		Form alice = Form(ALICE, 123, 0); // normal, too high
-// 	} catch (const std::exception &e) {
-// 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
-// 	}
-// 	try {
-// 		Form alice = Form(ALICE, 0, 0); // too high, too high
-// 	} catch (const std::exception &e) {
-// 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
-// 	}
-// }
+	try {
+		AForm alice = AForm(ALICE, 0, 123); // too high, normal
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+	try {
+		AForm alice = AForm(ALICE, 123, 0); // normal, too high
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+	try {
+		AForm alice = AForm(ALICE, 0, 0); // too high, too high
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+}
 
-// /* === Expect ===
-// Error: grade is too low
-// Error: grade is too low
-// Error: grade is too low
-// */
-// static void RunTest8() {
-// 	DisplayTitle("From constructor: throw exception / grade too low");
+/* === Expect ===
+Error: grade is too low
+Error: grade is too low
+Error: grade is too low
+*/
+static void RunTest8() {
+	DisplayTitle("AForm constructor: throw exception / grade too low");
 
-// 	Form bob = Form(BOB, 1, 150); // normal, normal
+	AForm bob = AForm(BOB, 1, 150); // normal, normal
 
-// 	try {
-// 		Form bob = Form(BOB, 151, 1); // too low, normal
-// 	} catch (const std::exception &e) {
-// 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
-// 	}
-// 	try {
-// 		Form bob = Form(BOB, 151, 1); // normal, too low
-// 	} catch (const std::exception &e) {
-// 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
-// 	}
+	try {
+		AForm bob = AForm(BOB, 151, 1); // too low, normal
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+	try {
+		AForm bob = AForm(BOB, 151, 1); // normal, too low
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
 
-// 	try {
-// 		Form bob = Form(BOB, 151, 12345); // too low, too low
-// 	} catch (const std::exception &e) {
-// 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
-// 	}
-// }
+	try {
+		AForm bob = AForm(BOB, 151, 12345); // too low, too low
+	} catch (const std::exception &e) {
+		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+	}
+}
 
-// /* === Expect ===
-// [OK]
-// [OK]
-// */
-// static void RunTest9() {
-// 	DisplayTitle("Form copy test");
+/* === Expect ===
+[OK]
+[OK]
+*/
+static void RunTest9() {
+	DisplayTitle("AForm copy test");
 
-// 	static const unsigned int kGradeForSign    = 5;   // normal
-// 	static const unsigned int kGradeForExecute = 123; // normal
+	static const unsigned int kGradeForSign    = 5;   // normal
+	static const unsigned int kGradeForExecute = 123; // normal
 
-// 	Form alice = Form(ALICE, kGradeForSign, kGradeForExecute);
+	AForm alice = AForm(ALICE, kGradeForSign, kGradeForExecute);
 
-// 	Form alice2(alice);
-// 	JudgeResult(alice2, alice); // [OK]
+	AForm alice2(alice);
+	JudgeResult(alice2, alice); // [OK]
 
-// 	Form alice3 = alice;
-// 	JudgeResult(alice3, alice); // [OK]
-// }
+	AForm alice3 = alice;
+	JudgeResult(alice3, alice); // [OK]
+}
 
-// /* === Expect ===
-// Form Alice(not signed), grade for sign is 5, grade for execute is 123
-// */
-// static void RunTest10() {
-// 	DisplayTitle("Form operator<< overload");
+/* === Expect ===
+Form Alice(not signed), grade for sign is 5, grade for execute is 123
+*/
+static void RunTest10() {
+	DisplayTitle("AForm operator<< overload");
 
-// 	Form alice = Form(ALICE, 5, 123);
-// 	std::cout << alice << std::endl;
-// }
+	AForm alice = AForm(ALICE, 5, 123);
+	std::cout << alice << std::endl;
+}
 
-// /* === Expect ===
-// Alice, bureaucrat grade 5.
-// Form: F1(not signed), grade for sign is 4, grade for execute is 50
-// Alice couldn't sign F1 because lower than the required Form grade.
-// Form: F1(not signed), grade for sign is 4, grade for execute is 50
-// Alice, bureaucrat grade 4.
-// Alice signed F1
-// Form: F1(signed), grade for sign is 4, grade for execute is 50
-// */
-// static void RunTest11() {
-// 	DisplayTitle("Bureaucrat try to sign the Form");
+/* === Expect ===
+Alice, bureaucrat grade 5.
+Form: F1(not signed), grade for sign is 4, grade for execute is 50
+Alice couldn't sign F1 because lower than the required Form grade.
+Form: F1(not signed), grade for sign is 4, grade for execute is 50
+Alice, bureaucrat grade 4.
+Alice signed F1
+Form: F1(signed), grade for sign is 4, grade for execute is 50
+*/
+static void RunTest11() {
+	DisplayTitle("Bureaucrat try to sign the Form");
 
-// 	Bureaucrat alice(ALICE, 5);
-// 	std::cout << alice << std::endl;
+	Bureaucrat alice(ALICE, 5);
+	std::cout << alice << std::endl;
 
-// 	Form form("F1", 4, 50);
-// 	std::cout << form << std::endl;
+	AForm form("F1", 4, 50);
+	std::cout << form << std::endl;
 
-// 	alice.signForm(form);
-// 	std::cout << form << std::endl;
+	alice.signForm(form);
+	std::cout << form << std::endl;
 
-// 	alice.IncrementGrade();
-// 	std::cout << alice << std::endl;
+	alice.IncrementGrade();
+	std::cout << alice << std::endl;
 
-// 	alice.signForm(form);
-// 	std::cout << form << std::endl;
-// }
+	alice.signForm(form);
+	std::cout << form << std::endl;
+}
 
 static void RunOriginalTest() {
 	/* ex00 */
@@ -306,11 +307,11 @@ static void RunOriginalTest() {
 	RunTest6();
 
 	/* ex01 */
-	// RunTest7();
-	// RunTest8();
-	// RunTest9();
-	// RunTest10();
-	// RunTest11();
+	RunTest7();
+	RunTest8();
+	RunTest9();
+	RunTest10();
+	RunTest11();
 
 	/* ex02 */
 }
