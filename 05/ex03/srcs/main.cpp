@@ -1,5 +1,6 @@
 #include "AForm.hpp"
 #include "Bureaucrat.hpp"
+#include "Intern.hpp"
 #include "PresidentialPardonForm.hpp"
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
@@ -458,6 +459,66 @@ static void RunTest17() {
 	bob.executeForm(form);
 }
 
+/* === Expect ===
+Intern creats robotomy request
+AForm: Robotomy Request(not signed), grade for sign is 72, grade for execute is 45
+*/
+static void RunTest18() {
+	DisplayTitle("Intern / subject test");
+
+	Intern someRandomIntern;
+	AForm *rrf;
+
+	rrf = someRandomIntern.makeForm(kRobotomyRequestFormName, "Bender");
+	// if (rrf == NULL) {
+	// 	return;
+	// }
+	std::cout << *rrf << std::endl;
+
+	delete rrf;
+}
+
+/* === Expect ===
+Intern creats presidential pardon
+------------------------
+AForm: Presidential Pardon(not signed), grade for sign is 25, grade for execute is 5
+------------------------
+executor(Bob): target(Bender) has been pardoned by Zaphod Beeblebrox.
+*/
+static void RunTest19() {
+	DisplayTitle("Intern / executeForm()");
+
+	Intern someRandomIntern;
+	AForm *rrf;
+
+	rrf = someRandomIntern.makeForm("presidential pardon", "Bender");
+	// if (rrf == NULL) {
+	// 	return;
+	// }
+	Line();
+	std::cout << *rrf << std::endl;
+
+	Line();
+	ExecuteAFormWithSign(rrf, 1);
+
+	delete rrf;
+}
+
+/* === Expect ===
+Intern creats Form failed. => Error: invalid Form name
+*/
+static void RunTest20() {
+	DisplayTitle("Intern / non exist form name");
+
+	Intern someRandomIntern;
+	AForm *rrf;
+
+	rrf = someRandomIntern.makeForm("non exist form", "Bender");
+	if (rrf == NULL) {
+		return;
+	}
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -481,6 +542,11 @@ static void RunOriginalTest() {
 	RunTest15();
 	RunTest16();
 	RunTest17();
+
+	/* ex03 */
+	RunTest18();
+	RunTest19();
+	RunTest20();
 }
 
 int main() {
