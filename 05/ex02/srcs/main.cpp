@@ -402,6 +402,62 @@ static void RunTest14() {
 	ExecuteAFormWithSign(&s_form, 138); // as AForm*, unable to execute
 }
 
+/* === Expect ===
+Bob failed to execute => Error: not signed
+------------------------
+executor(Bob): target(Pre_Alice) has been pardoned by Zaphod Beeblebrox.
+Bob execute Presidential Pardon
+*/
+static void RunTest15() {
+	DisplayTitle("Bureaucrat executeForm() by PresidentialPardon");
+
+	PresidentialPardonForm form("Pre_" ALICE); // 25, 5
+	Bureaucrat             bob(BOB, 1);        // sign OK, execute OK
+
+	// no sign
+	bob.executeForm(form);
+	Line();
+
+	// add sign
+	form.beSigned(bob);
+	bob.executeForm(form);
+}
+
+/* === Expect ===
+Bob failed to execute => Error: not signed
+------------------------
+Bob failed to execute => Error: Grade is too low
+*/
+static void RunTest16() {
+	DisplayTitle("Bureaucrat executeForm() by Robotomy");
+
+	RobotomyRequestForm form("Robo_" ALICE); // 72, 45
+	Bureaucrat          bob(BOB, 70);        // sign OK, execute NG
+
+	// no sign
+	bob.executeForm(form);
+	Line();
+
+	// add sign
+	form.beSigned(bob);
+	bob.executeForm(form);
+}
+
+/* === Expect ===
+executor(Bob): target(Shru_Alice) write tree to file. => Success
+Bob execute Shrubbery Creation
+*/
+static void RunTest17() {
+	DisplayTitle("Bureaucrat executeForm() by Shrubbery");
+
+	ShrubberyCreationForm form("Shru_" ALICE); // 145, 137
+	Bureaucrat            bob(BOB, 1);         // sign OK, execute OK
+
+	// add sign
+	form.beSigned(bob);
+	bob.executeForm(form);
+}
+
 static void RunOriginalTest() {
 	/* ex00 */
 	RunTest1();
@@ -422,6 +478,9 @@ static void RunOriginalTest() {
 	RunTest12();
 	RunTest13();
 	RunTest14();
+	RunTest15();
+	RunTest16();
+	RunTest17();
 }
 
 int main() {
