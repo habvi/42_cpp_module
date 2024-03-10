@@ -23,8 +23,8 @@ class AForm {
 	unsigned int       GetGradeForSign() const;
 	unsigned int       GetGradeForExecute() const;
 	// Following the instructions, not camelcase
-	bool beSigned(const Bureaucrat &b);
-	void execute(Bureaucrat const &executor) const;
+	bool         beSigned(const Bureaucrat &b);
+	virtual void execute(Bureaucrat const &executor) const;
 
   protected:
 	AForm();
