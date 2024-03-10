@@ -218,7 +218,7 @@ Error: grade is too low
 Error: grade is too low
 */
 static void RunTest8() {
-	DisplayTitle("From constructor: throw exception / grade too low");
+	DisplayTitle("Form constructor: throw exception / grade too low");
 
 	Form bob = Form(BOB, 1, 150); // normal, normal
 
