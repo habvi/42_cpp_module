@@ -14,8 +14,9 @@
 static void DisplayTitle(const std::string &title) {
 	static unsigned int testcase_number = 1;
 
-	std::cout << "\n\n┃ test " << testcase_number << ": " << title << std::endl;
-	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
+	std::cout << "\n\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
+	std::cout << "┃ test " << testcase_number << ": " << title << std::endl;
+	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 	testcase_number++;
 }
 
@@ -175,7 +176,7 @@ static void RunTest6() {
 	JudgeResult(alice, ALICE, grade - 3 + 1); // [OK]
 }
 
-// // -----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 static bool IsEqualNameAndGrade(const AForm &target, const AForm &expected) {
 	return target.GetName() == expected.GetName() &&
@@ -192,6 +193,8 @@ static void JudgeResult(const AForm &target, const AForm &expected) {
 		exit(EXIT_FAILURE);
 	}
 }
+
+// -----------------------------------------------------------------------------
 
 /* === Expect ===
 Error: Grade is too high
@@ -268,7 +271,7 @@ static void RunTest9() {
 }
 
 /* === Expect ===
-Form Alice(not signed), grade for sign is 5, grade for execute is 123
+AForm Alice(not signed), grade for sign is 5, grade for execute is 123
 */
 static void RunTest10() {
 	DisplayTitle("AForm operator<< overload");
@@ -279,12 +282,12 @@ static void RunTest10() {
 
 /* === Expect ===
 Alice, bureaucrat grade 5.
-Form: F1(not signed), grade for sign is 4, grade for execute is 50
+AForm: F1(not signed), grade for sign is 4, grade for execute is 50
 Alice couldn't sign F1 because lower than the required Form grade.
-Form: F1(not signed), grade for sign is 4, grade for execute is 50
+AForm: F1(not signed), grade for sign is 4, grade for execute is 50
 Alice, bureaucrat grade 4.
 Alice signed F1
-Form: F1(signed), grade for sign is 4, grade for execute is 50
+AForm: F1(signed), grade for sign is 4, grade for execute is 50
 */
 static void RunTest11() {
 	DisplayTitle("Bureaucrat try to sign the Form");
@@ -304,6 +307,8 @@ static void RunTest11() {
 	alice.signForm(form);
 	std::cout << form << std::endl;
 }
+
+// -----------------------------------------------------------------------------
 
 static void ExecuteAFormWithNoSign(AForm *form) {
 	Bureaucrat bob(BOB, 1);
@@ -325,6 +330,8 @@ static void ExecuteAFormWithSign(AForm *form, const unsigned int executor_grade)
 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
 	}
 }
+
+// -----------------------------------------------------------------------------
 
 /* === Expect ===
 AForm: Presidential Pardon(not signed), grade for sign is 25, grade for execute is 5
@@ -430,7 +437,7 @@ Bob failed to execute => Error: not signed
 Bob failed to execute => Error: Grade is too low
 */
 static void RunTest16() {
-	DisplayTitle("Bureaucrat executeForm() by Robotomy");
+	DisplayTitle("Bureaucrat executeForm() by Robotomy less grade");
 
 	RobotomyRequestForm form("Robo_" ALICE); // 72, 45
 	Bureaucrat          bob(BOB, 70);        // sign OK, execute NG
