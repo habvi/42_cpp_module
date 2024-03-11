@@ -3,3 +3,4 @@
 - [cpp02](02/) : Ad-hoc polymorphism, overloads, orthodox canonical classes
 - [cpp03](03/) : Inheritance
 - [cpp04](04/) : Subtype polymorphism, abstract classes, interfaces
+- [cpp05](05/) : Try/Catch and Exceptions
