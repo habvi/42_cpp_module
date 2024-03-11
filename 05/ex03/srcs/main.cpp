@@ -5,6 +5,7 @@
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 #include "color.hpp"
+#include "form_list.hpp"
 #include <cstdlib>
 #include <iostream>
 
@@ -492,9 +493,9 @@ static void RunTest18() {
 	AForm *rrf;
 
 	rrf = someRandomIntern.makeForm(kRobotomyRequestFormName, "Bender");
-	// if (rrf == NULL) {
-	// 	return;
-	// }
+	if (rrf == NULL) {
+		return;
+	}
 	std::cout << *rrf << std::endl;
 
 	delete rrf;
@@ -505,23 +506,82 @@ Intern creats presidential pardon
 ------------------------
 AForm: Presidential Pardon(not signed), grade for sign is 25, grade for execute is 5
 ------------------------
-executor(Bob): target(Bender) has been pardoned by Zaphod Beeblebrox.
+executor(Bob): target(Pre_Bender) has been pardoned by Zaphod Beeblebrox.
+Bob execute Presidential Pardon
 */
 static void RunTest19() {
-	DisplayTitle("Intern / executeForm()");
+	DisplayTitle("Intern / executeForm() PresidentialPardon");
 
 	Intern someRandomIntern;
 	AForm *rrf;
 
-	rrf = someRandomIntern.makeForm("presidential pardon", "Bender");
-	// if (rrf == NULL) {
-	// 	return;
-	// }
+	rrf = someRandomIntern.makeForm(kPresidentialPardonFormName, "Pre_Bender");
+	if (rrf == NULL) {
+		return;
+	}
+	Line();
+	std::cout << *rrf << std::endl;
+
+	Line();
+	ExecuteFormByBureaucratWithSign(BOB, 1, *rrf);
+
+	delete rrf;
+}
+
+/* === Expect ===
+Intern creats robotomy request
+------------------------
+AForm: Robotomy Request(not signed), grade for sign is 72, grade for execute is 45
+------------------------
+Drrrrrrrrrrrrrrr....
+executor(Bob): target(Robo_Bender) Failed to robotomized.
+Drrrrrrrrrrrrrrr....
+executor(Bob): target(Robo_Bender) has been robotomized successfully.
+*/
+static void RunTest20() {
+	DisplayTitle("Intern / executeForm() RobotomyRequest");
+
+	Intern someRandomIntern;
+	AForm *rrf;
+
+	rrf = someRandomIntern.makeForm(kRobotomyRequestFormName, "Robo_Bender");
+	if (rrf == NULL) {
+		return;
+	}
 	Line();
 	std::cout << *rrf << std::endl;
 
 	Line();
 	ExecuteAFormWithSign(rrf, 1);
+	ExecuteAFormWithSign(rrf, 1);
+
+	delete rrf;
+}
+
+/* === Expect ===
+Intern creats shrubbery creation
+------------------------
+AForm: Shrubbery Creation(not signed), grade for sign is 145, grade for execute is
+137
+------------------------
+executor(Bob): target(Shru_Bender) write tree to file. => Success
+Bob execute Shrubbery Creation
+*/
+static void RunTest21() {
+	DisplayTitle("Intern / executeForm() ShrubberyCreation");
+
+	Intern someRandomIntern;
+	AForm *rrf;
+
+	rrf = someRandomIntern.makeForm(kShrubberyCreationFormName, "Shru_Bender");
+	if (rrf == NULL) {
+		return;
+	}
+	Line();
+	std::cout << *rrf << std::endl;
+
+	Line();
+	ExecuteFormByBureaucratWithSign(BOB, 1, *rrf);
 
 	delete rrf;
 }
@@ -529,7 +589,7 @@ static void RunTest19() {
 /* === Expect ===
 Intern creats Form failed. => Error: invalid Form name
 */
-static void RunTest20() {
+static void RunTest22() {
 	DisplayTitle("Intern / non exist form name");
 
 	Intern someRandomIntern;
@@ -569,6 +629,8 @@ static void RunOriginalTest() {
 	RunTest18();
 	RunTest19();
 	RunTest20();
+	RunTest21();
+	RunTest22();
 }
 
 int main() {
