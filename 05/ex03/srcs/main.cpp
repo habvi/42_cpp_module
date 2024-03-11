@@ -410,6 +410,29 @@ static void RunTest14() {
 	ExecuteAFormWithSign(&s_form, 138); // as AForm*, unable to execute
 }
 
+// -----------------------------------------------------------------------------
+
+static void ExecuteFormByBureaucratWithNoSign(
+	const std::string &name, const unsigned int grade, AForm &form
+) {
+	const Bureaucrat bob(name, grade);
+
+	// no sign
+	bob.executeForm(form);
+}
+
+static void ExecuteFormByBureaucratWithSign(
+	const std::string &name, const unsigned int grade, AForm &form
+) {
+	const Bureaucrat bob(name, grade);
+
+	// add sign
+	form.beSigned(bob);
+	bob.executeForm(form);
+}
+
+// -----------------------------------------------------------------------------
+
 /* === Expect ===
 Bob failed to execute => Error: not signed
 ------------------------
@@ -420,15 +443,12 @@ static void RunTest15() {
 	DisplayTitle("Bureaucrat executeForm() by PresidentialPardon");
 
 	PresidentialPardonForm form("Pre_" ALICE); // 25, 5
-	Bureaucrat             bob(BOB, 1);        // sign OK, execute OK
 
 	// no sign
-	bob.executeForm(form);
+	ExecuteFormByBureaucratWithNoSign(BOB, 1, form);
 	Line();
-
-	// add sign
-	form.beSigned(bob);
-	bob.executeForm(form);
+	// with sign
+	ExecuteFormByBureaucratWithSign(BOB, 1, form); // 1 : sign OK, execute OK
 }
 
 /* === Expect ===
@@ -440,15 +460,12 @@ static void RunTest16() {
 	DisplayTitle("Bureaucrat executeForm() by Robotomy less grade");
 
 	RobotomyRequestForm form("Robo_" ALICE); // 72, 45
-	Bureaucrat          bob(BOB, 70);        // sign OK, execute NG
 
 	// no sign
-	bob.executeForm(form);
+	ExecuteFormByBureaucratWithNoSign(BOB, 70, form);
 	Line();
-
-	// add sign
-	form.beSigned(bob);
-	bob.executeForm(form);
+	// with sign
+	ExecuteFormByBureaucratWithSign(BOB, 70, form); // 70 : sign OK, execute NG
 }
 
 /* === Expect ===
@@ -459,11 +476,9 @@ static void RunTest17() {
 	DisplayTitle("Bureaucrat executeForm() by Shrubbery");
 
 	ShrubberyCreationForm form("Shru_" ALICE); // 145, 137
-	Bureaucrat            bob(BOB, 1);         // sign OK, execute OK
 
-	// add sign
-	form.beSigned(bob);
-	bob.executeForm(form);
+	// with sign
+	ExecuteFormByBureaucratWithSign(BOB, 1, form); // 1 : sign OK, execute OK
 }
 
 /* === Expect ===
