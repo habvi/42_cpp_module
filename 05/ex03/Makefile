@@ -60,7 +60,7 @@ check:
 
 #--------------------------------------------
 # test for ShrubberyCreationForm's execute() fail
-TEST_FILENAME := Shru_Alice_shrubbery
+TEST_FILENAME := Shru_Alice_shrubbery Shru_Bender_shrubbery
 
 .PHONY	: chmod
 chmod:
@@ -71,6 +71,13 @@ chmod:
 back:
 	@chmod 664 $(TEST_FILENAME)
 
+# test's cout & cerr to file and compare
+# robotomized success almost 50%
+.PHONY	: diff
+diff: all
+	@./$(NAME) > out.txt 2>&1
+	@-diff expected.txt out.txt
+	@rm out.txt
 
 #--------------------------------------------
 
