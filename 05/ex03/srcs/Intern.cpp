@@ -38,7 +38,8 @@ AForm *TryMakeForm(const std::string &form_name, const std::string &target) {
 	return form;
 }
 
-AForm *Intern::makeForm(const std::string &form_name, const std::string &target) {
+AForm *
+Intern::makeForm(const std::string &form_name, const std::string &target) const {
 	AForm *form;
 
 	try {
