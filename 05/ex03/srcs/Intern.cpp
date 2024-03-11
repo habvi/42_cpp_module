@@ -3,6 +3,7 @@
 #include "RobotomyRequestForm.hpp"
 #include "ShrubberyCreationForm.hpp"
 #include "color.hpp"
+#include "form_list.hpp"
 #include <iostream>
 #include <new>
 
@@ -19,19 +20,44 @@ const Intern &Intern::operator=(const Intern &i) {
 
 Intern::~Intern() {}
 
-AForm *TryMakeForm(const std::string &form_name, const std::string &target) {
-	AForm *form = NULL;
+static AForm *CreatePresidentialPardonForm(const std::string &target) {
+	return new (std::nothrow) PresidentialPardonForm(target);
+}
 
-	// todo: don't use if/else
-	if (form_name == "presidential pardon") {
-		form = new (std::nothrow) PresidentialPardonForm(target);
-	} else if (form_name == "robotomy request") {
-		form = new (std::nothrow) RobotomyRequestForm(target);
-	} else if (form_name == "shrubbery creation") {
-		form = new (std::nothrow) ShrubberyCreationForm(target);
-	} else {
+static AForm *CreateRobotomyRequestForm(const std::string &target) {
+	return new (std::nothrow) RobotomyRequestForm(target);
+}
+
+static AForm *CreateShrubberyCreationForm(const std::string &target) {
+	return new (std::nothrow) ShrubberyCreationForm(target);
+}
+
+typedef AForm *(*CreateFormFunc)(const std::string &);
+typedef std::pair<const std::string, CreateFormFunc> FormPair;
+
+static CreateFormFunc GetCreateFormFunction(const std::string &form_name) {
+	static const FormPair forms[] = {
+		std::make_pair(kPresidentialPardonFormName, &CreatePresidentialPardonForm),
+		std::make_pair(kRobotomyRequestFormName, &CreateRobotomyRequestForm),
+		std::make_pair(kShrubberyCreationFormName, &CreateShrubberyCreationForm)
+	};
+	const size_t size = sizeof(forms) / sizeof(forms[0]);
+
+	for (size_t i = 0; i < size; i++) {
+		if (forms[i].first == form_name) {
+			return forms[i].second;
+		}
+	}
+	return NULL;
+}
+
+static AForm *TryMakeForm(const std::string &form_name, const std::string &target) {
+	CreateFormFunc create_form = GetCreateFormFunction(form_name);
+	if (create_form == NULL) {
 		throw std::logic_error("Error: invalid Form name");
 	}
+
+	AForm *form = create_form(target);
 	if (form == NULL) {
 		throw;
 	}
