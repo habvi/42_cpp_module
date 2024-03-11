@@ -19,16 +19,16 @@ const Intern &Intern::operator=(const Intern &i) {
 
 Intern::~Intern() {}
 
-AForm *TryMakeForm(const std::string &form_name, const std::string &target_form) {
+AForm *TryMakeForm(const std::string &form_name, const std::string &target) {
 	AForm *form = NULL;
 
 	// todo: don't use if/else
 	if (form_name == "presidential pardon") {
-		form = new (std::nothrow) PresidentialPardonForm(target_form);
+		form = new (std::nothrow) PresidentialPardonForm(target);
 	} else if (form_name == "robotomy request") {
-		form = new (std::nothrow) RobotomyRequestForm(target_form);
+		form = new (std::nothrow) RobotomyRequestForm(target);
 	} else if (form_name == "shrubbery creation") {
-		form = new (std::nothrow) ShrubberyCreationForm(target_form);
+		form = new (std::nothrow) ShrubberyCreationForm(target);
 	} else {
 		throw std::logic_error("Error: invalid Form name");
 	}
@@ -38,12 +38,11 @@ AForm *TryMakeForm(const std::string &form_name, const std::string &target_form)
 	return form;
 }
 
-AForm *
-Intern::makeForm(const std::string &form_name, const std::string &target_form) {
+AForm *Intern::makeForm(const std::string &form_name, const std::string &target) {
 	AForm *form;
 
 	try {
-		form = TryMakeForm(form_name, target_form);
+		form = TryMakeForm(form_name, target);
 		std::cout << COLOR_PINK "Intern creats " << form_name << COLOR_END
 				  << std::endl;
 	} catch (const std::exception &e) {

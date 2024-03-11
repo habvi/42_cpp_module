@@ -13,7 +13,7 @@ class Intern {
 	~Intern();
 
   public:
-	AForm *makeForm(const std::string &form_name, const std::string &target_form);
+	AForm *makeForm(const std::string &form_name, const std::string &target);
 };
 
 #endif /* EX03_INTERN_FORM_HPP */
