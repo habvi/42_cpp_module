@@ -1,7 +1,7 @@
 #include "Bureaucrat.hpp"
 #include "color.hpp"
 
-Bureaucrat::Bureaucrat() {}
+Bureaucrat::Bureaucrat() : grade_(kLowestGrade) {}
 
 Bureaucrat::Bureaucrat(const std::string &name, const unsigned int grade)
 	: name_(name) {
