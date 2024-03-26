@@ -22,8 +22,10 @@ class Form {
 	bool               GetIsSigned() const;
 	unsigned int       GetGradeForSign() const;
 	unsigned int       GetGradeForExecute() const;
+
+  public:
 	// Following the instructions, not camelcase
-	bool beSigned(const Bureaucrat &b);
+	void beSigned(const Bureaucrat &b);
 
   private:
 	Form();

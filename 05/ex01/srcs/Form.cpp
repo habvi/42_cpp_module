@@ -50,15 +50,11 @@ unsigned int Form::GetGradeForExecute() const {
 	return grade_for_execute_;
 }
 
-bool Form::beSigned(const Bureaucrat &b) {
-	if (b.getGrade() > kLowestGrade) {
-		throw GradeTooLowException();
+void Form::beSigned(const Bureaucrat &b) {
+	if (b.getGrade() > grade_for_sign_) {
+		Form::GradeTooLowException();
 	}
-	if (b.getGrade() <= grade_for_sign_) {
-		is_signed_ = true;
-		return true;
-	}
-	return false;
+	is_signed_ = true;
 }
 
 void Form::ThrowGradeException(const unsigned int grade) const {
