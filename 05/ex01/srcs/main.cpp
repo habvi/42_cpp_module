@@ -276,10 +276,17 @@ static void RunTest10() {
 	std::cout << alice << std::endl;
 }
 
+static void ExecSignFormTest(Bureaucrat &b, Form &form) {
+	try {
+		b.signForm(form);
+	} catch (const std::exception &e) {
+	}
+}
+
 /* === Expect ===
 Alice, bureaucrat grade 5.
 Form: F1(not signed), grade for sign is 4, grade for execute is 50
-Alice couldn't sign F1 because lower than the required Form grade.
+Alice couldn't sign F1 because Error: Grade is too low
 Form: F1(not signed), grade for sign is 4, grade for execute is 50
 Alice, bureaucrat grade 4.
 Alice signed F1
@@ -288,19 +295,19 @@ Form: F1(signed), grade for sign is 4, grade for execute is 50
 static void RunTest11() {
 	DisplayTitle("Bureaucrat try to sign the Form");
 
-	Bureaucrat alice(ALICE, 5);
+	Bureaucrat alice(ALICE, 5); // grade 5 is too low for sign
 	std::cout << alice << std::endl;
 
-	Form form("F1", 4, 50);
+	Form form("F1", 4, 50); // sign need grade 4
 	std::cout << form << std::endl;
 
-	alice.signForm(form);
+	ExecSignFormTest(alice, form); // sign failed
 	std::cout << form << std::endl;
 
-	alice.IncrementGrade();
+	alice.IncrementGrade(); // alice grade++ -> grade 4
 	std::cout << alice << std::endl;
 
-	alice.signForm(form);
+	ExecSignFormTest(alice, form); // sign success
 	std::cout << form << std::endl;
 }
 
