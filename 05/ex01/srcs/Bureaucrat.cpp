@@ -1,18 +1,13 @@
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
-#include "GradeException.hpp"
 #include "color.hpp"
 #include <iostream>
 
-Bureaucrat::Bureaucrat() {}
+Bureaucrat::Bureaucrat() : grade_(kLowestGrade) {}
 
 Bureaucrat::Bureaucrat(const std::string &name, const unsigned int grade)
 	: name_(name) {
-	if (grade < kHighestGrade) {
-		throw GradeTooHighException();
-	} else if (grade > kLowestGrade) {
-		throw GradeTooLowException();
-	}
+	ThrowGradeException(grade);
 	grade_ = grade;
 }
 
@@ -37,25 +32,13 @@ unsigned int Bureaucrat::getGrade() const {
 }
 
 void Bureaucrat::IncrementGrade() {
-	if (grade_ - 1 < kHighestGrade) {
-		throw GradeTooHighException();
-	}
+	ThrowGradeException(grade_ - 1);
 	grade_--;
 }
 
 void Bureaucrat::DecrementGrade() {
-	if (grade_ + 1 > kLowestGrade) {
-		throw GradeTooLowException();
-	}
+	ThrowGradeException(grade_ + 1);
 	grade_++;
-}
-
-const char *Bureaucrat::GradeTooHighException() const {
-	throw GradeException("Error: Grade is too high");
-}
-
-const char *Bureaucrat::GradeTooLowException() const {
-	throw GradeException("Error: Grade is too low");
 }
 
 void Bureaucrat::signForm(Form &form) {
@@ -77,6 +60,22 @@ void Bureaucrat::signForm(Form &form) {
 		throw;
 	}
 }
+
+void Bureaucrat::ThrowGradeException(const unsigned int grade) const {
+	if (grade < kHighestGrade) {
+		throw Bureaucrat::GradeTooHighException();
+	} else if (grade > kLowestGrade) {
+		throw Bureaucrat::GradeTooLowException();
+	}
+}
+
+// exception
+Bureaucrat::GradeTooHighException::GradeTooHighException()
+	: std::logic_error("Error: Grade is too high") {}
+
+// exception
+Bureaucrat::GradeTooLowException::GradeTooLowException()
+	: std::logic_error("Error: Grade is too low") {}
 
 std::ostream &operator<<(std::ostream &out, const Bureaucrat &b) {
 	out << COLOR_PINK << b.getName() << ", bureaucrat grade " << b.getGrade()

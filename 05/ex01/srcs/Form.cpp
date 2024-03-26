@@ -1,6 +1,5 @@
 #include "Form.hpp"
 #include "Bureaucrat.hpp"
-#include "GradeException.hpp"
 #include "color.hpp"
 
 Form::Form() : grade_for_sign_(kLowestGrade), grade_for_execute_(kLowestGrade) {}
