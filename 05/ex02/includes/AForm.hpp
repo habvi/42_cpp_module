@@ -35,15 +35,16 @@ class AForm {
   public:
 	// Following the instructions, not camelcase
 	void         beSigned(const Bureaucrat &b);
-	virtual void execute(Bureaucrat const &executor) const = 0;
+	virtual void execute(Bureaucrat const &executor) const;
 
   protected:
 	AForm();
 
   private:
-	void ThrowGradeException(const unsigned int grade) const;
-	void GradeTooHighException() const;
-	void GradeTooLowException() const;
+	void         ThrowGradeException(const unsigned int grade) const;
+	void         GradeTooHighException() const;
+	void         GradeTooLowException() const;
+	virtual void ExecuteEachForm(Bureaucrat const &executor) const = 0;
 
   private:
 	const std::string  name_;

@@ -64,6 +64,7 @@ void AForm::execute(Bureaucrat const &executor) const {
 	if (executor.getGrade() > grade_for_execute_) {
 		AForm::GradeTooLowException();
 	}
+	ExecuteEachForm(executor);
 }
 
 void AForm::ThrowGradeException(const unsigned int grade) const {
