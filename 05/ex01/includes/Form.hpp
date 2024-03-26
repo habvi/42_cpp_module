@@ -27,8 +27,11 @@ class Form {
 
   private:
 	Form();
-	const char *GradeTooHighException() const;
-	const char *GradeTooLowException() const;
+
+  private:
+	void ThrowGradeException(const unsigned int grade) const;
+	void GradeTooHighException() const;
+	void GradeTooLowException() const;
 
   private:
 	static const unsigned int kHighestGrade = 1;
