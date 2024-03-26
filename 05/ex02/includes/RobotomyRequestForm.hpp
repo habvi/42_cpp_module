@@ -21,6 +21,8 @@ class RobotomyRequestForm : public AForm {
 
   private:
 	RobotomyRequestForm();
+
+  private:
 	void ExecuteEachForm(Bureaucrat const &executor) const;
 
   private:

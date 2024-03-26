@@ -21,6 +21,8 @@ class PresidentialPardonForm : public AForm {
 
   private:
 	PresidentialPardonForm();
+
+  private:
 	void ExecuteEachForm(Bureaucrat const &executor) const;
 
   private:
