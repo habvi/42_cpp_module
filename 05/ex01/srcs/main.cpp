@@ -91,20 +91,27 @@ static void RunTest2() {
 [OK]
 [OK]
 [OK]
+[OK]
+[OK]
 */
 static void RunTest3() {
 	DisplayTitle("Bureaucrat copy test");
 
 	static const unsigned int kGrade = 123;
 
-	Bureaucrat alice = Bureaucrat(ALICE, kGrade);
-	JudgeResult(alice, ALICE, kGrade); // [OK]
+	Bureaucrat alice = Bureaucrat(ALICE, kGrade); // copy
+	JudgeResult(alice, ALICE, kGrade);            // [OK]
 
-	Bureaucrat alice2(alice);
+	Bureaucrat alice2(alice);           // copy
 	JudgeResult(alice2, ALICE, kGrade); // [OK]
 
-	Bureaucrat alice3 = alice;
+	Bureaucrat alice3 = alice;          // copy
 	JudgeResult(alice3, ALICE, kGrade); // [OK]
+
+	Bureaucrat bob(BOB, kGrade - 10);
+	JudgeResult(bob, BOB, kGrade - 10); // [OK]
+	bob = alice;                        // copy
+	JudgeResult(bob, BOB, kGrade);      // [OK] bob not changed (const name)
 }
 
 /* === Expect ===
