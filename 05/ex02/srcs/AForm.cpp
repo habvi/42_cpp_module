@@ -1,9 +1,10 @@
 #include "AForm.hpp"
 #include "Bureaucrat.hpp"
-#include "GradeException.hpp"
 #include "color.hpp"
 
-AForm::AForm() : grade_for_sign_(kLowestGrade), grade_for_execute_(kLowestGrade) {}
+AForm::AForm()
+	: grade_for_sign_(Bureaucrat::GetLowestGrade()),
+	  grade_for_execute_(Bureaucrat::GetLowestGrade()) {}
 
 AForm::AForm(
 	const std::string &name,
@@ -14,11 +15,8 @@ AForm::AForm(
 	  is_signed_(false),
 	  grade_for_sign_(grade_for_sign),
 	  grade_for_execute_(grade_for_execute) {
-	if (grade_for_sign < kHighestGrade || grade_for_execute < kHighestGrade) {
-		throw GradeTooHighException();
-	} else if (grade_for_sign > kLowestGrade || grade_for_execute > kLowestGrade) {
-		throw GradeTooLowException();
-	}
+	ThrowGradeException(grade_for_sign);
+	ThrowGradeException(grade_for_execute);
 }
 
 AForm::AForm(const AForm &f)
@@ -52,23 +50,11 @@ unsigned int AForm::GetGradeForExecute() const {
 	return grade_for_execute_;
 }
 
-const char *AForm::GradeTooHighException() const {
-	throw GradeException("Error: Grade is too high");
-}
-
-const char *AForm::GradeTooLowException() const {
-	throw GradeException("Error: Grade is too low");
-}
-
-bool AForm::beSigned(const Bureaucrat &b) {
-	if (b.getGrade() > kLowestGrade) {
-		throw GradeTooLowException();
+void AForm::beSigned(const Bureaucrat &b) {
+	if (b.getGrade() > grade_for_sign_) {
+		AForm::GradeTooLowException();
 	}
-	if (b.getGrade() <= grade_for_sign_) {
-		is_signed_ = true;
-		return true;
-	}
-	return false;
+	is_signed_ = true;
 }
 
 void AForm::execute(Bureaucrat const &executor) const {
@@ -76,8 +62,24 @@ void AForm::execute(Bureaucrat const &executor) const {
 		throw std::logic_error("Error: not signed");
 	}
 	if (executor.getGrade() > grade_for_execute_) {
-		throw GradeException("Error: Grade is too low");
+		AForm::GradeTooLowException();
 	}
+}
+
+void AForm::ThrowGradeException(const unsigned int grade) const {
+	if (grade < Bureaucrat::GetHighestGrade()) {
+		AForm::GradeTooHighException();
+	} else if (grade > Bureaucrat::GetLowestGrade()) {
+		AForm::GradeTooLowException();
+	}
+}
+
+void AForm::GradeTooHighException() const {
+	throw Bureaucrat::GradeTooHighException();
+}
+
+void AForm::GradeTooLowException() const {
+	throw Bureaucrat::GradeTooLowException();
 }
 
 std::ostream &operator<<(std::ostream &out, const AForm &f) {
