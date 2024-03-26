@@ -1,18 +1,13 @@
 #include "Bureaucrat.hpp"
 #include "AForm.hpp"
-#include "GradeException.hpp"
 #include "color.hpp"
 #include <iostream>
 
-Bureaucrat::Bureaucrat() {}
+Bureaucrat::Bureaucrat() : grade_(kLowestGrade) {}
 
 Bureaucrat::Bureaucrat(const std::string &name, const unsigned int grade)
 	: name_(name) {
-	if (grade < kHighestGrade) {
-		throw GradeTooHighException();
-	} else if (grade > kLowestGrade) {
-		throw GradeTooLowException();
-	}
+	ThrowGradeException(grade);
 	grade_ = grade;
 }
 
@@ -36,44 +31,33 @@ unsigned int Bureaucrat::getGrade() const {
 	return grade_;
 }
 
+unsigned int Bureaucrat::GetHighestGrade() {
+	return kHighestGrade;
+}
+
+unsigned int Bureaucrat::GetLowestGrade() {
+	return kLowestGrade;
+}
+
 void Bureaucrat::IncrementGrade() {
-	if (grade_ - 1 < kHighestGrade) {
-		throw GradeTooHighException();
-	}
+	ThrowGradeException(grade_ - 1);
 	grade_--;
 }
 
 void Bureaucrat::DecrementGrade() {
-	if (grade_ + 1 > kLowestGrade) {
-		throw GradeTooLowException();
-	}
+	ThrowGradeException(grade_ + 1);
 	grade_++;
-}
-
-const char *Bureaucrat::GradeTooHighException() const {
-	throw GradeException("Error: Grade is too high");
-}
-
-const char *Bureaucrat::GradeTooLowException() const {
-	throw GradeException("Error: Grade is too low");
 }
 
 void Bureaucrat::signForm(AForm &form) {
 	try {
-		bool is_successful_sign = form.beSigned(*this);
-		if (is_successful_sign) {
-			std::cout << COLOR_PINK << getName() << COLOR_END " signed " COLOR_PINK
-					  << form.GetName() << COLOR_END << std::endl;
-		} else {
-			std::cout << COLOR_PINK << getName()
-					  << COLOR_END " couldn't sign " COLOR_PINK << form.GetName()
-					  << COLOR_END << " because lower than the required Form grade."
-					  << std::endl;
-		}
+		form.beSigned(*this);
+		std::cout << COLOR_PINK << getName() << COLOR_END " signed " COLOR_PINK
+				  << form.GetName() << COLOR_END << std::endl;
 	} catch (const std::exception &e) {
 		std::cout << COLOR_PINK << getName()
 				  << COLOR_END " couldn't sign " COLOR_PINK << form.GetName()
-				  << COLOR_END << " because the Grade is too low" << std::endl;
+				  << COLOR_END << " because " COLOR_PINK << e.what() << std::endl;
 		throw;
 	}
 }
@@ -88,6 +72,22 @@ void Bureaucrat::executeForm(const AForm &form) const {
 				  << e.what() << COLOR_END << std::endl;
 	}
 }
+
+void Bureaucrat::ThrowGradeException(const unsigned int grade) const {
+	if (grade < kHighestGrade) {
+		throw Bureaucrat::GradeTooHighException();
+	} else if (grade > kLowestGrade) {
+		throw Bureaucrat::GradeTooLowException();
+	}
+}
+
+// exception
+Bureaucrat::GradeTooHighException::GradeTooHighException()
+	: std::logic_error("Error: Grade is too high") {}
+
+// exception
+Bureaucrat::GradeTooLowException::GradeTooLowException()
+	: std::logic_error("Error: Grade is too low") {}
 
 std::ostream &operator<<(std::ostream &out, const Bureaucrat &b) {
 	out << COLOR_PINK << b.getName() << ", bureaucrat grade " << b.getGrade()

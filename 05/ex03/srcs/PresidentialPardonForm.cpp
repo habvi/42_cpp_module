@@ -30,11 +30,11 @@ const std::string &PresidentialPardonForm::GetTarget() const {
 }
 
 void PresidentialPardonForm::execute(Bureaucrat const &executor) const {
-	try {
-		AForm::execute(executor);
-	} catch (const std::exception &e) {
-		throw;
-	}
+	AForm::execute(executor);
+}
+
+// override
+void PresidentialPardonForm::ExecuteEachForm(Bureaucrat const &executor) const {
 	std::cout << "executor(" COLOR_BLUE << executor.getName()
 			  << COLOR_END "): target(" << COLOR_BLUE << GetTarget()
 			  << COLOR_END ") has been pardoned by Zaphod Beeblebrox." << std::endl;
