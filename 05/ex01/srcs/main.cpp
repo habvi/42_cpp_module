@@ -10,8 +10,9 @@
 static void DisplayTitle(const std::string &title) {
 	static unsigned int testcase_number = 1;
 
-	std::cout << "\n\n┃ test " << testcase_number << ": " << title << std::endl;
-	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
+	std::cout << "\n\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
+	std::cout << "┃ test " << testcase_number << ": " << title << std::endl;
+	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 	testcase_number++;
 }
 

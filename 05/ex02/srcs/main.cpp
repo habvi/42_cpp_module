@@ -12,8 +12,9 @@
 
 static void
 DisplayTitle(const unsigned int testcase_number, const std::string &title) {
-	std::cout << "\n\n┃ test " << testcase_number << ": " << title << std::endl;
-	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
+	std::cout << "\n\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
+	std::cout << "┃ test " << testcase_number << ": " << title << std::endl;
+	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 }
 
 static void Line() {
