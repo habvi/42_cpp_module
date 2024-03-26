@@ -2,7 +2,9 @@
 #include "Bureaucrat.hpp"
 #include "color.hpp"
 
-Form::Form() : grade_for_sign_(kLowestGrade), grade_for_execute_(kLowestGrade) {}
+Form::Form()
+	: grade_for_sign_(Bureaucrat::GetLowestGrade()),
+	  grade_for_execute_(Bureaucrat::GetLowestGrade()) {}
 
 Form::Form(
 	const std::string &name,

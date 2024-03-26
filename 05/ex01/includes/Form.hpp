@@ -34,12 +34,10 @@ class Form {
 	void GradeTooLowException() const;
 
   private:
-	static const unsigned int kHighestGrade = 1;
-	static const unsigned int kLowestGrade  = 150;
-	const std::string         name_;
-	bool                      is_signed_;
-	const unsigned int        grade_for_sign_;
-	const unsigned int        grade_for_execute_;
+	const std::string  name_;
+	bool               is_signed_;
+	const unsigned int grade_for_sign_;
+	const unsigned int grade_for_execute_;
 };
 
 std::ostream &operator<<(std::ostream &out, const Form &b);
