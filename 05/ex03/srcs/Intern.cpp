@@ -21,15 +21,15 @@ const Intern &Intern::operator=(const Intern &i) {
 Intern::~Intern() {}
 
 static AForm *CreatePresidentialPardonForm(const std::string &target) {
-	return new (std::nothrow) PresidentialPardonForm(target);
+	return new PresidentialPardonForm(target);
 }
 
 static AForm *CreateRobotomyRequestForm(const std::string &target) {
-	return new (std::nothrow) RobotomyRequestForm(target);
+	return new RobotomyRequestForm(target);
 }
 
 static AForm *CreateShrubberyCreationForm(const std::string &target) {
-	return new (std::nothrow) ShrubberyCreationForm(target);
+	return new ShrubberyCreationForm(target);
 }
 
 typedef AForm *(*CreateFormFunc)(const std::string &);
@@ -56,17 +56,12 @@ static AForm *TryMakeForm(const std::string &form_name, const std::string &targe
 	if (create_form == NULL) {
 		throw std::logic_error("Error: invalid Form name");
 	}
-
-	AForm *form = create_form(target);
-	if (form == NULL) {
-		throw;
-	}
-	return form;
+	return create_form(target);
 }
 
 AForm *
 Intern::makeForm(const std::string &form_name, const std::string &target) const {
-	AForm *form;
+	AForm *form = NULL;
 
 	try {
 		form = TryMakeForm(form_name, target);
