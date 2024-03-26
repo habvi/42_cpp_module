@@ -9,8 +9,9 @@
 static void DisplayTitle(const std::string &title) {
 	static unsigned int testcase_number = 1;
 
-	std::cout << "\n\n┃ test " << testcase_number << ": " << title << std::endl;
-	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
+	std::cout << "\n\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
+	std::cout << "┃ test " << testcase_number << ": " << title << std::endl;
+	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 	testcase_number++;
 }
 
@@ -53,16 +54,16 @@ Error: grade is too high
 static void RunTest1() {
 	DisplayTitle("IncrementGrade(), throw exception / too high");
 
-	unsigned int grade = 2;
+	static const unsigned int kGrade = 2;
 
-	Bureaucrat alice(ALICE, grade);
-	JudgeResult(alice, ALICE, grade); // [OK]
+	Bureaucrat alice(ALICE, kGrade);
+	JudgeResult(alice, ALICE, kGrade); // [OK]
 
 	ExecGradeTest(alice, &Bureaucrat::IncrementGrade);
-	JudgeResult(alice, ALICE, grade - 1); // [OK]
+	JudgeResult(alice, ALICE, kGrade - 1); // [OK]
 
 	ExecGradeTest(alice, &Bureaucrat::IncrementGrade); // catch exception
-	JudgeResult(alice, ALICE, grade - 1);              // [OK] nothing changed
+	JudgeResult(alice, ALICE, kGrade - 1);             // [OK] nothing changed
 }
 
 /* === Expect ===
@@ -74,16 +75,16 @@ Error: grade is too low
 static void RunTest2() {
 	DisplayTitle("DecrementGrade(), throw exception / too low");
 
-	unsigned int grade = 149;
+	static const unsigned int kGrade = 149;
 
-	Bureaucrat bob = Bureaucrat(BOB, grade);
-	JudgeResult(bob, BOB, grade); // [OK]
+	Bureaucrat bob = Bureaucrat(BOB, kGrade);
+	JudgeResult(bob, BOB, kGrade); // [OK]
 
 	ExecGradeTest(bob, &Bureaucrat::DecrementGrade);
-	JudgeResult(bob, BOB, grade + 1); // [OK]
+	JudgeResult(bob, BOB, kGrade + 1); // [OK]
 
 	ExecGradeTest(bob, &Bureaucrat::DecrementGrade); // catch exception
-	JudgeResult(bob, BOB, grade + 1);                // [OK] nothing changed
+	JudgeResult(bob, BOB, kGrade + 1);               // [OK] nothing changed
 }
 
 /* === Expect ===
@@ -154,23 +155,23 @@ Alice, bureaucrat grade 121.
 static void RunTest6() {
 	DisplayTitle("operator<< overload");
 
-	unsigned int grade = 123;
+	static const unsigned int kGrade = 123;
 
-	Bureaucrat alice(ALICE, grade);
-	std::cout << alice << std::endl;  // operator<<
-	JudgeResult(alice, ALICE, grade); // [OK]
+	Bureaucrat alice(ALICE, kGrade);
+	std::cout << alice << std::endl;   // operator<<
+	JudgeResult(alice, ALICE, kGrade); // [OK]
 
 	// increment 3 times
 	for (unsigned int i = 0; i < 3; i++) {
 		ExecGradeTest(alice, &Bureaucrat::IncrementGrade);
-		std::cout << alice << std::endl;          // operator<<
-		JudgeResult(alice, ALICE, grade - i - 1); // [OK]
+		std::cout << alice << std::endl;           // operator<<
+		JudgeResult(alice, ALICE, kGrade - i - 1); // [OK]
 	}
 
 	// decrement
 	ExecGradeTest(alice, &Bureaucrat::DecrementGrade);
-	std::cout << alice << std::endl;          // operator<<
-	JudgeResult(alice, ALICE, grade - 3 + 1); // [OK]
+	std::cout << alice << std::endl;           // operator<<
+	JudgeResult(alice, ALICE, kGrade - 3 + 1); // [OK]
 }
 
 static void RunOriginalTest() {

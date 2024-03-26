@@ -2,7 +2,6 @@ NAME		:=	a.out
 
 SRCS_DIR	:=	srcs
 SRCS		:=	Bureaucrat.cpp \
-				GradeException.cpp \
 				main.cpp
 
 OBJ_DIR		:=	objs

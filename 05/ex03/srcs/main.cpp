@@ -7,18 +7,17 @@
 #include "color.hpp"
 #include "form_list.hpp"
 #include <cstdlib>
+#include <ctime>
 #include <iostream>
 
 #define ALICE "Alice"
 #define BOB   "Bob"
 
-static void DisplayTitle(const std::string &title) {
-	static unsigned int testcase_number = 1;
-
+static void
+DisplayTitle(const unsigned int testcase_number, const std::string &title) {
 	std::cout << "\n\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 	std::cout << "┃ test " << testcase_number << ": " << title << std::endl;
 	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
-	testcase_number++;
 }
 
 static void Line() {
@@ -62,18 +61,18 @@ Error: grade is too high
 [OK]
 */
 static void RunTest1() {
-	DisplayTitle("Bureaucrat IncrementGrade(), throw exception / too high");
+	DisplayTitle(1, "Bureaucrat IncrementGrade(), throw exception / too high");
 
-	unsigned int grade = 2;
+	static const unsigned int kGrade = 2;
 
-	Bureaucrat alice(ALICE, grade);
-	JudgeResult(alice, ALICE, grade); // [OK]
+	Bureaucrat alice(ALICE, kGrade);
+	JudgeResult(alice, ALICE, kGrade); // [OK]
 
 	ExecGradeTest(alice, &Bureaucrat::IncrementGrade);
-	JudgeResult(alice, ALICE, grade - 1); // [OK]
+	JudgeResult(alice, ALICE, kGrade - 1); // [OK]
 
 	ExecGradeTest(alice, &Bureaucrat::IncrementGrade); // catch exception
-	JudgeResult(alice, ALICE, grade - 1);              // [OK] nothing changed
+	JudgeResult(alice, ALICE, kGrade - 1);             // [OK] nothing changed
 }
 
 /* === Expect ===
@@ -83,45 +82,52 @@ Error: grade is too low
 [OK]
 */
 static void RunTest2() {
-	DisplayTitle("Bureaucrat DecrementGrade(), throw exception / too low");
+	DisplayTitle(2, "Bureaucrat DecrementGrade(), throw exception / too low");
 
-	unsigned int grade = 149;
+	static const unsigned int kGrade = 149;
 
-	Bureaucrat bob = Bureaucrat(BOB, grade);
-	JudgeResult(bob, BOB, grade); // [OK]
+	Bureaucrat bob = Bureaucrat(BOB, kGrade);
+	JudgeResult(bob, BOB, kGrade); // [OK]
 
 	ExecGradeTest(bob, &Bureaucrat::DecrementGrade);
-	JudgeResult(bob, BOB, grade + 1); // [OK]
+	JudgeResult(bob, BOB, kGrade + 1); // [OK]
 
 	ExecGradeTest(bob, &Bureaucrat::DecrementGrade); // catch exception
-	JudgeResult(bob, BOB, grade + 1);                // [OK] nothing changed
+	JudgeResult(bob, BOB, kGrade + 1);               // [OK] nothing changed
 }
 
 /* === Expect ===
 [OK]
 [OK]
 [OK]
+[OK]
+[OK]
 */
 static void RunTest3() {
-	DisplayTitle("Bureaucrat copy test");
+	DisplayTitle(3, "Bureaucrat copy test");
 
 	static const unsigned int kGrade = 123;
 
-	Bureaucrat alice = Bureaucrat(ALICE, kGrade);
-	JudgeResult(alice, ALICE, kGrade); // [OK]
+	Bureaucrat alice = Bureaucrat(ALICE, kGrade); // copy
+	JudgeResult(alice, ALICE, kGrade);            // [OK]
 
-	Bureaucrat alice2(alice);
+	Bureaucrat alice2(alice);           // copy
 	JudgeResult(alice2, ALICE, kGrade); // [OK]
 
-	Bureaucrat alice3 = alice;
+	Bureaucrat alice3 = alice;          // copy
 	JudgeResult(alice3, ALICE, kGrade); // [OK]
+
+	Bureaucrat bob(BOB, kGrade - 10);
+	JudgeResult(bob, BOB, kGrade - 10); // [OK]
+	bob = alice;                        // copy
+	JudgeResult(bob, BOB, kGrade);      // [OK] bob not changed (const name)
 }
 
 /* === Expect ===
 Error: grade is too high
 */
 static void RunTest4() {
-	DisplayTitle("Bureaucrat constructor: throw exception / grade too high");
+	DisplayTitle(4, "Bureaucrat constructor: throw exception / grade too high");
 
 	try {
 		Bureaucrat bob = Bureaucrat(BOB, 0);
@@ -134,7 +140,7 @@ static void RunTest4() {
 Error: grade is too low
 */
 static void RunTest5() {
-	DisplayTitle("Bureaucrat constructor: throw exception / grade too low");
+	DisplayTitle(5, "Bureaucrat constructor: throw exception / grade too low");
 
 	try {
 		Bureaucrat bob = Bureaucrat(BOB, 151);
@@ -156,44 +162,44 @@ Alice, bureaucrat grade 121.
 [OK]
 */
 static void RunTest6() {
-	DisplayTitle("Bureaucrat operator<< overload");
+	DisplayTitle(6, "Bureaucrat operator<< overload");
 
-	unsigned int grade = 123;
+	static const unsigned int kGrade = 123;
 
-	Bureaucrat alice(ALICE, grade);
-	std::cout << alice << std::endl;  // operator<<
-	JudgeResult(alice, ALICE, grade); // [OK]
+	Bureaucrat alice(ALICE, kGrade);
+	std::cout << alice << std::endl;   // operator<<
+	JudgeResult(alice, ALICE, kGrade); // [OK]
 
 	// increment 3 times
 	for (unsigned int i = 0; i < 3; i++) {
 		ExecGradeTest(alice, &Bureaucrat::IncrementGrade);
-		std::cout << alice << std::endl;          // operator<<
-		JudgeResult(alice, ALICE, grade - i - 1); // [OK]
+		std::cout << alice << std::endl;           // operator<<
+		JudgeResult(alice, ALICE, kGrade - i - 1); // [OK]
 	}
 
 	// decrement
 	ExecGradeTest(alice, &Bureaucrat::DecrementGrade);
-	std::cout << alice << std::endl;          // operator<<
-	JudgeResult(alice, ALICE, grade - 3 + 1); // [OK]
+	std::cout << alice << std::endl;           // operator<<
+	JudgeResult(alice, ALICE, kGrade - 3 + 1); // [OK]
 }
 
 // -----------------------------------------------------------------------------
 
-static bool IsEqualNameAndGrade(const AForm &target, const AForm &expected) {
-	return target.GetName() == expected.GetName() &&
-		   target.GetIsSigned() == expected.GetIsSigned() &&
-		   target.GetGradeForSign() == expected.GetGradeForSign() &&
-		   target.GetGradeForExecute() == expected.GetGradeForExecute();
-}
+// static bool IsEqualNameAndGrade(const AForm &target, const AForm &expected) {
+// 	return target.GetName() == expected.GetName() &&
+// 		   target.GetIsSigned() == expected.GetIsSigned() &&
+// 		   target.GetGradeForSign() == expected.GetGradeForSign() &&
+// 		   target.GetGradeForExecute() == expected.GetGradeForExecute();
+// }
 
-static void JudgeResult(const AForm &target, const AForm &expected) {
-	if (IsEqualNameAndGrade(target, expected)) {
-		std::cout << COLOR_GREEN "[OK]" << COLOR_END << std::endl;
-	} else {
-		std::cout << COLOR_RED "[NG]" << COLOR_END << std::endl;
-		exit(EXIT_FAILURE);
-	}
-}
+// static void JudgeResult(const AForm &target, const AForm &expected) {
+// 	if (IsEqualNameAndGrade(target, expected)) {
+// 		std::cout << COLOR_GREEN "[OK]" << COLOR_END << std::endl;
+// 	} else {
+// 		std::cout << COLOR_RED "[NG]" << COLOR_END << std::endl;
+// 		exit(EXIT_FAILURE);
+// 	}
+// }
 
 // -----------------------------------------------------------------------------
 
@@ -202,111 +208,121 @@ Error: Grade is too high
 Error: Grade is too high
 Error: Grade is too high
 */
-static void RunTest7() {
-	DisplayTitle("AForm constructor: throw exception / grade too high");
+// static void RunTest7() {
+// 	DisplayTitle(7, "AForm constructor: throw exception / grade too high");
 
-	AForm alice = AForm(ALICE, 150, 1); // normal, normal
+// 	AForm alice = AForm(ALICE, 150, 1); // normal, normal
 
-	try {
-		AForm alice = AForm(ALICE, 0, 123); // too high, normal
-	} catch (const std::exception &e) {
-		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
-	}
-	try {
-		AForm alice = AForm(ALICE, 123, 0); // normal, too high
-	} catch (const std::exception &e) {
-		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
-	}
-	try {
-		AForm alice = AForm(ALICE, 0, 0); // too high, too high
-	} catch (const std::exception &e) {
-		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
-	}
-}
+// 	try {
+// 		AForm alice = AForm(ALICE, 0, 123); // too high, normal
+// 	} catch (const std::exception &e) {
+// 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+// 	}
+// 	try {
+// 		AForm alice = AForm(ALICE, 123, 0); // normal, too high
+// 	} catch (const std::exception &e) {
+// 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+// 	}
+// 	try {
+// 		AForm alice = AForm(ALICE, 0, 0); // too high, too high
+// 	} catch (const std::exception &e) {
+// 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+// 	}
+// }
 
 /* === Expect ===
 Error: grade is too low
 Error: grade is too low
 Error: grade is too low
 */
-static void RunTest8() {
-	DisplayTitle("AForm constructor: throw exception / grade too low");
+// static void RunTest8() {
+// 	DisplayTitle(8, "AForm constructor: throw exception / grade too low");
 
-	AForm bob = AForm(BOB, 1, 150); // normal, normal
+// 	AForm bob = AForm(BOB, 1, 150); // normal, normal
 
-	try {
-		AForm bob = AForm(BOB, 151, 1); // too low, normal
-	} catch (const std::exception &e) {
-		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
-	}
-	try {
-		AForm bob = AForm(BOB, 151, 1); // normal, too low
-	} catch (const std::exception &e) {
-		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
-	}
+// 	try {
+// 		AForm bob = AForm(BOB, 151, 1); // too low, normal
+// 	} catch (const std::exception &e) {
+// 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+// 	}
+// 	try {
+// 		AForm bob = AForm(BOB, 151, 1); // normal, too low
+// 	} catch (const std::exception &e) {
+// 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+// 	}
 
-	try {
-		AForm bob = AForm(BOB, 151, 12345); // too low, too low
-	} catch (const std::exception &e) {
-		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
-	}
-}
+// 	try {
+// 		AForm bob = AForm(BOB, 151, 12345); // too low, too low
+// 	} catch (const std::exception &e) {
+// 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+// 	}
+// }
 
 /* === Expect ===
 [OK]
 [OK]
 */
-static void RunTest9() {
-	DisplayTitle("AForm copy test");
+// static void RunTest9() {
+// 	DisplayTitle(9, "AForm copy test");
 
-	static const unsigned int kGradeForSign    = 5;   // normal
-	static const unsigned int kGradeForExecute = 123; // normal
+// 	static const unsigned int kGradeForSign    = 5;   // normal
+// 	static const unsigned int kGradeForExecute = 123; // normal
 
-	AForm alice = AForm(ALICE, kGradeForSign, kGradeForExecute);
+// 	AForm alice = AForm(ALICE, kGradeForSign, kGradeForExecute);
 
-	AForm alice2(alice);
-	JudgeResult(alice2, alice); // [OK]
+// 	AForm alice2(alice);
+// 	JudgeResult(alice2, alice); // [OK]
 
-	AForm alice3 = alice;
-	JudgeResult(alice3, alice); // [OK]
-}
+// 	AForm alice3 = alice;
+// 	JudgeResult(alice3, alice); // [OK]
+// }
 
 /* === Expect ===
 AForm Alice(not signed), grade for sign is 5, grade for execute is 123
 */
-static void RunTest10() {
-	DisplayTitle("AForm operator<< overload");
+// static void RunTest10() {
+// 	DisplayTitle(10, "AForm operator<< overload");
 
-	AForm alice = AForm(ALICE, 5, 123);
-	std::cout << alice << std::endl;
+// 	AForm alice = AForm(ALICE, 5, 123);
+// 	std::cout << alice << std::endl;
+// }
+
+static void ExecSignFormTest(Bureaucrat &b, AForm &form) {
+	try {
+		b.signForm(form);
+	} catch (const std::exception &e) {
+	}
 }
 
 /* === Expect ===
 Alice, bureaucrat grade 5.
-AForm: F1(not signed), grade for sign is 4, grade for execute is 50
-Alice couldn't sign F1 because lower than the required Form grade.
-AForm: F1(not signed), grade for sign is 4, grade for execute is 50
+Form: F1(not signed), grade for sign is 4, grade for execute is 50
+Alice couldn't sign F1 because Error: Grade is too low
+Form: F1(not signed), grade for sign is 4, grade for execute is 50
 Alice, bureaucrat grade 4.
 Alice signed F1
-AForm: F1(signed), grade for sign is 4, grade for execute is 50
+Form: F1(signed), grade for sign is 4, grade for execute is 50
 */
 static void RunTest11() {
-	DisplayTitle("Bureaucrat try to sign the Form");
+	DisplayTitle(11, "Bureaucrat try to sign the Form");
 
-	Bureaucrat alice(ALICE, 5);
+	Bureaucrat alice(ALICE, 26); // grade 26 is too low for sign
 	std::cout << alice << std::endl;
 
-	AForm form("F1", 4, 50);
-	std::cout << form << std::endl;
+	// AForm form("F1", 4, 50);
+	AForm *form = new PresidentialPardonForm("Pre_" ALICE); // sign need grade 25
+	std::cout << *form << std::endl;
 
-	alice.signForm(form);
-	std::cout << form << std::endl;
+	ExecSignFormTest(alice, *form); // sign failed
+	std::cout << *form << std::endl;
 
-	alice.IncrementGrade();
+	alice.IncrementGrade(); // alice grade++ -> grade 25
 	std::cout << alice << std::endl;
 
-	alice.signForm(form);
-	std::cout << form << std::endl;
+	ExecSignFormTest(alice, *form); // sign success
+	std::cout << *form << std::endl;
+
+	delete form;
 }
 
 // -----------------------------------------------------------------------------
@@ -343,7 +359,7 @@ executor(Bob): target(Pre_Alice) has been pardoned by Zaphod Beeblebrox.
 Error: Grade is too low
 */
 static void RunTest12() {
-	DisplayTitle("PresidentialPardonForm class's execute()");
+	DisplayTitle(12, "PresidentialPardonForm class's execute()");
 
 	PresidentialPardonForm p_form("Pre_" ALICE); // 25, 5
 	std::cout << p_form << std::endl;            // AForm's operator<<
@@ -372,7 +388,7 @@ executor(Bob): target(Robo_Alice) Failed to robotomized.
 Error: Grade is too low
 */
 static void RunTest13() {
-	DisplayTitle("RobotomyRequestForm class's execute()");
+	DisplayTitle(13, "RobotomyRequestForm class's execute()");
 
 	RobotomyRequestForm r_form("Robo_" ALICE); // 72, 45
 	std::cout << r_form << std::endl;          // AForm's operator<<
@@ -399,7 +415,7 @@ executor(Bob): target(Shru_Alice) write tree to file. => Success
 Error: Grade is too low
 */
 static void RunTest14() {
-	DisplayTitle("ShrubberyCreationForm class's execute()");
+	DisplayTitle(14, "ShrubberyCreationForm class's execute()");
 
 	ShrubberyCreationForm s_form("Shru_" ALICE); // 145, 137
 	std::cout << s_form << std::endl;            // AForm's operator<<
@@ -441,7 +457,7 @@ executor(Bob): target(Pre_Alice) has been pardoned by Zaphod Beeblebrox.
 Bob execute Presidential Pardon
 */
 static void RunTest15() {
-	DisplayTitle("Bureaucrat executeForm() by PresidentialPardon");
+	DisplayTitle(15, "Bureaucrat executeForm() by PresidentialPardon");
 
 	PresidentialPardonForm form("Pre_" ALICE); // 25, 5
 
@@ -458,7 +474,7 @@ Bob failed to execute => Error: not signed
 Bob failed to execute => Error: Grade is too low
 */
 static void RunTest16() {
-	DisplayTitle("Bureaucrat executeForm() by Robotomy less grade");
+	DisplayTitle(16, "Bureaucrat executeForm() by Robotomy less grade");
 
 	RobotomyRequestForm form("Robo_" ALICE); // 72, 45
 
@@ -474,7 +490,7 @@ executor(Bob): target(Shru_Alice) write tree to file. => Success
 Bob execute Shrubbery Creation
 */
 static void RunTest17() {
-	DisplayTitle("Bureaucrat executeForm() by Shrubbery");
+	DisplayTitle(17, "Bureaucrat executeForm() by Shrubbery");
 
 	ShrubberyCreationForm form("Shru_" ALICE); // 145, 137
 
@@ -487,7 +503,7 @@ Intern creats robotomy request
 AForm: Robotomy Request(not signed), grade for sign is 72, grade for execute is 45
 */
 static void RunTest18() {
-	DisplayTitle("Intern / subject test");
+	DisplayTitle(18, "Intern / subject test");
 
 	Intern someRandomIntern;
 	AForm *rrf;
@@ -510,7 +526,7 @@ executor(Bob): target(Pre_Bender) has been pardoned by Zaphod Beeblebrox.
 Bob execute Presidential Pardon
 */
 static void RunTest19() {
-	DisplayTitle("Intern / executeForm() PresidentialPardon");
+	DisplayTitle(19, "Intern / executeForm() PresidentialPardon");
 
 	Intern someRandomIntern;
 	AForm *rrf;
@@ -539,7 +555,7 @@ Drrrrrrrrrrrrrrr....
 executor(Bob): target(Robo_Bender) has been robotomized successfully.
 */
 static void RunTest20() {
-	DisplayTitle("Intern / executeForm() RobotomyRequest");
+	DisplayTitle(20, "Intern / executeForm() RobotomyRequest");
 
 	Intern someRandomIntern;
 	AForm *rrf;
@@ -568,7 +584,7 @@ executor(Bob): target(Shru_Bender) write tree to file. => Success
 Bob execute Shrubbery Creation
 */
 static void RunTest21() {
-	DisplayTitle("Intern / executeForm() ShrubberyCreation");
+	DisplayTitle(21, "Intern / executeForm() ShrubberyCreation");
 
 	Intern someRandomIntern;
 	AForm *rrf;
@@ -590,7 +606,7 @@ static void RunTest21() {
 Intern creats Form failed. => Error: invalid Form name
 */
 static void RunTest22() {
-	DisplayTitle("Intern / non exist form name");
+	DisplayTitle(22, "Intern / non exist form name");
 
 	Intern someRandomIntern;
 	AForm *rrf;
@@ -611,10 +627,11 @@ static void RunOriginalTest() {
 	RunTest6();
 
 	/* ex01 */
-	RunTest7();
-	RunTest8();
-	RunTest9();
-	RunTest10();
+	// instance AForm test off
+	// RunTest7();
+	// RunTest8();
+	// RunTest9();
+	// RunTest10();
 	RunTest11();
 
 	/* ex02 */
@@ -634,6 +651,8 @@ static void RunOriginalTest() {
 }
 
 int main() {
+	// for RobotomyRequestForm's rand()
+	std::srand(std::time(NULL));
 	RunOriginalTest();
 	return EXIT_SUCCESS;
 }

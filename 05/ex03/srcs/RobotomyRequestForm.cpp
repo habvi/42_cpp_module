@@ -41,11 +41,11 @@ static bool IsRobotomized() {
 }
 
 void RobotomyRequestForm::execute(Bureaucrat const &executor) const {
-	try {
-		AForm::execute(executor);
-	} catch (const std::exception &e) {
-		throw;
-	}
+	AForm::execute(executor);
+}
+
+// override
+void RobotomyRequestForm::ExecuteEachForm(Bureaucrat const &executor) const {
 	std::cout << "Drrrrrrrrrrrrrrr...." << std::endl;
 	std::cout << "executor(" COLOR_BLUE << executor.getName()
 			  << COLOR_END "): target(" << COLOR_BLUE << GetTarget()
