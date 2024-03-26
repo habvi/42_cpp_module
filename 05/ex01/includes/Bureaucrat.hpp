@@ -28,8 +28,10 @@ class Bureaucrat {
 
   public:
 	// Following the instructions, not camelcase
-	const std::string &getName() const;
-	unsigned int       getGrade() const;
+	const std::string  &getName() const;
+	unsigned int        getGrade() const;
+	static unsigned int GetHighestGrade();
+	static unsigned int GetLowestGrade();
 
   public:
 	void IncrementGrade();

@@ -31,6 +31,14 @@ unsigned int Bureaucrat::getGrade() const {
 	return grade_;
 }
 
+unsigned int Bureaucrat::GetHighestGrade() {
+	return kHighestGrade;
+}
+
+unsigned int Bureaucrat::GetLowestGrade() {
+	return kLowestGrade;
+}
+
 void Bureaucrat::IncrementGrade() {
 	ThrowGradeException(grade_ - 1);
 	grade_--;
