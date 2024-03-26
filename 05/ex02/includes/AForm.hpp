@@ -35,7 +35,7 @@ class AForm {
   public:
 	// Following the instructions, not camelcase
 	void         beSigned(const Bureaucrat &b);
-	virtual void execute(Bureaucrat const &executor) const;
+	virtual void execute(Bureaucrat const &executor) const = 0;
 
   protected:
 	AForm();
