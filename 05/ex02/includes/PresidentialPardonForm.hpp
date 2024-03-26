@@ -21,6 +21,7 @@ class PresidentialPardonForm : public AForm {
 
   private:
 	PresidentialPardonForm();
+	void ExecuteEachForm(Bureaucrat const &executor) const;
 
   private:
 	static const std::string  kFormName;

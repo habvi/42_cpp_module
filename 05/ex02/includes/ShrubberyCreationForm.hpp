@@ -21,6 +21,7 @@ class ShrubberyCreationForm : public AForm {
 
   private:
 	ShrubberyCreationForm();
+	void ExecuteEachForm(Bureaucrat const &executor) const;
 	void WriteTreeToFile() const;
 
   private:
