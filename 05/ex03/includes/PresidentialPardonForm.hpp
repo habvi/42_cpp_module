@@ -23,6 +23,9 @@ class PresidentialPardonForm : public AForm {
 	PresidentialPardonForm();
 
   private:
+	void ExecuteEachForm(Bureaucrat const &executor) const;
+
+  private:
 	static const std::string  kFormName;
 	static const unsigned int kGradeForSign    = 25;
 	static const unsigned int kGradeForExecute = 5;
