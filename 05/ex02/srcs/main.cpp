@@ -5,6 +5,7 @@
 #include "ShrubberyCreationForm.hpp"
 #include "color.hpp"
 #include <cstdlib>
+#include <ctime>
 #include <iostream>
 
 #define ALICE "Alice"
@@ -501,6 +502,8 @@ static void RunOriginalTest() {
 }
 
 int main() {
+	// for RobotomyRequestForm's rand()
+	std::srand(std::time(NULL));
 	RunOriginalTest();
 	return EXIT_SUCCESS;
 }
