@@ -2,6 +2,7 @@
 #define EX02_AFORM_HPP
 
 #include <ostream>
+#include <stdexcept> // logic_error
 #include <string>
 
 class Bureaucrat;
@@ -16,6 +17,14 @@ class AForm {
 	AForm(const AForm &f);
 	virtual ~AForm();
 	const AForm &operator=(const AForm &f);
+
+  public:
+	// Following the instructions,
+	// exception classes don’t have to be designed in Orthodox Canonical Form.
+	class NotSignedException : public std::logic_error {
+	  public:
+		NotSignedException();
+	};
 
   public:
 	const std::string &GetName() const;

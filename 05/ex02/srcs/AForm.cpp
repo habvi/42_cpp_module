@@ -59,7 +59,7 @@ void AForm::beSigned(const Bureaucrat &b) {
 
 void AForm::execute(Bureaucrat const &executor) const {
 	if (!is_signed_) {
-		throw std::logic_error("Error: not signed");
+		throw AForm::NotSignedException();
 	}
 	if (executor.getGrade() > grade_for_execute_) {
 		AForm::GradeTooLowException();
@@ -81,6 +81,9 @@ void AForm::GradeTooHighException() const {
 void AForm::GradeTooLowException() const {
 	throw Bureaucrat::GradeTooLowException();
 }
+
+AForm::NotSignedException::NotSignedException()
+	: std::logic_error("Error: not signed") {}
 
 std::ostream &operator<<(std::ostream &out, const AForm &f) {
 	out << "AForm: " COLOR_BLUE << f.GetName() << "("
