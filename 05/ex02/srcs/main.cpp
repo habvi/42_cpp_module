@@ -207,7 +207,9 @@ Error: Grade is too high
 // static void RunTest7() {
 // 	DisplayTitle(7, "AForm constructor: throw exception / grade too high");
 
-// 	AForm alice = AForm(ALICE, 150, 1); // normal, normal
+// 	{
+// 		AForm alice = AForm(ALICE, 150, 1); // normal, normal
+// 	}
 
 // 	try {
 // 		AForm alice = AForm(ALICE, 0, 123); // too high, normal
@@ -234,7 +236,9 @@ Error: grade is too low
 // static void RunTest8() {
 // 	DisplayTitle(8, "AForm constructor: throw exception / grade too low");
 
-// 	AForm bob = AForm(BOB, 1, 150); // normal, normal
+// 	{
+// 		AForm bob = AForm(BOB, 1, 150); // normal, normal
+// 	}
 
 // 	try {
 // 		AForm bob = AForm(BOB, 151, 1); // too low, normal

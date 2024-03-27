@@ -201,7 +201,9 @@ Error: Grade is too high
 static void RunTest7() {
 	DisplayTitle("Form constructor: throw exception / grade too high");
 
-	Form alice = Form(ALICE, 150, 1); // normal, normal
+	{
+		Form alice = Form(ALICE, 150, 1); // normal, normal
+	}
 
 	try {
 		Form alice = Form(ALICE, 0, 123); // too high, normal
@@ -228,7 +230,9 @@ Error: grade is too low
 static void RunTest8() {
 	DisplayTitle("Form constructor: throw exception / grade too low");
 
-	Form bob = Form(BOB, 1, 150); // normal, normal
+	{
+		Form bob = Form(BOB, 1, 150); // normal, normal
+	}
 
 	try {
 		Form bob = Form(BOB, 151, 1); // too low, normal
