@@ -2,6 +2,7 @@
 #define EX01_BUREAUCRAT_HPP
 
 #include <ostream>
+#include <stdexcept> // logic_error
 #include <string>
 
 class Form;
@@ -14,9 +15,23 @@ class Bureaucrat {
 	const Bureaucrat &operator=(const Bureaucrat &b);
 
   public:
+	// Following the instructions,
+	// exception classes don’t have to be designed in Orthodox Canonical Form.
+	class GradeTooHighException : public std::logic_error {
+	  public:
+		GradeTooHighException();
+	};
+	class GradeTooLowException : public std::logic_error {
+	  public:
+		GradeTooLowException();
+	};
+
+  public:
 	// Following the instructions, not camelcase
-	const std::string &getName() const;
-	unsigned int       getGrade() const;
+	const std::string  &getName() const;
+	unsigned int        getGrade() const;
+	static unsigned int GetHighestGrade();
+	static unsigned int GetLowestGrade();
 
   public:
 	void IncrementGrade();
@@ -26,8 +41,9 @@ class Bureaucrat {
 
   private:
 	Bureaucrat();
-	const char *GradeTooHighException() const;
-	const char *GradeTooLowException() const;
+
+  private:
+	void ThrowGradeException(const unsigned int grade) const;
 
   private:
 	static const unsigned int kHighestGrade = 1;

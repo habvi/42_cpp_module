@@ -2,7 +2,6 @@
 #include "Bureaucrat.hpp"
 #include "color.hpp"
 #include <cstdlib>
-#include <ctime>
 #include <iostream>
 
 const std::string RobotomyRequestForm::kFormName = "Robotomy Request";
@@ -31,8 +30,9 @@ const std::string &RobotomyRequestForm::GetTarget() const {
 	return target_;
 }
 
+// the pseudo-random number generator should only be seeded once, before any calls to
+// rand(), at the start of the program.
 static bool IsRobotomized() {
-	std::srand(std::time(NULL));
 	const unsigned int  random_int = std::rand();
 	static unsigned int number     = random_int % 2;
 
@@ -41,11 +41,11 @@ static bool IsRobotomized() {
 }
 
 void RobotomyRequestForm::execute(Bureaucrat const &executor) const {
-	try {
-		AForm::execute(executor);
-	} catch (const std::exception &e) {
-		throw;
-	}
+	AForm::execute(executor);
+}
+
+// override
+void RobotomyRequestForm::ExecuteEachForm(Bureaucrat const &executor) const {
 	std::cout << "Drrrrrrrrrrrrrrr...." << std::endl;
 	std::cout << "executor(" COLOR_BLUE << executor.getName()
 			  << COLOR_END "): target(" << COLOR_BLUE << GetTarget()

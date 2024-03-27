@@ -49,11 +49,11 @@ void ShrubberyCreationForm::WriteTreeToFile() const {
 }
 
 void ShrubberyCreationForm::execute(Bureaucrat const &executor) const {
-	try {
-		AForm::execute(executor);
-	} catch (const std::exception &e) {
-		throw;
-	}
+	AForm::execute(executor);
+}
+
+// override
+void ShrubberyCreationForm::ExecuteEachForm(Bureaucrat const &executor) const {
 	std::cout << "executor(" COLOR_BLUE << executor.getName()
 			  << COLOR_END "): target(" << COLOR_BLUE << GetTarget()
 			  << COLOR_END ") write tree to file." COLOR_END;

@@ -23,6 +23,9 @@ class RobotomyRequestForm : public AForm {
 	RobotomyRequestForm();
 
   private:
+	void ExecuteEachForm(Bureaucrat const &executor) const;
+
+  private:
 	static const std::string  kFormName;
 	static const unsigned int kGradeForSign    = 72;
 	static const unsigned int kGradeForExecute = 45;

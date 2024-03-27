@@ -22,21 +22,24 @@ class Form {
 	bool               GetIsSigned() const;
 	unsigned int       GetGradeForSign() const;
 	unsigned int       GetGradeForExecute() const;
+
+  public:
 	// Following the instructions, not camelcase
-	bool beSigned(const Bureaucrat &b);
+	void beSigned(const Bureaucrat &b);
 
   private:
 	Form();
-	const char *GradeTooHighException() const;
-	const char *GradeTooLowException() const;
 
   private:
-	static const unsigned int kHighestGrade = 1;
-	static const unsigned int kLowestGrade  = 150;
-	const std::string         name_;
-	bool                      is_signed_;
-	const unsigned int        grade_for_sign_;
-	const unsigned int        grade_for_execute_;
+	void ThrowGradeException(const unsigned int grade) const;
+	void GradeTooHighException() const;
+	void GradeTooLowException() const;
+
+  private:
+	const std::string  name_;
+	bool               is_signed_;
+	const unsigned int grade_for_sign_;
+	const unsigned int grade_for_execute_;
 };
 
 std::ostream &operator<<(std::ostream &out, const Form &b);

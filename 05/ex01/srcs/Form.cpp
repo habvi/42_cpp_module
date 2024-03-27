@@ -1,9 +1,10 @@
 #include "Form.hpp"
 #include "Bureaucrat.hpp"
-#include "GradeException.hpp"
 #include "color.hpp"
 
-Form::Form() : grade_for_sign_(kLowestGrade), grade_for_execute_(kLowestGrade) {}
+Form::Form()
+	: grade_for_sign_(Bureaucrat::GetLowestGrade()),
+	  grade_for_execute_(Bureaucrat::GetLowestGrade()) {}
 
 Form::Form(
 	const std::string &name,
@@ -14,11 +15,8 @@ Form::Form(
 	  is_signed_(false),
 	  grade_for_sign_(grade_for_sign),
 	  grade_for_execute_(grade_for_execute) {
-	if (grade_for_sign < kHighestGrade || grade_for_execute < kHighestGrade) {
-		throw GradeTooHighException();
-	} else if (grade_for_sign > kLowestGrade || grade_for_execute > kLowestGrade) {
-		throw GradeTooLowException();
-	}
+	ThrowGradeException(grade_for_sign);
+	ThrowGradeException(grade_for_execute);
 }
 
 Form::Form(const Form &f)
@@ -52,23 +50,27 @@ unsigned int Form::GetGradeForExecute() const {
 	return grade_for_execute_;
 }
 
-const char *Form::GradeTooHighException() const {
-	throw GradeException("Error: Grade is too high");
+void Form::beSigned(const Bureaucrat &b) {
+	if (b.getGrade() > grade_for_sign_) {
+		Form::GradeTooLowException();
+	}
+	is_signed_ = true;
 }
 
-const char *Form::GradeTooLowException() const {
-	throw GradeException("Error: Grade is too low");
+void Form::ThrowGradeException(const unsigned int grade) const {
+	if (grade < Bureaucrat::GetHighestGrade()) {
+		Form::GradeTooHighException();
+	} else if (grade > Bureaucrat::GetLowestGrade()) {
+		Form::GradeTooLowException();
+	}
 }
 
-bool Form::beSigned(const Bureaucrat &b) {
-	if (b.getGrade() > kLowestGrade) {
-		throw GradeTooLowException();
-	}
-	if (b.getGrade() <= grade_for_sign_) {
-		is_signed_ = true;
-		return true;
-	}
-	return false;
+void Form::GradeTooHighException() const {
+	throw Bureaucrat::GradeTooHighException();
+}
+
+void Form::GradeTooLowException() const {
+	throw Bureaucrat::GradeTooLowException();
 }
 
 std::ostream &operator<<(std::ostream &out, const Form &f) {

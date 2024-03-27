@@ -3,7 +3,6 @@ NAME		:=	a.out
 SRCS_DIR	:=	srcs
 SRCS		:=	AForm.cpp \
 				Bureaucrat.cpp \
-				GradeException.cpp \
 				main.cpp \
 				PresidentialPardonForm.cpp \
 				RobotomyRequestForm.cpp \
