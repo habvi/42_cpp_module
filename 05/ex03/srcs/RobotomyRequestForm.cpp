@@ -32,7 +32,6 @@ const std::string &RobotomyRequestForm::GetTarget() const {
 }
 
 static bool IsRobotomized() {
-	std::srand(std::time(NULL));
 	const unsigned int  random_int = std::rand();
 	static unsigned int number     = random_int % 2;
 
