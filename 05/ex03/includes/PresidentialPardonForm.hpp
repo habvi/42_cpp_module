@@ -17,6 +17,7 @@ class PresidentialPardonForm : public AForm {
 	const std::string &GetTarget() const;
 
   public:
+	// Following the instructions, not camelcase
 	void execute(Bureaucrat const &executor) const;
 
   private:

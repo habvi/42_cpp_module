@@ -13,6 +13,7 @@ class Intern {
 	~Intern();
 
   public:
+	// Following the instructions, not camelcase
 	AForm *makeForm(const std::string &form_name, const std::string &target) const;
 };
 
