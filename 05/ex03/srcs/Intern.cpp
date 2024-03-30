@@ -65,10 +65,10 @@ Intern::makeForm(const std::string &form_name, const std::string &target) const 
 
 	try {
 		form = TryMakeForm(form_name, target);
-		std::cout << COLOR_PINK "Intern creats " << form_name << COLOR_END
+		std::cout << COLOR_PINK "Intern creates " << form_name << COLOR_END
 				  << std::endl;
 	} catch (const std::exception &e) {
-		std::cerr << COLOR_PINK << "Intern creats Form failed. => " COLOR_RED
+		std::cerr << COLOR_PINK << "Intern creates Form failed. => " COLOR_RED
 				  << e.what() << COLOR_END << std::endl;
 		return NULL;
 	}
