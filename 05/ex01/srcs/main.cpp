@@ -240,7 +240,7 @@ static void RunTest8() {
 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
 	}
 	try {
-		Form bob = Form(BOB, 151, 1); // normal, too low
+		Form bob = Form(BOB, 1, 151); // normal, too low
 	} catch (const std::exception &e) {
 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
 	}

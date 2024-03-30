@@ -49,7 +49,7 @@ void Bureaucrat::DecrementGrade() {
 	grade_++;
 }
 
-void Bureaucrat::signForm(AForm &form) {
+void Bureaucrat::signForm(AForm &form) const {
 	try {
 		form.beSigned(*this);
 		std::cout << COLOR_PINK << getName() << COLOR_END " signed " COLOR_PINK

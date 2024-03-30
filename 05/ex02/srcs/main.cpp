@@ -246,7 +246,7 @@ Error: grade is too low
 // 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
 // 	}
 // 	try {
-// 		AForm bob = AForm(BOB, 151, 1); // normal, too low
+// 		AForm bob = AForm(BOB, 1, 151); // normal, too low
 // 	} catch (const std::exception &e) {
 // 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
 // 	}

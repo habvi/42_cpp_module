@@ -37,7 +37,7 @@ class Bureaucrat {
 	void IncrementGrade();
 	void DecrementGrade();
 	// Following the instructions, not camelcase
-	void signForm(Form &form);
+	void signForm(Form &form) const;
 
   private:
 	Bureaucrat();

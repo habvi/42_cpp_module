@@ -250,7 +250,7 @@ Error: grade is too low
 // 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
 // 	}
 // 	try {
-// 		AForm bob = AForm(BOB, 151, 1); // normal, too low
+// 		AForm bob = AForm(BOB, 1, 151); // normal, too low
 // 	} catch (const std::exception &e) {
 // 		std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
 // 	}
@@ -503,7 +503,7 @@ static void RunTest17() {
 }
 
 /* === Expect ===
-Intern creats robotomy request
+Intern creates robotomy request
 AForm: Robotomy Request(not signed), grade for sign is 72, grade for execute is 45
 */
 static void RunTest18() {
@@ -522,7 +522,7 @@ static void RunTest18() {
 }
 
 /* === Expect ===
-Intern creats presidential pardon
+Intern creates presidential pardon
 ------------------------
 AForm: Presidential Pardon(not signed), grade for sign is 25, grade for execute is 5
 ------------------------
@@ -549,7 +549,7 @@ static void RunTest19() {
 }
 
 /* === Expect ===
-Intern creats robotomy request
+Intern creates robotomy request
 ------------------------
 AForm: Robotomy Request(not signed), grade for sign is 72, grade for execute is 45
 ------------------------
@@ -579,7 +579,7 @@ static void RunTest20() {
 }
 
 /* === Expect ===
-Intern creats shrubbery creation
+Intern creates shrubbery creation
 ------------------------
 AForm: Shrubbery Creation(not signed), grade for sign is 145, grade for execute is
 137
@@ -607,7 +607,7 @@ static void RunTest21() {
 }
 
 /* === Expect ===
-Intern creats Form failed. => Error: invalid Form name
+Intern creates Form failed. => Error: invalid Form name
 */
 static void RunTest22() {
 	DisplayTitle(22, "Intern / non exist form name");
