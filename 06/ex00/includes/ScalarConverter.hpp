@@ -46,9 +46,19 @@ class ScalarConverter {
 	template <typename T>
 	static void
 	Display(const std::string &title, const Type convert_to, const T scalar);
+
+	/* set convert to each type*/
 	static void SetImpossible();
 	template <typename T>
 	static void SetConvertEachType(const Type convert_to, const T &scalar);
+	template <typename T>
+	static void SetConvertToChar(const T &scalar);
+	template <typename T>
+	static void SetConvertToInteger(const T &scalar);
+	template <typename T>
+	static void SetConvertToFloat(const T &scalar);
+	template <typename T>
+	static void SetConvertToDouble(const T &scalar);
 
   private:
 	/* constant */

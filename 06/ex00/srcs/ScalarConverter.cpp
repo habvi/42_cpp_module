@@ -41,7 +41,22 @@ void ScalarConverter::SetImpossible() {
 
 template <typename T>
 void ScalarConverter::SetConvertEachType(const Type convert_to, const T &scalar) {
-	oss_ << convert_to << " " << scalar << std::endl;
+	switch (convert_to) {
+	case kTypeChar:
+		SetConvertToChar(scalar);
+		break;
+	case kTypeInt:
+		SetConvertToInteger(scalar);
+		break;
+	case kTypeFloat:
+		SetConvertToFloat(scalar);
+		break;
+	case kTypeDouble:
+		SetConvertToDouble(scalar);
+		break;
+	default:
+		break;
+	}
 }
 
 template <typename T>
