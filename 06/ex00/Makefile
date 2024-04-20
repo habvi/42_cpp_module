@@ -55,5 +55,10 @@ check:
 	@cppcheck --enable=all $$(find . -type f -name "*.cpp" | tr '\n' ' ')
 
 #--------------------------------------------
+.PHONY	: diff
+diff: all
+	@./$(NAME) > out
+	@diff out expected
+#--------------------------------------------
 
 -include $(DEPS)
