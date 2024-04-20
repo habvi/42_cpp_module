@@ -51,15 +51,9 @@ static void RunFloatTest() {
 	RunTest("123.456f");
 	RunTest("2147483648f");
 	RunTest("-2147483649f");
-	RunTest("inff");
-	RunTest("+inff");
-	RunTest("INFF");
-	RunTest("+INFF");
 	RunTest("-inff");
-	RunTest("-INFF");
+	RunTest("+inff");
 	RunTest("nanf");
-	RunTest("NANF");
-	RunTest("NaNF");
 }
 
 static void RunDoubleTest() {
@@ -77,15 +71,9 @@ static void RunDoubleTest() {
 			"1111111111111111111111111111111111111111111111111111111111111111111111"
 			"1111111111111111111111111111111111111111111111111111111111111111111111"
 			"11111111111111111111111111111");
-	RunTest("inf");
-	RunTest("INF");
-	RunTest("+inf");
-	RunTest("+INF");
 	RunTest("-inf");
-	RunTest("-INF");
-	RunTest("-iNF");
+	RunTest("+inf");
 	RunTest("nan");
-	RunTest("NAN");
 }
 
 static void RunErrorTest() {
@@ -128,6 +116,18 @@ static void RunErrorTest() {
 			"1111111111111111111111111111111111111111111111111111111111111111111111"
 			"1111111111111111111111111111111111111111111111111111111111111111111111"
 			"111111111111111111111111111111");
+	RunTest("inff");
+	RunTest("INFF");
+	RunTest("+INFF");
+	RunTest("-INFF");
+	RunTest("NANF");
+	RunTest("NaNF");
+	RunTest("inf");
+	RunTest("INF");
+	RunTest("+INF");
+	RunTest("-INF");
+	RunTest("-iNF");
+	RunTest("NAN");
 }
 
 static void RunOriginalTest() {

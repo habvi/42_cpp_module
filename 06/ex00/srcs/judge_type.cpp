@@ -1,6 +1,6 @@
 #include "ScalarConverter.hpp"
 #include "utils.hpp"
-#include <cctype> // isdigit,tolower
+#include <cctype> // isdigit
 #include <cerrno>
 #include <cstdlib> // strtod
 
@@ -21,18 +21,6 @@ static double ConvertStrToDouble(const std::string &str, bool &err) {
 		return -1;
 	}
 	return num;
-}
-
-static bool IsSameStr(const std::string &s1, const std::string &s2) {
-	if (s1.size() != s2.size()) {
-		return false;
-	}
-	for (size_t i = 0; i < s1.size(); i++) {
-		if (std::tolower(s1[i]) != std::tolower(s2[i])) {
-			return false;
-		}
-	}
-	return true;
 }
 
 // ----------------------------------------------------------------------------
@@ -109,14 +97,14 @@ bool ScalarConverter::IsTypeFloat() {
 // ----------------------------------------------------------------------------
 static bool IsInfinityOrNanStr(const std::string &s) {
 	static const std::string infs[] = {
-		"inf",
-		"infinity",
+		"-inf",
+		"+inf",
 		"nan",
 	};
 	const size_t size = sizeof(infs) / sizeof(*infs);
 
 	for (size_t i = 0; i < size; i++) {
-		if (IsSameStr(s, infs[i])) {
+		if (s == infs[i]) {
 			return true;
 		}
 	}
@@ -125,31 +113,13 @@ static bool IsInfinityOrNanStr(const std::string &s) {
 
 // ok : -DBL_MAX～DBL_MAX / inf / nan
 // ng : out_of_range / 12.3f / "  123" / inff / nanf
-bool ScalarConverter::IsTypeDouble() {
-	size_t head = 0;
-	if (src_[head] == '-' || src_[head] == '+') {
-		head++;
-	}
-	if (IsInfinityOrNanStr(&src_[head])) {
+bool ScalarConverter::IsTypeDouble(const std::string &str) {
+	if (IsInfinityOrNanStr(str)) {
 		return true;
 	}
-	for (size_t i = head; i < src_.size(); i++) {
-		if (!(std::isdigit(src_[i]) || src_[i] == '.')) {
-			return false;
-		}
-	}
-	bool err;
-	ConvertStrToDouble(src_, err);
-	return err == false;
-}
-
-bool ScalarConverter::IsTypeDouble(const std::string &str) {
 	size_t head = 0;
 	if (str[head] == '-' || str[head] == '+') {
 		head++;
-	}
-	if (IsInfinityOrNanStr(&str[head])) {
-		return true;
 	}
 	for (size_t i = head; i < str.size(); i++) {
 		if (!(std::isdigit(str[i]) || str[i] == '.')) {

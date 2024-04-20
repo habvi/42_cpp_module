@@ -30,7 +30,6 @@ class ScalarConverter {
 	static bool IsTypeInteger();
 	static bool IsIntegerRangeForFloat(const float &num);
 	static bool IsTypeFloat();
-	static bool IsTypeDouble();
 	static bool IsTypeDouble(const std::string &str);
 	/* _judge.hpp */
 	template <typename T>

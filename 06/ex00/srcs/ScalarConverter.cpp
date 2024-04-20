@@ -33,7 +33,7 @@ void ScalarConverter::SetType() {
 		type_ = kTypeInt;
 	} else if (IsTypeFloat()) {
 		type_ = kTypeFloat;
-	} else if (IsTypeDouble()) {
+	} else if (IsTypeDouble(src_)) {
 		type_ = kTypeDouble;
 	} else {
 		type_ = kTypeInvalid;
