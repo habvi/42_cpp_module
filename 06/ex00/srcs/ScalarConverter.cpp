@@ -1,7 +1,8 @@
 #include "ScalarConverter.hpp"
 #include <iostream>
 
-std::string ScalarConverter::src_;
+std::string           ScalarConverter::src_;
+ScalarConverter::Type ScalarConverter::type_;
 
 ScalarConverter::ScalarConverter() {}
 

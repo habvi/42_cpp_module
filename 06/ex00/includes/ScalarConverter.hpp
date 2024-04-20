@@ -22,6 +22,7 @@ class ScalarConverter {
 
   private:
 	static std::string src_;
+	static Type        type_;
 };
 
 #endif /* EX00_SCALAR_CONVERTER_HPP */
