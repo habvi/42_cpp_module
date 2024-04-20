@@ -1,5 +1,5 @@
 #include "ScalarConverter.hpp"
-#include <cctype> // isdigit
+#include <cctype> // isdigit,tolower
 #include <cerrno>
 #include <cstdlib> // strtod
 #include <iostream>
@@ -29,16 +29,16 @@ bool ScalarConverter::IsTypeChar() {
 	return src_[0] == '\'' && src_[2] == '\'';
 }
 
-double ScalarConverter::ConvertStrToDouble(bool &err) {
+double ScalarConverter::ConvertStrToDouble(const std::string &str, bool &err) {
 	err = false;
 	char *str_end;
 	errno            = 0;
-	const double num = std::strtod(src_.c_str(), &str_end);
+	const double num = std::strtod(str.c_str(), &str_end);
 	if (errno == ERANGE) {
 		err = true;
 		return -1;
 	}
-	if (src_ == str_end || *str_end != '\0') {
+	if (str == str_end || *str_end != '\0') {
 		err = true;
 		return -1;
 	}
@@ -63,7 +63,7 @@ bool ScalarConverter::IsTypeInteger() {
 		}
 	}
 	bool         err;
-	const double num = ConvertStrToDouble(err);
+	const double num = ConvertStrToDouble(src_, err);
 	if (err) {
 		return false;
 	}
@@ -99,21 +99,82 @@ bool ScalarConverter::IsTypeFloat() {
 	if (!(pos_f != std::string::npos || pos_F != std::string::npos)) {
 		return false;
 	}
-	std::string except_tail_f = src_.substr(0, src_.size() - 1);
-	src_                      = except_tail_f;
-	if (!IsTypeDouble()) {
+	const std::string except_tail_f = src_.substr(0, src_.size() - 1);
+	if (!IsTypeDouble(except_tail_f)) {
 		return false;
 	}
 	bool         err;
-	const double num = ConvertStrToDouble(err);
+	const double num = ConvertStrToDouble(except_tail_f, err);
 	if (err) {
 		return false;
 	}
 	return IsFloatRange(num);
 }
 
-bool ScalarConverter::IsTypeDouble() {
+static bool IsSameStr(const std::string &s1, const std::string &s2) {
+	if (s1.size() != s2.size()) {
+		return false;
+	}
+	for (size_t i = 0; i < s1.size(); i++) {
+		if (std::tolower(s1[i]) != std::tolower(s2[i])) {
+			return false;
+		}
+	}
+	return true;
+}
+
+static bool IsInfinityOrNanStr(const std::string &s) {
+	static const std::string infs[] = {
+		"inf",
+		"infinity",
+		"nan",
+	};
+	const size_t size = sizeof(infs) / sizeof(*infs);
+
+	for (size_t i = 0; i < size; i++) {
+		if (IsSameStr(s, infs[i])) {
+			return true;
+		}
+	}
 	return false;
+}
+
+// ok : -DBL_MAX～DBL_MAX / inf / nan
+// ng : out_of_range / 12.3f / "  123" / inff / nanf
+bool ScalarConverter::IsTypeDouble() {
+	size_t head = 0;
+	if (src_[head] == '-' || src_[head] == '+') {
+		head++;
+	}
+	if (IsInfinityOrNanStr(&src_[head])) {
+		return true;
+	}
+	for (size_t i = head; i < src_.size(); i++) {
+		if (!(std::isdigit(src_[i]) || src_[i] == '.')) {
+			return false;
+		}
+	}
+	bool err;
+	ConvertStrToDouble(src_, err);
+	return err == false;
+}
+
+bool ScalarConverter::IsTypeDouble(const std::string &str) {
+	size_t head = 0;
+	if (str[head] == '-' || str[head] == '+') {
+		head++;
+	}
+	if (IsInfinityOrNanStr(&str[head])) {
+		return true;
+	}
+	for (size_t i = head; i < str.size(); i++) {
+		if (!(std::isdigit(str[i]) || str[i] == '.')) {
+			return false;
+		}
+	}
+	bool err;
+	ConvertStrToDouble(src_, err);
+	return err == false;
 }
 
 void ScalarConverter::SetType() {

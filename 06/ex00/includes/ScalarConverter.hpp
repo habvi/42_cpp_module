@@ -28,9 +28,10 @@ class ScalarConverter {
 	static bool IsTypeInteger();
 	static bool IsTypeFloat();
 	static bool IsTypeDouble();
+	static bool IsTypeDouble(const std::string &str);
 
 	static bool   IsIntegerRange(const double &num);
-	static double ConvertStrToDouble(bool &err);
+	static double ConvertStrToDouble(const std::string &str, bool &err);
 
   private:
 	static std::string src_;
