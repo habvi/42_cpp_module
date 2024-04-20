@@ -5,6 +5,13 @@
 
 class ScalarConverter {
   public:
+	typedef enum e_type {
+		kTypeInvalid = 0,
+		kTypeChar,
+		kTypeInt,
+		kTypeFloat,
+		kTypeDouble
+	} Type;
 	static void convert(const std::string &str);
 
   private:
