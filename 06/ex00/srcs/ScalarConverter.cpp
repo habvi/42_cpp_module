@@ -9,6 +9,7 @@ std::string           ScalarConverter::src_;
 ScalarConverter::Type ScalarConverter::type_;
 std::ostringstream    ScalarConverter::oss_;
 
+// ----------------------------------------------------------------------------
 ScalarConverter::ScalarConverter() {}
 
 ScalarConverter::ScalarConverter(const ScalarConverter &c) {
@@ -22,6 +23,7 @@ const ScalarConverter &ScalarConverter::operator=(const ScalarConverter &c) {
 
 ScalarConverter::~ScalarConverter() {}
 
+// ----------------------------------------------------------------------------
 void ScalarConverter::SetType() {
 	if (IsTypeChar()) {
 		type_ = kTypeChar;
@@ -36,6 +38,7 @@ void ScalarConverter::SetType() {
 	}
 }
 
+// ----------------------------------------------------------------------------
 void ScalarConverter::SetImpossible() {
 	oss_ << COLOR_PINK << kMessageImpossible << COLOR_END << std::endl;
 }
@@ -90,6 +93,7 @@ void ScalarConverter::DisplayConvertAll(const T scalar) {
 	}
 }
 
+// ----------------------------------------------------------------------------
 static char ConvertToChar(const std::string &str) {
 	return static_cast<char>(str[1]);
 }
