@@ -12,6 +12,9 @@ class ScalarConverter {
 	ScalarConverter(const ScalarConverter &c);
 	const ScalarConverter &operator=(const ScalarConverter &c);
 	~ScalarConverter();
+
+  private:
+	static std::string src_;
 };
 
 #endif /* EX00_SCALAR_CONVERTER_HPP */

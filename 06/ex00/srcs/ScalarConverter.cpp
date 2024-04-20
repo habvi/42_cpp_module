@@ -1,6 +1,8 @@
 #include "ScalarConverter.hpp"
 #include <iostream>
 
+std::string ScalarConverter::src_;
+
 ScalarConverter::ScalarConverter() {}
 
 ScalarConverter::ScalarConverter(const ScalarConverter &c) {
@@ -15,5 +17,6 @@ const ScalarConverter &ScalarConverter::operator=(const ScalarConverter &c) {
 ScalarConverter::~ScalarConverter() {}
 
 void ScalarConverter::convert(const std::string &str) {
-	std::cout << str << std::endl;
+	src_ = str;
+	std::cout << src_ << std::endl;
 }
