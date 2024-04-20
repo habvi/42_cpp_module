@@ -70,8 +70,46 @@ bool ScalarConverter::IsTypeInteger() {
 	return IsIntegerRange(num);
 }
 
+static bool IsNan(const double &num) {
+	return num != num;
+}
+
+static bool IsInfinity(const double &num) {
+	static const double inf = std::numeric_limits<double>::infinity();
+	return num == inf || num == -inf;
+}
+
+static bool IsInfinityOrNan(const double &num) {
+	return IsInfinity(num) || IsNan(num);
+}
+
+static bool IsFloatRange(const double &num) {
+	if (IsInfinityOrNan(num)) {
+		return true;
+	}
+	return -std::numeric_limits<float>::max() <= num &&
+		   num <= std::numeric_limits<float>::max();
+}
+
+// ok : -FLT_MAX～FLT_MAX / inff / -INFF / nanf / -NAnf
+// ng : out_of_range / 12.3(no f) / "  123f" / inf / nan
 bool ScalarConverter::IsTypeFloat() {
-	return false;
+	std::string::size_type pos_f = src_.rfind("f");
+	std::string::size_type pos_F = src_.rfind("F");
+	if (!(pos_f != std::string::npos || pos_F != std::string::npos)) {
+		return false;
+	}
+	std::string except_tail_f = src_.substr(0, src_.size() - 1);
+	src_                      = except_tail_f;
+	if (!IsTypeDouble()) {
+		return false;
+	}
+	bool         err;
+	const double num = ConvertStrToDouble(err);
+	if (err) {
+		return false;
+	}
+	return IsFloatRange(num);
 }
 
 bool ScalarConverter::IsTypeDouble() {
