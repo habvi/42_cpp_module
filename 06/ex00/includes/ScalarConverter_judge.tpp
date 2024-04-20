@@ -12,8 +12,7 @@ bool ScalarConverter::IsCharRange(const T &scalar) {
 	if (!IsIntegerRange(scalar)) {
 		return false;
 	}
-	// todo: issame iru?
-	return IsSame(scalar, static_cast<int>(scalar)) && IsValidRange<char>(scalar);
+	return IsValidRange<char>(scalar);
 }
 
 template <typename T>

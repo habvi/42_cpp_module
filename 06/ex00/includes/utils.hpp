@@ -3,11 +3,6 @@
 
 #include <limits>
 
-template <typename T, typename U>
-bool IsSame(const T &before, const U &after) {
-	return before == after;
-}
-
 template <typename T>
 bool IsNan(const T &num) {
 	return num != num;
