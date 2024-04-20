@@ -179,6 +179,6 @@ bool ScalarConverter::IsTypeDouble(const std::string &str) {
 		}
 	}
 	bool err;
-	ConvertStrToDouble(src_, err);
+	ConvertStrToDouble(str, err);
 	return err == false;
 }
