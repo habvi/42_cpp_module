@@ -93,7 +93,12 @@ bool ScalarConverter::IsTypeInteger() {
 // ----------------------------------------------------------------------------
 // float
 // ----------------------------------------------------------------------------
-static bool IsFloatRange(const double &num) {
+template bool ScalarConverter::IsFloatRange<char>(const char &);
+template bool ScalarConverter::IsFloatRange<int>(const int &);
+template bool ScalarConverter::IsFloatRange<float>(const float &);
+template bool ScalarConverter::IsFloatRange<double>(const double &);
+template <typename T>
+bool ScalarConverter::IsFloatRange(const T &num) {
 	if (IsInfinityOrNan(num)) {
 		return true;
 	}

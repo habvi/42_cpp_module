@@ -31,8 +31,10 @@ class ScalarConverter {
 	static bool IsTypeDouble();
 	static bool IsTypeDouble(const std::string &str);
 
-	static bool   IsIntegerRange(const float &num);
-	static bool   IsIntegerRange(const double &num);
+	static bool IsIntegerRange(const float &num);
+	static bool IsIntegerRange(const double &num);
+	template <typename T>
+	static bool   IsFloatRange(const T &num);
 	static double ConvertStrToDouble(const std::string &str, bool &err);
 
 	/* convert */
@@ -51,6 +53,8 @@ class ScalarConverter {
 	/* set convert to each type*/
 	static void SetImpossible();
 	template <typename T>
+	static void SetFixed(const T &t);
+	template <typename T>
 	static void SetConvertEachType(const Type convert_to, const T &scalar);
 	template <typename T>
 	static void SetConvertToChar(const T &scalar);
@@ -63,12 +67,15 @@ class ScalarConverter {
 	template <typename T>
 	static void SetConvertToFloat(const T &scalar);
 	template <typename T>
+	static void SetToFloat(const T &num);
+	template <typename T>
 	static void SetConvertToDouble(const T &scalar);
 
   private:
 	/* constant */
 	static const std::string kMessageImpossible;
 	static const std::string kMessageNonDisplayable;
+	static const int         kPrecision = 1;
 	/* variables */
 	static std::string        src_;
 	static Type               type_;

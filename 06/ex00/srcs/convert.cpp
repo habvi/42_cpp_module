@@ -1,8 +1,15 @@
 #include "ScalarConverter.hpp"
 #include "color.hpp"
 #include "utils.hpp"
-#include <cctype> // isprint
+#include <cctype>  // isprint
+#include <iomanip> // fixed
 #include <iostream>
+
+// float || double
+template <typename T>
+void ScalarConverter::SetFixed(const T &t) {
+	oss_ << std::fixed << std::setprecision(kPrecision) << t;
+}
 
 static bool IsCharRange(const int num) {
 	return std::numeric_limits<char>::min() <= num &&
@@ -22,6 +29,12 @@ void ScalarConverter::SetToChar(const T &num) {
 template <typename T>
 void ScalarConverter::SetToInteger(const T &num) {
 	oss_ << static_cast<int>(num) << std::endl;
+}
+
+template <typename T>
+void ScalarConverter::SetToFloat(const T &num) {
+	SetFixed(static_cast<float>(num));
+	oss_ << "f" << std::endl;
 }
 
 template void ScalarConverter::SetConvertToChar<char>(const char &);
@@ -78,7 +91,11 @@ template void ScalarConverter::SetConvertToFloat<float>(const float &);
 template void ScalarConverter::SetConvertToFloat<double>(const double &);
 template <typename T>
 void ScalarConverter::SetConvertToFloat(const T &scalar) {
-	oss_ << scalar << std::endl;
+	if (IsFloatRange(scalar)) {
+		SetToFloat(scalar);
+	} else {
+		SetImpossible();
+	}
 }
 
 template void ScalarConverter::SetConvertToDouble<char>(const char &);
