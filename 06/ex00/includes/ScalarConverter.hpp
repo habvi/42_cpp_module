@@ -28,53 +28,34 @@ class ScalarConverter {
 	/* judge type */
 	static bool IsTypeChar();
 	static bool IsTypeInteger();
+	static bool IsIntegerRangeForFloat(const float &num);
 	static bool IsTypeFloat();
 	static bool IsTypeDouble();
 	static bool IsTypeDouble(const std::string &str);
-
+	/* _judge.hpp */
+	template <typename T>
+	static bool IsValidRange(const double &num);
 	template <typename T>
 	static bool IsCharRange(const T &scalar);
 	template <typename T>
 	static bool IsIntegerRange(const T &scalar);
-	static bool IsIntegerRangeForFloat(const float &num);
 	template <typename T>
-	static bool IsValidRange(const double &num) {
-		return std::numeric_limits<T>::min() <= num &&
-			   num <= std::numeric_limits<T>::max();
-	}
-	template <typename T>
-	static bool IsFloatRange(const T &num) {
-		return -std::numeric_limits<float>::max() <= num &&
-			   num <= std::numeric_limits<float>::max();
-	}
+	static bool IsFloatRange(const T &num);
 
 	/* display */
 	template <typename T>
-	static void DisplayConvertAll(const T scalar);
-	template <typename T>
-	static void
-	Display(const std::string &title, const Type convert_to, const T scalar);
+	static void DisplayAll(const T scalar);
 
-	/* set convert to each type*/
+	/* set convert to each type */
 	static void SetImpossible();
 	template <typename T>
 	static void SetFixed(const T &t);
 	template <typename T>
-	static void SetConvertEachType(const Type convert_to, const T &scalar);
-	template <typename T>
-	static void SetConvertToChar(const T &scalar);
-	template <typename T>
 	static void SetToChar(const T &num);
-	template <typename T>
-	static void SetConvertToInteger(const T &scalar);
 	template <typename T>
 	static void SetToInteger(const T &num);
 	template <typename T>
-	static void SetConvertToFloat(const T &scalar);
-	template <typename T>
 	static void SetToFloat(const T &num);
-	template <typename T>
-	static void SetConvertToDouble(const T &scalar);
 	template <typename T>
 	static void SetToDouble(const T &num);
 
@@ -88,5 +69,7 @@ class ScalarConverter {
 	static Type               type_;
 	static std::ostringstream oss_;
 };
+
+#include "ScalarConverter_judge.tpp"
 
 #endif /* EX00_SCALAR_CONVERTER_HPP */

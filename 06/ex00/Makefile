@@ -1,8 +1,7 @@
 NAME		:=	convert
 
 SRCS_DIR	:=	srcs
-SRCS		:=	convert.cpp \
-				judge_type.cpp \
+SRCS		:=	judge_type.cpp \
 				main.cpp \
 				ScalarConverter.cpp
 

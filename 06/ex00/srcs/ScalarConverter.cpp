@@ -1,6 +1,8 @@
 #include "ScalarConverter.hpp"
 #include "color.hpp"
+#include <cctype>  // isprint
 #include <cstdlib> // strtod
+#include <iomanip> // fixed
 #include <iostream>
 
 const std::string     ScalarConverter::kMessageImpossible     = "impossible";
@@ -43,53 +45,72 @@ void ScalarConverter::SetImpossible() {
 	oss_ << COLOR_PINK << kMessageImpossible << COLOR_END << std::endl;
 }
 
+// float || double
 template <typename T>
-void ScalarConverter::SetConvertEachType(const Type convert_to, const T &scalar) {
-	switch (convert_to) {
-	case kTypeChar:
-		SetConvertToChar(scalar);
-		break;
-	case kTypeInt:
-		SetConvertToInteger(scalar);
-		break;
-	case kTypeFloat:
-		SetConvertToFloat(scalar);
-		break;
-	case kTypeDouble:
-		SetConvertToDouble(scalar);
-		break;
-	default:
-		break;
-	}
+void ScalarConverter::SetFixed(const T &t) {
+	oss_ << std::fixed << std::setprecision(kPrecision) << t;
 }
 
 template <typename T>
-void ScalarConverter::Display(
-	const std::string &title, const Type convert_to, const T scalar
-) {
-	oss_ << title << ": ";
-
-	if (type_ == kTypeInvalid) {
+void ScalarConverter::SetToChar(const T &scalar) {
+	if (!IsCharRange(scalar)) {
 		SetImpossible();
-	} else {
-		SetConvertEachType(convert_to, scalar);
+		return;
 	}
-	std::cout << oss_.str();
-	oss_.str("");
+	const char c = static_cast<char>(scalar);
+	if (std::isprint(c)) {
+		oss_ << "'" << c << "'" << std::endl;
+	} else {
+		oss_ << COLOR_BLUE << kMessageNonDisplayable << COLOR_END << std::endl;
+	}
 }
 
 template <typename T>
-void ScalarConverter::DisplayConvertAll(const T scalar) {
-	static const std::pair<const std::string, const Type> types[] = {
-		std::make_pair("char", kTypeChar),
-		std::make_pair("int", kTypeInt),
-		std::make_pair("float", kTypeFloat),
-		std::make_pair("double", kTypeDouble)
+void ScalarConverter::SetToInteger(const T &scalar) {
+	if (!IsIntegerRange(scalar)) {
+		SetImpossible();
+		return;
+	}
+	oss_ << static_cast<int>(scalar) << std::endl;
+}
+
+template <typename T>
+void ScalarConverter::SetToFloat(const T &scalar) {
+	if (!IsFloatRange(scalar)) {
+		SetImpossible();
+		return;
+	}
+	SetFixed(static_cast<float>(scalar));
+	oss_ << "f" << std::endl;
+}
+
+template <typename T>
+void ScalarConverter::SetToDouble(const T &scalar) {
+	SetFixed(static_cast<double>(scalar));
+	oss_ << std::endl;
+}
+
+// ----------------------------------------------------------------------------
+template <typename T>
+void ScalarConverter::DisplayAll(const T scalar) {
+	typedef void (*SetConvertFunc)(const T &);
+	static const std::pair<const std::string, SetConvertFunc> types[] = {
+		std::make_pair("char", &SetToChar<T>),
+		std::make_pair("int", &SetToInteger<T>),
+		std::make_pair("float", &SetToFloat<T>),
+		std::make_pair("double", &SetToDouble<T>)
 	};
 	const unsigned int size = sizeof(types) / sizeof(*types);
 
 	for (unsigned int i = 0; i < size; i++) {
-		Display(types[i].first, types[i].second, scalar);
+		oss_ << types[i].first << ": ";
+		if (type_ == kTypeInvalid) {
+			SetImpossible();
+		} else {
+			types[i].second(scalar);
+		}
+		std::cout << oss_.str();
+		oss_.str("");
 	}
 }
 
@@ -117,19 +138,19 @@ void ScalarConverter::convert(const std::string &str) {
 
 	switch (type_) {
 	case kTypeChar:
-		DisplayConvertAll(ConvertToChar(src_));
+		DisplayAll(ConvertToChar(src_));
 		break;
 	case kTypeInt:
-		DisplayConvertAll(ConvertToInteger(src_));
+		DisplayAll(ConvertToInteger(src_));
 		break;
 	case kTypeFloat:
-		DisplayConvertAll(ConvertToFloat(src_));
+		DisplayAll(ConvertToFloat(src_));
 		break;
 	case kTypeDouble:
-		DisplayConvertAll(ConvertToDouble(src_));
+		DisplayAll(ConvertToDouble(src_));
 		break;
 	case kTypeInvalid:
-		DisplayConvertAll(0);
+		DisplayAll(0); // unused argument
 		break;
 	default:
 		break;

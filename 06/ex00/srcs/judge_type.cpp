@@ -101,7 +101,7 @@ bool ScalarConverter::IsTypeFloat() {
 	if (err) {
 		return false;
 	}
-	return IsInfinityOrNan(num) || IsFloatRange(num);
+	return IsFloatRange(num);
 }
 
 // ----------------------------------------------------------------------------
