@@ -1,7 +1,12 @@
 #ifndef EX00_SCALAR_CONVERTER_HPP
 #define EX00_SCALAR_CONVERTER_HPP
 
+#include <string>
+
 class ScalarConverter {
+  public:
+	static void convert(const std::string &str);
+
   private:
 	ScalarConverter();
 	ScalarConverter(const ScalarConverter &c);
