@@ -1,5 +1,9 @@
 #include "ScalarConverter.hpp"
+#include <cctype> // isdigit
+#include <cerrno>
+#include <cstdlib> // strtod
 #include <iostream>
+#include <limits>
 
 std::string           ScalarConverter::src_;
 ScalarConverter::Type ScalarConverter::type_;
@@ -25,8 +29,45 @@ bool ScalarConverter::IsTypeChar() {
 	return src_[0] == '\'' && src_[2] == '\'';
 }
 
+double ScalarConverter::ConvertStrToDouble(bool &err) {
+	err = false;
+	char *str_end;
+	errno            = 0;
+	const double num = std::strtod(src_.c_str(), &str_end);
+	if (errno == ERANGE) {
+		err = true;
+		return -1;
+	}
+	if (src_ == str_end || *str_end != '\0') {
+		err = true;
+		return -1;
+	}
+	return num;
+}
+
+bool ScalarConverter::IsIntegerRange(const double &num) {
+	return std::numeric_limits<int>::min() <= num &&
+		   num <= std::numeric_limits<int>::max();
+}
+
+// ok : INT_MIN～INT_MAX
+// ng : out_of_range / 12.3f / 12.3 / "  123" / inf / nan
 bool ScalarConverter::IsTypeInteger() {
-	return true;
+	size_t head = 0;
+	if (src_[head] == '-' || src_[head] == '+') {
+		head++;
+	}
+	for (size_t i = head; i < src_.size(); i++) {
+		if (!std::isdigit(src_[i])) {
+			return false;
+		}
+	}
+	bool         err;
+	const double num = ConvertStrToDouble(err);
+	if (err) {
+		return false;
+	}
+	return IsIntegerRange(num);
 }
 
 bool ScalarConverter::IsTypeFloat() {
