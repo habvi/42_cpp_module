@@ -1,7 +1,8 @@
 NAME		:=	convert
 
 SRCS_DIR	:=	srcs
-SRCS		:=	main.cpp \
+SRCS		:=	judge_type.cpp \
+				main.cpp \
 				ScalarConverter.cpp
 
 OBJ_DIR		:=	objs
