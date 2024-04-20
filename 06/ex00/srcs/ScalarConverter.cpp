@@ -17,8 +17,12 @@ const ScalarConverter &ScalarConverter::operator=(const ScalarConverter &c) {
 
 ScalarConverter::~ScalarConverter() {}
 
+// 'a' (3bytes)
 bool ScalarConverter::IsTypeChar() {
-	return false;
+	if (src_.size() != 3) {
+		return false;
+	}
+	return src_[0] == '\'' && src_[2] == '\'';
 }
 
 bool ScalarConverter::IsTypeInteger() {
