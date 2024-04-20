@@ -21,6 +21,15 @@ class ScalarConverter {
 	~ScalarConverter();
 
   private:
+	static void SetType();
+
+	/* judge type */
+	static bool IsTypeChar();
+	static bool IsTypeInteger();
+	static bool IsTypeFloat();
+	static bool IsTypeDouble();
+
+  private:
 	static std::string src_;
 	static Type        type_;
 };
