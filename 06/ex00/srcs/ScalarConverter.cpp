@@ -1,12 +1,14 @@
 #include "ScalarConverter.hpp"
-#include <cctype> // isdigit,tolower
+#include "color.hpp"
 #include <cerrno>
 #include <cstdlib> // strtod
 #include <iostream>
 #include <limits>
 
+const std::string     ScalarConverter::kMessageImpossible = "impossible";
 std::string           ScalarConverter::src_;
 ScalarConverter::Type ScalarConverter::type_;
+std::ostringstream    ScalarConverter::oss_;
 
 ScalarConverter::ScalarConverter() {}
 
@@ -191,6 +193,30 @@ void ScalarConverter::SetType() {
 	}
 }
 
+void ScalarConverter::SetImpossible() {
+	oss_ << COLOR_PINK << kMessageImpossible << COLOR_END << std::endl;
+}
+
+template <typename T>
+void ScalarConverter::SetConvertEachType(const Type convert_to, const T &scalar) {
+	oss_ << convert_to << " " << scalar << std::endl;
+}
+
+template <typename T>
+void ScalarConverter::Display(
+	const std::string &title, const Type convert_to, const T scalar
+) {
+	oss_ << title << ": ";
+
+	if (type_ == kTypeInvalid) {
+		SetImpossible();
+	} else {
+		SetConvertEachType(convert_to, scalar);
+	}
+	std::cout << oss_.str();
+	oss_.str("");
+}
+
 template <typename T>
 void ScalarConverter::DisplayConvertAll(const T scalar) {
 	static const std::pair<const std::string, const Type> types[] = {
@@ -202,8 +228,7 @@ void ScalarConverter::DisplayConvertAll(const T scalar) {
 	const unsigned int size = sizeof(types) / sizeof(*types);
 
 	for (unsigned int i = 0; i < size; i++) {
-		std::cout << types[i].first << ": " << types[i].second << " " << scalar
-				  << std::endl;
+		Display(types[i].first, types[i].second, scalar);
 	}
 }
 

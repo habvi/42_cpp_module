@@ -1,6 +1,7 @@
 #ifndef EX00_SCALAR_CONVERTER_HPP
 #define EX00_SCALAR_CONVERTER_HPP
 
+#include <sstream> // ostringstream
 #include <string>
 
 class ScalarConverter {
@@ -42,10 +43,20 @@ class ScalarConverter {
 	/* display */
 	template <typename T>
 	static void DisplayConvertAll(const T scalar);
+	template <typename T>
+	static void
+	Display(const std::string &title, const Type convert_to, const T scalar);
+	static void SetImpossible();
+	template <typename T>
+	static void SetConvertEachType(const Type convert_to, const T &scalar);
 
   private:
-	static std::string src_;
-	static Type        type_;
+	/* constant */
+	static const std::string kMessageImpossible;
+	/* variables */
+	static std::string        src_;
+	static Type               type_;
+	static std::ostringstream oss_;
 };
 
 #endif /* EX00_SCALAR_CONVERTER_HPP */
