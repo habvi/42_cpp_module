@@ -50,21 +50,16 @@ template void ScalarConverter::SetConvertToChar<float>(const float &);
 template void ScalarConverter::SetConvertToChar<double>(const double &);
 template <typename T>
 void ScalarConverter::SetConvertToChar(const T &scalar) {
-	if (type_ == kTypeFloat) {
-		if (!IsIntegerRange(static_cast<float>(scalar)) ||
-			!IsSame(scalar, static_cast<int>(scalar))) {
-			SetImpossible();
-			return;
-		}
+	if (type_ == kTypeFloat && !IsIntegerRange(static_cast<float>(scalar))) {
+		SetImpossible();
+		return;
 	}
-	if (type_ == kTypeDouble) {
-		if (!IsIntegerRange(static_cast<double>(scalar)) ||
-			!IsSame(scalar, static_cast<int>(scalar))) {
-			SetImpossible();
-			return;
-		}
+	if (type_ == kTypeDouble && !IsIntegerRange(static_cast<double>(scalar))) {
+		SetImpossible();
+		return;
 	}
-	if (IsCharRange(static_cast<int>(scalar))) {
+	if (IsSame(scalar, static_cast<int>(scalar)) &&
+		IsCharRange(static_cast<int>(scalar))) {
 		SetToChar(scalar);
 	} else {
 		SetImpossible();
@@ -77,17 +72,13 @@ template void ScalarConverter::SetConvertToInteger<float>(const float &);
 template void ScalarConverter::SetConvertToInteger<double>(const double &);
 template <typename T>
 void ScalarConverter::SetConvertToInteger(const T &scalar) {
-	if (type_ == kTypeFloat) {
-		if (!IsIntegerRange(static_cast<float>(scalar))) {
-			SetImpossible();
-			return;
-		}
+	if (type_ == kTypeFloat && !IsIntegerRange(static_cast<float>(scalar))) {
+		SetImpossible();
+		return;
 	}
-	if (type_ == kTypeDouble) {
-		if (!IsIntegerRange(static_cast<double>(scalar))) {
-			SetImpossible();
-			return;
-		}
+	if (type_ == kTypeDouble && !IsIntegerRange(static_cast<double>(scalar))) {
+		SetImpossible();
+		return;
 	}
 	SetToInteger(scalar);
 }
