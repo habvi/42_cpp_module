@@ -3,7 +3,8 @@
 #include <cstdlib> // strtod
 #include <iostream>
 
-const std::string     ScalarConverter::kMessageImpossible = "impossible";
+const std::string     ScalarConverter::kMessageImpossible     = "impossible";
+const std::string     ScalarConverter::kMessageNonDisplayable = "Non displayable";
 std::string           ScalarConverter::src_;
 ScalarConverter::Type ScalarConverter::type_;
 std::ostringstream    ScalarConverter::oss_;

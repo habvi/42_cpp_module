@@ -1,4 +1,5 @@
 #include "ScalarConverter.hpp"
+#include "utils.hpp"
 #include <cctype> // isdigit,tolower
 #include <cerrno>
 #include <cstdlib> // strtod
@@ -21,19 +22,6 @@ double ScalarConverter::ConvertStrToDouble(const std::string &str, bool &err) {
 		return -1;
 	}
 	return num;
-}
-
-static bool IsNan(const double &num) {
-	return num != num;
-}
-
-static bool IsInfinity(const double &num) {
-	static const double inf = std::numeric_limits<double>::infinity();
-	return num == inf || num == -inf;
-}
-
-static bool IsInfinityOrNan(const double &num) {
-	return IsInfinity(num) || IsNan(num);
 }
 
 static bool IsSameStr(const std::string &s1, const std::string &s2) {
@@ -62,6 +50,18 @@ bool ScalarConverter::IsTypeChar() {
 // ----------------------------------------------------------------------------
 // integer
 // ----------------------------------------------------------------------------
+bool ScalarConverter::IsIntegerRange(const float &num) {
+	if (IsInfinityOrNan(num)) {
+		return false;
+	}
+	if (num >= (std::numeric_limits<int>::max() - 1.0f) ||
+		num < (std::numeric_limits<int>::min() + 1.0f) ||
+		(num >= 0.0f && num < std::numeric_limits<float>::min())) {
+		return false;
+	}
+	return true;
+}
+
 bool ScalarConverter::IsIntegerRange(const double &num) {
 	// if (IsInfinityOrNan(num)) {
 	// 	return false;
