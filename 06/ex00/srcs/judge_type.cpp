@@ -8,7 +8,7 @@
 // ----------------------------------------------------------------------------
 // utils
 // ----------------------------------------------------------------------------
-double ScalarConverter::ConvertStrToDouble(const std::string &str, bool &err) {
+static double ConvertStrToDouble(const std::string &str, bool &err) {
 	err = false;
 	char *str_end;
 	errno            = 0;

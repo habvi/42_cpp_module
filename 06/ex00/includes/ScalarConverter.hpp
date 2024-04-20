@@ -34,8 +34,7 @@ class ScalarConverter {
 	static bool IsIntegerRange(const float &num);
 	static bool IsIntegerRange(const double &num);
 	template <typename T>
-	static bool   IsFloatRange(const T &num);
-	static double ConvertStrToDouble(const std::string &str, bool &err);
+	static bool IsFloatRange(const T &num);
 
 	/* display */
 	template <typename T>
