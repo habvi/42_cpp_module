@@ -50,7 +50,7 @@ bool ScalarConverter::IsTypeChar() {
 // ----------------------------------------------------------------------------
 // integer
 // ----------------------------------------------------------------------------
-bool ScalarConverter::IsIntegerRange(const float &num) {
+bool ScalarConverter::IsIntegerRangeForFloat(const float &num) {
 	if (IsInfinityOrNan(num)) {
 		return false;
 	}
@@ -60,14 +60,6 @@ bool ScalarConverter::IsIntegerRange(const float &num) {
 		return false;
 	}
 	return true;
-}
-
-bool ScalarConverter::IsIntegerRange(const double &num) {
-	// if (IsInfinityOrNan(num)) {
-	// 	return false;
-	// }
-	return std::numeric_limits<int>::min() <= num &&
-		   num <= std::numeric_limits<int>::max();
 }
 
 // ok : INT_MIN～INT_MAX
@@ -87,7 +79,7 @@ bool ScalarConverter::IsTypeInteger() {
 	if (err) {
 		return false;
 	}
-	return IsIntegerRange(num);
+	return IsValidRange<int>(num);
 }
 
 // ----------------------------------------------------------------------------

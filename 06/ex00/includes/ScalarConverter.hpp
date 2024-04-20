@@ -1,6 +1,7 @@
 #ifndef EX00_SCALAR_CONVERTER_HPP
 #define EX00_SCALAR_CONVERTER_HPP
 
+#include <limits>
 #include <sstream> // ostringstream
 #include <string>
 
@@ -31,8 +32,12 @@ class ScalarConverter {
 	static bool IsTypeDouble();
 	static bool IsTypeDouble(const std::string &str);
 
-	static bool IsIntegerRange(const float &num);
-	static bool IsIntegerRange(const double &num);
+	static bool IsIntegerRangeForFloat(const float &num);
+	template <typename T>
+	static bool IsValidRange(const double &num) {
+		return std::numeric_limits<T>::min() <= num &&
+			   num <= std::numeric_limits<T>::max();
+	}
 	template <typename T>
 	static bool IsFloatRange(const T &num);
 
