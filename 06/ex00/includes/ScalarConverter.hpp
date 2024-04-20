@@ -37,12 +37,6 @@ class ScalarConverter {
 	static bool   IsFloatRange(const T &num);
 	static double ConvertStrToDouble(const std::string &str, bool &err);
 
-	/* convert */
-	static char   ConvertToChar();
-	static int    ConvertToInteger();
-	static float  ConvertToFloat();
-	static double ConvertToDouble();
-
 	/* display */
 	template <typename T>
 	static void DisplayConvertAll(const T scalar);

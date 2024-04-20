@@ -90,22 +90,21 @@ void ScalarConverter::DisplayConvertAll(const T scalar) {
 	}
 }
 
-char ScalarConverter::ConvertToChar() {
-	return static_cast<char>(src_[1]);
+static char ConvertToChar(const std::string &str) {
+	return static_cast<char>(str[1]);
 }
 
-int ScalarConverter::ConvertToInteger() {
-	return static_cast<int>(std::atoi(src_.c_str()));
+static int ConvertToInteger(const std::string &str) {
+	return static_cast<int>(std::atoi(str.c_str()));
 }
 
-float ScalarConverter::ConvertToFloat() {
-	std::string except_tail_f = src_.substr(0, src_.size() - 1);
-	src_                      = except_tail_f;
-	return static_cast<float>(std::strtod(src_.c_str(), NULL));
+static float ConvertToFloat(const std::string &str) {
+	std::string except_tail_f = str.substr(0, str.size() - 1);
+	return static_cast<float>(std::strtod(except_tail_f.c_str(), NULL));
 }
 
-double ScalarConverter::ConvertToDouble() {
-	return static_cast<double>(std::strtod(src_.c_str(), NULL));
+static double ConvertToDouble(const std::string &str) {
+	return static_cast<double>(std::strtod(str.c_str(), NULL));
 }
 
 void ScalarConverter::convert(const std::string &str) {
@@ -114,16 +113,16 @@ void ScalarConverter::convert(const std::string &str) {
 
 	switch (type_) {
 	case kTypeChar:
-		DisplayConvertAll(ConvertToChar());
+		DisplayConvertAll(ConvertToChar(src_));
 		break;
 	case kTypeInt:
-		DisplayConvertAll(ConvertToInteger());
+		DisplayConvertAll(ConvertToInteger(src_));
 		break;
 	case kTypeFloat:
-		DisplayConvertAll(ConvertToFloat());
+		DisplayConvertAll(ConvertToFloat(src_));
 		break;
 	case kTypeDouble:
-		DisplayConvertAll(ConvertToDouble());
+		DisplayConvertAll(ConvertToDouble(src_));
 		break;
 	case kTypeInvalid:
 		DisplayConvertAll(0);
