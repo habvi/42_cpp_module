@@ -3,7 +3,6 @@
 #include <cctype> // isdigit,tolower
 #include <cerrno>
 #include <cstdlib> // strtod
-#include <limits>
 
 // ----------------------------------------------------------------------------
 // utils
@@ -85,19 +84,6 @@ bool ScalarConverter::IsTypeInteger() {
 // ----------------------------------------------------------------------------
 // float
 // ----------------------------------------------------------------------------
-template bool ScalarConverter::IsFloatRange<char>(const char &);
-template bool ScalarConverter::IsFloatRange<int>(const int &);
-template bool ScalarConverter::IsFloatRange<float>(const float &);
-template bool ScalarConverter::IsFloatRange<double>(const double &);
-template <typename T>
-bool ScalarConverter::IsFloatRange(const T &num) {
-	if (IsInfinityOrNan(num)) {
-		return true;
-	}
-	return -std::numeric_limits<float>::max() <= num &&
-		   num <= std::numeric_limits<float>::max();
-}
-
 // ok : -FLT_MAX～FLT_MAX / inff / -INFF / nanf / -NAnf
 // ng : out_of_range / 12.3(no f) / "  123f" / inf / nan
 bool ScalarConverter::IsTypeFloat() {
@@ -115,7 +101,7 @@ bool ScalarConverter::IsTypeFloat() {
 	if (err) {
 		return false;
 	}
-	return IsFloatRange(num);
+	return IsInfinityOrNan(num) || IsFloatRange(num);
 }
 
 // ----------------------------------------------------------------------------

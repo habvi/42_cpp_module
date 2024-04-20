@@ -32,6 +32,10 @@ class ScalarConverter {
 	static bool IsTypeDouble();
 	static bool IsTypeDouble(const std::string &str);
 
+	template <typename T>
+	static bool IsCharRange(const T &scalar);
+	template <typename T>
+	static bool IsIntegerRange(const T &scalar);
 	static bool IsIntegerRangeForFloat(const float &num);
 	template <typename T>
 	static bool IsValidRange(const double &num) {
@@ -39,7 +43,10 @@ class ScalarConverter {
 			   num <= std::numeric_limits<T>::max();
 	}
 	template <typename T>
-	static bool IsFloatRange(const T &num);
+	static bool IsFloatRange(const T &num) {
+		return -std::numeric_limits<float>::max() <= num &&
+			   num <= std::numeric_limits<float>::max();
+	}
 
 	/* display */
 	template <typename T>

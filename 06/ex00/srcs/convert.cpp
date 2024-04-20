@@ -39,21 +39,32 @@ void ScalarConverter::SetToDouble(const T &num) {
 }
 
 // ----------------------------------------------------------------------------
+template <typename T>
+bool ScalarConverter::IsCharRange(const T &scalar) {
+	if (!IsIntegerRange(scalar)) {
+		return false;
+	}
+	return IsSame(scalar, static_cast<int>(scalar)) && IsValidRange<char>(scalar);
+}
+
+template <typename T>
+bool ScalarConverter::IsIntegerRange(const T &scalar) {
+	if (type_ == kTypeFloat && !IsIntegerRangeForFloat(scalar)) {
+		return false;
+	}
+	if (type_ == kTypeDouble && !IsValidRange<int>(scalar)) {
+		return false;
+	}
+	return true;
+}
+
 template void ScalarConverter::SetConvertToChar<char>(const char &);
 template void ScalarConverter::SetConvertToChar<int>(const int &);
 template void ScalarConverter::SetConvertToChar<float>(const float &);
 template void ScalarConverter::SetConvertToChar<double>(const double &);
 template <typename T>
 void ScalarConverter::SetConvertToChar(const T &scalar) {
-	if (type_ == kTypeFloat && !IsIntegerRangeForFloat(scalar)) {
-		SetImpossible();
-		return;
-	}
-	if (type_ == kTypeDouble && !IsValidRange<int>(scalar)) {
-		SetImpossible();
-		return;
-	}
-	if (IsSame(scalar, static_cast<int>(scalar)) && IsValidRange<char>(scalar)) {
+	if (IsCharRange(scalar)) {
 		SetToChar(scalar);
 	} else {
 		SetImpossible();
@@ -66,15 +77,11 @@ template void ScalarConverter::SetConvertToInteger<float>(const float &);
 template void ScalarConverter::SetConvertToInteger<double>(const double &);
 template <typename T>
 void ScalarConverter::SetConvertToInteger(const T &scalar) {
-	if (type_ == kTypeFloat && !IsIntegerRangeForFloat(scalar)) {
+	if (IsIntegerRange(scalar)) {
+		SetToInteger(scalar);
+	} else {
 		SetImpossible();
-		return;
 	}
-	if (type_ == kTypeDouble && !IsValidRange<int>(scalar)) {
-		SetImpossible();
-		return;
-	}
-	SetToInteger(scalar);
 }
 
 template void ScalarConverter::SetConvertToFloat<char>(const char &);
@@ -83,7 +90,7 @@ template void ScalarConverter::SetConvertToFloat<float>(const float &);
 template void ScalarConverter::SetConvertToFloat<double>(const double &);
 template <typename T>
 void ScalarConverter::SetConvertToFloat(const T &scalar) {
-	if (IsFloatRange(scalar)) {
+	if (IsInfinityOrNan(scalar) || IsFloatRange(scalar)) {
 		SetToFloat(scalar);
 	} else {
 		SetImpossible();
