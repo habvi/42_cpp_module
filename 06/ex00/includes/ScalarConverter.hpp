@@ -33,6 +33,16 @@ class ScalarConverter {
 	static bool   IsIntegerRange(const double &num);
 	static double ConvertStrToDouble(const std::string &str, bool &err);
 
+	/* convert */
+	static char   ConvertToChar();
+	static int    ConvertToInteger();
+	static float  ConvertToFloat();
+	static double ConvertToDouble();
+
+	/* display */
+	template <typename T>
+	static void DisplayConvertAll(const T scalar);
+
   private:
 	static std::string src_;
 	static Type        type_;

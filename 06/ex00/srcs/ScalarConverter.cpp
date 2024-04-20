@@ -191,8 +191,61 @@ void ScalarConverter::SetType() {
 	}
 }
 
+template <typename T>
+void ScalarConverter::DisplayConvertAll(const T scalar) {
+	static const std::pair<const std::string, const Type> types[] = {
+		std::make_pair("char", kTypeChar),
+		std::make_pair("int", kTypeInt),
+		std::make_pair("float", kTypeFloat),
+		std::make_pair("double", kTypeDouble)
+	};
+	const unsigned int size = sizeof(types) / sizeof(*types);
+
+	for (unsigned int i = 0; i < size; i++) {
+		std::cout << types[i].first << ": " << types[i].second << " " << scalar
+				  << std::endl;
+	}
+}
+
+char ScalarConverter::ConvertToChar() {
+	return static_cast<char>(src_[1]);
+}
+
+int ScalarConverter::ConvertToInteger() {
+	return static_cast<int>(std::atoi(src_.c_str()));
+}
+
+float ScalarConverter::ConvertToFloat() {
+	std::string except_tail_f = src_.substr(0, src_.size() - 1);
+	src_                      = except_tail_f;
+	return static_cast<float>(std::strtod(src_.c_str(), NULL));
+}
+
+double ScalarConverter::ConvertToDouble() {
+	return static_cast<double>(std::strtod(src_.c_str(), NULL));
+}
+
 void ScalarConverter::convert(const std::string &str) {
 	src_ = str;
 	SetType();
-	std::cout << src_ << " " << type_ << std::endl;
+
+	switch (type_) {
+	case kTypeChar:
+		DisplayConvertAll(ConvertToChar());
+		break;
+	case kTypeInt:
+		DisplayConvertAll(ConvertToInteger());
+		break;
+	case kTypeFloat:
+		DisplayConvertAll(ConvertToFloat());
+		break;
+	case kTypeDouble:
+		DisplayConvertAll(ConvertToDouble());
+		break;
+	case kTypeInvalid:
+		DisplayConvertAll(0);
+		break;
+	default:
+		break;
+	}
 }
