@@ -19,6 +19,11 @@ void ScalarConverter::SetToChar(const T &num) {
 	}
 }
 
+template <typename T>
+void ScalarConverter::SetToInteger(const T &num) {
+	oss_ << static_cast<int>(num) << std::endl;
+}
+
 template void ScalarConverter::SetConvertToChar<char>(const char &);
 template void ScalarConverter::SetConvertToChar<int>(const int &);
 template void ScalarConverter::SetConvertToChar<float>(const float &);
@@ -52,7 +57,19 @@ template void ScalarConverter::SetConvertToInteger<float>(const float &);
 template void ScalarConverter::SetConvertToInteger<double>(const double &);
 template <typename T>
 void ScalarConverter::SetConvertToInteger(const T &scalar) {
-	oss_ << scalar << std::endl;
+	if (type_ == kTypeFloat) {
+		if (!IsIntegerRange(static_cast<float>(scalar))) {
+			SetImpossible();
+			return;
+		}
+	}
+	if (type_ == kTypeDouble) {
+		if (!IsIntegerRange(static_cast<double>(scalar))) {
+			SetImpossible();
+			return;
+		}
+	}
+	SetToInteger(scalar);
 }
 
 template void ScalarConverter::SetConvertToFloat<char>(const char &);

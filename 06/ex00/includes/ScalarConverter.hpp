@@ -59,6 +59,8 @@ class ScalarConverter {
 	template <typename T>
 	static void SetConvertToInteger(const T &scalar);
 	template <typename T>
+	static void SetToInteger(const T &num);
+	template <typename T>
 	static void SetConvertToFloat(const T &scalar);
 	template <typename T>
 	static void SetConvertToDouble(const T &scalar);
