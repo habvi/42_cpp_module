@@ -11,11 +11,6 @@ void ScalarConverter::SetFixed(const T &t) {
 }
 
 // ----------------------------------------------------------------------------
-static bool IsCharRange(const int num) {
-	return std::numeric_limits<char>::min() <= num &&
-		   num <= std::numeric_limits<char>::max();
-}
-
 template <typename T>
 void ScalarConverter::SetToChar(const T &num) {
 	const char c = static_cast<char>(num);
@@ -58,8 +53,7 @@ void ScalarConverter::SetConvertToChar(const T &scalar) {
 		SetImpossible();
 		return;
 	}
-	if (IsSame(scalar, static_cast<int>(scalar)) &&
-		IsCharRange(static_cast<int>(scalar))) {
+	if (IsSame(scalar, static_cast<int>(scalar)) && IsValidRange<char>(scalar)) {
 		SetToChar(scalar);
 	} else {
 		SetImpossible();
