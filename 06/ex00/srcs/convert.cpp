@@ -11,6 +11,7 @@ void ScalarConverter::SetFixed(const T &t) {
 	oss_ << std::fixed << std::setprecision(kPrecision) << t;
 }
 
+// ----------------------------------------------------------------------------
 static bool IsCharRange(const int num) {
 	return std::numeric_limits<char>::min() <= num &&
 		   num <= std::numeric_limits<char>::max();
@@ -37,6 +38,13 @@ void ScalarConverter::SetToFloat(const T &num) {
 	oss_ << "f" << std::endl;
 }
 
+template <typename T>
+void ScalarConverter::SetToDouble(const T &num) {
+	SetFixed(static_cast<double>(num));
+	oss_ << std::endl;
+}
+
+// ----------------------------------------------------------------------------
 template void ScalarConverter::SetConvertToChar<char>(const char &);
 template void ScalarConverter::SetConvertToChar<int>(const int &);
 template void ScalarConverter::SetConvertToChar<float>(const float &);
@@ -104,5 +112,5 @@ template void ScalarConverter::SetConvertToDouble<float>(const float &);
 template void ScalarConverter::SetConvertToDouble<double>(const double &);
 template <typename T>
 void ScalarConverter::SetConvertToDouble(const T &scalar) {
-	oss_ << scalar << std::endl;
+	SetToDouble(scalar);
 }

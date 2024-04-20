@@ -70,6 +70,8 @@ class ScalarConverter {
 	static void SetToFloat(const T &num);
 	template <typename T>
 	static void SetConvertToDouble(const T &scalar);
+	template <typename T>
+	static void SetToDouble(const T &num);
 
   private:
 	/* constant */
