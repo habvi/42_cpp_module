@@ -4,3 +4,7 @@
 - [cpp03](03/) : Inheritance
 - [cpp04](04/) : Subtype polymorphism, abstract classes, interfaces
 - [cpp05](05/) : Try/Catch and Exceptions
+- [cpp06](06/) : Different casts
+- [cpp07](07/) : Templates
+- [cpp08](08/) : Templated containers, iterators and algorithms
+- [cpp09](09/) : Containers
