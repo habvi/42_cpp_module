@@ -47,11 +47,33 @@ void identify(Base *p) {
 	}
 }
 
+void identify(Base &p) {
+	try {
+		dynamic_cast<A &>(p);
+		print("A");
+	} catch (const std::exception &e) {
+		try {
+			dynamic_cast<B &>(p);
+			print("B");
+		} catch (const std::exception &e) {
+			try {
+				dynamic_cast<C &>(p);
+				print("C");
+			} catch (const std::exception &e) {
+				std::cerr << COLOR_RED "Error: " << e.what() << COLOR_END
+						  << std::endl;
+				throw std::invalid_argument("invalid argument type");
+			}
+		}
+	}
+}
+
 int main() {
 	std::srand(std::time(0));
 
 	Base *p = generate();
 	identify(p);
+	identify(*p);
 	delete p;
 
 	std::cout << "------------------" << std::endl;
