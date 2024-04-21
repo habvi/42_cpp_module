@@ -49,15 +49,15 @@ void identify(Base *p) {
 
 void identify(Base &p) {
 	try {
-		dynamic_cast<A &>(p);
+		(void)dynamic_cast<A &>(p);
 		print("A");
 	} catch (const std::exception &e_a) {
 		try {
-			dynamic_cast<B &>(p);
+			(void)dynamic_cast<B &>(p);
 			print("B");
 		} catch (const std::exception &e_b) {
 			try {
-				dynamic_cast<C &>(p);
+				(void)dynamic_cast<C &>(p);
 				print("C");
 			} catch (const std::exception &e_c) {
 				std::cerr << COLOR_RED "Error: " << e_c.what() << COLOR_END

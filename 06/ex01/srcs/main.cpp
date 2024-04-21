@@ -5,8 +5,7 @@
 #include <iostream>
 
 static void PutData(const Data *data) {
-	std::cout << data << " / [" << data->str << "][" << data->var << "]"
-			  << std::endl;
+	std::cout << data << " / [" << data->var << "]" << std::endl;
 }
 
 static void JudgeIsSame(const Data *data1, const Data *data2) {
