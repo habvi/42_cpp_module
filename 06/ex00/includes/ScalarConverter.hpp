@@ -1,6 +1,7 @@
 #ifndef EX00_SCALAR_CONVERTER_HPP
 #define EX00_SCALAR_CONVERTER_HPP
 
+#include "utils.hpp"
 #include <limits>
 #include <sstream> // ostringstream
 #include <string>
@@ -31,7 +32,6 @@ class ScalarConverter {
 	static bool IsIntegerRangeForFloat(const float &num);
 	static bool IsTypeFloat();
 	static bool IsTypeDouble(const std::string &str);
-	/* _judge.hpp */
 	template <typename T>
 	static bool IsValidRange(const double &num);
 	template <typename T>
@@ -68,7 +68,5 @@ class ScalarConverter {
 	static Type               type_;
 	static std::ostringstream oss_;
 };
-
-#include "ScalarConverter_judge.tpp"
 
 #endif /* EX00_SCALAR_CONVERTER_HPP */
