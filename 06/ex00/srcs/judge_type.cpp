@@ -1,5 +1,4 @@
 #include "ScalarConverter.hpp"
-#include "utils.hpp"
 #include <cctype> // isdigit
 #include <cerrno>
 #include <cstdlib> // strtod
