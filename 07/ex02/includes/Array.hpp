@@ -6,7 +6,7 @@
 template <typename T>
 class Array {
   public:
-	Array(){};
+	Array() : array_(NULL){};
 	Array(const unsigned int n) : array_(new T[n]), size_(n){};
 	Array(const Array &other) {
 		*this = Deepcopy(other);
