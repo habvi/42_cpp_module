@@ -1,4 +1,5 @@
 #include "Serializer.hpp"
+#include "Data.hpp"
 #include <stdexcept>
 
 Serializer::Serializer() {}
