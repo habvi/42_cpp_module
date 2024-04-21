@@ -51,16 +51,16 @@ void identify(Base &p) {
 	try {
 		dynamic_cast<A &>(p);
 		print("A");
-	} catch (const std::exception &e) {
+	} catch (const std::exception &e_a) {
 		try {
 			dynamic_cast<B &>(p);
 			print("B");
-		} catch (const std::exception &e) {
+		} catch (const std::exception &e_b) {
 			try {
 				dynamic_cast<C &>(p);
 				print("C");
-			} catch (const std::exception &e) {
-				std::cerr << COLOR_RED "Error: " << e.what() << COLOR_END
+			} catch (const std::exception &e_c) {
+				std::cerr << COLOR_RED "Error: " << e_c.what() << COLOR_END
 						  << std::endl;
 				throw std::invalid_argument("invalid argument type");
 			}
