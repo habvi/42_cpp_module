@@ -15,6 +15,7 @@ class Array {
 	T &operator[](const unsigned int index);
 
   public:
+	// Following the instructions, not camelcase.
 	unsigned int size() const;
 
   private:
