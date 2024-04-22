@@ -32,11 +32,19 @@ void Span::addNumber(const unsigned int number) {
 	putStoredNumbers();
 }
 
+void Span::throwExceptionIfLessElemCounts() const {
+	if (elem_count_ == 0 || elem_count_ == 1) {
+		throw std::runtime_error("Span elements needs more than 2");
+	}
+}
+
 unsigned int Span::shortestSpan() const {
+	throwExceptionIfLessElemCounts();
 	return 1;
 }
 
 unsigned int Span::longestSpan() const {
+	throwExceptionIfLessElemCounts();
 	return 1;
 }
 
