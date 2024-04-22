@@ -20,6 +20,7 @@ class Span {
 
   private:
 	Span();
+	void putStoredNumbers() const;
 
   private:
 	const unsigned int max_elem_size_;
