@@ -23,6 +23,7 @@ class Span {
 
   private:
 	const unsigned int max_elem_size_;
+	unsigned int       elem_count_;
 	MapElems           orderd_elems_;
 };
 
