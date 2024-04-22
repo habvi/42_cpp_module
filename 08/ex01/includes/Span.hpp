@@ -1,7 +1,12 @@
 #ifndef EX01_SPAN_HPP
 #define EX01_SPAN_HPP
 
+#include <map>
+
 class Span {
+  public:
+	typedef std::map<unsigned int, unsigned int> MapElems;
+
   public:
 	Span(const unsigned int n);
 	Span(const Span &other);
@@ -18,6 +23,7 @@ class Span {
 
   private:
 	const unsigned int max_elem_size_;
+	MapElems           orderd_elems_;
 };
 
 #endif /* EX01_SPAN_HPP */

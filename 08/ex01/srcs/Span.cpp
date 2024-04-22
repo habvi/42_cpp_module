@@ -21,9 +21,9 @@ Span::~Span() {}
 
 // ---------------------------------------------------
 void Span::addNumber(const unsigned int number) {
-	(void)number;
-	return;
+	orderd_elems_[number]++;
 }
+
 unsigned int Span::shortestSpan() const {
 	return 1;
 }
