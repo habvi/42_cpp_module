@@ -18,8 +18,8 @@ class Array {
 	unsigned int size() const;
 
   private:
-	Array &Deepcopy(const Array &other);
-	void   ThrowIfIndexOutOfRange(const unsigned int index) const;
+	void DeepcopyMembers(const Array &other);
+	void ThrowIfIndexOutOfRange(const unsigned int index) const;
 
   private:
 	T           *array_;

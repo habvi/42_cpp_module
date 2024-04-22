@@ -8,7 +8,7 @@ Array<T>::Array(const unsigned int n) : array_(new T[n]), size_(n) {}
 
 template <typename T>
 Array<T>::Array(const Array &other) {
-	Deepcopy(other);
+	DeepcopyMembers(other);
 }
 
 template <typename T>
@@ -20,7 +20,7 @@ template <typename T>
 const Array<T> &Array<T>::operator=(const Array &other) {
 	if (this != &other) {
 		delete[] array_;
-		Deepcopy(other);
+		DeepcopyMembers(other);
 	}
 	return *this;
 }
@@ -45,13 +45,12 @@ unsigned int Array<T>::size() const {
 
 // --------------------------------------------------------------------
 template <typename T>
-Array<T> &Array<T>::Deepcopy(const Array &other) {
+void Array<T>::DeepcopyMembers(const Array &other) {
 	size_  = other.size();
 	array_ = new T[size_];
 	for (unsigned int i = 0; i < size_; i++) {
 		array_[i] = other[i];
 	}
-	return *this;
 }
 
 template <typename T>
