@@ -3,15 +3,23 @@
 #include <iostream>
 #include <stdexcept>
 
-Span::Span() : max_elem_size_(0), elem_count_(0), shortest_span_(UINT_MAX) {}
+Span::Span()
+	: max_elem_size_(0),
+	  elem_count_(0),
+	  shortest_span_(UINT_MAX),
+	  longest_span_(0) {}
 
 Span::Span(const unsigned int n)
-	: max_elem_size_(n), elem_count_(0), shortest_span_(UINT_MAX) {}
+	: max_elem_size_(n),
+	  elem_count_(0),
+	  shortest_span_(UINT_MAX),
+	  longest_span_(0) {}
 
 Span::Span(const Span &other)
 	: max_elem_size_(other.max_elem_size_),
 	  elem_count_(other.elem_count_),
-	  shortest_span_(other.shortest_span_) {
+	  shortest_span_(other.shortest_span_),
+	  longest_span_(other.longest_span_) {
 	// todo Deepcopy
 	(void)other;
 }
@@ -34,6 +42,7 @@ void Span::addNumber(const unsigned int number) {
 	updateShortestSpan(number);
 	orderd_elems_[number]++;
 	elem_count_++;
+	updateLongestSpan();
 	putStoredNumbers();
 }
 
@@ -50,13 +59,19 @@ unsigned int Span::shortestSpan() const {
 
 unsigned int Span::longestSpan() const {
 	throwExceptionIfLessElemCounts();
-	return 1;
+	return longest_span_;
 }
 
 // ---------------------------------------------------
 void Span::updateShortestSpanMember(const unsigned int &new_span) {
 	if (new_span < shortest_span_) {
 		shortest_span_ = new_span;
+	}
+}
+
+void Span::updateLongestSpanMember(const unsigned int &new_span) {
+	if (new_span > longest_span_) {
+		longest_span_ = new_span;
 	}
 }
 
@@ -81,6 +96,19 @@ void Span::updateShortestSpan(const unsigned int &number) {
 		// always exist higher element
 		updateShortestSpanMember(itr->first - number);
 	}
+}
+
+// at least one element exist
+void Span::updateLongestSpan() {
+	if (orderd_elems_.size() < 2) {
+		return;
+	}
+	MapElems::const_iterator begin = orderd_elems_.begin();
+	MapElems::const_iterator end   = orderd_elems_.end();
+	// always exist lower element
+	--end;
+	const unsigned int span = end->first - begin->first;
+	updateLongestSpanMember(span);
 }
 
 // ---------------------------------------------------

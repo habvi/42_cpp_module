@@ -22,6 +22,8 @@ class Span {
 	Span();
 	void updateShortestSpan(const unsigned int &new_span);
 	void updateShortestSpanMember(const unsigned int &new_span);
+	void updateLongestSpan();
+	void updateLongestSpanMember(const unsigned int &new_span);
 	void putStoredNumbers() const;
 	void throwExceptionIfLessElemCounts() const;
 
@@ -30,6 +32,7 @@ class Span {
 	unsigned int       elem_count_;
 	MapElems           orderd_elems_;
 	unsigned int       shortest_span_;
+	unsigned int       longest_span_;
 };
 
 #endif /* EX01_SPAN_HPP */
