@@ -126,6 +126,27 @@ void Span::updateLongestSpan() {
 }
 
 // ---------------------------------------------------
+unsigned int Span::max_elem_size() const {
+	return max_elem_size_;
+}
+
+unsigned int Span::elem_count() const {
+	return elem_count_;
+}
+
+const Span::MapElems &Span::orderd_elems() const {
+	return orderd_elems_;
+}
+
+unsigned int Span::shortest_span() const {
+	return shortest_span_;
+}
+
+unsigned int Span::longest_span() const {
+	return longest_span_;
+}
+
+// ---------------------------------------------------
 // debug
 // ---------------------------------------------------
 void Span::putStoredNumbers() const {

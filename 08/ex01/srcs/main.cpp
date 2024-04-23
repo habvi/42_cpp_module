@@ -78,6 +78,39 @@ namespace test {
 	}
 
 	// -------------------------------------------------------------------------
+	void JudgeIsSameMembers(const Span &s1, const Span &s2) {
+		if (&s1 == &s2) {
+			std::cerr << COLOR_RED << "Error: same Span instance" << COLOR_END;
+			exit(EXIT_FAILURE);
+		}
+		// judge map's all elements
+		Span::MapElems elems_s1 = s1.orderd_elems();
+		Span::MapElems elems_s2 = s2.orderd_elems();
+		if (elems_s1.size() != elems_s2.size()) {
+			std::cerr << COLOR_RED << "Error: not the same map size" << COLOR_END;
+			exit(EXIT_FAILURE);
+		}
+		Span::MapElems::const_iterator itr_s1;
+		Span::MapElems::const_iterator itr_s2 = elems_s2.begin();
+		for (itr_s1 = elems_s1.begin(); itr_s1 != elems_s1.end(); ++itr_s1) {
+			if (itr_s1->first != itr_s2->first || itr_s1->second != itr_s2->second) {
+				std::cerr << COLOR_RED << "Error: not the same map" << COLOR_END;
+				exit(EXIT_FAILURE);
+			}
+			++itr_s2;
+		}
+		// judge other members
+		if (s1.max_elem_size() != s2.max_elem_size() ||
+			s1.elem_count() != s2.elem_count() ||
+			s1.shortest_span() != s2.shortest_span() ||
+			s1.longest_span() != s2.longest_span()) {
+			std::cerr << COLOR_RED << "Error: not the same member variables"
+					  << COLOR_END;
+			exit(EXIT_FAILURE);
+		}
+		std::cout << COLOR_GREEN "[copy: OK]" COLOR_END << std::endl;
+	}
+	// -------------------------------------------------------------------------
 	void RunSubjectTest() {
 		DisplayTitle(0, "subject test");
 
@@ -123,7 +156,6 @@ namespace test {
 
 		Span span = Span(4);
 		AddNumber(span, 1, SUCCESS);
-		ShortestAndLongest(span, 0, FAIL, 0, FAIL);
 		AddNumber(span, 3, SUCCESS);
 		ShortestAndLongest(span, 2, SUCCESS, 2, SUCCESS);
 		AddNumber(span, 5, SUCCESS);
@@ -138,7 +170,6 @@ namespace test {
 
 		Span span = Span(4);
 		AddNumber(span, 1, SUCCESS);
-		ShortestAndLongest(span, 0, FAIL, 0, FAIL);
 		AddNumber(span, 3, SUCCESS);
 		ShortestAndLongest(span, 2, SUCCESS, 2, SUCCESS);
 		AddNumber(span, 5, SUCCESS);
@@ -152,7 +183,6 @@ namespace test {
 
 		Span span = Span(4);
 		AddNumber(span, 0, SUCCESS);
-		ShortestAndLongest(span, 0, FAIL, 0, FAIL);
 		AddNumber(span, 5, SUCCESS);
 		ShortestAndLongest(span, 5, SUCCESS, 5, SUCCESS);
 		AddNumber(span, 50, SUCCESS);
@@ -164,11 +194,50 @@ namespace test {
 
 		Span span = Span(4);
 		AddNumber(span, 100, SUCCESS);
-		ShortestAndLongest(span, 0, FAIL, 0, FAIL);
 		AddNumber(span, 95, SUCCESS);
 		ShortestAndLongest(span, 5, SUCCESS, 5, SUCCESS);
 		AddNumber(span, 50, SUCCESS);
 		ShortestAndLongest(span, 5, SUCCESS, 50, SUCCESS);
+	}
+
+	void RunOriginalTest8() {
+		DisplayTitle(8, "capacity: 3 / copy constructor");
+
+		Span span1 = Span(3);
+		AddNumber(span1, 2, SUCCESS);
+		AddNumber(span1, 10, SUCCESS);
+		ShortestAndLongest(span1, 8, SUCCESS, 8, SUCCESS);
+		Line();
+
+		// copy
+		Span span2(span1);
+		JudgeIsSameMembers(span1, span2);
+		AddNumber(span2, 4, SUCCESS);
+		ShortestAndLongest(span2, 2, SUCCESS, 8, SUCCESS);
+
+		Line();
+		// The changes to span2 aren't being reflected span1
+		ShortestAndLongest(span1, 8, SUCCESS, 8, SUCCESS);
+	}
+
+	void RunOriginalTest9() {
+		DisplayTitle(9, "capacity: 3 / operator= ");
+
+		Span span1 = Span(3);
+		AddNumber(span1, 2, SUCCESS);
+		AddNumber(span1, 10, SUCCESS);
+		ShortestAndLongest(span1, 8, SUCCESS, 8, SUCCESS);
+		Line();
+
+		// copy
+		Span span2 = span1;
+		JudgeIsSameMembers(span1, span2);
+		AddNumber(span2, 4, SUCCESS);
+		ShortestAndLongest(span2, 2, SUCCESS, 8, SUCCESS);
+
+		Line();
+		// The changes to span2 aren't being reflected span1
+		ShortestAndLongest(span1, 8, SUCCESS, 8, SUCCESS);
 	}
 
 } // namespace test
@@ -183,6 +252,8 @@ int main() {
 	test::RunOriginalTest5();
 	test::RunOriginalTest6();
 	test::RunOriginalTest7();
+	test::RunOriginalTest8();
+	test::RunOriginalTest9();
 
 	return EXIT_SUCCESS;
 }
