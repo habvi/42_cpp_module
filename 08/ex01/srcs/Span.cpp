@@ -20,19 +20,32 @@ Span::Span(const Span &other)
 	  elem_count_(other.elem_count_),
 	  shortest_span_(other.shortest_span_),
 	  longest_span_(other.longest_span_) {
-	// todo Deepcopy
-	(void)other;
+	deepcopyMembers(other);
 }
 
 const Span &Span::operator=(const Span &other) {
 	if (this != &other) {
-		// todo Deepcopy
+		orderd_elems_.clear();
+		deepcopyMembers(other);
 	}
 	(void)other;
 	return *this;
 }
 
 Span::~Span() {}
+
+void Span::deepcopyMembers(const Span &other) {
+	elem_count_    = other.elem_count_;
+	shortest_span_ = other.shortest_span_;
+	longest_span_  = other.longest_span_;
+
+	MapElems::const_iterator itr_other;
+	for (itr_other = other.orderd_elems_.begin();
+		 itr_other != other.orderd_elems_.end();
+		 ++itr_other) {
+		orderd_elems_[itr_other->first] = itr_other->second;
+	}
+}
 
 // ---------------------------------------------------
 void Span::addNumber(const unsigned int number) {

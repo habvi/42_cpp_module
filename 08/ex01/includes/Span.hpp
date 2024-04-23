@@ -18,14 +18,23 @@ class Span {
 	unsigned int shortestSpan() const;
 	unsigned int longestSpan() const;
 
+  public:
+	// getter for test
+	unsigned int    max_elem_size() const;
+	unsigned int    elem_count() const;
+	const MapElems &orderd_elems() const;
+	unsigned int    shortest_span() const;
+	unsigned int    longest_span() const;
+
   private:
 	Span();
+	void deepcopyMembers(const Span &other);
+	void throwExceptionIfLessElemCounts() const;
 	void updateShortestSpan(const unsigned int &new_span);
 	void updateShortestSpanMember(const unsigned int &new_span);
 	void updateLongestSpan();
 	void updateLongestSpanMember(const unsigned int &new_span);
 	void putStoredNumbers() const;
-	void throwExceptionIfLessElemCounts() const;
 
   private:
 	const unsigned int max_elem_size_;
