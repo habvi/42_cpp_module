@@ -43,6 +43,7 @@ void Span::addNumber(const unsigned int number) {
 	orderd_elems_[number]++;
 	elem_count_++;
 	updateLongestSpan();
+	// debug
 	putStoredNumbers();
 }
 
@@ -112,8 +113,13 @@ void Span::updateLongestSpan() {
 }
 
 // ---------------------------------------------------
+// debug
+// ---------------------------------------------------
 void Span::putStoredNumbers() const {
-	std::cout << "map (size:" << orderd_elems_.size() << ") : {";
+	std::cout << "-----------------------------------" << std::endl;
+	std::cout << "map (size:" << orderd_elems_.size()
+			  << "),(elem count:" << elem_count_ << ")" << std::endl;
+	std::cout << "==> {";
 	MapElems::const_iterator itr;
 	for (itr = orderd_elems_.begin(); itr != orderd_elems_.end(); ++itr) {
 		if (itr != orderd_elems_.begin()) {
@@ -122,5 +128,7 @@ void Span::putStoredNumbers() const {
 		std::cout << "{" << itr->first << ", " << itr->second << "}";
 	}
 	std::cout << "}" << std::endl;
-	std::cout << "--------------" << std::endl;
+	// std::cout << "shortest: " << shortest_span_ << ", longest: " << longest_span_
+	// 		  << std::endl;
+	// std::cout << "--------------" << std::endl;
 }
