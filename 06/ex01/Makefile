@@ -31,7 +31,6 @@ $(NAME): $(OBJS)
 
 .PHONY	: clean
 clean:
-	$(RM) $(TEST_FILENAME)
 	$(RM) -r $(OBJ_DIR)
 
 .PHONY	: fclean
