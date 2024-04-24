@@ -154,7 +154,6 @@ unsigned int Span::longest_span() const {
 // debug
 // ---------------------------------------------------
 void Span::PutStoredNumbers() const {
-	std::cout << "-----------------------------------" << std::endl;
 	std::cout << "map (size:" << orderd_elems_.size()
 			  << "),(elem count:" << elem_count_ << ")" << std::endl;
 	std::cout << "==> {";
@@ -166,7 +165,4 @@ void Span::PutStoredNumbers() const {
 		std::cout << "{" << itr->first << ", " << itr->second << "}";
 	}
 	std::cout << "}" << std::endl;
-	// std::cout << "shortest: " << shortest_span_ << ", longest: " << longest_span_
-	// 		  << std::endl;
-	// std::cout << "--------------" << std::endl;
 }
