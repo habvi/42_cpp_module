@@ -26,11 +26,49 @@ void ToDouble(T &x) {
 	x *= 2;
 }
 
+template <typename T>
+void NonConstNothing(T &a) {
+	(void)a;
+}
+
+template <typename T>
+void ConstNothing(const T &a) {
+	(void)a;
+}
+// -------------------------------------------------
+// non-const int[], non-const func
 static void RunTest1() {
 	int array[5] = {-1, 0, 1, 2, 3};
 	PutArray("before", array);
 
 	iter(array, 5, &ToDouble);
+	PutArray("after ", array);
+}
+
+// non-const int[], const func
+static void RunTest2() {
+	int array[5] = {-1, 0, 1, 2, 3};
+	PutArray("before", array);
+
+	iter(array, 5, &ConstNothing);
+	PutArray("after ", array);
+}
+
+// const int[], non-const func
+static void RunTest3() {
+	const int array[5] = {-1, 0, 1, 2, 3};
+	PutArray("before", array);
+
+	iter(array, 5, &NonConstNothing);
+	PutArray("after ", array);
+}
+
+// const int[], const func
+static void RunTest4() {
+	const int array[5] = {-1, 0, 1, 2, 3};
+	PutArray("before", array);
+
+	iter(array, 5, &ConstNothing);
 	PutArray("after ", array);
 }
 
@@ -40,7 +78,9 @@ void AddBikkuri(T &s) {
 	s += "!";
 }
 
-static void RunTest2() {
+// -------------------------------------------------
+// non-const string[], non-const func
+static void RunTest5() {
 	std::string array[3] = {"", "x", "abcde"};
 	PutArray("before", array);
 
@@ -48,17 +88,30 @@ static void RunTest2() {
 	PutArray("after ", array);
 }
 
-// -------------------------------------------------
-template <typename T>
-void Nothing(const T &a) {
-	(void)a;
+// non-const string[], const func
+static void RunTest6() {
+	std::string array[3] = {"", "x", "abcde"};
+	PutArray("before", array);
+
+	iter(array, 3, &ConstNothing);
+	PutArray("after ", array);
 }
 
-static void RunTest3() {
+// const string[], non-const func
+static void RunTest7() {
 	const std::string array[3] = {"", "x", "abcde"};
 	PutArray("before", array);
 
-	iter(array, 3, &Nothing);
+	iter(array, 3, &NonConstNothing);
+	PutArray("after ", array);
+}
+
+// const string[], const func
+static void RunTest8() {
+	const std::string array[3] = {"", "x", "abcde"};
+	PutArray("before", array);
+
+	iter(array, 3, &ConstNothing);
 	PutArray("after ", array);
 }
 
@@ -69,5 +122,15 @@ int main() {
 	RunTest2();
 	Line();
 	RunTest3();
+	Line();
+	RunTest4();
+	Line();
+	RunTest5();
+	Line();
+	RunTest6();
+	Line();
+	RunTest7();
+	Line();
+	RunTest8();
 	return EXIT_SUCCESS;
 }
