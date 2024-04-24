@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <sstream> // stringstream
+#include <vector>
 
 namespace test {
 	typedef enum e_result {
@@ -240,6 +241,41 @@ namespace test {
 		ShortestAndLongest(span1, 8, SUCCESS, 8, SUCCESS);
 	}
 
+	void RunOriginalTest10() {
+		DisplayTitle(10, "capacity: 10000 / by addNumber()");
+
+		static const unsigned int kCapacity = 100000;
+
+		Span span = Span(kCapacity);
+		for (unsigned int i = 0; i < kCapacity; i++) {
+			span.addNumber(i);
+		}
+		ShortestAndLongest(span, 1, SUCCESS, kCapacity - 1, SUCCESS);
+	}
+
+	void RunOriginalTest11() {
+		DisplayTitle(11, "capacity: 10000 / Insert() / add at once");
+
+		static const unsigned int kCapacity = 100000;
+
+		Span span = Span(kCapacity);
+		span.Insert(kCapacity, 3);
+		ShortestAndLongest(span, 0, SUCCESS, 0, SUCCESS);
+	}
+
+	void RunOriginalTest12() {
+		DisplayTitle(11, "capacity: 7 / Insert() / range of iterators");
+
+		static const unsigned int kCapacity = 10;
+
+		unsigned int              arr[7] = {12, 377, 41, 9999, 215, 0, 3146};
+		std::vector<unsigned int> vec(arr, arr + 7);
+
+		Span span = Span(kCapacity);
+		span.Insert<std::vector<unsigned int> >(vec.begin(), vec.end());
+		ShortestAndLongest(span, 12, SUCCESS, 9999, SUCCESS);
+	}
+
 } // namespace test
 
 int main() {
@@ -254,6 +290,9 @@ int main() {
 	test::RunOriginalTest7();
 	test::RunOriginalTest8();
 	test::RunOriginalTest9();
+	test::RunOriginalTest10();
+	test::RunOriginalTest11();
+	test::RunOriginalTest12();
 
 	return EXIT_SUCCESS;
 }
