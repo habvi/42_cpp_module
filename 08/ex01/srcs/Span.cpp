@@ -20,13 +20,13 @@ Span::Span(const Span &other)
 	  elem_count_(other.elem_count_),
 	  shortest_span_(other.shortest_span_),
 	  longest_span_(other.longest_span_) {
-	deepcopyMembers(other);
+	DeepcopyMembers(other);
 }
 
 const Span &Span::operator=(const Span &other) {
 	if (this != &other) {
 		orderd_elems_.clear();
-		deepcopyMembers(other);
+		DeepcopyMembers(other);
 	}
 	(void)other;
 	return *this;
@@ -34,7 +34,7 @@ const Span &Span::operator=(const Span &other) {
 
 Span::~Span() {}
 
-void Span::deepcopyMembers(const Span &other) {
+void Span::DeepcopyMembers(const Span &other) {
 	elem_count_    = other.elem_count_;
 	shortest_span_ = other.shortest_span_;
 	longest_span_  = other.longest_span_;
@@ -52,44 +52,44 @@ void Span::addNumber(const unsigned int number) {
 	if (elem_count_ == max_elem_size_) {
 		throw std::runtime_error("Span is full");
 	}
-	updateShortestSpan(number);
+	UpdateShortestSpan(number);
 	orderd_elems_[number]++;
 	elem_count_++;
-	updateLongestSpan();
+	UpdateLongestSpan();
 	// debug
-	putStoredNumbers();
+	PutStoredNumbers();
 }
 
-void Span::throwExceptionIfLessElemCounts() const {
+void Span::ThrowExceptionIfLessElemCounts() const {
 	if (elem_count_ == 0 || elem_count_ == 1) {
 		throw std::runtime_error("Span elements needs more than 2");
 	}
 }
 
 unsigned int Span::shortestSpan() const {
-	throwExceptionIfLessElemCounts();
+	ThrowExceptionIfLessElemCounts();
 	return shortest_span_;
 }
 
 unsigned int Span::longestSpan() const {
-	throwExceptionIfLessElemCounts();
+	ThrowExceptionIfLessElemCounts();
 	return longest_span_;
 }
 
 // ---------------------------------------------------
-void Span::updateShortestSpanMember(const unsigned int &new_span) {
+void Span::UpdateShortestSpanMember(const unsigned int &new_span) {
 	if (new_span < shortest_span_) {
 		shortest_span_ = new_span;
 	}
 }
 
-void Span::updateLongestSpanMember(const unsigned int &new_span) {
+void Span::UpdateLongestSpanMember(const unsigned int &new_span) {
 	if (new_span > longest_span_) {
 		longest_span_ = new_span;
 	}
 }
 
-void Span::updateShortestSpan(const unsigned int &number) {
+void Span::UpdateShortestSpan(const unsigned int &number) {
 	// empty
 	if (orderd_elems_.empty()) {
 		return;
@@ -104,16 +104,16 @@ void Span::updateShortestSpan(const unsigned int &number) {
 	if (itr != orderd_elems_.begin()) {
 		// always exist lower element
 		--itr;
-		updateShortestSpanMember(number - itr->first);
+		UpdateShortestSpanMember(number - itr->first);
 	}
 	if (itr != orderd_elems_.end()) {
 		// always exist higher element
-		updateShortestSpanMember(itr->first - number);
+		UpdateShortestSpanMember(itr->first - number);
 	}
 }
 
 // at least one element exist
-void Span::updateLongestSpan() {
+void Span::UpdateLongestSpan() {
 	if (orderd_elems_.size() < 2) {
 		return;
 	}
@@ -122,7 +122,7 @@ void Span::updateLongestSpan() {
 	// always exist lower element
 	--end;
 	const unsigned int span = end->first - begin->first;
-	updateLongestSpanMember(span);
+	UpdateLongestSpanMember(span);
 }
 
 // ---------------------------------------------------
@@ -149,7 +149,7 @@ unsigned int Span::longest_span() const {
 // ---------------------------------------------------
 // debug
 // ---------------------------------------------------
-void Span::putStoredNumbers() const {
+void Span::PutStoredNumbers() const {
 	std::cout << "-----------------------------------" << std::endl;
 	std::cout << "map (size:" << orderd_elems_.size()
 			  << "),(elem count:" << elem_count_ << ")" << std::endl;

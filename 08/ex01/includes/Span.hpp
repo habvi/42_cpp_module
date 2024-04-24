@@ -14,6 +14,7 @@ class Span {
 	~Span();
 
   public:
+	// Following the instructions, not camelcase.
 	void         addNumber(const unsigned int number);
 	unsigned int shortestSpan() const;
 	unsigned int longestSpan() const;
@@ -28,13 +29,13 @@ class Span {
 
   private:
 	Span();
-	void deepcopyMembers(const Span &other);
-	void throwExceptionIfLessElemCounts() const;
-	void updateShortestSpan(const unsigned int &new_span);
-	void updateShortestSpanMember(const unsigned int &new_span);
-	void updateLongestSpan();
-	void updateLongestSpanMember(const unsigned int &new_span);
-	void putStoredNumbers() const;
+	void DeepcopyMembers(const Span &other);
+	void ThrowExceptionIfLessElemCounts() const;
+	void UpdateShortestSpan(const unsigned int &new_span);
+	void UpdateShortestSpanMember(const unsigned int &new_span);
+	void UpdateLongestSpan();
+	void UpdateLongestSpanMember(const unsigned int &new_span);
+	void PutStoredNumbers() const;
 
   private:
 	const unsigned int max_elem_size_;
