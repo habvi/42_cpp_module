@@ -4,7 +4,7 @@ template <typename T>
 Array<T>::Array() : array_(NULL), size_(0) {}
 
 template <typename T>
-Array<T>::Array(const unsigned int n) : array_(new T[n]), size_(n) {}
+Array<T>::Array(const unsigned int n) : array_(new T[n]()), size_(n) {}
 
 template <typename T>
 Array<T>::Array(const Array &other) {
@@ -47,7 +47,7 @@ unsigned int Array<T>::size() const {
 template <typename T>
 void Array<T>::DeepcopyMembers(const Array &other) {
 	size_  = other.size();
-	array_ = new T[size_];
+	array_ = new T[size_]();
 	for (unsigned int i = 0; i < size_; i++) {
 		array_[i] = other[i];
 	}
