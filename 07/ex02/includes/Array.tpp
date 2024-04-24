@@ -1,7 +1,7 @@
 #include <stdexcept>
 
 template <typename T>
-Array<T>::Array() : array_(NULL), size_(0) {}
+Array<T>::Array() : array_(new T[0]()), size_(0) {}
 
 template <typename T>
 Array<T>::Array(const unsigned int n) : array_(new T[n]()), size_(n) {}
