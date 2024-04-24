@@ -21,6 +21,7 @@ class Span {
 	void         Insert(const unsigned int count, const unsigned int value);
 	template <typename T>
 	void Insert(typename T::iterator first, typename T::iterator last);
+	void PutStoredNumbers() const;
 
   public:
 	// getter for test
@@ -38,7 +39,6 @@ class Span {
 	void UpdateShortestSpanMember(const unsigned int &new_span);
 	void UpdateLongestSpan();
 	void UpdateLongestSpanMember(const unsigned int &new_span);
-	void PutStoredNumbers() const;
 
   private:
 	const unsigned int max_elem_size_;

@@ -56,8 +56,6 @@ void Span::addNumber(const unsigned int number) {
 	orderd_elems_[number]++;
 	elem_count_++;
 	UpdateLongestSpan();
-	// debug
-	PutStoredNumbers();
 }
 
 void Span::ThrowExceptionIfLessElemCounts() const {
