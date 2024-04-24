@@ -4,12 +4,12 @@
 #include <string>
 
 template <typename T>
-static void PutArray(const std::string &title, const T &array) {
+static void
+PutArray(const std::string &title, const T &array, const size_t array_size) {
 	std::cout << title << " = {";
-	const size_t size = sizeof(array) / sizeof(*array);
-	for (size_t i = 0; i < size; i++) {
+	for (size_t i = 0; i < array_size; i++) {
 		std::cout << array[i];
-		if (i != size - 1) {
+		if (i != array_size - 1) {
 			std::cout << ", ";
 		}
 	}
@@ -39,37 +39,37 @@ void ConstNothing(const T &a) {
 // non-const int[], non-const func
 static void RunTest1() {
 	int array[5] = {-1, 0, 1, 2, 3};
-	PutArray("before", array);
+	PutArray("before", array, 5);
 
 	iter(array, 5, &ToDouble);
-	PutArray("after ", array);
+	PutArray("after ", array, 5);
 }
 
 // non-const int[], const func
 static void RunTest2() {
 	int array[5] = {-1, 0, 1, 2, 3};
-	PutArray("before", array);
+	PutArray("before", array, 5);
 
 	iter(array, 5, &ConstNothing);
-	PutArray("after ", array);
+	PutArray("after ", array, 5);
 }
 
 // const int[], non-const func
 static void RunTest3() {
 	const int array[5] = {-1, 0, 1, 2, 3};
-	PutArray("before", array);
+	PutArray("before", array, 5);
 
 	iter(array, 5, &NonConstNothing);
-	PutArray("after ", array);
+	PutArray("after ", array, 5);
 }
 
 // const int[], const func
 static void RunTest4() {
 	const int array[5] = {-1, 0, 1, 2, 3};
-	PutArray("before", array);
+	PutArray("before", array, 5);
 
 	iter(array, 5, &ConstNothing);
-	PutArray("after ", array);
+	PutArray("after ", array, 5);
 }
 
 // -------------------------------------------------
@@ -82,37 +82,37 @@ void AddBikkuri(T &s) {
 // non-const string[], non-const func
 static void RunTest5() {
 	std::string array[3] = {"", "x", "abcde"};
-	PutArray("before", array);
+	PutArray("before", array, 3);
 
 	iter(array, 3, &AddBikkuri);
-	PutArray("after ", array);
+	PutArray("after ", array, 3);
 }
 
 // non-const string[], const func
 static void RunTest6() {
 	std::string array[3] = {"", "x", "abcde"};
-	PutArray("before", array);
+	PutArray("before", array, 3);
 
 	iter(array, 3, &ConstNothing);
-	PutArray("after ", array);
+	PutArray("after ", array, 3);
 }
 
 // const string[], non-const func
 static void RunTest7() {
 	const std::string array[3] = {"", "x", "abcde"};
-	PutArray("before", array);
+	PutArray("before", array, 3);
 
 	iter(array, 3, &NonConstNothing);
-	PutArray("after ", array);
+	PutArray("after ", array, 3);
 }
 
 // const string[], const func
 static void RunTest8() {
 	const std::string array[3] = {"", "x", "abcde"};
-	PutArray("before", array);
+	PutArray("before", array, 3);
 
 	iter(array, 3, &ConstNothing);
-	PutArray("after ", array);
+	PutArray("after ", array, 3);
 }
 
 // -------------------------------------------------
