@@ -4,7 +4,7 @@
 #include <cstddef>
 
 template <typename T>
-void iter(T *array, const size_t &length, void (*func)(T &)) {
+void iter(T *array, const size_t length, void (*func)(T &)) {
 	if (!array || !func) {
 		return;
 	}
@@ -14,7 +14,7 @@ void iter(T *array, const size_t &length, void (*func)(T &)) {
 }
 
 template <typename T>
-void iter(const T *array, const size_t &length, void (*func)(T &)) {
+void iter(const T *array, const size_t length, void (*func)(const T &)) {
 	if (!array || !func) {
 		return;
 	}
