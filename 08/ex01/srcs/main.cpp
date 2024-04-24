@@ -24,11 +24,22 @@ namespace test {
 	}
 
 	template <typename T>
-	void JudgeResult(const std::string &msg, const T &expected, const T &result) {
+	void JudgeResult(const T &expected, const T &result) {
 		if (expected == result) {
-			std::cout << COLOR_GREEN "[" << msg << "OK]" COLOR_END << std::endl;
+			std::cout << COLOR_GREEN "[OK]" COLOR_END << std::endl;
 		} else {
-			std::cout << COLOR_RED "[" << msg << "NG]" COLOR_END << std::endl;
+			std::cout << COLOR_RED "[NG]" COLOR_END << std::endl;
+			exit(EXIT_FAILURE);
+		}
+	}
+
+	template <typename T>
+	void JudgeResult(const unsigned int num, const T &expected, const T &result) {
+		if (expected == result) {
+			std::cout << COLOR_GREEN "[add " << num << " : OK]" COLOR_END
+					  << std::endl;
+		} else {
+			std::cout << COLOR_RED "[add " << num << " : NG]" COLOR_END << std::endl;
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -37,10 +48,10 @@ namespace test {
 	void AddNumber(Span &span, const unsigned int num, Result expected) {
 		try {
 			span.addNumber(num);
-			JudgeResult("add: ", expected, SUCCESS);
+			JudgeResult(num, expected, SUCCESS);
 		} catch (const std::exception &e) {
 			std::cerr << COLOR_RED << "Error: " << e.what() << " " << COLOR_END;
-			JudgeResult("add: ", expected, FAIL);
+			JudgeResult(num, expected, FAIL);
 		}
 	}
 
@@ -58,11 +69,11 @@ namespace test {
 			ss << span.shortestSpan();
 			unsigned int exec_ret;
 			ss >> exec_ret;
-			std::cout << "shortest: " << exec_ret << " ";
-			JudgeResult("", expected_shortest, exec_ret);
+			std::cout << COLOR_PINK "shortest: " << exec_ret << " " COLOR_END;
+			JudgeResult(expected_shortest, exec_ret);
 		} catch (const std::exception &e) {
 			std::cerr << COLOR_RED << "Error: " << e.what() << " " << COLOR_END;
-			JudgeResult("", expected_shortest_result, FAIL);
+			JudgeResult(expected_shortest_result, FAIL);
 		}
 		// longestSpan()
 		try {
@@ -70,11 +81,11 @@ namespace test {
 			ss << span.longestSpan();
 			unsigned int exec_ret;
 			ss >> exec_ret;
-			std::cout << "longest : " << exec_ret << " ";
-			JudgeResult("", expected_longest, exec_ret);
+			std::cout << COLOR_PINK "longest : " << exec_ret << " " COLOR_END;
+			JudgeResult(expected_longest, exec_ret);
 		} catch (const std::exception &e) {
 			std::cerr << COLOR_RED << "Error: " << e.what() << " " << COLOR_END;
-			JudgeResult("", expected_longest_result, FAIL);
+			JudgeResult(expected_longest_result, FAIL);
 		}
 	}
 
