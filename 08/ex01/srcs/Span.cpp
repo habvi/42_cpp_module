@@ -76,6 +76,12 @@ unsigned int Span::longestSpan() const {
 	return longest_span_;
 }
 
+void Span::Insert(const unsigned int count, const unsigned int value) {
+	for (size_t i = 0; i < count; i++) {
+		addNumber(value);
+	}
+}
+
 // ---------------------------------------------------
 void Span::UpdateShortestSpanMember(const unsigned int &new_span) {
 	if (new_span < shortest_span_) {

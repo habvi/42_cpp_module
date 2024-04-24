@@ -18,6 +18,9 @@ class Span {
 	void         addNumber(const unsigned int number);
 	unsigned int shortestSpan() const;
 	unsigned int longestSpan() const;
+	void         Insert(const unsigned int count, const unsigned int value);
+	template <typename T>
+	void Insert(typename T::iterator first, typename T::iterator last);
 
   public:
 	// getter for test
@@ -44,5 +47,12 @@ class Span {
 	unsigned int       shortest_span_;
 	unsigned int       longest_span_;
 };
+
+template <typename T>
+void Span::Insert(typename T::iterator first, typename T::iterator last) {
+	for (; first != last; ++first) {
+		addNumber(*first);
+	}
+}
 
 #endif /* EX01_SPAN_HPP */
