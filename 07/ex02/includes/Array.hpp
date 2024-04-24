@@ -19,7 +19,7 @@ class Array {
 	unsigned int size() const;
 
   private:
-	void DeepcopyMembers(const Array &other);
+	T   *DupArray(const Array &other);
 	void ThrowIfIndexOutOfRange(const unsigned int index) const;
 
   private:
