@@ -17,7 +17,7 @@ Array<T>::~Array() {
 }
 
 template <typename T>
-const Array<T> &Array<T>::operator=(const Array &other) {
+Array<T> &Array<T>::operator=(const Array &other) {
 	if (this != &other) {
 		delete[] array_;
 		DeepcopyMembers(other);

@@ -8,7 +8,7 @@ class Array {
 	Array(const unsigned int n);
 	Array(const Array &other);
 	~Array();
-	const Array &operator=(const Array &other);
+	Array &operator=(const Array &other);
 	// for read : [i]
 	const T &operator[](const unsigned int index) const;
 	// for write : [i] = x
