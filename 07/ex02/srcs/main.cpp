@@ -214,7 +214,8 @@ namespace test {
 		}
 	}
 
-	void Print2DArray(const std::string &title, const Array<Array<int> > &array2D) {
+	template <typename T>
+	void Print2DArray(const std::string &title, const Array<Array<T> > &array2D) {
 		std::cout << title << " = {" << std::endl;
 		for (unsigned int i = 0; i < array2D.size(); ++i) {
 			std::cout << "   ";
