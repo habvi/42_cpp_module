@@ -41,11 +41,11 @@ re: fclean all
 #--------------------------------------------
 .PHONY	: run
 run: all
-	@./$(NAME)
+	@./$(NAME) test
 
 .PHONY	: val
 val: all
-	@valgrind ./$(NAME)
+	@valgrind ./$(NAME) test
 
 .PHONY	: check
 check:

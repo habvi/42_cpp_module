@@ -123,6 +123,17 @@ namespace test {
 		std::cout << COLOR_GREEN "[copy: OK]" COLOR_END << std::endl;
 	}
 	// -------------------------------------------------------------------------
+	void RunExactlySubjectTest() {
+		Span sp = Span(5);
+		sp.addNumber(6);
+		sp.addNumber(3);
+		sp.addNumber(17);
+		sp.addNumber(9);
+		sp.addNumber(11);
+		std::cout << sp.shortestSpan() << std::endl;
+		std::cout << sp.longestSpan() << std::endl;
+	}
+
 	void RunSubjectTest() {
 		DisplayTitle(0, "subject test");
 
@@ -325,21 +336,24 @@ namespace test {
 
 } // namespace test
 
-int main() {
-	test::RunSubjectTest();
-
-	test::RunOriginalTest1();
-	test::RunOriginalTest2();
-	test::RunOriginalTest3();
-	test::RunOriginalTest4();
-	test::RunOriginalTest5();
-	test::RunOriginalTest6();
-	test::RunOriginalTest7();
-	test::RunOriginalTest8();
-	test::RunOriginalTest9();
-	test::RunOriginalTest10();
-	test::RunOriginalTest11();
-	test::RunOriginalTest12();
-
+int main(int argc, char **argv) {
+	(void)argv;
+	if (argc == 1) {
+		test::RunExactlySubjectTest();
+	} else {
+		test::RunSubjectTest();
+		test::RunOriginalTest1();
+		test::RunOriginalTest2();
+		test::RunOriginalTest3();
+		test::RunOriginalTest4();
+		test::RunOriginalTest5();
+		test::RunOriginalTest6();
+		test::RunOriginalTest7();
+		test::RunOriginalTest8();
+		test::RunOriginalTest9();
+		test::RunOriginalTest10();
+		test::RunOriginalTest11();
+		test::RunOriginalTest12();
+	}
 	return EXIT_SUCCESS;
 }
