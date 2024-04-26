@@ -16,6 +16,7 @@ Span::Span(const Span &other)
 
 const Span &Span::operator=(const Span &other) {
 	if (this != &other) {
+		capacity_      = other.capacity_;
 		orderd_elems_  = other.orderd_elems_;
 		shortest_span_ = other.shortest_span_;
 		longest_span_  = other.longest_span_;

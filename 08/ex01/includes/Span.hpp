@@ -39,10 +39,10 @@ class Span {
 	void UpdateLongestSpanMember(const unsigned int new_span);
 
   private:
-	const unsigned int capacity_;
-	Elems              orderd_elems_;
-	unsigned int       shortest_span_;
-	unsigned int       longest_span_;
+	unsigned int capacity_;
+	Elems        orderd_elems_;
+	unsigned int shortest_span_;
+	unsigned int longest_span_;
 };
 
 template <typename T>
