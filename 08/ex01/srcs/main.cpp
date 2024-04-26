@@ -166,15 +166,15 @@ namespace test {
 
 		Span span = Span(2);
 		AddNumber(span, 9, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		ShortestAndLongest(span, 0, FAIL, 0, FAIL);
 		Line();
 		AddNumber(span, 9, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		ShortestAndLongest(span, 0, SUCCESS, 0, SUCCESS);
 		Line();
 		AddNumber(span, 9, FAIL);
-		span.PutStoredNumbers();
+		span.PutElems();
 		ShortestAndLongest(span, 0, FAIL, 0, FAIL);
 	}
 
@@ -183,18 +183,18 @@ namespace test {
 
 		Span span = Span(4);
 		AddNumber(span, 1, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		Line();
 		AddNumber(span, 3, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		ShortestAndLongest(span, 2, SUCCESS, 2, SUCCESS);
 		Line();
 		AddNumber(span, 5, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		ShortestAndLongest(span, 2, SUCCESS, 4, SUCCESS);
 		Line();
 		AddNumber(span, 5, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		ShortestAndLongest(span, 0, SUCCESS, 4, SUCCESS);
 	}
 
@@ -203,18 +203,18 @@ namespace test {
 
 		Span span = Span(4);
 		AddNumber(span, 1, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		Line();
 		AddNumber(span, 3, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		ShortestAndLongest(span, 2, SUCCESS, 2, SUCCESS);
 		Line();
 		AddNumber(span, 5, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		ShortestAndLongest(span, 2, SUCCESS, 4, SUCCESS);
 		Line();
 		AddNumber(span, 1, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		ShortestAndLongest(span, 0, SUCCESS, 4, SUCCESS);
 	}
 
@@ -223,14 +223,14 @@ namespace test {
 
 		Span span = Span(4);
 		AddNumber(span, 0, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		Line();
 		AddNumber(span, 5, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		ShortestAndLongest(span, 5, SUCCESS, 5, SUCCESS);
 		Line();
 		AddNumber(span, 50, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		ShortestAndLongest(span, 5, SUCCESS, 50, SUCCESS);
 	}
 
@@ -239,14 +239,14 @@ namespace test {
 
 		Span span = Span(4);
 		AddNumber(span, 100, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		Line();
 		AddNumber(span, 95, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		ShortestAndLongest(span, 5, SUCCESS, 5, SUCCESS);
 		Line();
 		AddNumber(span, 50, SUCCESS);
-		span.PutStoredNumbers();
+		span.PutElems();
 		ShortestAndLongest(span, 5, SUCCESS, 50, SUCCESS);
 	}
 
@@ -255,10 +255,10 @@ namespace test {
 
 		Span span1 = Span(3);
 		AddNumber(span1, 2, SUCCESS);
-		span1.PutStoredNumbers();
+		span1.PutElems();
 		Line();
 		AddNumber(span1, 10, SUCCESS);
-		span1.PutStoredNumbers();
+		span1.PutElems();
 		ShortestAndLongest(span1, 8, SUCCESS, 8, SUCCESS);
 		Line();
 
@@ -266,7 +266,7 @@ namespace test {
 		Span span2(span1);
 		JudgeIsSameMembers(span1, span2);
 		AddNumber(span2, 4, SUCCESS);
-		span2.PutStoredNumbers();
+		span2.PutElems();
 		ShortestAndLongest(span2, 2, SUCCESS, 8, SUCCESS);
 
 		Line();
@@ -279,10 +279,10 @@ namespace test {
 
 		Span span1 = Span(3);
 		AddNumber(span1, 2, SUCCESS);
-		span1.PutStoredNumbers();
+		span1.PutElems();
 		Line();
 		AddNumber(span1, 10, SUCCESS);
-		span1.PutStoredNumbers();
+		span1.PutElems();
 		ShortestAndLongest(span1, 8, SUCCESS, 8, SUCCESS);
 		Line();
 
@@ -290,7 +290,7 @@ namespace test {
 		Span span2 = span1;
 		JudgeIsSameMembers(span1, span2);
 		AddNumber(span2, 4, SUCCESS);
-		span2.PutStoredNumbers();
+		span2.PutElems();
 		ShortestAndLongest(span2, 2, SUCCESS, 8, SUCCESS);
 
 		Line();
@@ -330,7 +330,7 @@ namespace test {
 
 		Span span = Span(kCapacity);
 		span.Insert<std::vector<unsigned int> >(vec.begin(), vec.end());
-		span.PutStoredNumbers();
+		span.PutElems();
 		ShortestAndLongest(span, 12, SUCCESS, 9999, SUCCESS);
 	}
 

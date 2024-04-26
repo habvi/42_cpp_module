@@ -21,7 +21,7 @@ class Span {
 	void         Insert(const unsigned int count, const unsigned int value);
 	template <typename T>
 	void Insert(typename T::const_iterator first, typename T::const_iterator last);
-	void PutStoredNumbers() const;
+	void PutElems() const;
 
   public:
 	// getter for test

@@ -140,7 +140,7 @@ unsigned int Span::longest_span() const {
 // ---------------------------------------------------
 // debug
 // ---------------------------------------------------
-void Span::PutStoredNumbers() const {
+void Span::PutElems() const {
 	std::cout << "map (size:" << orderd_elems_.size()
 			  << "),(elem count:" << elem_count_ << ")" << std::endl;
 	std::cout << "==> {";
