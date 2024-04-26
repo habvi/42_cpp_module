@@ -8,11 +8,10 @@ template <typename T>
 MutantStack<T>::MutantStack(const MutantStack &other)
 	: std::stack< T, Container >(other) {}
 
+// Preventing self-assignment is delegated to the parent class.
 template <typename T>
 MutantStack<T> &MutantStack<T>::operator=(const MutantStack &other) {
-	if (this != &other) {
-		std::stack<T>::operator=(other);
-	}
+	std::stack<T>::operator=(other);
 	return *this;
 }
 
