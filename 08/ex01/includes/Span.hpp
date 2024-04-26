@@ -1,6 +1,7 @@
 #ifndef EX01_SPAN_HPP
 #define EX01_SPAN_HPP
 
+#include <ostream>
 #include <set>
 
 class Span {
@@ -22,8 +23,8 @@ class Span {
 	void         Insert(const unsigned int start, const unsigned int end);
 	template <typename T>
 	void Insert(typename T::const_iterator first, typename T::const_iterator last);
-	void PutElems() const;
-	bool IsSameSpan(const Span &other) const;
+	std::ostream &Print(std::ostream &out) const;
+	bool          IsSameSpan(const Span &other) const;
 
   private:
 	Span();
@@ -46,5 +47,7 @@ void Span::Insert(
 		addNumber(*first);
 	}
 }
+
+std::ostream &operator<<(std::ostream &out, const Span &s);
 
 #endif /* EX01_SPAN_HPP */

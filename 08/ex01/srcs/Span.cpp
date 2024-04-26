@@ -1,6 +1,5 @@
 #include "Span.hpp"
 #include <climits>
-#include <iostream>
 #include <stdexcept>
 
 Span::Span() : capacity_(0), size_(0), shortest_span_(UINT_MAX), longest_span_(0) {}
@@ -128,15 +127,22 @@ bool Span::IsSameSpan(const Span &other) const {
 // ---------------------------------------------------
 // debug
 // ---------------------------------------------------
-void Span::PutElems() const {
-	std::cout << "Elems (size:" << orderd_elems_.size() << ")" << std::endl;
-	std::cout << "==> {";
+std::ostream &Span::Print(std::ostream &out) const {
+	out << "Elems (key kind: " << orderd_elems_.size() << ", size:" << size_
+		<< ", shortest: " << shortest_span_ << ", longest: " << longest_span_ << ")"
+		<< std::endl;
+	out << "==> {";
 	Elems::const_iterator itr;
 	for (itr = orderd_elems_.begin(); itr != orderd_elems_.end(); ++itr) {
 		if (itr != orderd_elems_.begin()) {
-			std::cout << ", ";
+			out << ", ";
 		}
-		std::cout << *itr;
+		out << *itr;
 	}
-	std::cout << "}" << std::endl;
+	out << "}" << std::endl;
+	return out;
+}
+
+std::ostream &operator<<(std::ostream &out, const Span &s) {
+	return s.Print(out);
 }
