@@ -365,11 +365,15 @@ namespace test {
 		}
 		mstack.DebugPrint();
 
-		mstack.pop(); // size = 0, nothing happened
+		// pop() with size = 0 is undefined
+		// (linux:nothing happened, macOS:Segmentation fault)
+		if (mstack.size()) {
+			mstack.pop();
+		}
 	}
 
 	void RunOriginalTest7() {
-		DisplayTitle(11, "MutantStack<string> / copy");
+		DisplayTitle(12, "MutantStack<string> / copy");
 
 		MutantStack<std::string> mstack;
 		mstack.push("abcdefghijklmn");
@@ -389,7 +393,7 @@ namespace test {
 	}
 
 	void RunOriginalTest8() {
-		DisplayTitle(12, "MutantStack<int> / rbegin,rend ");
+		DisplayTitle(13, "MutantStack<int> / rbegin,rend ");
 
 		MutantStack<int> mstack;
 		for (int i = 0; i < 10; i++) {
