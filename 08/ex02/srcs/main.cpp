@@ -375,6 +375,37 @@ namespace test {
 		JudgeIsSameStack(mstack, tmp2);
 	}
 
+	void RunOriginalTest8() {
+		DisplayTitle(12, "MutantStack<int> / rbegin,rend ");
+
+		MutantStack<int> mstack;
+		for (int i = 0; i < 10; i++) {
+			mstack.push(i);
+		}
+		mstack.DebugPrint();
+		Line();
+
+		// reverse_iterator
+		MutantStack<int>::reverse_iterator rbegin = mstack.rbegin();
+		MutantStack<int>::reverse_iterator rend   = mstack.rend();
+		while (rbegin != rend) {
+			std::cout << *rbegin << " ";
+			*rbegin += 10; // OK
+			++rbegin;
+		}
+		std::cout << std::endl;
+
+		// const_reverse_iterator
+		MutantStack<int>::const_reverse_iterator rbegin2 = mstack.rbegin();
+		MutantStack<int>::const_reverse_iterator rend2   = mstack.rend();
+		while (rbegin2 != rend2) {
+			std::cout << *rbegin2 << " ";
+			// *rbegin += 10; // NG
+			++rbegin2;
+		}
+		std::cout << std::endl;
+	}
+
 	// -------------------------------------------------------------------------
 
 } // namespace test
@@ -393,5 +424,6 @@ int main() {
 	test::RunOriginalTest5();
 	test::RunOriginalTest6();
 	test::RunOriginalTest7();
+	test::RunOriginalTest8();
 	return EXIT_SUCCESS;
 }
