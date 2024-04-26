@@ -36,19 +36,19 @@ void Span::addNumber(const unsigned int number) {
 	UpdateLongestSpan();
 }
 
-void Span::ThrowExceptionIfLessElemCounts() const {
-	if (orderd_elems_.size() < 2) {
+static void ThrowExceptionIfLessElemCounts(const std::size_t size) {
+	if (size < 2) {
 		throw std::logic_error("Span needs at least 2 elements");
 	}
 }
 
 unsigned int Span::shortestSpan() const {
-	ThrowExceptionIfLessElemCounts();
+	ThrowExceptionIfLessElemCounts(orderd_elems_.size());
 	return shortest_span_;
 }
 
 unsigned int Span::longestSpan() const {
-	ThrowExceptionIfLessElemCounts();
+	ThrowExceptionIfLessElemCounts(orderd_elems_.size());
 	return longest_span_;
 }
 
