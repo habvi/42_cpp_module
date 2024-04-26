@@ -3,13 +3,13 @@
 #include <iostream>
 #include <stdexcept>
 
-Span::Span() : max_elem_size_(0), shortest_span_(UINT_MAX), longest_span_(0) {}
+Span::Span() : capacity_(0), shortest_span_(UINT_MAX), longest_span_(0) {}
 
 Span::Span(const unsigned int n)
-	: max_elem_size_(n), shortest_span_(UINT_MAX), longest_span_(0) {}
+	: capacity_(n), shortest_span_(UINT_MAX), longest_span_(0) {}
 
 Span::Span(const Span &other)
-	: max_elem_size_(other.max_elem_size_),
+	: capacity_(other.capacity_),
 	  orderd_elems_(other.orderd_elems_),
 	  shortest_span_(other.shortest_span_),
 	  longest_span_(other.longest_span_) {}
@@ -27,7 +27,7 @@ Span::~Span() {}
 
 // ---------------------------------------------------
 void Span::addNumber(const unsigned int number) {
-	if (orderd_elems_.size() == max_elem_size_) {
+	if (orderd_elems_.size() == capacity_) {
 		throw std::runtime_error("Span is full");
 	}
 	UpdateShortestSpan(number);
@@ -109,8 +109,8 @@ void Span::UpdateLongestSpan() {
 }
 
 // ---------------------------------------------------
-unsigned int Span::max_elem_size() const {
-	return max_elem_size_;
+unsigned int Span::capacity() const {
+	return capacity_;
 }
 
 const Span::Elems &Span::orderd_elems() const {

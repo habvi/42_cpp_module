@@ -112,7 +112,7 @@ namespace test {
 			++itr_s2;
 		}
 		// judge other members
-		if (s1.max_elem_size() != s2.max_elem_size() ||
+		if (s1.capacity() != s2.capacity() ||
 			s1.shortest_span() != s2.shortest_span() ||
 			s1.longest_span() != s2.longest_span()) {
 			std::cerr << COLOR_RED << "Error: not the same member variables"

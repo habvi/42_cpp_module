@@ -25,7 +25,7 @@ class Span {
 
   public:
 	// getter for test
-	unsigned int max_elem_size() const;
+	unsigned int capacity() const;
 	const Elems &orderd_elems() const;
 	unsigned int shortest_span() const;
 	unsigned int longest_span() const;
@@ -39,7 +39,7 @@ class Span {
 	void UpdateLongestSpanMember(const unsigned int new_span);
 
   private:
-	const unsigned int max_elem_size_;
+	const unsigned int capacity_;
 	Elems              orderd_elems_;
 	unsigned int       shortest_span_;
 	unsigned int       longest_span_;
