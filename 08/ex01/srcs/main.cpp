@@ -159,6 +159,8 @@ namespace test {
 		DisplayTitle(2, "capacity: 1 / shortestSpan() /longestSpan()");
 
 		Span span = Span(1);
+		AddNumber(span, 5, SUCCESS);
+		span.PutElems();
 		ShortestAndLongest(span, 0, FAIL, 0, FAIL);
 	}
 
