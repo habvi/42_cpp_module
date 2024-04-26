@@ -40,11 +40,6 @@ typename MutantStack<T>::const_iterator MutantStack<T>::end() const {
 	return this->c.end();
 }
 
-template <typename T>
-std::size_t MutantStack<T>::size() const {
-	return this->c.size();
-}
-
 // ---------------------------------------------------
 // debug
 // ---------------------------------------------------

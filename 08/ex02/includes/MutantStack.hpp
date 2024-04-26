@@ -22,7 +22,6 @@ class MutantStack : public std::stack<T> {
 	const_iterator begin() const;
 	iterator       end();
 	const_iterator end() const;
-	std::size_t    size() const;
 
   public:
 	void DebugPrint();
