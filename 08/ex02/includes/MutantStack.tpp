@@ -6,7 +6,7 @@ MutantStack<T>::MutantStack() {}
 
 template <typename T>
 MutantStack<T>::MutantStack(const MutantStack &other)
-	: std::stack< T, std::deque<T> >(other) {}
+	: std::stack< T, Container >(other) {}
 
 template <typename T>
 MutantStack<T> &MutantStack<T>::operator=(const MutantStack &other) {
@@ -22,27 +22,27 @@ MutantStack<T>::~MutantStack() {}
 // ---------------------------------------------------
 template <typename T>
 typename MutantStack<T>::iterator MutantStack<T>::begin() {
-	return std::stack<T>::c.begin();
+	return this->c.begin();
 }
 
 template <typename T>
 typename MutantStack<T>::const_iterator MutantStack<T>::begin() const {
-	return std::stack<T>::c.begin();
+	return this->c.begin();
 }
 
 template <typename T>
 typename MutantStack<T>::iterator MutantStack<T>::end() {
-	return std::stack<T>::c.end();
+	return this->c.end();
 }
 
 template <typename T>
 typename MutantStack<T>::const_iterator MutantStack<T>::end() const {
-	return std::stack<T>::c.end();
+	return this->c.end();
 }
 
 template <typename T>
 std::size_t MutantStack<T>::size() const {
-	return std::stack<T>::size();
+	return this->c.size();
 }
 
 // ---------------------------------------------------
@@ -50,10 +50,10 @@ std::size_t MutantStack<T>::size() const {
 // ---------------------------------------------------
 template <typename T>
 void MutantStack<T>::DebugPrint() {
-	std::cout << COLOR_PINK "mstack" COLOR_END " (size:" << size() << ")"
+	std::cout << COLOR_PINK "mstack" COLOR_END " (size:" << this->size() << ")"
 			  << std::endl;
 	std::cout << "==> {";
-	typename std::deque<T>::iterator itr;
+	iterator itr;
 	for (itr = begin(); itr != end(); ++itr) {
 		if (itr != begin()) {
 			std::cout << ", ";
