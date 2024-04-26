@@ -5,7 +5,7 @@
 
 class Span {
   public:
-	typedef std::set<unsigned int> Elems;
+	typedef std::multiset<unsigned int> Elems;
 
   public:
 	Span(const unsigned int n);
@@ -26,7 +26,6 @@ class Span {
   public:
 	// getter for test
 	unsigned int max_elem_size() const;
-	unsigned int elem_count() const;
 	const Elems &orderd_elems() const;
 	unsigned int shortest_span() const;
 	unsigned int longest_span() const;
@@ -41,7 +40,6 @@ class Span {
 
   private:
 	const unsigned int max_elem_size_;
-	unsigned int       elem_count_;
 	Elems              orderd_elems_;
 	unsigned int       shortest_span_;
 	unsigned int       longest_span_;

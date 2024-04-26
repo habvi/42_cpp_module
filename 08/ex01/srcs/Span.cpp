@@ -3,28 +3,19 @@
 #include <iostream>
 #include <stdexcept>
 
-Span::Span()
-	: max_elem_size_(0),
-	  elem_count_(0),
-	  shortest_span_(UINT_MAX),
-	  longest_span_(0) {}
+Span::Span() : max_elem_size_(0), shortest_span_(UINT_MAX), longest_span_(0) {}
 
 Span::Span(const unsigned int n)
-	: max_elem_size_(n),
-	  elem_count_(0),
-	  shortest_span_(UINT_MAX),
-	  longest_span_(0) {}
+	: max_elem_size_(n), shortest_span_(UINT_MAX), longest_span_(0) {}
 
 Span::Span(const Span &other)
 	: max_elem_size_(other.max_elem_size_),
-	  elem_count_(other.elem_count_),
 	  orderd_elems_(other.orderd_elems_),
 	  shortest_span_(other.shortest_span_),
 	  longest_span_(other.longest_span_) {}
 
 const Span &Span::operator=(const Span &other) {
 	if (this != &other) {
-		elem_count_    = other.elem_count_;
 		orderd_elems_  = other.orderd_elems_;
 		shortest_span_ = other.shortest_span_;
 		longest_span_  = other.longest_span_;
@@ -36,17 +27,16 @@ Span::~Span() {}
 
 // ---------------------------------------------------
 void Span::addNumber(const unsigned int number) {
-	if (elem_count_ == max_elem_size_) {
+	if (orderd_elems_.size() == max_elem_size_) {
 		throw std::runtime_error("Span is full");
 	}
 	UpdateShortestSpan(number);
 	orderd_elems_.insert(number);
-	elem_count_++;
 	UpdateLongestSpan();
 }
 
 void Span::ThrowExceptionIfLessElemCounts() const {
-	if (elem_count_ == 0 || elem_count_ == 1) {
+	if (orderd_elems_.size() < 2) {
 		throw std::runtime_error("Span elements needs more than 2");
 	}
 }
@@ -123,10 +113,6 @@ unsigned int Span::max_elem_size() const {
 	return max_elem_size_;
 }
 
-unsigned int Span::elem_count() const {
-	return elem_count_;
-}
-
 const Span::Elems &Span::orderd_elems() const {
 	return orderd_elems_;
 }
@@ -143,8 +129,7 @@ unsigned int Span::longest_span() const {
 // debug
 // ---------------------------------------------------
 void Span::PutElems() const {
-	std::cout << "map (size:" << orderd_elems_.size()
-			  << "),(elem count:" << elem_count_ << ")" << std::endl;
+	std::cout << "Elems (size:" << orderd_elems_.size() << ")" << std::endl;
 	std::cout << "==> {";
 	Elems::const_iterator itr;
 	for (itr = orderd_elems_.begin(); itr != orderd_elems_.end(); ++itr) {

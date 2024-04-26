@@ -113,7 +113,6 @@ namespace test {
 		}
 		// judge other members
 		if (s1.max_elem_size() != s2.max_elem_size() ||
-			s1.elem_count() != s2.elem_count() ||
 			s1.shortest_span() != s2.shortest_span() ||
 			s1.longest_span() != s2.longest_span()) {
 			std::cerr << COLOR_RED << "Error: not the same member variables"
