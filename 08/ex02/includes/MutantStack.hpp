@@ -2,6 +2,7 @@
 #define EX02_MUTANTSTACK_HPP
 
 #include <cstddef>
+#include <ostream>
 #include <stack>
 
 template <typename T>
@@ -30,8 +31,11 @@ class MutantStack : public std::stack<T> {
 	const_reverse_iterator rend() const;
 
   public:
-	void DebugPrint() const;
+	std::ostream &Print(std::ostream &out) const;
 };
+
+template <typename T>
+std::ostream &operator<<(std::ostream &out, const MutantStack<T> &m);
 
 #include "MutantStack.tpp"
 

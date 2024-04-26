@@ -63,16 +63,22 @@ typename MutantStack<T>::const_reverse_iterator MutantStack<T>::rend() const {
 // debug
 // ---------------------------------------------------
 template <typename T>
-void MutantStack<T>::DebugPrint() const {
-	std::cout << COLOR_PINK "mstack" COLOR_END " (size:" << this->size() << ")"
-			  << std::endl;
-	std::cout << "==> {";
+std::ostream &MutantStack<T>::Print(std::ostream &out) const {
+	out << COLOR_PINK "mstack" COLOR_END " (size:" << this->size() << ")"
+		<< std::endl;
+	out << "==> {";
 	const_iterator itr;
 	for (itr = begin(); itr != end(); ++itr) {
 		if (itr != begin()) {
-			std::cout << ", ";
+			out << ", ";
 		}
-		std::cout << *itr;
+		out << *itr;
 	}
-	std::cout << "}" << std::endl;
+	out << "}" << std::endl;
+	return out;
+}
+
+template <typename T>
+std::ostream &operator<<(std::ostream &out, const MutantStack<T> &m) {
+	return m.Print(out);
 }
