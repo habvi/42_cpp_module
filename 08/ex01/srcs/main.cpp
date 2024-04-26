@@ -319,8 +319,8 @@ namespace test {
 		static const unsigned int kCapacity = 100000;
 
 		Span span = Span(kCapacity);
-		span.Insert(kCapacity, 3);
-		ShortestAndLongest(span, 0, SUCCESS, 0, SUCCESS);
+		span.Insert(123, 1000);
+		ShortestAndLongest(span, 1, SUCCESS, 1000 - 123 - 1, SUCCESS);
 	}
 
 	void RunOriginalTest12() {

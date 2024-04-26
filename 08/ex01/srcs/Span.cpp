@@ -61,9 +61,11 @@ unsigned int Span::longestSpan() const {
 	return longest_span_;
 }
 
-void Span::Insert(const unsigned int count, const unsigned int value) {
-	for (size_t i = 0; i < count; i++) {
-		addNumber(value);
+// addNumber: start ~ (end - 1)
+// if start >= end, nothing happend.
+void Span::Insert(const unsigned int start, const unsigned int end) {
+	for (unsigned int i = start; i < end; i++) {
+		addNumber(i);
 	}
 }
 

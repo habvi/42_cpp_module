@@ -18,7 +18,7 @@ class Span {
 	void         addNumber(const unsigned int number);
 	unsigned int shortestSpan() const;
 	unsigned int longestSpan() const;
-	void         Insert(const unsigned int count, const unsigned int value);
+	void         Insert(const unsigned int start, const unsigned int end);
 	template <typename T>
 	void Insert(typename T::const_iterator first, typename T::const_iterator last);
 	void PutElems() const;
