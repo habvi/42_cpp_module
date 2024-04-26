@@ -20,7 +20,7 @@ class Span {
 	unsigned int longestSpan() const;
 	void         Insert(const unsigned int count, const unsigned int value);
 	template <typename T>
-	void Insert(typename T::iterator first, typename T::iterator last);
+	void Insert(typename T::const_iterator first, typename T::const_iterator last);
 	void PutStoredNumbers() const;
 
   public:
@@ -48,7 +48,9 @@ class Span {
 };
 
 template <typename T>
-void Span::Insert(typename T::iterator first, typename T::iterator last) {
+void Span::Insert(
+	typename T::const_iterator first, typename T::const_iterator last
+) {
 	for (; first != last; ++first) {
 		addNumber(*first);
 	}
