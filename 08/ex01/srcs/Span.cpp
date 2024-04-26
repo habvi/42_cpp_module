@@ -29,7 +29,7 @@ Span::~Span() {}
 // ---------------------------------------------------
 void Span::addNumber(const unsigned int number) {
 	if (orderd_elems_.size() == capacity_) {
-		throw std::runtime_error("Span is full");
+		throw std::logic_error("Span is full");
 	}
 	UpdateShortestSpan(number);
 	orderd_elems_.insert(number);
@@ -38,7 +38,7 @@ void Span::addNumber(const unsigned int number) {
 
 void Span::ThrowExceptionIfLessElemCounts() const {
 	if (orderd_elems_.size() < 2) {
-		throw std::runtime_error("Span elements needs more than 2");
+		throw std::logic_error("Span needs at least 2 elements");
 	}
 }
 
