@@ -1,0 +1,79 @@
+#include "color.hpp"
+#include <iostream>
+
+template <typename T>
+MutantStack<T>::MutantStack() {}
+
+template <typename T>
+MutantStack<T>::MutantStack(const MutantStack &other)
+	: std::stack< T, Container >(other) {}
+
+template <typename T>
+MutantStack<T> &MutantStack<T>::operator=(const MutantStack &other) {
+	if (this != &other) {
+		std::stack<T>::operator=(other);
+	}
+	return *this;
+}
+
+template <typename T>
+MutantStack<T>::~MutantStack() {}
+
+// ---------------------------------------------------
+template <typename T>
+typename MutantStack<T>::iterator MutantStack<T>::begin() {
+	return this->c.begin();
+}
+
+template <typename T>
+typename MutantStack<T>::const_iterator MutantStack<T>::begin() const {
+	return this->c.begin();
+}
+
+template <typename T>
+typename MutantStack<T>::iterator MutantStack<T>::end() {
+	return this->c.end();
+}
+
+template <typename T>
+typename MutantStack<T>::const_iterator MutantStack<T>::end() const {
+	return this->c.end();
+}
+
+template <typename T>
+typename MutantStack<T>::reverse_iterator MutantStack<T>::rbegin() {
+	return this->c.rbegin();
+}
+
+template <typename T>
+typename MutantStack<T>::const_reverse_iterator MutantStack<T>::rbegin() const {
+	return this->c.rbegin();
+}
+
+template <typename T>
+typename MutantStack<T>::reverse_iterator MutantStack<T>::rend() {
+	return this->c.rend();
+}
+
+template <typename T>
+typename MutantStack<T>::const_reverse_iterator MutantStack<T>::rend() const {
+	return this->c.rend();
+}
+
+// ---------------------------------------------------
+// debug
+// ---------------------------------------------------
+template <typename T>
+void MutantStack<T>::DebugPrint() {
+	std::cout << COLOR_PINK "mstack" COLOR_END " (size:" << this->size() << ")"
+			  << std::endl;
+	std::cout << "==> {";
+	iterator itr;
+	for (itr = begin(); itr != end(); ++itr) {
+		if (itr != begin()) {
+			std::cout << ", ";
+		}
+		std::cout << *itr;
+	}
+	std::cout << "}" << std::endl;
+}
