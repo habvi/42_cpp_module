@@ -143,6 +143,7 @@ namespace test {
 		mstack.push(0);                          // {5, 3, 5, 737, 0}
 		Line();
 
+		// iterator
 		MutantStack<int>::iterator it  = mstack.begin();
 		MutantStack<int>::iterator ite = mstack.end();
 		++it;
@@ -151,6 +152,18 @@ namespace test {
 			std::cout << *it << std::endl;
 			++it;
 		}
+		Line();
+
+		// const_iterator
+		MutantStack<int>::const_iterator it2  = mstack.begin();
+		MutantStack<int>::const_iterator ite2 = mstack.end();
+		++it2;
+		--it2;
+		while (it2 != ite2) {
+			std::cout << *it2 << " ";
+			++it2;
+		}
+		std::cout << std::endl;
 		std::stack<int> s(mstack);
 	}
 
