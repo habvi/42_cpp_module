@@ -64,11 +64,11 @@ typename MutantStack<T>::const_reverse_iterator MutantStack<T>::rend() const {
 // debug
 // ---------------------------------------------------
 template <typename T>
-void MutantStack<T>::DebugPrint() {
+void MutantStack<T>::DebugPrint() const {
 	std::cout << COLOR_PINK "mstack" COLOR_END " (size:" << this->size() << ")"
 			  << std::endl;
 	std::cout << "==> {";
-	iterator itr;
+	const_iterator itr;
 	for (itr = begin(); itr != end(); ++itr) {
 		if (itr != begin()) {
 			std::cout << ", ";
