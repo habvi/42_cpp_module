@@ -33,7 +33,6 @@ class Span {
 
   private:
 	Span();
-	void DeepcopyMembers(const Span &other);
 	void ThrowExceptionIfLessElemCounts() const;
 	void UpdateShortestSpan(const unsigned int &new_span);
 	void UpdateShortestSpanMember(const unsigned int &new_span);

@@ -18,34 +18,21 @@ Span::Span(const unsigned int n)
 Span::Span(const Span &other)
 	: max_elem_size_(other.max_elem_size_),
 	  elem_count_(other.elem_count_),
+	  orderd_elems_(other.orderd_elems_),
 	  shortest_span_(other.shortest_span_),
-	  longest_span_(other.longest_span_) {
-	DeepcopyMembers(other);
-}
+	  longest_span_(other.longest_span_) {}
 
 const Span &Span::operator=(const Span &other) {
 	if (this != &other) {
-		orderd_elems_.clear();
-		DeepcopyMembers(other);
+		elem_count_    = other.elem_count_;
+		orderd_elems_  = other.orderd_elems_;
+		shortest_span_ = other.shortest_span_;
+		longest_span_  = other.longest_span_;
 	}
-	(void)other;
 	return *this;
 }
 
 Span::~Span() {}
-
-void Span::DeepcopyMembers(const Span &other) {
-	elem_count_    = other.elem_count_;
-	shortest_span_ = other.shortest_span_;
-	longest_span_  = other.longest_span_;
-
-	MapElems::const_iterator itr_other;
-	for (itr_other = other.orderd_elems_.begin();
-		 itr_other != other.orderd_elems_.end();
-		 ++itr_other) {
-		orderd_elems_[itr_other->first] = itr_other->second;
-	}
-}
 
 // ---------------------------------------------------
 void Span::addNumber(const unsigned int number) {
