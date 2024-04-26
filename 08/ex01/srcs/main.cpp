@@ -96,16 +96,16 @@ namespace test {
 			exit(EXIT_FAILURE);
 		}
 		// judge map's all elements
-		Span::MapElems elems_s1 = s1.orderd_elems();
-		Span::MapElems elems_s2 = s2.orderd_elems();
+		Span::Elems elems_s1 = s1.orderd_elems();
+		Span::Elems elems_s2 = s2.orderd_elems();
 		if (elems_s1.size() != elems_s2.size()) {
 			std::cerr << COLOR_RED << "Error: not the same map size" << COLOR_END;
 			exit(EXIT_FAILURE);
 		}
-		Span::MapElems::const_iterator itr_s1;
-		Span::MapElems::const_iterator itr_s2 = elems_s2.begin();
+		Span::Elems::const_iterator itr_s1;
+		Span::Elems::const_iterator itr_s2 = elems_s2.begin();
 		for (itr_s1 = elems_s1.begin(); itr_s1 != elems_s1.end(); ++itr_s1) {
-			if (itr_s1->first != itr_s2->first || itr_s1->second != itr_s2->second) {
+			if (*itr_s1 != *itr_s2) {
 				std::cerr << COLOR_RED << "Error: not the same map" << COLOR_END;
 				exit(EXIT_FAILURE);
 			}
@@ -134,6 +134,7 @@ namespace test {
 		std::cout << sp.longestSpan() << std::endl;
 	}
 
+	// -------------------------------------------------------------------------
 	void RunSubjectTest() {
 		DisplayTitle(0, "subject test");
 

@@ -1,11 +1,11 @@
 #ifndef EX01_SPAN_HPP
 #define EX01_SPAN_HPP
 
-#include <map>
+#include <set>
 
 class Span {
   public:
-	typedef std::map<unsigned int, unsigned int> MapElems;
+	typedef std::set<unsigned int> Elems;
 
   public:
 	Span(const unsigned int n);
@@ -25,11 +25,11 @@ class Span {
 
   public:
 	// getter for test
-	unsigned int    max_elem_size() const;
-	unsigned int    elem_count() const;
-	const MapElems &orderd_elems() const;
-	unsigned int    shortest_span() const;
-	unsigned int    longest_span() const;
+	unsigned int max_elem_size() const;
+	unsigned int elem_count() const;
+	const Elems &orderd_elems() const;
+	unsigned int shortest_span() const;
+	unsigned int longest_span() const;
 
   private:
 	Span();
@@ -42,7 +42,7 @@ class Span {
   private:
 	const unsigned int max_elem_size_;
 	unsigned int       elem_count_;
-	MapElems           orderd_elems_;
+	Elems              orderd_elems_;
 	unsigned int       shortest_span_;
 	unsigned int       longest_span_;
 };

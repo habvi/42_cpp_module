@@ -40,7 +40,7 @@ void Span::addNumber(const unsigned int number) {
 		throw std::runtime_error("Span is full");
 	}
 	UpdateShortestSpan(number);
-	orderd_elems_[number]++;
+	orderd_elems_.insert(number);
 	elem_count_++;
 	UpdateLongestSpan();
 }
@@ -91,15 +91,15 @@ void Span::UpdateShortestSpan(const unsigned int &number) {
 		return;
 	}
 	// new element
-	MapElems::const_iterator itr = orderd_elems_.lower_bound(number);
+	Elems::const_iterator itr = orderd_elems_.lower_bound(number);
+	if (itr != orderd_elems_.end()) {
+		// always exist higher element
+		UpdateShortestSpanMember(*itr - number);
+	}
 	if (itr != orderd_elems_.begin()) {
 		// always exist lower element
 		--itr;
-		UpdateShortestSpanMember(number - itr->first);
-	}
-	if (itr != orderd_elems_.end()) {
-		// always exist higher element
-		UpdateShortestSpanMember(itr->first - number);
+		UpdateShortestSpanMember(number - *itr);
 	}
 }
 
@@ -108,11 +108,11 @@ void Span::UpdateLongestSpan() {
 	if (orderd_elems_.size() < 2) {
 		return;
 	}
-	MapElems::const_iterator begin = orderd_elems_.begin();
-	MapElems::const_iterator end   = orderd_elems_.end();
+	Elems::const_iterator begin = orderd_elems_.begin();
+	Elems::const_iterator end   = orderd_elems_.end();
 	// always exist lower element
 	--end;
-	const unsigned int span = end->first - begin->first;
+	const unsigned int span = *end - *begin;
 	UpdateLongestSpanMember(span);
 }
 
@@ -125,7 +125,7 @@ unsigned int Span::elem_count() const {
 	return elem_count_;
 }
 
-const Span::MapElems &Span::orderd_elems() const {
+const Span::Elems &Span::orderd_elems() const {
 	return orderd_elems_;
 }
 
@@ -144,12 +144,12 @@ void Span::PutElems() const {
 	std::cout << "map (size:" << orderd_elems_.size()
 			  << "),(elem count:" << elem_count_ << ")" << std::endl;
 	std::cout << "==> {";
-	MapElems::const_iterator itr;
+	Elems::const_iterator itr;
 	for (itr = orderd_elems_.begin(); itr != orderd_elems_.end(); ++itr) {
 		if (itr != orderd_elems_.begin()) {
 			std::cout << ", ";
 		}
-		std::cout << "{" << itr->first << ", " << itr->second << "}";
+		std::cout << *itr;
 	}
 	std::cout << "}" << std::endl;
 }
