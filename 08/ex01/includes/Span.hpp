@@ -5,7 +5,8 @@
 
 class Span {
   public:
-	typedef std::multiset<unsigned int> Elems;
+	typedef std::set<unsigned int>                 Elems;
+	typedef std::pair<Elems::const_iterator, bool> InsertResult;
 
   public:
 	Span(const unsigned int n);
@@ -32,13 +33,12 @@ class Span {
 
   private:
 	Span();
-	void UpdateShortestSpan(const unsigned int new_span);
-	void UpdateShortestSpanMember(const unsigned int new_span);
+	void UpdateShortestSpan(InsertResult result);
 	void UpdateLongestSpan();
-	void UpdateLongestSpanMember(const unsigned int new_span);
 
   private:
 	unsigned int capacity_;
+	unsigned int size_;
 	Elems        orderd_elems_;
 	unsigned int shortest_span_;
 	unsigned int longest_span_;

@@ -3,13 +3,14 @@
 #include <iostream>
 #include <stdexcept>
 
-Span::Span() : capacity_(0), shortest_span_(UINT_MAX), longest_span_(0) {}
+Span::Span() : capacity_(0), size_(0), shortest_span_(UINT_MAX), longest_span_(0) {}
 
 Span::Span(const unsigned int n)
-	: capacity_(n), shortest_span_(UINT_MAX), longest_span_(0) {}
+	: capacity_(n), size_(0), shortest_span_(UINT_MAX), longest_span_(0) {}
 
 Span::Span(const Span &other)
 	: capacity_(other.capacity_),
+	  size_(other.size_),
 	  orderd_elems_(other.orderd_elems_),
 	  shortest_span_(other.shortest_span_),
 	  longest_span_(other.longest_span_) {}
@@ -17,6 +18,7 @@ Span::Span(const Span &other)
 const Span &Span::operator=(const Span &other) {
 	if (this != &other) {
 		capacity_      = other.capacity_;
+		size_          = other.size_;
 		orderd_elems_  = other.orderd_elems_;
 		shortest_span_ = other.shortest_span_;
 		longest_span_  = other.longest_span_;
@@ -28,11 +30,12 @@ Span::~Span() {}
 
 // ---------------------------------------------------
 void Span::addNumber(const unsigned int number) {
-	if (orderd_elems_.size() == capacity_) {
+	if (size_ >= capacity_) {
 		throw std::logic_error("Span is full");
 	}
-	UpdateShortestSpan(number);
-	orderd_elems_.insert(number);
+	InsertResult result = orderd_elems_.insert(number);
+	size_++;
+	UpdateShortestSpan(result);
 	UpdateLongestSpan();
 }
 
@@ -43,12 +46,12 @@ static void ThrowExceptionIfLessElemCounts(const std::size_t size) {
 }
 
 unsigned int Span::shortestSpan() const {
-	ThrowExceptionIfLessElemCounts(orderd_elems_.size());
+	ThrowExceptionIfLessElemCounts(size_);
 	return shortest_span_;
 }
 
 unsigned int Span::longestSpan() const {
-	ThrowExceptionIfLessElemCounts(orderd_elems_.size());
+	ThrowExceptionIfLessElemCounts(size_);
 	return longest_span_;
 }
 
@@ -61,38 +64,24 @@ void Span::Insert(const unsigned int start, const unsigned int end) {
 }
 
 // ---------------------------------------------------
-void Span::UpdateShortestSpanMember(const unsigned int new_span) {
-	if (new_span < shortest_span_) {
-		shortest_span_ = new_span;
-	}
-}
-
-void Span::UpdateLongestSpanMember(const unsigned int new_span) {
-	if (new_span > longest_span_) {
-		longest_span_ = new_span;
-	}
-}
-
-void Span::UpdateShortestSpan(const unsigned int number) {
-	// empty
-	if (orderd_elems_.empty()) {
-		return;
-	}
-	// same element
-	if (orderd_elems_.count(number) > 0) {
+void Span::UpdateShortestSpan(InsertResult result) {
+	const bool is_new_number = result.second;
+	if (!is_new_number) {
 		shortest_span_ = 0;
 		return;
 	}
-	// new element
-	Elems::const_iterator itr = orderd_elems_.lower_bound(number);
-	if (itr != orderd_elems_.end()) {
-		// always exist higher element
-		UpdateShortestSpanMember(*itr - number);
-	}
-	if (itr != orderd_elems_.begin()) {
+	// new element (lower_bound)
+	Elems::const_iterator lower  = result.first;
+	Elems::const_iterator higher = result.first;
+	if (higher != orderd_elems_.begin()) {
 		// always exist lower element
-		--itr;
-		UpdateShortestSpanMember(number - *itr);
+		shortest_span_ = std::min(shortest_span_, *higher - *(--lower));
+		++lower;
+	}
+	if (lower != --orderd_elems_.end()) {
+		// always exist higher element
+		shortest_span_ = std::min(shortest_span_, *(++higher) - *lower);
+		--higher;
 	}
 }
 
@@ -105,8 +94,7 @@ void Span::UpdateLongestSpan() {
 	Elems::const_iterator end   = orderd_elems_.end();
 	// always exist lower element
 	--end;
-	const unsigned int span = *end - *begin;
-	UpdateLongestSpanMember(span);
+	longest_span_ = std::max(longest_span_, *end - *begin);
 }
 
 // ---------------------------------------------------
