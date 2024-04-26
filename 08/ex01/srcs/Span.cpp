@@ -98,20 +98,31 @@ void Span::UpdateLongestSpan() {
 }
 
 // ---------------------------------------------------
-unsigned int Span::capacity() const {
-	return capacity_;
-}
-
-const Span::Elems &Span::orderd_elems() const {
-	return orderd_elems_;
-}
-
-unsigned int Span::shortest_span() const {
-	return shortest_span_;
-}
-
-unsigned int Span::longest_span() const {
-	return longest_span_;
+bool Span::IsSameSpan(const Span &other) const {
+	if (this == &other) {
+		return true;
+	}
+	// Elems
+	const Span::Elems elems1 = orderd_elems_;
+	const Span::Elems elems2 = other.orderd_elems_;
+	if (elems1.size() != elems2.size()) {
+		return false;
+	}
+	Elems::const_iterator itr1 = elems1.begin();
+	Elems::const_iterator itr2 = elems2.begin();
+	for (; itr1 != elems1.end(); ++itr1) {
+		if (*itr1 != *itr2) {
+			return false;
+		}
+		++itr2;
+	}
+	// other members
+	if (capacity_ != other.capacity_ || size_ != other.size_ ||
+		shortest_span_ != other.shortest_span_ ||
+		longest_span_ != other.longest_span_) {
+		return false;
+	}
+	return true;
 }
 
 // ---------------------------------------------------

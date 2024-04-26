@@ -91,35 +91,12 @@ namespace test {
 
 	// -------------------------------------------------------------------------
 	void JudgeIsSameMembers(const Span &s1, const Span &s2) {
-		if (&s1 == &s2) {
-			std::cerr << COLOR_RED << "Error: same Span instance" << COLOR_END;
+		if (s1.IsSameSpan(s2)) {
+			std::cout << COLOR_GREEN "[copy: OK]" COLOR_END << std::endl;
+		} else {
+			std::cerr << COLOR_RED << "Error: not the same Span" << COLOR_END;
 			exit(EXIT_FAILURE);
 		}
-		// judge map's all elements
-		Span::Elems elems_s1 = s1.orderd_elems();
-		Span::Elems elems_s2 = s2.orderd_elems();
-		if (elems_s1.size() != elems_s2.size()) {
-			std::cerr << COLOR_RED << "Error: not the same map size" << COLOR_END;
-			exit(EXIT_FAILURE);
-		}
-		Span::Elems::const_iterator itr_s1;
-		Span::Elems::const_iterator itr_s2 = elems_s2.begin();
-		for (itr_s1 = elems_s1.begin(); itr_s1 != elems_s1.end(); ++itr_s1) {
-			if (*itr_s1 != *itr_s2) {
-				std::cerr << COLOR_RED << "Error: not the same map" << COLOR_END;
-				exit(EXIT_FAILURE);
-			}
-			++itr_s2;
-		}
-		// judge other members
-		if (s1.capacity() != s2.capacity() ||
-			s1.shortest_span() != s2.shortest_span() ||
-			s1.longest_span() != s2.longest_span()) {
-			std::cerr << COLOR_RED << "Error: not the same member variables"
-					  << COLOR_END;
-			exit(EXIT_FAILURE);
-		}
-		std::cout << COLOR_GREEN "[copy: OK]" COLOR_END << std::endl;
 	}
 	// -------------------------------------------------------------------------
 	void RunExactlySubjectTest() {

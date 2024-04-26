@@ -23,13 +23,7 @@ class Span {
 	template <typename T>
 	void Insert(typename T::const_iterator first, typename T::const_iterator last);
 	void PutElems() const;
-
-  public:
-	// getter for test
-	unsigned int capacity() const;
-	const Elems &orderd_elems() const;
-	unsigned int shortest_span() const;
-	unsigned int longest_span() const;
+	bool IsSameSpan(const Span &other) const;
 
   private:
 	Span();
