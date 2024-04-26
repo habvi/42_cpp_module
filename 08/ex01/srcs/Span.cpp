@@ -60,19 +60,19 @@ void Span::Insert(const unsigned int start, const unsigned int end) {
 }
 
 // ---------------------------------------------------
-void Span::UpdateShortestSpanMember(const unsigned int &new_span) {
+void Span::UpdateShortestSpanMember(const unsigned int new_span) {
 	if (new_span < shortest_span_) {
 		shortest_span_ = new_span;
 	}
 }
 
-void Span::UpdateLongestSpanMember(const unsigned int &new_span) {
+void Span::UpdateLongestSpanMember(const unsigned int new_span) {
 	if (new_span > longest_span_) {
 		longest_span_ = new_span;
 	}
 }
 
-void Span::UpdateShortestSpan(const unsigned int &number) {
+void Span::UpdateShortestSpan(const unsigned int number) {
 	// empty
 	if (orderd_elems_.empty()) {
 		return;

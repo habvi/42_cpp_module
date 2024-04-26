@@ -33,10 +33,10 @@ class Span {
   private:
 	Span();
 	void ThrowExceptionIfLessElemCounts() const;
-	void UpdateShortestSpan(const unsigned int &new_span);
-	void UpdateShortestSpanMember(const unsigned int &new_span);
+	void UpdateShortestSpan(const unsigned int new_span);
+	void UpdateShortestSpanMember(const unsigned int new_span);
 	void UpdateLongestSpan();
-	void UpdateLongestSpanMember(const unsigned int &new_span);
+	void UpdateLongestSpanMember(const unsigned int new_span);
 
   private:
 	const unsigned int max_elem_size_;
