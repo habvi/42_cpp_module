@@ -2,6 +2,9 @@
 #include <climits>
 #include <stdexcept>
 
+const std::string Span::kErrMsgNotEnoughSize = "Not enough elements size";
+const std::string Span::kErrMsgFullCapacity  = "Capacity is full";
+
 Span::Span() : capacity_(0), size_(0), shortest_span_(UINT_MAX), longest_span_(0) {}
 
 Span::Span(const unsigned int n)
@@ -30,7 +33,7 @@ Span::~Span() {}
 // ---------------------------------------------------
 void Span::addNumber(const int number) {
 	if (size_ >= capacity_) {
-		throw std::logic_error("Span is full");
+		throw std::logic_error(kErrMsgFullCapacity);
 	}
 	InsertResult result = orderd_elems_.insert(number);
 	size_++;
@@ -38,19 +41,17 @@ void Span::addNumber(const int number) {
 	UpdateLongestSpan();
 }
 
-static void ThrowExceptionIfLessElemCounts(const std::size_t size) {
-	if (size < 2) {
-		throw std::logic_error("Span needs at least 2 elements");
-	}
-}
-
 unsigned int Span::shortestSpan() const {
-	ThrowExceptionIfLessElemCounts(size_);
+	if (size_ < 2) {
+		throw std::logic_error(kErrMsgNotEnoughSize);
+	}
 	return shortest_span_;
 }
 
 unsigned int Span::longestSpan() const {
-	ThrowExceptionIfLessElemCounts(size_);
+	if (size_ < 2) {
+		throw std::logic_error(kErrMsgNotEnoughSize);
+	}
 	return longest_span_;
 }
 

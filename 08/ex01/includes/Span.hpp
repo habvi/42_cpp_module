@@ -33,11 +33,13 @@ class Span {
 	void UpdateLongestSpan();
 
   private:
-	unsigned int capacity_;
-	unsigned int size_;
-	Elems        orderd_elems_;
-	unsigned int shortest_span_;
-	unsigned int longest_span_;
+	static const std::string kErrMsgNotEnoughSize;
+	static const std::string kErrMsgFullCapacity;
+	unsigned int             capacity_;
+	unsigned int             size_;
+	Elems                    orderd_elems_;
+	unsigned int             shortest_span_;
+	unsigned int             longest_span_;
 };
 
 template <typename T>
