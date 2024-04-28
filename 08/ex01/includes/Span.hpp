@@ -29,8 +29,10 @@ class Span {
 
   private:
 	Span();
-	void UpdateShortestSpan(InsertResult result);
-	void UpdateLongestSpan();
+	Elems::const_iterator Prev(Elems::const_iterator itr);
+	Elems::const_iterator Next(Elems::const_iterator itr);
+	void                  UpdateShortestSpan(InsertResult result);
+	void                  UpdateLongestSpan();
 
   private:
 	unsigned int capacity_;

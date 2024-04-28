@@ -63,6 +63,14 @@ void Span::Insert(const int start, const int end) {
 }
 
 // ---------------------------------------------------
+Span::Elems::const_iterator Span::Prev(Elems::const_iterator itr) {
+	return --itr;
+}
+
+Span::Elems::const_iterator Span::Next(Elems::const_iterator itr) {
+	return ++itr;
+}
+
 void Span::UpdateShortestSpan(InsertResult result) {
 	const bool is_new_number = result.second;
 	if (!is_new_number) {
@@ -70,16 +78,16 @@ void Span::UpdateShortestSpan(InsertResult result) {
 		return;
 	}
 	// new number (lower_bound)
+	Elems::const_iterator itr = result.first;
+	if (itr != orderd_elems_.begin()) {
 		// always exist lower element
-		const unsigned int span = static_cast<unsigned int>(*higher - *(--lower));
+		const unsigned int span = static_cast<unsigned int>(*itr - *Prev(itr));
 		shortest_span_          = std::min(shortest_span_, span);
-		++lower;
 	}
-	if (lower != --orderd_elems_.end()) {
+	if (itr != --orderd_elems_.end()) {
 		// always exist higher element
-		const unsigned int span = static_cast<unsigned int>(*(++higher) - *lower);
+		const unsigned int span = static_cast<unsigned int>(*Next(itr) - *itr);
 		shortest_span_          = std::min(shortest_span_, span);
-		--higher;
 	}
 }
 
@@ -91,8 +99,7 @@ void Span::UpdateLongestSpan() {
 	Elems::const_iterator begin = orderd_elems_.begin();
 	Elems::const_iterator end   = orderd_elems_.end();
 	// always exist lower element
-	--end;
-	const unsigned int span = static_cast<unsigned int>(*end - *begin);
+	const unsigned int span = static_cast<unsigned int>(*Prev(end) - *begin);
 	longest_span_           = std::max(longest_span_, span);
 }
 
