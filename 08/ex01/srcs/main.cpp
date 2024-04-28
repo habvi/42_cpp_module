@@ -1,5 +1,6 @@
 #include "Span.hpp"
 #include "color.hpp"
+#include <climits>
 #include <cstdlib>
 #include <iostream>
 #include <sstream> // stringstream
@@ -34,10 +35,14 @@ namespace test {
 	}
 
 	template <typename T>
-	void JudgeResult(const unsigned int num, const T &expected, const T &result) {
+	void JudgeResult(const int num, const T &expected, const T &result) {
 		if (expected == result) {
-			std::cout << COLOR_GREEN "[add " << num << " : OK]" COLOR_END
-					  << std::endl;
+			if (expected == SUCCESS) {
+				std::cout << COLOR_GREEN "[add " << num << " : OK]" COLOR_END
+						  << std::endl;
+			} else {
+				std::cout << COLOR_GREEN "[OK]" COLOR_END << std::endl;
+			}
 		} else {
 			std::cout << COLOR_RED "[add " << num << " : NG]" COLOR_END << std::endl;
 			exit(EXIT_FAILURE);
@@ -45,7 +50,7 @@ namespace test {
 	}
 
 	// -------------------------------------------------------------------------
-	void AddNumber(Span &span, const unsigned int num, Result expected) {
+	void AddNumber(Span &span, const int num, Result expected) {
 		try {
 			span.addNumber(num);
 			JudgeResult(num, expected, SUCCESS);
@@ -91,36 +96,12 @@ namespace test {
 
 	// -------------------------------------------------------------------------
 	void JudgeIsSameMembers(const Span &s1, const Span &s2) {
-		if (&s1 == &s2) {
-			std::cerr << COLOR_RED << "Error: same Span instance" << COLOR_END;
+		if (s1.IsSameSpan(s2)) {
+			std::cout << COLOR_GREEN "[copy: OK]" COLOR_END << std::endl;
+		} else {
+			std::cerr << COLOR_RED << "Error: not the same Span" << COLOR_END;
 			exit(EXIT_FAILURE);
 		}
-		// judge map's all elements
-		Span::Elems elems_s1 = s1.orderd_elems();
-		Span::Elems elems_s2 = s2.orderd_elems();
-		if (elems_s1.size() != elems_s2.size()) {
-			std::cerr << COLOR_RED << "Error: not the same map size" << COLOR_END;
-			exit(EXIT_FAILURE);
-		}
-		Span::Elems::const_iterator itr_s1;
-		Span::Elems::const_iterator itr_s2 = elems_s2.begin();
-		for (itr_s1 = elems_s1.begin(); itr_s1 != elems_s1.end(); ++itr_s1) {
-			if (*itr_s1 != *itr_s2) {
-				std::cerr << COLOR_RED << "Error: not the same map" << COLOR_END;
-				exit(EXIT_FAILURE);
-			}
-			++itr_s2;
-		}
-		// judge other members
-		if (s1.max_elem_size() != s2.max_elem_size() ||
-			s1.elem_count() != s2.elem_count() ||
-			s1.shortest_span() != s2.shortest_span() ||
-			s1.longest_span() != s2.longest_span()) {
-			std::cerr << COLOR_RED << "Error: not the same member variables"
-					  << COLOR_END;
-			exit(EXIT_FAILURE);
-		}
-		std::cout << COLOR_GREEN "[copy: OK]" COLOR_END << std::endl;
 	}
 	// -------------------------------------------------------------------------
 	void RunExactlySubjectTest() {
@@ -160,7 +141,7 @@ namespace test {
 
 		Span span = Span(1);
 		AddNumber(span, 5, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 0, FAIL, 0, FAIL);
 	}
 
@@ -169,15 +150,15 @@ namespace test {
 
 		Span span = Span(2);
 		AddNumber(span, 9, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 0, FAIL, 0, FAIL);
 		Line();
 		AddNumber(span, 9, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 0, SUCCESS, 0, SUCCESS);
 		Line();
 		AddNumber(span, 9, FAIL);
-		span.PutElems();
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 0, FAIL, 0, FAIL);
 	}
 
@@ -186,18 +167,18 @@ namespace test {
 
 		Span span = Span(4);
 		AddNumber(span, 1, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		Line();
 		AddNumber(span, 3, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 2, SUCCESS, 2, SUCCESS);
 		Line();
 		AddNumber(span, 5, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 2, SUCCESS, 4, SUCCESS);
 		Line();
 		AddNumber(span, 5, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 0, SUCCESS, 4, SUCCESS);
 	}
 
@@ -206,18 +187,18 @@ namespace test {
 
 		Span span = Span(4);
 		AddNumber(span, 1, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		Line();
 		AddNumber(span, 3, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 2, SUCCESS, 2, SUCCESS);
 		Line();
 		AddNumber(span, 5, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 2, SUCCESS, 4, SUCCESS);
 		Line();
 		AddNumber(span, 1, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 0, SUCCESS, 4, SUCCESS);
 	}
 
@@ -226,14 +207,14 @@ namespace test {
 
 		Span span = Span(4);
 		AddNumber(span, 0, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		Line();
 		AddNumber(span, 5, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 5, SUCCESS, 5, SUCCESS);
 		Line();
 		AddNumber(span, 50, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 5, SUCCESS, 50, SUCCESS);
 	}
 
@@ -242,14 +223,14 @@ namespace test {
 
 		Span span = Span(4);
 		AddNumber(span, 100, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		Line();
 		AddNumber(span, 95, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 5, SUCCESS, 5, SUCCESS);
 		Line();
 		AddNumber(span, 50, SUCCESS);
-		span.PutElems();
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 5, SUCCESS, 50, SUCCESS);
 	}
 
@@ -258,10 +239,10 @@ namespace test {
 
 		Span span1 = Span(3);
 		AddNumber(span1, 2, SUCCESS);
-		span1.PutElems();
+		std::cout << span1 << std::endl;
 		Line();
 		AddNumber(span1, 10, SUCCESS);
-		span1.PutElems();
+		std::cout << span1 << std::endl;
 		ShortestAndLongest(span1, 8, SUCCESS, 8, SUCCESS);
 		Line();
 
@@ -269,7 +250,7 @@ namespace test {
 		Span span2(span1);
 		JudgeIsSameMembers(span1, span2);
 		AddNumber(span2, 4, SUCCESS);
-		span2.PutElems();
+		std::cout << span2 << std::endl;
 		ShortestAndLongest(span2, 2, SUCCESS, 8, SUCCESS);
 
 		Line();
@@ -282,10 +263,10 @@ namespace test {
 
 		Span span1 = Span(3);
 		AddNumber(span1, 2, SUCCESS);
-		span1.PutElems();
+		std::cout << span1 << std::endl;
 		Line();
 		AddNumber(span1, 10, SUCCESS);
-		span1.PutElems();
+		std::cout << span1 << std::endl;
 		ShortestAndLongest(span1, 8, SUCCESS, 8, SUCCESS);
 		Line();
 
@@ -293,7 +274,7 @@ namespace test {
 		Span span2 = span1;
 		JudgeIsSameMembers(span1, span2);
 		AddNumber(span2, 4, SUCCESS);
-		span2.PutElems();
+		std::cout << span2 << std::endl;
 		ShortestAndLongest(span2, 2, SUCCESS, 8, SUCCESS);
 
 		Line();
@@ -302,7 +283,7 @@ namespace test {
 	}
 
 	void RunOriginalTest10() {
-		DisplayTitle(10, "capacity: 10000 / by addNumber()");
+		DisplayTitle(10, "capacity: 100000 / by addNumber()");
 
 		static const unsigned int kCapacity = 100000;
 
@@ -314,29 +295,67 @@ namespace test {
 	}
 
 	void RunOriginalTest11() {
-		DisplayTitle(11, "capacity: 10000 / Insert() / add at once");
+		DisplayTitle(11, "capacity: 100000 / Insert() / add at once");
 
-		static const unsigned int kCapacity = 100000;
-
-		Span span = Span(kCapacity);
+		Span span = Span(100000);
 		span.Insert(123, 1000);
 		ShortestAndLongest(span, 1, SUCCESS, 1000 - 123 - 1, SUCCESS);
 	}
 
 	void RunOriginalTest12() {
-		DisplayTitle(11, "capacity: 7 / Insert() / range of iterators");
+		DisplayTitle(12, "capacity: 10 / Insert() / range of iterators");
 
-		static const unsigned int kCapacity = 10;
+		int              arr[7] = {12, 377, 41, 9999, 215, 0, 3146};
+		std::vector<int> vec(arr, arr + 7);
 
-		unsigned int              arr[7] = {12, 377, 41, 9999, 215, 0, 3146};
-		std::vector<unsigned int> vec(arr, arr + 7);
-
-		Span span = Span(kCapacity);
-		span.Insert<std::vector<unsigned int> >(vec.begin(), vec.end());
-		span.PutElems();
+		Span span = Span(10);
+		span.Insert<std::vector<int> >(vec.begin(), vec.end());
+		std::cout << span << std::endl;
 		ShortestAndLongest(span, 12, SUCCESS, 9999, SUCCESS);
 	}
 
+	void RunOriginalTest13() {
+		DisplayTitle(13, "capacity: 6 / INT_MIN, INT_MAX");
+
+		int              arr[2] = {INT_MIN, INT_MAX};
+		std::vector<int> vec(arr, arr + 2);
+
+		Span span = Span(6);
+		span.Insert<std::vector<int> >(vec.begin(), vec.end());
+		std::cout << span << std::endl;
+		ShortestAndLongest(span, UINT_MAX, SUCCESS, UINT_MAX, SUCCESS);
+		Line();
+
+		AddNumber(span, INT_MAX, SUCCESS);
+		std::cout << span << std::endl;
+		ShortestAndLongest(span, 0, SUCCESS, UINT_MAX, SUCCESS);
+		Line();
+
+		AddNumber(span, 0, SUCCESS);
+		std::cout << span << std::endl;
+		ShortestAndLongest(span, 0, SUCCESS, UINT_MAX, SUCCESS);
+	}
+
+	void RunOriginalTest14() {
+		DisplayTitle(14, "capacity: 6 / minus elems");
+
+		Span span = Span(6);
+		AddNumber(span, -10, SUCCESS);
+		std::cout << span << std::endl;
+		AddNumber(span, -30, SUCCESS);
+		std::cout << span << std::endl;
+		ShortestAndLongest(span, 20, SUCCESS, 20, SUCCESS);
+		Line();
+
+		AddNumber(span, -12, SUCCESS);
+		std::cout << span << std::endl;
+		ShortestAndLongest(span, 2, SUCCESS, 20, SUCCESS);
+		Line();
+
+		AddNumber(span, -100, SUCCESS);
+		std::cout << span << std::endl;
+		ShortestAndLongest(span, 2, SUCCESS, 90, SUCCESS);
+	}
 } // namespace test
 
 int main(int argc, char **argv) {
@@ -357,6 +376,8 @@ int main(int argc, char **argv) {
 		test::RunOriginalTest10();
 		test::RunOriginalTest11();
 		test::RunOriginalTest12();
+		test::RunOriginalTest13();
+		test::RunOriginalTest14();
 	}
 	return EXIT_SUCCESS;
 }

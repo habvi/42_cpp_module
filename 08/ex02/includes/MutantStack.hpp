@@ -2,12 +2,12 @@
 #define EX02_MUTANTSTACK_HPP
 
 #include <cstddef>
+#include <ostream>
 #include <stack>
 
-template <typename T>
-class MutantStack : public std::stack<T> {
+template <typename T, typename Container = std::deque<T> >
+class MutantStack : public std::stack<T, Container> {
   public:
-	typedef typename std::stack<T>::container_type     Container;
 	typedef typename Container::iterator               iterator;
 	typedef typename Container::const_iterator         const_iterator;
 	typedef typename Container::reverse_iterator       reverse_iterator;
@@ -30,8 +30,11 @@ class MutantStack : public std::stack<T> {
 	const_reverse_iterator rend() const;
 
   public:
-	void DebugPrint();
+	std::ostream &Print(std::ostream &out) const;
 };
+
+template <typename T, typename Container>
+std::ostream &operator<<(std::ostream &out, const MutantStack<T, Container> &m);
 
 #include "MutantStack.tpp"
 

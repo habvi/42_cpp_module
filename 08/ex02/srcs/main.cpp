@@ -273,10 +273,10 @@ namespace test {
 		for (int i = 0; i < 10; i++) {
 			mstack.push(i);
 		}
-		mstack.DebugPrint();
+		std::cout << mstack << std::endl;
 
 		MutantStack<int> tmp(mstack); // copy
-		tmp.DebugPrint();
+		std::cout << tmp << std::endl;
 
 		JudgeIsSameStack(mstack, tmp);
 	}
@@ -288,7 +288,7 @@ namespace test {
 		for (int i = 0; i < 10; i++) {
 			mstack.push(i);
 		}
-		mstack.DebugPrint();
+		std::cout << mstack << std::endl;
 
 		std::stack<int> tmp(mstack); // copy
 
@@ -302,10 +302,10 @@ namespace test {
 		for (int i = 0; i < 10; i++) {
 			mstack.push(i);
 		}
-		mstack.DebugPrint();
+		std::cout << mstack << std::endl;
 
 		MutantStack<int> tmp = mstack; // copy
-		tmp.DebugPrint();
+		std::cout << tmp << std::endl;
 
 		JudgeIsSameStack(mstack, tmp);
 	}
@@ -317,7 +317,7 @@ namespace test {
 		for (int i = 0; i < 10; i++) {
 			mstack.push(i);
 		}
-		mstack.DebugPrint();
+		std::cout << mstack << std::endl;
 
 		std::stack<int> tmp = mstack; // copy
 
@@ -333,7 +333,7 @@ namespace test {
 		for (int i = 0; i < 10; i++) {
 			mstack.push(i);
 		}
-		mstack.DebugPrint();
+		std::cout << mstack << std::endl;
 		Line();
 
 		MutantStack<int> tmp(mstack); // copy
@@ -345,7 +345,7 @@ namespace test {
 			*itr = 123; // update value
 			++itr;
 		}
-		mstack.DebugPrint(); // updated
+		std::cout << mstack << std::endl; // updated
 		Line();
 		PrintStack(tmp); // after. not change
 	}
@@ -357,13 +357,13 @@ namespace test {
 		for (int i = 0; i < 10; i++) {
 			mstack.push(i);
 		}
-		mstack.DebugPrint();
+		std::cout << mstack << std::endl;
 		Line();
 
 		for (int i = 0; i < 10; i++) {
 			mstack.pop();
 		}
-		mstack.DebugPrint();
+		std::cout << mstack << std::endl;
 
 		// pop() with size = 0 is undefined
 		// (linux:nothing happened, macOS:Segmentation fault)
@@ -379,16 +379,16 @@ namespace test {
 		mstack.push("abcdefghijklmn");
 		mstack.push("");
 		mstack.push("1234");
-		mstack.DebugPrint();
+		std::cout << mstack << std::endl;
 		Line();
 
 		MutantStack<std::string> tmp(mstack); // copy
-		tmp.DebugPrint();
+		std::cout << tmp << std::endl;
 		JudgeIsSameStack(mstack, tmp);
 		Line();
 
 		MutantStack<std::string> tmp2 = mstack; // copy
-		tmp2.DebugPrint();
+		std::cout << tmp2 << std::endl;
 		JudgeIsSameStack(mstack, tmp2);
 	}
 
@@ -399,7 +399,7 @@ namespace test {
 		for (int i = 0; i < 10; i++) {
 			mstack.push(i);
 		}
-		mstack.DebugPrint();
+		std::cout << mstack << std::endl;
 		Line();
 
 		// reverse_iterator
