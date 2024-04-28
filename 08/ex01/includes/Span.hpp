@@ -6,7 +6,7 @@
 
 class Span {
   public:
-	typedef std::set<unsigned int>                 Elems;
+	typedef std::set<int>                          Elems;
 	typedef std::pair<Elems::const_iterator, bool> InsertResult;
 
   public:
@@ -17,10 +17,11 @@ class Span {
 
   public:
 	// Following the instructions, not camelcase.
-	void         addNumber(const unsigned int number);
+	void         addNumber(const int number);
 	unsigned int shortestSpan() const;
 	unsigned int longestSpan() const;
-	void         Insert(const unsigned int start, const unsigned int end);
+	// original functions
+	void Insert(const int start, const int end);
 	template <typename T>
 	void Insert(typename T::const_iterator first, typename T::const_iterator last);
 	std::ostream &Print(std::ostream &out) const;

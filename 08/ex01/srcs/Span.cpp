@@ -28,7 +28,7 @@ Span &Span::operator=(const Span &other) {
 Span::~Span() {}
 
 // ---------------------------------------------------
-void Span::addNumber(const unsigned int number) {
+void Span::addNumber(const int number) {
 	if (size_ >= capacity_) {
 		throw std::logic_error("Span is full");
 	}
@@ -56,8 +56,8 @@ unsigned int Span::longestSpan() const {
 
 // addNumber: start ~ (end - 1)
 // if start >= end, nothing happend.
-void Span::Insert(const unsigned int start, const unsigned int end) {
-	for (unsigned int i = start; i < end; i++) {
+void Span::Insert(const int start, const int end) {
+	for (int i = start; i < end; i++) {
 		addNumber(i);
 	}
 }
@@ -69,17 +69,16 @@ void Span::UpdateShortestSpan(InsertResult result) {
 		shortest_span_ = 0;
 		return;
 	}
-	// new element (lower_bound)
-	Elems::const_iterator lower  = result.first;
-	Elems::const_iterator higher = result.first;
-	if (higher != orderd_elems_.begin()) {
+	// new number (lower_bound)
 		// always exist lower element
-		shortest_span_ = std::min(shortest_span_, *higher - *(--lower));
+		const unsigned int span = static_cast<unsigned int>(*higher - *(--lower));
+		shortest_span_          = std::min(shortest_span_, span);
 		++lower;
 	}
 	if (lower != --orderd_elems_.end()) {
 		// always exist higher element
-		shortest_span_ = std::min(shortest_span_, *(++higher) - *lower);
+		const unsigned int span = static_cast<unsigned int>(*(++higher) - *lower);
+		shortest_span_          = std::min(shortest_span_, span);
 		--higher;
 	}
 }
@@ -93,7 +92,8 @@ void Span::UpdateLongestSpan() {
 	Elems::const_iterator end   = orderd_elems_.end();
 	// always exist lower element
 	--end;
-	longest_span_ = std::max(longest_span_, *end - *begin);
+	const unsigned int span = static_cast<unsigned int>(*end - *begin);
+	longest_span_           = std::max(longest_span_, span);
 }
 
 // ---------------------------------------------------
