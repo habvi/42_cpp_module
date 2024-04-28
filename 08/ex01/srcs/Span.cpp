@@ -1,4 +1,5 @@
 #include "Span.hpp"
+#include <algorithm> // min,max
 #include <climits>
 #include <stdexcept>
 
