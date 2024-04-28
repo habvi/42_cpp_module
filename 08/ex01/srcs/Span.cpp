@@ -63,14 +63,6 @@ void Span::Insert(const int start, const int end) {
 }
 
 // ---------------------------------------------------
-Span::Elems::const_iterator Span::Prev(Elems::const_iterator itr) {
-	return --itr;
-}
-
-Span::Elems::const_iterator Span::Next(Elems::const_iterator itr) {
-	return ++itr;
-}
-
 void Span::UpdateShortestSpan(InsertResult result) {
 	const bool is_new_number = result.second;
 	if (!is_new_number) {
@@ -78,16 +70,18 @@ void Span::UpdateShortestSpan(InsertResult result) {
 		return;
 	}
 	// new number (lower_bound)
-	Elems::const_iterator itr = result.first;
-	if (itr != orderd_elems_.begin()) {
+	const Elems::const_iterator pos = result.first;
+	if (pos != orderd_elems_.begin()) {
 		// always exist lower element
-		const unsigned int span = static_cast<unsigned int>(*itr - *Prev(itr));
-		shortest_span_          = std::min(shortest_span_, span);
+		const Elems::const_iterator prev = --Elems::iterator(pos);
+		const unsigned int          span = static_cast<unsigned int>(*pos - *prev);
+		shortest_span_                   = std::min(shortest_span_, span);
 	}
-	if (itr != --orderd_elems_.end()) {
+	if (pos != --orderd_elems_.end()) {
 		// always exist higher element
-		const unsigned int span = static_cast<unsigned int>(*Next(itr) - *itr);
-		shortest_span_          = std::min(shortest_span_, span);
+		const Elems::const_iterator next = ++Elems::iterator(pos);
+		const unsigned int          span = static_cast<unsigned int>(*next - *pos);
+		shortest_span_                   = std::min(shortest_span_, span);
 	}
 }
 
@@ -96,11 +90,11 @@ void Span::UpdateLongestSpan() {
 	if (orderd_elems_.size() < 2) {
 		return;
 	}
-	Elems::const_iterator begin = orderd_elems_.begin();
-	Elems::const_iterator end   = orderd_elems_.end();
+	const Elems::const_iterator first = orderd_elems_.begin();
 	// always exist lower element
-	const unsigned int span = static_cast<unsigned int>(*Prev(end) - *begin);
-	longest_span_           = std::max(longest_span_, span);
+	const Elems::const_iterator last = --orderd_elems_.end();
+	const unsigned int          span = static_cast<unsigned int>(*last - *first);
+	longest_span_                    = std::max(longest_span_, span);
 }
 
 // ---------------------------------------------------
