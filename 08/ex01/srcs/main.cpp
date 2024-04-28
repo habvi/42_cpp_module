@@ -35,7 +35,7 @@ namespace test {
 	}
 
 	template <typename T>
-	void JudgeResult(const unsigned int num, const T &expected, const T &result) {
+	void JudgeResult(const int num, const T &expected, const T &result) {
 		if (expected == result) {
 			std::cout << COLOR_GREEN "[add " << num << " : OK]" COLOR_END
 					  << std::endl;
@@ -46,7 +46,7 @@ namespace test {
 	}
 
 	// -------------------------------------------------------------------------
-	void AddNumber(Span &span, const unsigned int num, Result expected) {
+	void AddNumber(Span &span, const int num, Result expected) {
 		try {
 			span.addNumber(num);
 			JudgeResult(num, expected, SUCCESS);
@@ -305,11 +305,11 @@ namespace test {
 
 		static const unsigned int kCapacity = 10;
 
-		unsigned int              arr[7] = {12, 377, 41, 9999, 215, 0, 3146};
-		std::vector<unsigned int> vec(arr, arr + 7);
+		int              arr[7] = {12, 377, 41, 9999, 215, 0, 3146};
+		std::vector<int> vec(arr, arr + 7);
 
 		Span span = Span(kCapacity);
-		span.Insert<std::vector<unsigned int> >(vec.begin(), vec.end());
+		span.Insert<std::vector<int> >(vec.begin(), vec.end());
 		std::cout << span << std::endl;
 		ShortestAndLongest(span, 12, SUCCESS, 9999, SUCCESS);
 	}
