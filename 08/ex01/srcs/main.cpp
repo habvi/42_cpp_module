@@ -1,5 +1,6 @@
 #include "Span.hpp"
 #include "color.hpp"
+#include <climits>
 #include <cstdlib>
 #include <iostream>
 #include <sstream> // stringstream
@@ -313,6 +314,46 @@ namespace test {
 		ShortestAndLongest(span, 12, SUCCESS, 9999, SUCCESS);
 	}
 
+	void RunOriginalTest13() {
+		DisplayTitle(13, "capacity: 6 / INT_MIN, INT_MAX");
+
+		int              arr[2] = {INT_MIN, INT_MAX};
+		std::vector<int> vec(arr, arr + 2);
+
+		Span span = Span(6);
+		span.Insert<std::vector<int> >(vec.begin(), vec.end());
+		std::cout << span << std::endl;
+		ShortestAndLongest(span, UINT_MAX, SUCCESS, UINT_MAX, SUCCESS);
+		Line();
+
+		AddNumber(span, INT_MAX, SUCCESS);
+		std::cout << span << std::endl;
+		ShortestAndLongest(span, 0, SUCCESS, UINT_MAX, SUCCESS);
+		Line();
+
+		AddNumber(span, 0, SUCCESS);
+		std::cout << span << std::endl;
+		ShortestAndLongest(span, 0, SUCCESS, UINT_MAX, SUCCESS);
+	}
+
+	void RunOriginalTest14() {
+		DisplayTitle(14, "capacity: 6 / minus elems");
+
+		Span span = Span(6);
+		AddNumber(span, -10, SUCCESS);
+		std::cout << span << std::endl;
+		AddNumber(span, -30, SUCCESS);
+		std::cout << span << std::endl;
+		ShortestAndLongest(span, 20, SUCCESS, 20, SUCCESS);
+		Line();
+		AddNumber(span, -12, SUCCESS);
+		std::cout << span << std::endl;
+		ShortestAndLongest(span, 2, SUCCESS, 20, SUCCESS);
+		Line();
+		AddNumber(span, -100, SUCCESS);
+		std::cout << span << std::endl;
+		ShortestAndLongest(span, 2, SUCCESS, 90, SUCCESS);
+	}
 } // namespace test
 
 int main(int argc, char **argv) {
@@ -333,6 +374,8 @@ int main(int argc, char **argv) {
 		test::RunOriginalTest10();
 		test::RunOriginalTest11();
 		test::RunOriginalTest12();
+		test::RunOriginalTest13();
+		test::RunOriginalTest14();
 	}
 	return EXIT_SUCCESS;
 }
