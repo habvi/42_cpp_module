@@ -142,7 +142,7 @@ std::ostream &Span::Print(std::ostream &out) const {
 		}
 		out << *itr;
 	}
-	out << "}" << std::endl;
+	out << "}";
 	return out;
 }
 
