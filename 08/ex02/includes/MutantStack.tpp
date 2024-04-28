@@ -81,7 +81,7 @@ std::ostream &MutantStack<T, Container>::Print(std::ostream &out) const {
 		}
 		out << *itr;
 	}
-	out << "}" << std::endl;
+	out << "}";
 	return out;
 }
 
