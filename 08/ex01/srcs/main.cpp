@@ -37,8 +37,12 @@ namespace test {
 	template <typename T>
 	void JudgeResult(const int num, const T &expected, const T &result) {
 		if (expected == result) {
-			std::cout << COLOR_GREEN "[add " << num << " : OK]" COLOR_END
-					  << std::endl;
+			if (expected == SUCCESS) {
+				std::cout << COLOR_GREEN "[add " << num << " : OK]" COLOR_END
+						  << std::endl;
+			} else {
+				std::cout << COLOR_GREEN "[OK]" COLOR_END << std::endl;
+			}
 		} else {
 			std::cout << COLOR_RED "[add " << num << " : NG]" COLOR_END << std::endl;
 			exit(EXIT_FAILURE);
@@ -279,7 +283,7 @@ namespace test {
 	}
 
 	void RunOriginalTest10() {
-		DisplayTitle(10, "capacity: 10000 / by addNumber()");
+		DisplayTitle(10, "capacity: 100000 / by addNumber()");
 
 		static const unsigned int kCapacity = 100000;
 
@@ -291,24 +295,20 @@ namespace test {
 	}
 
 	void RunOriginalTest11() {
-		DisplayTitle(11, "capacity: 10000 / Insert() / add at once");
+		DisplayTitle(11, "capacity: 100000 / Insert() / add at once");
 
-		static const unsigned int kCapacity = 100000;
-
-		Span span = Span(kCapacity);
+		Span span = Span(100000);
 		span.Insert(123, 1000);
 		ShortestAndLongest(span, 1, SUCCESS, 1000 - 123 - 1, SUCCESS);
 	}
 
 	void RunOriginalTest12() {
-		DisplayTitle(11, "capacity: 7 / Insert() / range of iterators");
-
-		static const unsigned int kCapacity = 10;
+		DisplayTitle(12, "capacity: 10 / Insert() / range of iterators");
 
 		int              arr[7] = {12, 377, 41, 9999, 215, 0, 3146};
 		std::vector<int> vec(arr, arr + 7);
 
-		Span span = Span(kCapacity);
+		Span span = Span(10);
 		span.Insert<std::vector<int> >(vec.begin(), vec.end());
 		std::cout << span << std::endl;
 		ShortestAndLongest(span, 12, SUCCESS, 9999, SUCCESS);
@@ -346,10 +346,12 @@ namespace test {
 		std::cout << span << std::endl;
 		ShortestAndLongest(span, 20, SUCCESS, 20, SUCCESS);
 		Line();
+
 		AddNumber(span, -12, SUCCESS);
 		std::cout << span << std::endl;
 		ShortestAndLongest(span, 2, SUCCESS, 20, SUCCESS);
 		Line();
+
 		AddNumber(span, -100, SUCCESS);
 		std::cout << span << std::endl;
 		ShortestAndLongest(span, 2, SUCCESS, 90, SUCCESS);
