@@ -19,7 +19,7 @@ class AMateria {
 	AMateria();
 	explicit AMateria(std::string const &type);
 	AMateria(const AMateria &a);
-	const AMateria &operator=(const AMateria &a);
+	AMateria &operator=(const AMateria &a);
 
   private:
 	std::string type_;

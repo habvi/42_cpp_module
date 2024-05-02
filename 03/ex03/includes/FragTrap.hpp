@@ -9,7 +9,7 @@ class FragTrap : public virtual ClapTrap {
 	explicit FragTrap(const std::string &name);
 	FragTrap(const FragTrap &f);
 	~FragTrap();
-	const FragTrap &operator=(const FragTrap &f);
+	FragTrap &operator=(const FragTrap &f);
 
   public:
 	// Following the instructions, not camelcase and const qualifier isn't used.

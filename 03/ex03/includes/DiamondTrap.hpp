@@ -10,7 +10,7 @@ class DiamondTrap : public ScavTrap, public FragTrap {
 	explicit DiamondTrap(const std::string &name);
 	DiamondTrap(const DiamondTrap &d);
 	~DiamondTrap();
-	const DiamondTrap &operator=(const DiamondTrap &d);
+	DiamondTrap &operator=(const DiamondTrap &d);
 
   public:
 	// Following the instructions, not camelcase and const qualifier isn't used.

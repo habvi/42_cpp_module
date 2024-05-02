@@ -12,7 +12,7 @@ Ice::Ice(const std::string &type) : AMateria(type) {}
 
 Ice::Ice(const Ice &i) : AMateria(i.getType()) {}
 
-const Ice &Ice::operator=(const Ice &i) {
+Ice &Ice::operator=(const Ice &i) {
 	if (this != &i) {
 		AMateria::operator=(i);
 	}

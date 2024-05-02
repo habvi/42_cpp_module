@@ -10,7 +10,7 @@ class MateriaSourceDammy : public IMateriaSource {
   public:
 	MateriaSourceDammy();
 	MateriaSourceDammy(const MateriaSourceDammy &m);
-	const MateriaSourceDammy &operator=(const MateriaSourceDammy &m);
+	MateriaSourceDammy &operator=(const MateriaSourceDammy &m);
 	~MateriaSourceDammy();
 
   public:

@@ -12,7 +12,7 @@ class Serializer {
   private:
 	Serializer();
 	Serializer(const Serializer &s);
-	const Serializer &operator=(const Serializer &s);
+	Serializer &operator=(const Serializer &s);
 	~Serializer();
 };
 

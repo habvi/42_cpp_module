@@ -26,7 +26,7 @@ class Contact {
 	Contact();
 	explicit Contact(const t_contact_dto &data);
 	Contact(const Contact &c);
-	const Contact &operator=(const Contact &c);
+	Contact &operator=(const Contact &c);
 	~Contact();
 
   public:

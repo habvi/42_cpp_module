@@ -24,7 +24,7 @@ Contact::Contact(const Contact &c) {
 }
 
 // It's not necessary to implement this explicitly. they are handled automatically.
-const Contact &Contact::operator=(const Contact &c) {
+Contact &Contact::operator=(const Contact &c) {
 	if (this != &c) {
 		first_name_     = c.first_name_;
 		last_name_      = c.last_name_;

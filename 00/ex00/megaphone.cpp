@@ -13,7 +13,7 @@ class Megaphone {
 	// destructor
 	~Megaphone();
 	// copy assignment operator
-	const Megaphone &operator=(const Megaphone &m);
+	Megaphone &operator=(const Megaphone &m);
 
   public:
 	void print_voice();
@@ -56,7 +56,7 @@ Megaphone::~Megaphone() {
 	// std::cerr << "(call destructor)" << std::endl;
 }
 
-const Megaphone &Megaphone::operator=(const Megaphone &m) {
+Megaphone &Megaphone::operator=(const Megaphone &m) {
 	// prevent self-assignment
 	if (this != &m) {
 		destroy_voice_();

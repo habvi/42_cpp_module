@@ -14,7 +14,7 @@ Bureaucrat::Bureaucrat(const Bureaucrat &b)
 
 Bureaucrat::~Bureaucrat() {}
 
-const Bureaucrat &Bureaucrat::operator=(const Bureaucrat &b) {
+Bureaucrat &Bureaucrat::operator=(const Bureaucrat &b) {
 	if (this != &b) {
 		grade_ = b.getGrade();
 	}

@@ -19,7 +19,7 @@ Fixed::Fixed(const float number)
 Fixed::Fixed(const Fixed &f) : fixed_point_number_value_(f.getRawBits()) {}
 
 // copy assignment operator overload
-const Fixed &Fixed::operator=(const Fixed &f) {
+Fixed &Fixed::operator=(const Fixed &f) {
 	if (this != &f) {
 		setRawBits(f.getRawBits());
 	}

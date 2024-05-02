@@ -16,7 +16,7 @@ class AForm {
 	);
 	AForm(const AForm &f);
 	virtual ~AForm();
-	const AForm &operator=(const AForm &f);
+	AForm &operator=(const AForm &f);
 
   public:
 	// Following the instructions,

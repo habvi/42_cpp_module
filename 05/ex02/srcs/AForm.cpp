@@ -27,7 +27,7 @@ AForm::AForm(const AForm &f)
 
 AForm::~AForm() {}
 
-const AForm &AForm::operator=(const AForm &f) {
+AForm &AForm::operator=(const AForm &f) {
 	if (this != &f) {
 		is_signed_ = f.GetIsSigned();
 	}

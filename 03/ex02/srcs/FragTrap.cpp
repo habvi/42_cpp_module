@@ -31,7 +31,7 @@ FragTrap::~FragTrap() {
 }
 
 // copy assignment operator overload
-const FragTrap &FragTrap::operator=(const FragTrap &f) {
+FragTrap &FragTrap::operator=(const FragTrap &f) {
 	if (this != &f) {
 		ClapTrap::operator=(f);
 	}

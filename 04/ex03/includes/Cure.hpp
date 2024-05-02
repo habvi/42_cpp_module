@@ -10,7 +10,7 @@ class Cure : public AMateria {
 	Cure();
 	explicit Cure(std::string const &type);
 	Cure(const Cure &c);
-	const Cure &operator=(const Cure &c);
+	Cure &operator=(const Cure &c);
 	~Cure();
 
   public:

@@ -20,7 +20,7 @@ WrongCat::WrongCat(const WrongCat &c) : WrongAnimal(c) {
 	SetType(c.getType());
 }
 
-const WrongCat &WrongCat::operator=(const WrongCat &c) {
+WrongCat &WrongCat::operator=(const WrongCat &c) {
 	std::cerr << "Copy assignment operator= called (" TYPE_WRONG_CAT ")"
 			  << std::endl;
 	if (this != &c) {

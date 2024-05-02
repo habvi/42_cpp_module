@@ -13,7 +13,7 @@ Animal::Animal(const Animal &a) : type(a.getType()) {
 	std::cerr << "Copy constructor called (" TYPE_ANIMAL ")" << std::endl;
 }
 
-const Animal &Animal::operator=(const Animal &a) {
+Animal &Animal::operator=(const Animal &a) {
 	std::cerr << "Copy assignment operator= called (" TYPE_ANIMAL ")" << std::endl;
 	if (this != &a) {
 		SetType(a.getType());

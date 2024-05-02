@@ -9,7 +9,7 @@ class Intern {
   public:
 	Intern();
 	Intern(const Intern &i);
-	const Intern &operator=(const Intern &i);
+	Intern &operator=(const Intern &i);
 	~Intern();
 
   public:

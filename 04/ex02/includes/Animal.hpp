@@ -15,8 +15,8 @@ class Animal {
   protected:
 	Animal();
 	Animal(const Animal &a);
-	const Animal &operator=(const Animal &a);
-	void          SetType(const std::string &name);
+	Animal &operator=(const Animal &a);
+	void    SetType(const std::string &name);
 
   protected:
 	std::string type;

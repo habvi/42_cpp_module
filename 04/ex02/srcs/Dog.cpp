@@ -47,7 +47,7 @@ Dog::Dog(const Dog &d) : Animal(d) {
 	SetType(d.getType());
 }
 
-const Dog &Dog::operator=(const Dog &d) {
+Dog &Dog::operator=(const Dog &d) {
 	std::cerr << "Copy assignment operator= called (" TYPE_DOG ")" << std::endl;
 	if (this != &d) {
 		delete brain_;

@@ -13,7 +13,7 @@ Intern::Intern(const Intern &i) {
 	(void)i;
 }
 
-const Intern &Intern::operator=(const Intern &i) {
+Intern &Intern::operator=(const Intern &i) {
 	(void)i;
 	return *this;
 }

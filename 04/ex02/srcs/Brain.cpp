@@ -20,7 +20,7 @@ Brain::Brain(const Brain &b) {
 	CopyIdeas(b);
 }
 
-const Brain &Brain::operator=(const Brain &b) {
+Brain &Brain::operator=(const Brain &b) {
 	std::cerr << "Copy assignment operator= called (" TYPE_BRAIN ")" << std::endl;
 	if (this != &b) {
 		CopyIdeas(b);

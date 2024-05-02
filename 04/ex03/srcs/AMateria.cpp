@@ -7,7 +7,7 @@ AMateria::AMateria(const std::string &type) : type_(type) {}
 
 AMateria::AMateria(const AMateria &a) : type_(a.getType()) {}
 
-const AMateria &AMateria::operator=(const AMateria &a) {
+AMateria &AMateria::operator=(const AMateria &a) {
 	if (this != &a) {
 		type_ = a.getType();
 	}

@@ -16,7 +16,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &s)
 	: AForm(s.GetName(), s.GetGradeForSign(), s.GetGradeForExecute()),
 	  target_(s.GetTarget()) {}
 
-const ShrubberyCreationForm &
+ShrubberyCreationForm &
 ShrubberyCreationForm::operator=(const ShrubberyCreationForm &s) {
 	if (this != &s) {
 		AForm::operator=(s);

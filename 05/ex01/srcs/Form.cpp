@@ -27,7 +27,7 @@ Form::Form(const Form &f)
 
 Form::~Form() {}
 
-const Form &Form::operator=(const Form &f) {
+Form &Form::operator=(const Form &f) {
 	if (this != &f) {
 		is_signed_ = f.GetIsSigned();
 	}

@@ -32,7 +32,7 @@ ScavTrap::~ScavTrap() {
 }
 
 // copy assignment operator overload
-const ScavTrap &ScavTrap::operator=(const ScavTrap &s) {
+ScavTrap &ScavTrap::operator=(const ScavTrap &s) {
 	if (this != &s) {
 		ClapTrap::operator=(s);
 	}

@@ -20,7 +20,7 @@ Cat::Cat(const Cat &c) : Animal(c) {
 	SetType(c.getType());
 }
 
-const Cat &Cat::operator=(const Cat &c) {
+Cat &Cat::operator=(const Cat &c) {
 	std::cerr << "Copy assignment operator= called (" TYPE_CAT ")" << std::endl;
 	if (this != &c) {
 		SetType(c.getType());

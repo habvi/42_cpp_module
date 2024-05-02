@@ -35,7 +35,7 @@ Character::Character(const Character &c) : name_(c.getName()) {
 	}
 }
 
-const Character &Character::operator=(const Character &c) {
+Character &Character::operator=(const Character &c) {
 	if (this != &c) {
 		name_ = c.getName();
 		for (unsigned int i = 0; i < kLimitSlotNum; i++) {

@@ -32,7 +32,7 @@ ClapTrap::~ClapTrap() {
 }
 
 // copy assignment operator overload
-const ClapTrap &ClapTrap::operator=(const ClapTrap &c) {
+ClapTrap &ClapTrap::operator=(const ClapTrap &c) {
 	if (this != &c) {
 		name_          = c.GetName();
 		hit_points_    = c.GetHitPoints();

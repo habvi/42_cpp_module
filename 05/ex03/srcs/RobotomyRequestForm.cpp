@@ -16,8 +16,7 @@ RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &r)
 	: AForm(r.GetName(), r.GetGradeForSign(), r.GetGradeForExecute()),
 	  target_(r.GetTarget()) {}
 
-const RobotomyRequestForm &
-RobotomyRequestForm::operator=(const RobotomyRequestForm &r) {
+RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &r) {
 	if (this != &r) {
 		AForm::operator=(r);
 		target_ = r.GetTarget();

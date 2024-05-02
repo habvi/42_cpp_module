@@ -29,7 +29,7 @@ MateriaSource::MateriaSource(const MateriaSource &m)
 	}
 }
 
-const MateriaSource &MateriaSource::operator=(const MateriaSource &m) {
+MateriaSource &MateriaSource::operator=(const MateriaSource &m) {
 	if (this != &m) {
 		num_of_srcs_ = m.getNumOfSrcs();
 		for (unsigned int i = 0; i < kLimitCharactersNum; i++) {

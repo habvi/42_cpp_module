@@ -8,7 +8,7 @@ Serializer::Serializer(const Serializer &s) {
 	(void)s;
 }
 
-const Serializer &Serializer::operator=(const Serializer &s) {
+Serializer &Serializer::operator=(const Serializer &s) {
 	(void)s;
 	return *this;
 }

@@ -15,7 +15,7 @@ class Form {
 	);
 	Form(const Form &f);
 	~Form();
-	const Form &operator=(const Form &f);
+	Form &operator=(const Form &f);
 
   public:
 	const std::string &GetName() const;

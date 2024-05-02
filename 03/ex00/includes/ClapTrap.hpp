@@ -8,7 +8,7 @@ class ClapTrap {
 	explicit ClapTrap(const std::string &name);
 	ClapTrap(const ClapTrap &c);
 	~ClapTrap();
-	const ClapTrap &operator=(const ClapTrap &c);
+	ClapTrap &operator=(const ClapTrap &c);
 
   public:
 	// Following the instructions, not camelcase.

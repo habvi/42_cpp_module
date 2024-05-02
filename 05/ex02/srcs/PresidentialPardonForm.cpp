@@ -14,7 +14,7 @@ PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &p)
 	: AForm(p.GetName(), p.GetGradeForSign(), p.GetGradeForExecute()),
 	  target_(p.GetTarget()) {}
 
-const PresidentialPardonForm &
+PresidentialPardonForm &
 PresidentialPardonForm::operator=(const PresidentialPardonForm &p) {
 	if (this != &p) {
 		AForm::operator=(p);

@@ -12,7 +12,7 @@ Cure::Cure(const std::string &type) : AMateria(type) {}
 
 Cure::Cure(const Cure &c) : AMateria(c.getType()) {}
 
-const Cure &Cure::operator=(const Cure &c) {
+Cure &Cure::operator=(const Cure &c) {
 	if (this != &c) {
 		AMateria::operator=(c);
 	}

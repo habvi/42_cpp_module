@@ -34,7 +34,7 @@ DiamondTrap::~DiamondTrap() {
 }
 
 // copy assignment operator overload
-const DiamondTrap &DiamondTrap::operator=(const DiamondTrap &d) {
+DiamondTrap &DiamondTrap::operator=(const DiamondTrap &d) {
 	if (this != &d) {
 		ClapTrap::operator=(d);
 		SetHitPoints(d.GetHitPoints());

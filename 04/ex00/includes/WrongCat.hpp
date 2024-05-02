@@ -9,7 +9,7 @@ class WrongCat : public WrongAnimal {
 	WrongCat();
 	WrongCat(const std::string &name);
 	WrongCat(const WrongCat &w);
-	const WrongCat &operator=(const WrongCat &w);
+	WrongCat &operator=(const WrongCat &w);
 	~WrongCat();
 
   public:

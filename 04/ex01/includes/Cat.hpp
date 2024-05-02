@@ -11,7 +11,7 @@ class Cat : public Animal {
 	Cat();
 	Cat(const std::string &name);
 	Cat(const Cat &c);
-	const Cat &operator=(const Cat &c);
+	Cat &operator=(const Cat &c);
 	~Cat();
 
   public:

@@ -7,8 +7,7 @@ MateriaSourceDammy::MateriaSourceDammy(const MateriaSourceDammy &m) {
 	(void)m;
 }
 
-const MateriaSourceDammy &MateriaSourceDammy::operator=(const MateriaSourceDammy &m
-) {
+MateriaSourceDammy &MateriaSourceDammy::operator=(const MateriaSourceDammy &m) {
 	(void)m;
 	return *this;
 }

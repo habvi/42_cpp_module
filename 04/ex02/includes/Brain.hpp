@@ -7,7 +7,7 @@ class Brain {
   public:
 	Brain();
 	Brain(const Brain &b);
-	const Brain &operator=(const Brain &b);
+	Brain &operator=(const Brain &b);
 	~Brain();
 
   public:
