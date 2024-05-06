@@ -39,13 +39,15 @@ fclean: clean
 re: fclean all
 
 #--------------------------------------------
+INFILE	:= input.txt
+
 .PHONY	: run
 run: all
-	@./$(NAME)
+	@./$(NAME) $(INFILE)
 
 .PHONY	: val
 val: all
-	@valgrind ./$(NAME)
+	@valgrind ./$(NAME) $(INFILE)
 
 .PHONY	: check
 check:
