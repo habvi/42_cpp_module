@@ -37,13 +37,13 @@ void BitcoinExchange::AddRate(const std::string &date, const double rate) {
 	btc_rates_[date] = rate;
 }
 
-double BitcoinExchange::Exchange(const std::string &date, const double amount) {
-	if (amount < 0) {
+double BitcoinExchange::Exchange(const std::string &date, const double value) {
+	if (value < 0) {
 		throw NotPositiveNumberException();
-	} else if (amount > kMaxBtcValue) {
+	} else if (value > kMaxBtcValue) {
 		throw TooLargeNumberException();
 	}
 	// todo: PastDateNotFoundException()
 	// todo: check overflow
-	return btc_rates_[date] * amount;
+	return btc_rates_[date] * value;
 }

@@ -36,17 +36,17 @@ namespace {
 	}
 
 	// -------------------------------------------------------------------------
-	bool ParseLine(const std::string &line, std::string &date, double &amount) {
+	bool ParseLine(const std::string &line, std::string &date, double &value) {
 		(void)line;
 		(void)date;
-		(void)amount;
+		(void)value;
 		return true;
 	}
 
 	void FmtPrintResult(
-		const std::string &date, const double amount, const double exchange_result
+		const std::string &date, const double value, const double exchange_result
 	) {
-		std::cout << date << " => " << amount << " = " << exchange_result
+		std::cout << date << " => " << value << " = " << exchange_result
 				  << std::endl;
 	}
 
@@ -59,14 +59,14 @@ namespace {
 				break;
 			}
 			std::string date;
-			double      amount;
-			if (infile.fail() || !ParseLine(line, date, amount)) {
+			double      value;
+			if (infile.fail() || !ParseLine(line, date, value)) {
 				PrintError("bad input => " + line);
 				continue;
 			}
 			try {
-				const double exchange_result = btc.Exchange(date, amount);
-				FmtPrintResult(date, amount, exchange_result);
+				const double exchange_result = btc.Exchange(date, value);
+				FmtPrintResult(date, value, exchange_result);
 			} catch (const BitcoinExchange::NotPositiveNumberException &e) {
 				PrintError(e.what());
 			} catch (const BitcoinExchange::TooLargeNumberException &e) {

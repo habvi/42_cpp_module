@@ -30,7 +30,7 @@ class BitcoinExchange {
 
   public:
 	void   AddRate(const std::string &date, const double rate);
-	double Exchange(const std::string &date, const double amount);
+	double Exchange(const std::string &date, const double value);
 
   private:
 	static const double           kMaxBtcValue;
