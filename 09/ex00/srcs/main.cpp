@@ -50,7 +50,7 @@ namespace {
 				  << std::endl;
 	}
 
-	void PrintExchangeResult(const BitcoinExchange &btc, const char *infile_path) {
+	void PrintExchangeResult(BitcoinExchange &btc, const char *infile_path) {
 		std::ifstream infile(infile_path);
 		std::string   line;
 		while (!infile.eof()) {

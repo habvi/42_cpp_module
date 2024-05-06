@@ -23,12 +23,17 @@ class BitcoinExchange {
 	  public:
 		DuplicateDateException();
 	};
+	class PastDateNotFoundException : public std::logic_error {
+	  public:
+		PastDateNotFoundException();
+	};
 
   public:
 	void   AddRate(const std::string &date, const double rate);
-	double Exchange(const std::string &date, const double amount) const;
+	double Exchange(const std::string &date, const double amount);
 
   private:
+	static const double           kMaxBtcValue;
 	std::map<std::string, double> btc_rates_;
 };
 
