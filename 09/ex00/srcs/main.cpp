@@ -15,17 +15,14 @@ namespace {
 		std::cerr << "- Usage: ./btc *.txt" << std::endl;
 	}
 
-	// OK: *.txt
-	bool IsValidInfileType(const char *path) {
+	bool IsValidFileType(const char *path, const std::string &extension) {
 		std::ifstream infile(path);
 		if (!infile) {
 			return false;
 		}
-		static const std::string     kExtension = ".txt";
 		const std::string            path_str(path);
-		const std::string::size_type pos = path_str.rfind(kExtension);
-		return pos != std::string::npos &&
-			   pos + kExtension.size() == path_str.size();
+		const std::string::size_type pos = path_str.rfind(extension);
+		return pos != std::string::npos && pos + extension.size() == path_str.size();
 	}
 
 	// -------------------------------------------------------------------------
@@ -54,13 +51,12 @@ namespace {
 
 	// -------------------------------------------------------------------------
 	// <date>,<rate>
-	bool AddBitcoinRates(BitcoinExchange &btc) {
-		static size_t      line_num             = 0;
-		static const char *kBitcoinRateFilepath = "data_tmp.csv"; // todo
+	bool AddBitcoinRates(BitcoinExchange &btc, const char *btc_rate_filepath) {
+		static size_t line_num = 0;
 
-		std::ifstream infile(kBitcoinRateFilepath);
+		std::ifstream infile(btc_rate_filepath);
 		if (!infile) {
-			PrintError("could not open " + std::string(kBitcoinRateFilepath));
+			PrintError("could not open " + std::string(btc_rate_filepath));
 			return false;
 		}
 		std::string line;
@@ -135,13 +131,19 @@ namespace {
 } // namespace
 
 int main(int argc, char **argv) {
-	if (argc != 2 || !IsValidInfileType(argv[1])) {
+	if (argc != 2) {
+		PrintErrorOpenFileFail();
+		return EXIT_FAILURE;
+	}
+	static const char *kBitcoinRateFilepath = "data_tmp.csv"; // todo
+	if (!IsValidFileType(kBitcoinRateFilepath, ".csv") ||
+		!IsValidFileType(argv[1], ".txt")) {
 		PrintErrorOpenFileFail();
 		return EXIT_FAILURE;
 	}
 
 	BitcoinExchange btc;
-	if (!AddBitcoinRates(btc)) {
+	if (!AddBitcoinRates(btc, kBitcoinRateFilepath)) {
 		return EXIT_FAILURE;
 	}
 	PrintExchangeResult(btc, argv[1]);
