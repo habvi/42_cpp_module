@@ -43,7 +43,12 @@ double BitcoinExchange::Exchange(const std::string &date, const double value) {
 	} else if (value > kMaxBtcValue) {
 		throw TooLargeNumberException();
 	}
-	// todo: PastDateNotFoundException()
+	std::map<std::string, double>::const_iterator itr = btc_rates_.lower_bound(date);
+	if (itr == btc_rates_.begin()) {
+		throw PastDateNotFoundException();
+	}
+	--itr;
+	const double pre_date_rate = itr->second;
 	// todo: check overflow
-	return btc_rates_[date] * value;
+	return pre_date_rate * value;
 }
