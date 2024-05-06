@@ -56,15 +56,14 @@ namespace {
 		return !ss.fail();
 	}
 
-	void AddBitcoinRates(BitcoinExchange &btc) {
+	bool AddBitcoinRates(BitcoinExchange &btc) {
 		static size_t      line_num             = 0;
 		static const char *kBitcoinRateFilepath = "data_tmp.csv"; // todo
 
 		std::ifstream infile(kBitcoinRateFilepath);
 		if (!infile) {
-			throw std::runtime_error(
-				"could not open " + std::string(kBitcoinRateFilepath)
-			);
+			PrintError("could not open " + std::string(kBitcoinRateFilepath));
+			return false;
 		}
 		std::string line;
 		while (std::getline(infile, line)) {
@@ -72,13 +71,20 @@ namespace {
 			std::string date;
 			double      rate = 0;
 			if (infile.fail() || !ParseData(line_num, line, date, rate)) {
-				throw std::logic_error("bad data => " + line);
+				PrintError("bad data => " + line);
+				return false;
 			}
 			if (line_num == 1) {
 				continue;
 			}
-			btc.AddRate(date, rate);
+			try {
+				btc.AddRate(date, rate);
+			} catch (const std::logic_error &e) {
+				PrintError(e.what());
+				return false;
+			}
 		}
+		return true;
 	}
 
 	// -------------------------------------------------------------------------
@@ -148,12 +154,9 @@ int main(int argc, char **argv) {
 	}
 
 	BitcoinExchange btc;
-	try {
-		AddBitcoinRates(btc);
-		PrintExchangeResult(btc, argv[1]);
-	} catch (const std::exception &e) {
-		PrintError(e.what());
+	if (!AddBitcoinRates(btc)) {
 		return EXIT_FAILURE;
 	}
+	PrintExchangeResult(btc, argv[1]);
 	return EXIT_SUCCESS;
 }
