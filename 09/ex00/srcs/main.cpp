@@ -6,8 +6,15 @@
 #include <sstream>
 
 namespace {
-	static const char *kBitcoinRateFilepath = "data_tmp.csv"; // todo
+	static const char       *kBitcoinRateFilepath = "data_tmp.csv"; // todo
+	static const std::string kDataFileHead        = "date,exchange_rate";
+	static const std::string kDataFileDelimiter   = ",";
+	static const std::string kErrBadData          = "bad data => ";
+	static const std::string kInputFileHead       = "date | value";
+	static const std::string kInputFileDelimiter  = " | ";
+	static const std::string kErrBadInput         = "bad input => ";
 
+	// -------------------------------------------------------------------------
 	void PrintError(const std::string &message) {
 		std::cerr << COLOR_RED "Error: " << message << COLOR_END << std::endl;
 	}
@@ -49,13 +56,13 @@ namespace {
 	bool OpenValidDataFile(const char *btc_rate_filepath, std::ifstream &file) {
 		return IsValidFileType(btc_rate_filepath, ".csv") &&
 			   OpenFile(btc_rate_filepath, file) &&
-			   IsValidFileHeadLine(file, "date,exchange_rate");
+			   IsValidFileHeadLine(file, kDataFileHead);
 	}
 
 	bool OpenValidInputFile(const char *input_filepath, std::ifstream &file) {
 		return IsValidFileType(input_filepath, ".txt") &&
 			   OpenFile(input_filepath, file) &&
-			   IsValidFileHeadLine(file, "date | value");
+			   IsValidFileHeadLine(file, kInputFileHead);
 	}
 
 	// -------------------------------------------------------------------------
@@ -88,13 +95,13 @@ namespace {
 		std::string line;
 		while (std::getline(btc_rate_file, line)) {
 			if (btc_rate_file.fail()) {
-				PrintError("bad data => " + line);
+				PrintError(kErrBadData + line);
 				return false;
 			}
 			std::string date;
 			double      rate;
-			if (!ParseBitcoinData(line, ",", date, rate)) {
-				PrintError("bad data => " + line);
+			if (!ParseBitcoinData(line, kDataFileDelimiter, date, rate)) {
+				PrintError(kErrBadData + line);
 				return false;
 			}
 			try {
@@ -120,13 +127,13 @@ namespace {
 		std::string line;
 		while (std::getline(input_file, line)) {
 			if (input_file.fail()) {
-				PrintError("bad input => " + line);
+				PrintError(kErrBadInput + line);
 				continue;
 			}
 			std::string date;
 			double      value;
-			if (!ParseBitcoinData(line, " | ", date, value)) {
-				PrintError("bad input => " + line);
+			if (!ParseBitcoinData(line, kInputFileDelimiter, date, value)) {
+				PrintError(kErrBadInput + line);
 				continue;
 			}
 			try {
@@ -144,6 +151,7 @@ int main(int argc, char **argv) {
 		PrintErrorOpenFileFail();
 		return EXIT_FAILURE;
 	}
+
 	std::ifstream data_file;
 	if (!OpenValidDataFile(kBitcoinRateFilepath, data_file)) {
 		return EXIT_FAILURE;
