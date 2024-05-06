@@ -56,23 +56,18 @@ namespace {
 		static const char *kBitcoinRateFilepath = "data_tmp.csv"; // todo
 		std::ifstream      infile(kBitcoinRateFilepath);
 		if (!infile) {
-			PrintError("could not open " + std::string(kBitcoinRateFilepath));
-			std::exit(EXIT_FAILURE);
+			throw std::runtime_error(
+				"could not open " + std::string(kBitcoinRateFilepath)
+			);
 		}
 		std::string line;
 		while (std::getline(infile, line) && !line.empty()) {
 			std::string date;
 			double      rate = 0;
-			if (infile.fail() || !ParseRate(line, date, rate)) {
-				PrintError("bad data => " + line);
-				std::exit(EXIT_FAILURE);
+			if (infile.fail() || !ParseData(line_num, line, date, rate)) {
+				throw std::logic_error("bad data => " + line);
 			}
-			try {
-				btc.AddRate(date, rate);
-			} catch (const std::logic_error &e) {
-				PrintError(e.what());
-				std::exit(EXIT_FAILURE);
-			}
+			btc.AddRate(date, rate);
 		}
 	}
 
@@ -118,8 +113,12 @@ int main(int argc, char **argv) {
 	}
 
 	BitcoinExchange btc;
-	AddBitcoinRates(btc);
-	PrintExchangeResult(btc, argv[1]);
-
+	try {
+		AddBitcoinRates(btc);
+		PrintExchangeResult(btc, argv[1]);
+	} catch (const std::exception &e) {
+		PrintError(e.what());
+		return EXIT_FAILURE;
+	}
 	return EXIT_SUCCESS;
 }
