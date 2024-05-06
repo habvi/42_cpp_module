@@ -82,7 +82,8 @@ namespace {
 	}
 
 	// -------------------------------------------------------------------------
-	bool ParseLine(const std::string &line, std::string &date, double &value) {
+	// <date> | <value>
+	bool ParseInput(const std::string &line, std::string &date, double &value) {
 		(void)line;
 		(void)date;
 		(void)value;
@@ -102,7 +103,7 @@ namespace {
 		while (std::getline(infile, line) && !line.empty()) {
 			std::string date;
 			double      value = 0;
-			if (infile.fail() || !ParseLine(line, date, value)) {
+			if (infile.fail() || !ParseInput(line, date, value)) {
 				PrintError("bad input => " + line);
 				continue;
 			}
