@@ -1,6 +1,7 @@
 #include "BitcoinExchange.hpp"
 #include "color.hpp"
 #include <cstdlib>
+#include <fstream>
 #include <iostream>
 
 namespace {
@@ -35,13 +36,43 @@ namespace {
 	}
 
 	// -------------------------------------------------------------------------
+	bool ParseLine(const std::string &line, std::string &date, double &amount) {
+		(void)line;
+		(void)date;
+		(void)amount;
+		return true;
+	}
+
+	void FmtPrintResult(
+		const std::string &date, const double amount, const double exchange_result
+	) {
+		std::cout << date << " => " << amount << " = " << exchange_result
+				  << std::endl;
+	}
+
 	void PrintExchangeResult(const BitcoinExchange &btc, const char *infile_path) {
-		(void)btc;
-		(void)infile_path;
-		std::string  date;
-		double       amount          = 0;
-		const double exchange_result = btc.Exchange(date, amount);
-		(void)exchange_result;
+		std::ifstream infile(infile_path);
+		std::string   line;
+		while (!infile.eof()) {
+			std::getline(infile, line);
+			if (infile.eof() && line.empty()) {
+				break;
+			}
+			std::string date;
+			double      amount;
+			if (infile.fail() || !ParseLine(line, date, amount)) {
+				PrintError("bad input => " + line);
+				continue;
+			}
+			try {
+				const double exchange_result = btc.Exchange(date, amount);
+				FmtPrintResult(date, amount, exchange_result);
+			} catch (const BitcoinExchange::NotPositiveNumberException &e) {
+				PrintError(e.what());
+			} catch (const BitcoinExchange::TooLargeNumberException &e) {
+				PrintError(e.what());
+			}
+		}
 	}
 } // namespace
 
