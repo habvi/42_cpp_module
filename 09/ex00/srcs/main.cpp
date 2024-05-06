@@ -6,6 +6,8 @@
 #include <sstream>
 
 namespace {
+	static const char *kBitcoinRateFilepath = "data_tmp.csv"; // todo
+
 	void PrintError(const std::string &message) {
 		std::cerr << COLOR_RED "Error: " << message << COLOR_END << std::endl;
 	}
@@ -16,13 +18,44 @@ namespace {
 	}
 
 	bool IsValidFileType(const char *path, const std::string &extension) {
-		std::ifstream infile(path);
-		if (!infile) {
-			return false;
-		}
 		const std::string            path_str(path);
 		const std::string::size_type pos = path_str.rfind(extension);
-		return pos != std::string::npos && pos + extension.size() == path_str.size();
+		if (pos == std::string::npos || pos + extension.size() != path_str.size()) {
+			PrintErrorOpenFileFail();
+			return false;
+		}
+		return true;
+	}
+
+	bool OpenFile(const char *filepath, std::ifstream &file) {
+		file.open(filepath);
+		if (!file) {
+			PrintError("could not open " + std::string(filepath));
+			return false;
+		}
+		return true;
+	}
+
+	bool IsValidFileHeadLine(std::ifstream &file, const std::string &head_str) {
+		std::string head_line;
+		std::getline(file, head_line);
+		if (file.fail() || head_line != head_str) {
+			PrintError("invalid file.");
+			return false;
+		}
+		return true;
+	}
+
+	bool OpenValidDataFile(const char *btc_rate_filepath, std::ifstream &file) {
+		return IsValidFileType(btc_rate_filepath, ".csv") &&
+			   OpenFile(btc_rate_filepath, file) &&
+			   IsValidFileHeadLine(file, "date,exchange_rate");
+	}
+
+	bool OpenValidInputFile(const char *input_filepath, std::ifstream &file) {
+		return IsValidFileType(input_filepath, ".txt") &&
+			   OpenFile(input_filepath, file) &&
+			   IsValidFileHeadLine(file, "date | value");
 	}
 
 	// -------------------------------------------------------------------------
@@ -51,26 +84,12 @@ namespace {
 
 	// -------------------------------------------------------------------------
 	// <date>,<rate>
-	bool AddBitcoinRates(BitcoinExchange &btc, const char *btc_rate_filepath) {
-		static size_t line_num = 0;
-
-		std::ifstream infile(btc_rate_filepath);
-		if (!infile) {
-			PrintError("could not open " + std::string(btc_rate_filepath));
-			return false;
-		}
+	bool AddBitcoinRates(BitcoinExchange &btc, std::ifstream &btc_rate_file) {
 		std::string line;
-		while (std::getline(infile, line)) {
-			if (infile.fail()) {
+		while (std::getline(btc_rate_file, line)) {
+			if (btc_rate_file.fail()) {
 				PrintError("bad data => " + line);
 				return false;
-			}
-			line_num++;
-			if (line_num == 1) {
-				if (line != "date,exchange_rate") {
-					return false;
-				}
-				continue;
 			}
 			std::string date;
 			double      rate;
@@ -97,21 +116,11 @@ namespace {
 	}
 
 	// <date> | <value>
-	void PrintExchangeResult(BitcoinExchange &btc, const char *infile_path) {
-		static size_t line_num = 0;
-		std::ifstream infile(infile_path);
-		std::string   line;
-		while (std::getline(infile, line)) {
-			if (infile.fail()) {
+	void PrintExchangeResult(BitcoinExchange &btc, std::ifstream &input_file) {
+		std::string line;
+		while (std::getline(input_file, line)) {
+			if (input_file.fail()) {
 				PrintError("bad input => " + line);
-				continue;
-			}
-			line_num++;
-			if (line_num == 1) {
-				// todo
-				if (line != "date | value") {
-					PrintError("bad input => " + line);
-				}
 				continue;
 			}
 			std::string date;
@@ -135,17 +144,18 @@ int main(int argc, char **argv) {
 		PrintErrorOpenFileFail();
 		return EXIT_FAILURE;
 	}
-	static const char *kBitcoinRateFilepath = "data_tmp.csv"; // todo
-	if (!IsValidFileType(kBitcoinRateFilepath, ".csv") ||
-		!IsValidFileType(argv[1], ".txt")) {
-		PrintErrorOpenFileFail();
+	std::ifstream data_file;
+	if (!OpenValidDataFile(kBitcoinRateFilepath, data_file)) {
 		return EXIT_FAILURE;
 	}
-
 	BitcoinExchange btc;
-	if (!AddBitcoinRates(btc, kBitcoinRateFilepath)) {
+	if (!AddBitcoinRates(btc, data_file)) {
 		return EXIT_FAILURE;
 	}
-	PrintExchangeResult(btc, argv[1]);
+	std::ifstream input_file;
+	if (!OpenValidInputFile(argv[1], input_file)) {
+		return EXIT_FAILURE;
+	}
+	PrintExchangeResult(btc, input_file);
 	return EXIT_SUCCESS;
 }
