@@ -53,13 +53,9 @@ namespace {
 	void PrintExchangeResult(BitcoinExchange &btc, const char *infile_path) {
 		std::ifstream infile(infile_path);
 		std::string   line;
-		while (!infile.eof()) {
-			std::getline(infile, line);
-			if (infile.eof() && line.empty()) {
-				break;
-			}
+		while (std::getline(infile, line) && !line.empty()) {
 			std::string date;
-			double      value;
+			double      value = 0;
 			if (infile.fail() || !ParseLine(line, date, value)) {
 				PrintError("bad input => " + line);
 				continue;
