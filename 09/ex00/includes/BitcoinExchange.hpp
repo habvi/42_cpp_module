@@ -19,6 +19,10 @@ class BitcoinExchange {
 	  public:
 		TooLargeNumberException();
 	};
+	class DuplicateDateException : public std::logic_error {
+	  public:
+		DuplicateDateException();
+	};
 
   public:
 	void   AddRate(const std::string &date, const double rate);

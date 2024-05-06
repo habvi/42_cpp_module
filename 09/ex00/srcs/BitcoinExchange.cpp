@@ -22,9 +22,14 @@ BitcoinExchange::NotPositiveNumberException::NotPositiveNumberException()
 BitcoinExchange::TooLargeNumberException::TooLargeNumberException()
 	: std::logic_error("too large a number.") {}
 
+BitcoinExchange::DuplicateDateException::DuplicateDateException()
+	: std::logic_error("duplicate date.") {}
+
 void BitcoinExchange::AddRate(const std::string &date, const double rate) {
-	(void)date;
-	(void)rate;
+	if (btc_rates_.count(date)) {
+		throw DuplicateDateException();
+	}
+	btc_rates_[date] = rate;
 }
 
 double
