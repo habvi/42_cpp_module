@@ -67,7 +67,7 @@ namespace {
 			);
 		}
 		std::string line;
-		while (std::getline(infile, line) && !line.empty()) {
+		while (std::getline(infile, line)) {
 			line_num++;
 			std::string date;
 			double      rate = 0;
