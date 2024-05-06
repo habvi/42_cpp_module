@@ -7,6 +7,9 @@
 
 class BitcoinExchange {
   public:
+	typedef std::map<std::string, double> BitcoinRates;
+
+  public:
 	BitcoinExchange();
 	BitcoinExchange(const BitcoinExchange &other);
 	BitcoinExchange &operator=(const BitcoinExchange &other);
@@ -37,8 +40,8 @@ class BitcoinExchange {
 	double Exchange(const std::string &date, const double value);
 
   private:
-	static const double           kMaxBtcValue;
-	std::map<std::string, double> btc_rates_;
+	static const double kMaxBtcValue;
+	BitcoinRates        btc_rates_;
 };
 
 #endif /* EX00_BITCOIN_EXCHANGE_HPP */

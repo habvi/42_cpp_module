@@ -125,7 +125,8 @@ double BitcoinExchange::Exchange(const std::string &date, const double value) {
 	} else if (value > kMaxBtcValue) {
 		throw TooLargeNumberException();
 	}
-	std::map<std::string, double>::const_iterator itr = btc_rates_.lower_bound(date);
+
+	BitcoinRates::const_iterator itr = btc_rates_.lower_bound(date);
 	if (itr->first == date) {
 		return itr->second * value;
 	}
