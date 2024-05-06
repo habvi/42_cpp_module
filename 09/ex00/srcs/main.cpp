@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 
 namespace {
 	void PrintError(const std::string &message) {
@@ -28,11 +29,51 @@ namespace {
 	}
 
 	// -------------------------------------------------------------------------
+	// <date>,<rate>
+	bool ParseRate(const std::string &line, std::string &date, double &rate) {
+		static size_t counter = 0;
+		counter++;
+
+		static const char      kDelim          = ',';
+		std::string::size_type delim_pos       = line.find(kDelim);
+		std::string::size_type delim_pos_right = line.rfind(kDelim);
+		if (delim_pos == std::string::npos || delim_pos + 1 == line.size() ||
+			delim_pos != delim_pos_right) {
+			return false;
+		}
+		date = line.substr(0, delim_pos);
+		// todo: check date format
+		std::string rate_str = line.substr(delim_pos + 1);
+		if (counter == 1) {
+			return date == "date" && rate_str == "exchange_rate";
+		}
+		std::stringstream ss(rate_str);
+		ss >> rate;
+		return !ss.fail();
+	}
+
 	void AddBitcoinRates(BitcoinExchange &btc) {
-		static const std::string &kBitcoinRateFilepath = "data.csv";
-		std::string               date;
-		double                    rate = 0;
-		btc.AddRate(date, rate);
+		static const char *kBitcoinRateFilepath = "data_tmp.csv"; // todo
+		std::ifstream      infile(kBitcoinRateFilepath);
+		if (!infile) {
+			PrintError("could not open " + std::string(kBitcoinRateFilepath));
+			std::exit(EXIT_FAILURE);
+		}
+		std::string line;
+		while (std::getline(infile, line) && !line.empty()) {
+			std::string date;
+			double      rate = 0;
+			if (infile.fail() || !ParseRate(line, date, rate)) {
+				PrintError("bad data => " + line);
+				std::exit(EXIT_FAILURE);
+			}
+			try {
+				btc.AddRate(date, rate);
+			} catch (const std::logic_error &e) {
+				PrintError(e.what());
+				std::exit(EXIT_FAILURE);
+			}
+		}
 	}
 
 	// -------------------------------------------------------------------------
