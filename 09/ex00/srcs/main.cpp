@@ -81,9 +81,8 @@ namespace {
 			return false;
 		}
 
-		date = line.substr(0, delim_pos);
-		// todo: check date format?
-		std::string       num_str = line.substr(delim_pos + delim.size());
+		date                      = line.substr(0, delim_pos);
+		const std::string num_str = line.substr(delim_pos + delim.size());
 		std::stringstream ss(num_str);
 		ss >> num;
 		return !ss.fail();

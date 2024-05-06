@@ -27,6 +27,10 @@ class BitcoinExchange {
 	  public:
 		PastDateNotFoundException();
 	};
+	class InvalidDateException : public std::logic_error {
+	  public:
+		InvalidDateException();
+	};
 
   public:
 	void   AddRate(const std::string &date, const double rate);
