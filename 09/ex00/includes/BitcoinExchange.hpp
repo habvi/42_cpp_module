@@ -34,6 +34,10 @@ class BitcoinExchange {
 	  public:
 		InvalidDateException();
 	};
+	class ExchangeRateOverflowException : public std::logic_error {
+	  public:
+		ExchangeRateOverflowException();
+	};
 
   public:
 	void   AddRate(const std::string &date, const double rate);

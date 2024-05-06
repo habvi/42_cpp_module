@@ -1,4 +1,6 @@
 #include "BitcoinExchange.hpp"
+#include <iostream> // todo
+#include <limits>
 #include <sstream>
 
 const double BitcoinExchange::kMaxBtcValue = 1000;
@@ -33,6 +35,9 @@ BitcoinExchange::PastDateNotFoundException::PastDateNotFoundException()
 
 BitcoinExchange::InvalidDateException::InvalidDateException()
 	: std::logic_error("invalid date.") {}
+
+BitcoinExchange::ExchangeRateOverflowException::ExchangeRateOverflowException()
+	: std::logic_error("overflow exchange rate.") {}
 
 namespace {
 	int ConvertToInt(const std::string &str, int &num) {
@@ -104,6 +109,18 @@ namespace {
 		std::string day   = date.substr(8);
 		return IsValidDate(year, month, day);
 	}
+
+	// value: 0 ~ 1000
+	bool IsOverflow(const double rate, const double value) {
+		if (value == 0) {
+			return false;
+		}
+		if (rate < 0) {
+			return rate < -std::numeric_limits<double>::max() / value;
+		} else {
+			return rate > std::numeric_limits<double>::max() / value;
+		}
+	}
 } // namespace
 
 void BitcoinExchange::AddRate(const std::string &date, const double rate) {
@@ -128,13 +145,19 @@ double BitcoinExchange::Exchange(const std::string &date, const double value) {
 
 	BitcoinRates::const_iterator itr = btc_rates_.lower_bound(date);
 	if (itr->first == date) {
-		return itr->second * value;
+		const double rate = itr->second;
+		if (IsOverflow(rate, value)) {
+			throw ExchangeRateOverflowException();
+		}
+		return rate * value;
 	}
 	if (itr == btc_rates_.begin()) {
 		throw PastDateNotFoundException();
 	}
 	--itr;
-	const double pre_date_rate = itr->second;
-	// todo: check overflow
-	return pre_date_rate * value;
+	const double rate = itr->second;
+	if (IsOverflow(rate, value)) {
+		throw ExchangeRateOverflowException();
+	}
+	return rate * value;
 }
