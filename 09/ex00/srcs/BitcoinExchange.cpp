@@ -16,6 +16,12 @@ BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other) {
 
 BitcoinExchange::~BitcoinExchange() {}
 
+BitcoinExchange::NotPositiveNumberException::NotPositiveNumberException()
+	: std::logic_error("not a positive number.") {}
+
+BitcoinExchange::TooLargeNumberException::TooLargeNumberException()
+	: std::logic_error("too large a number.") {}
+
 void BitcoinExchange::AddRate(const std::string &date, const double rate) {
 	(void)date;
 	(void)rate;
