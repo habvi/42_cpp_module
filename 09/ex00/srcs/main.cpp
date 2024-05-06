@@ -67,9 +67,7 @@ namespace {
 			try {
 				const double exchange_result = btc.Exchange(date, value);
 				FmtPrintResult(date, value, exchange_result);
-			} catch (const BitcoinExchange::NotPositiveNumberException &e) {
-				PrintError(e.what());
-			} catch (const BitcoinExchange::TooLargeNumberException &e) {
+			} catch (const std::logic_error &e) {
 				PrintError(e.what());
 			}
 		}
