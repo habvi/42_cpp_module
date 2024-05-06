@@ -53,6 +53,12 @@ val: all
 check:
 	@cppcheck --enable=all $$(find . -type f -name "*.cpp" | tr '\n' ' ')
 
+.PHONY	: diff
+diff: all
+	@./$(NAME) $(INFILE) > out.txt 2>&1
+	@-diff expected.txt out.txt
+#	@rm out.txt
+
 #--------------------------------------------
 
 -include $(DEPS)
