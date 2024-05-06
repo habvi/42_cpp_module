@@ -44,6 +44,9 @@ double BitcoinExchange::Exchange(const std::string &date, const double value) {
 		throw TooLargeNumberException();
 	}
 	std::map<std::string, double>::const_iterator itr = btc_rates_.lower_bound(date);
+	if (itr->first == date) {
+		return itr->second * value;
+	}
 	if (itr == btc_rates_.begin()) {
 		throw PastDateNotFoundException();
 	}
