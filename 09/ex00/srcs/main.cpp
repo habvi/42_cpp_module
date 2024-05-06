@@ -83,11 +83,30 @@ namespace {
 
 	// -------------------------------------------------------------------------
 	// <date> | <value>
-	bool ParseInput(const std::string &line, std::string &date, double &value) {
-		(void)line;
-		(void)date;
-		(void)value;
-		return true;
+	bool ParseInput(
+		const size_t       line_num,
+		const std::string &line,
+		std::string       &date,
+		double            &value
+	) {
+		if (line_num == 1) {
+			return line == "date | value";
+		}
+
+		static const char      kDelim          = '|';
+		std::string::size_type delim_pos       = line.find(kDelim);
+		std::string::size_type delim_pos_right = line.rfind(kDelim);
+		if (delim_pos == std::string::npos || delim_pos + 1 == line.size() ||
+			delim_pos != delim_pos_right) {
+			return false;
+		}
+
+		date = line.substr(0, delim_pos);
+		// todo: check date format
+		std::string       rate_str = line.substr(delim_pos + 1);
+		std::stringstream ss(rate_str);
+		ss >> value;
+		return !ss.fail();
 	}
 
 	void FmtPrintResult(
@@ -98,13 +117,18 @@ namespace {
 	}
 
 	void PrintExchangeResult(BitcoinExchange &btc, const char *infile_path) {
+		static size_t line_num = 0;
 		std::ifstream infile(infile_path);
 		std::string   line;
-		while (std::getline(infile, line) && !line.empty()) {
+		while (std::getline(infile, line)) {
+			line_num++;
 			std::string date;
 			double      value = 0;
-			if (infile.fail() || !ParseInput(line, date, value)) {
+			if (infile.fail() || !ParseInput(line_num, line, date, value)) {
 				PrintError("bad input => " + line);
+				continue;
+			}
+			if (line_num == 1) {
 				continue;
 			}
 			try {
