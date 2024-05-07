@@ -6,7 +6,7 @@
 #include <stack>
 #include <stdexcept>
 
-const char       *kOperations                 = "+-/*";
+const char       *RPN::kOperations            = "+-/*";
 const std::string RPN::kErrMsgInvalidArgument = "invalid argument";
 
 RPN::RPN() {}
@@ -28,20 +28,6 @@ namespace {
 
 	bool MyIsDigit(const char c) {
 		return std::isdigit(static_cast<unsigned char>(c));
-	}
-
-	bool IsOperations(const char c) {
-		return std::strchr(kOperations, c);
-	}
-
-	bool IsValidStr(const std::string &str) {
-		for (std::size_t i = 0; i < str.size(); i++) {
-			const char ch = str[i];
-			if (!MyIsDigit(ch) && !IsOperations(ch) && ch != ' ') {
-				return false;
-			}
-		}
-		return true;
 	}
 
 	int ConvertToInt(const char c) {
@@ -127,6 +113,20 @@ namespace {
 		}
 	}
 } // namespace
+
+bool RPN::IsOperations(const char c) {
+	return std::strchr(kOperations, c);
+}
+
+bool RPN::IsValidStr(const std::string &str) {
+	for (std::size_t i = 0; i < str.size(); i++) {
+		const char ch = str[i];
+		if (!MyIsDigit(ch) && !IsOperations(ch) && ch != ' ') {
+			return false;
+		}
+	}
+	return true;
+}
 
 // ex) "1 2 3 + -"
 // stack

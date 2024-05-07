@@ -12,6 +12,10 @@ class RPN {
 	RPN(const RPN &other);
 	RPN &operator=(const RPN &other);
 	~RPN();
+	static bool IsOperations(const char c);
+	static bool IsValidStr(const std::string &str);
+
+  private:
 	static const char       *kOperations;
 	static const std::string kErrMsgInvalidArgument;
 };
