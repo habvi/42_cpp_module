@@ -94,7 +94,7 @@ namespace {
 		return false;
 	}
 
-	int Eval(const int num1, const char op, const int num2) {
+	int EvalArithmeticOperation(const int num1, const char op, const int num2) {
 		static const std::string kErrMsgOverflowArgument = "overflow argument";
 
 		if (op == '+') {
@@ -133,16 +133,14 @@ int RPN::Calcurate(const std::string &rpn_str) {
 	for (std::size_t i = 0; i < rpn_str.size(); i++) {
 		const char ch = rpn_str[i];
 		if (MyIsDigit(ch)) {
-			const int num = ConvertToInt(ch);
-			num_stack.push(num);
+			num_stack.push(ConvertToInt(ch));
 		} else if (IsOperations(ch)) {
 			if (num_stack.size() < 2) {
 				throw std::invalid_argument(kErrMsgInvalidArgument);
 			}
-			const int num2        = PopBack(num_stack);
-			const int num1        = PopBack(num_stack);
-			const int calc_result = Eval(num1, ch, num2);
-			num_stack.push(calc_result);
+			const int num2 = PopBack(num_stack);
+			const int num1 = PopBack(num_stack);
+			num_stack.push(EvalArithmeticOperation(num1, ch, num2));
 		}
 	}
 	if (num_stack.size() != 1) {
