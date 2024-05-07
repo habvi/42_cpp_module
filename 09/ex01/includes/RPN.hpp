@@ -12,7 +12,8 @@ class RPN {
 	RPN(const RPN &other);
 	RPN &operator=(const RPN &other);
 	~RPN();
-	static const char *kOperations;
+	static const char       *kOperations;
+	static const std::string kErrMsgInvalidArgument;
 };
 
 #endif /* EX01_RPN_HPP */

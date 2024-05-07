@@ -6,7 +6,8 @@
 #include <stack>
 #include <stdexcept>
 
-const char *kOperations = "+-/*";
+const char       *kOperations                 = "+-/*";
+const std::string RPN::kErrMsgInvalidArgument = "invalid argument";
 
 RPN::RPN() {}
 
@@ -125,7 +126,7 @@ namespace {
 
 int RPN::Calcurate(const std::string &rpn_str) {
 	if (!IsValidStr(rpn_str)) {
-		throw std::invalid_argument("invalid argument");
+		throw std::invalid_argument(kErrMsgInvalidArgument);
 	}
 
 	std::stack<int> num_stack;
@@ -136,7 +137,7 @@ int RPN::Calcurate(const std::string &rpn_str) {
 			num_stack.push(num);
 		} else if (IsOperations(ch)) {
 			if (num_stack.size() < 2) {
-				throw std::invalid_argument("invalid argument");
+				throw std::invalid_argument(kErrMsgInvalidArgument);
 			}
 			const int num2        = PopBack(num_stack);
 			const int num1        = PopBack(num_stack);
@@ -145,7 +146,7 @@ int RPN::Calcurate(const std::string &rpn_str) {
 		}
 	}
 	if (num_stack.size() != 1) {
-		throw std::invalid_argument("invalid argument");
+		throw std::invalid_argument(kErrMsgInvalidArgument);
 	}
 	return num_stack.top();
 }
