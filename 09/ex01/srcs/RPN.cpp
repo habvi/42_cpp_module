@@ -1,6 +1,6 @@
 #include "RPN.hpp"
-#include <cctype>   // isdigit
-#include <cstring>  // strchr
+#include <cctype>  // isdigit
+#include <cstring> // strchr
 #include <limits>
 #include <sstream>
 #include <stack>
@@ -16,8 +16,7 @@ RPN::RPN(const RPN &other) {
 }
 
 RPN &RPN::operator=(const RPN &other) {
-	if (this != &other) {
-	}
+	(void)other;
 	return *this;
 }
 
@@ -129,6 +128,15 @@ namespace {
 	}
 } // namespace
 
+// ex) "1 2 3 + -"
+// stack
+// 1
+// 1 2
+// 1 2 3
+// 1 2 3 +
+// 1 5
+// 1 5 -
+// -4
 int RPN::Calcurate(const std::string &rpn_str) {
 	if (!IsValidStr(rpn_str)) {
 		throw std::invalid_argument(kErrMsgInvalidArgument);

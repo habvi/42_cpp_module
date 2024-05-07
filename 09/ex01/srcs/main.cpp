@@ -4,6 +4,7 @@
 #include <iostream>
 
 namespace {
+	// Following the instructions,  output to STDOUT in case of an error.
 	void PrintError(const std::string &message) {
 		std::cout << COLOR_RED << message << COLOR_END << std::endl;
 	}
