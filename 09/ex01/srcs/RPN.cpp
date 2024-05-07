@@ -36,7 +36,12 @@ namespace {
 	}
 
 	bool IsValidStr(const std::string &str) {
-		(void)str;
+		for (std::size_t i = 0; i < str.size(); i++) {
+			const char ch = str[i];
+			if (!MyIsDigit(ch) && !IsOperations(ch) && ch != ' ') {
+				return false;
+			}
+		}
 		return true;
 	}
 
