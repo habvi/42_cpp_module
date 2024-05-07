@@ -7,14 +7,12 @@ const double BitcoinExchange::kMaxBtcValue = 1000;
 
 BitcoinExchange::BitcoinExchange() {}
 
-// todo
-BitcoinExchange::BitcoinExchange(const BitcoinExchange &other) {
-	(void)other;
-}
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &other)
+	: btc_rates_(other.btc_rates_) {}
 
-// todo
 BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &other) {
 	if (this != &other) {
+		btc_rates_ = other.btc_rates_;
 	}
 	return *this;
 }
