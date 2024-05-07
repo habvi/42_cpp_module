@@ -1,6 +1,7 @@
 #include "RPN.hpp"
 #include <cctype>   // isdigit
 #include <cstring>  // strchr
+#include <limits>
 #include <sstream>
 #include <stack>
 #include <stdexcept>
@@ -22,6 +23,9 @@ RPN &RPN::operator=(const RPN &other) {
 RPN::~RPN() {}
 
 namespace {
+	static const int kIntMax = std::numeric_limits<int>::max();
+	static const int kIntMin = std::numeric_limits<int>::min();
+
 	bool MyIsDigit(const char c) {
 		return std::isdigit(static_cast<unsigned char>(c));
 	}
@@ -50,18 +54,70 @@ namespace {
 		return tmp_num;
 	}
 
+	bool IsOverflowAdd(const int num1, const int num2) {
+		if (num2 > 0) {
+			return num1 > kIntMax - num2;
+		} else {
+			return num1 < kIntMin - num2;
+		}
+	}
+
+	bool IsOverflowSub(const int num1, const int num2) {
+		if (num2 > 0) {
+			return num1 < kIntMin + num2;
+		} else {
+			return num1 > kIntMax + num2;
+		}
+	}
+
+	bool IsOverflowDiv(const int num1, const int num2) {
+		return num1 == kIntMin && num2 == -1;
+	}
+
+	bool IsOverflowMul(const int num1, const int num2) {
+		if (num1 > 0 && num2 > 0) {
+			if (num1 > kIntMax / num2) {
+				return true;
+			}
+		} else if (num1 < 0 && num2 < 0) {
+			if (num1 != -1 && num2 < kIntMax / num1) {
+				return true;
+			}
+		} else {
+			if (num1 > 0) {
+				return num2 < kIntMin / num1;
+			} else {
+				return num1 < kIntMin / num2;
+			}
+		}
+		return false;
+	}
+
 	int Eval(const int num1, const char op, const int num2) {
+		static const std::string kErrMsgOverflowArgument = "overflow argument";
+
 		if (op == '+') {
-			// todo: overflow
+			if (IsOverflowAdd(num1, num2)) {
+				throw std::overflow_error(kErrMsgOverflowArgument);
+			}
 			return num1 + num2;
 		} else if (op == '-') {
-			// todo: overflow
+			if (IsOverflowSub(num1, num2)) {
+				throw std::overflow_error(kErrMsgOverflowArgument);
+			}
 			return num1 - num2;
 		} else if (op == '/') {
-			// todo: zero division
+			if (num2 == 0) {
+				throw std::runtime_error("division by zero");
+			}
+			if (IsOverflowDiv(num1, num2)) {
+				throw std::overflow_error(kErrMsgOverflowArgument);
+			}
 			return num1 / num2;
 		} else {
-			// todo: overflow
+			if (IsOverflowMul(num1, num2)) {
+				throw std::overflow_error(kErrMsgOverflowArgument);
+			}
 			return num1 * num2;
 		}
 	}
