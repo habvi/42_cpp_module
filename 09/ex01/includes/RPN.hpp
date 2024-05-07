@@ -5,13 +5,14 @@
 
 class RPN {
   public:
-	static int Calcurate(const std::string &str);
+	static int Calcurate(const std::string &rpn_str);
 
   private:
 	RPN();
 	RPN(const RPN &other);
 	RPN &operator=(const RPN &other);
 	~RPN();
+	static const char *kOperations;
 };
 
 #endif /* EX01_RPN_HPP */
