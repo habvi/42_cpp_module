@@ -35,7 +35,7 @@ BitcoinExchange::InvalidDateException::InvalidDateException()
 	: std::logic_error("invalid date.") {}
 
 BitcoinExchange::ExchangeRateOverflowException::ExchangeRateOverflowException()
-	: std::logic_error("overflow exchange rate.") {}
+	: std::overflow_error("overflow exchange rate.") {}
 
 namespace {
 	int ConvertToInt(const std::string &str, int &num) {

@@ -2,7 +2,7 @@
 #define EX00_BITCOIN_EXCHANGE_HPP
 
 #include <map>
-#include <stdexcept> // logic_error
+#include <stdexcept> // logic_error,overflow_error
 #include <string>
 
 class BitcoinExchange {
@@ -34,7 +34,7 @@ class BitcoinExchange {
 	  public:
 		InvalidDateException();
 	};
-	class ExchangeRateOverflowException : public std::logic_error {
+	class ExchangeRateOverflowException : public std::overflow_error {
 	  public:
 		ExchangeRateOverflowException();
 	};

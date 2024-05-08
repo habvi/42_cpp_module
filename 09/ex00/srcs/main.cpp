@@ -105,7 +105,7 @@ namespace {
 			}
 			try {
 				btc.AddRate(date, rate);
-			} catch (const std::logic_error &e) {
+			} catch (const std::exception &e) {
 				PrintError(e.what());
 				return false;
 			}
@@ -138,7 +138,7 @@ namespace {
 			try {
 				const double exchange_result = btc.Exchange(date, value);
 				FmtPrintResult(date, value, exchange_result);
-			} catch (const std::logic_error &e) {
+			} catch (const std::exception &e) {
 				PrintError(e.what());
 			}
 		}
