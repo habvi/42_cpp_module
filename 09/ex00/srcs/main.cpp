@@ -85,7 +85,7 @@ namespace {
 		const std::string num_str = line.substr(delim_pos + delim.size());
 		std::stringstream ss(num_str);
 		ss >> num;
-		return !ss.fail();
+		return ss.eof() && !ss.fail();
 	}
 
 	// -------------------------------------------------------------------------

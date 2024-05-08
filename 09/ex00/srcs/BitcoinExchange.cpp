@@ -41,7 +41,7 @@ namespace {
 	int ConvertToInt(const std::string &str, int &num) {
 		std::stringstream ss(str);
 		ss >> num;
-		return !ss.fail();
+		return ss.eof() && !ss.fail();
 	}
 
 	bool IsValidYear(const int year) {
