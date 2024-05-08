@@ -12,6 +12,9 @@ INCLUDES	:=	-I./$(INCLUDE_DIR)/
 
 CXX			:=	c++
 CXXFLAGS	:=	-std=c++98 -Wall -Wextra -Werror -MMD -MP -pedantic
+ifdef RUN_TEST
+	CXXFLAGS += -D RUN_TEST
+endif
 
 DEPS		:=	$(OBJS:.o=.d)
 MKDIR		:=	mkdir -p
@@ -39,6 +42,11 @@ fclean: clean
 re: fclean all
 
 #--------------------------------------------
+.PHONY	: test
+test:
+	make re RUN_TEST=1
+	./$(NAME)
+
 .PHONY	: run
 run: all
 	@./$(NAME)
