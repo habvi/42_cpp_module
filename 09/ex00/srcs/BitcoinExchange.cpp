@@ -49,11 +49,11 @@ namespace {
 	}
 
 	bool IsValidMonth(const int month) {
-		return month >= 0 && month <= 12;
+		return month > 0 && month <= 12;
 	}
 
 	bool IsValidDay(const int month, const int day) {
-		if (day < 0) {
+		if (day <= 0) {
 			return false;
 		}
 		static const int short_month[5] = {2, 4, 6, 9, 11};
