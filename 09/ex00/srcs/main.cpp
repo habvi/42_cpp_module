@@ -6,7 +6,7 @@
 #include <sstream>
 
 namespace {
-	static const char       *kBitcoinRateFilepath = "data_tmp.csv"; // todo
+	static const char       *kBitcoinRateFilepath = "data.csv";
 	static const std::string kDataFileHead        = "date,exchange_rate";
 	static const std::string kDataFileDelimiter   = ",";
 	static const std::string kErrBadData          = "bad data => ";
