@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <cctype> // isdigit
 #include <cstdlib>
+#include <ctime>
+#include <iomanip>
 #include <iostream>
 #include <list>
 #include <set>
@@ -130,6 +132,42 @@ namespace {
 			++begin2;
 		}
 	}
+
+	void MergeInsertSortWithVector(
+		const std::vector<unsigned int> &vec_nums,
+		const std::vector<unsigned int> &sorted_nums
+	) {
+		const PmergeMe::PmergeVec pmerge_vec = ConvertToPmergeVec(vec_nums);
+
+		std::clock_t              c_start = std::clock();
+		const PmergeMe::PmergeVec result_nums =
+			PmergeMe::MergeInsertSort(pmerge_vec);
+		std::clock_t c_end = std::clock();
+
+		std::cout << std::fixed << std::setprecision(2)
+				  << "Time to process a range of " << vec_nums.size()
+				  << " elements with std::vector : " << (c_end - c_start) * 1.0
+				  << " us\n";
+		AssertEq(sorted_nums, result_nums);
+	}
+
+	void MergeInsertSortWithList(
+		const std::vector<unsigned int> &vec_nums,
+		const std::vector<unsigned int> &sorted_nums
+	) {
+		const PmergeMe::PmergeList pmerge_list = ConvertToPmergeList(vec_nums);
+
+		std::clock_t               c_start = std::clock();
+		const PmergeMe::PmergeList result_nums =
+			PmergeMe::MergeInsertSort(pmerge_list);
+		std::clock_t c_end = std::clock();
+
+		std::cout << std::fixed << std::setprecision(2)
+				  << "Time to process a range of " << vec_nums.size()
+				  << " elements with std::list   : " << (c_end - c_start) * 1.0
+				  << " us\n";
+		AssertEq(sorted_nums, result_nums);
+	}
 } // namespace
 
 int main(int argc, char **argv) {
@@ -145,17 +183,8 @@ int main(int argc, char **argv) {
 	std::vector<unsigned int> sorted_nums = SortedVec(vec_nums);
 	PrintNumsBeforeAfter(vec_nums, sorted_nums);
 
-	const PmergeMe::PmergeVec pmerge_vec = ConvertToPmergeVec(vec_nums);
-	// todo: time start
-	const PmergeMe::PmergeVec result_nums1 = PmergeMe::MergeInsertSort(pmerge_vec);
-	// todo: time stop
-	AssertEq(sorted_nums, result_nums1);
-
-	const PmergeMe::PmergeList pmerge_list = ConvertToPmergeList(vec_nums);
-	// todo: time start
-	const PmergeMe::PmergeList result_nums2 = PmergeMe::MergeInsertSort(pmerge_list);
-	// todo: time stop
-	AssertEq(sorted_nums, result_nums2);
+	MergeInsertSortWithVector(vec_nums, sorted_nums);
+	MergeInsertSortWithList(vec_nums, sorted_nums);
 
 	return EXIT_SUCCESS;
 }
