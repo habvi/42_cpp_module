@@ -1,4 +1,5 @@
 #include "PmergeMe.hpp"
+#include <algorithm> // todo: rm (sort)
 
 PmergeMe::PmergeMe() {}
 
@@ -16,7 +17,9 @@ PmergeMe::~PmergeMe() {}
 
 // todo
 PmergeMe::PmergeVec PmergeMe::MergeInsertSort(const PmergeVec &pmerge_vec) {
-	return pmerge_vec;
+	PmergeVec tmp_vec = pmerge_vec;
+	std::sort(tmp_vec.begin(), tmp_vec.end());
+	return tmp_vec;
 }
 
 // todo

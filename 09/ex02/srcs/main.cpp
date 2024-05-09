@@ -6,6 +6,7 @@
 #include <iostream>
 #include <set>
 #include <sstream>
+#include <stdexcept> // logic_error
 #include <vector>
 
 namespace {
@@ -97,6 +98,24 @@ namespace {
 		PrintNums("Before: ", vec_nums);
 		PrintNums("After: ", sorted_nums);
 	}
+
+	template <typename T>
+	void
+	AssertEq(const std::vector<unsigned int> &sorted_nums, const T &result_nums) {
+		static const std::string kErrMsgNotSorted = "sort is not complete.";
+
+		if (sorted_nums.size() != result_nums.size()) {
+			throw std::logic_error(kErrMsgNotSorted);
+		}
+		typename T::const_iterator begin1 = sorted_nums.begin();
+		typename T::const_iterator begin2 = result_nums.begin();
+		for (; begin1 != sorted_nums.end(); ++begin1) {
+			if (*begin1 != *begin2) {
+				throw std::logic_error(kErrMsgNotSorted);
+			}
+			++begin2;
+		}
+	}
 } // namespace
 
 int main(int argc, char **argv) {
@@ -114,15 +133,14 @@ int main(int argc, char **argv) {
 
 	// todo: time start
 	const PmergeMe::PmergeVec result_nums = PmergeMe::MergeInsertSort(vec_nums);
-	(void)result_nums;
 	// todo: time stop
-	// AssertEq(result_nums, sorted_nums);
+	AssertEq(sorted_nums, result_nums);
 
 	// convert vec_nums -> list<unsigned int> list_nums
 	// todo: time start
 	// MergeInsertSortWithList(list_nums);
 	// todo: time stop
-	// AssertEq(result_nums, sorted_nums);
+	// AssertEq(sorted_nums, result_nums);
 
 	return EXIT_SUCCESS;
 }
