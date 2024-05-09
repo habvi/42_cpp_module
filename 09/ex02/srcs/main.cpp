@@ -1,5 +1,6 @@
 #include "PmergeMe.hpp"
 #include "color.hpp"
+#include <algorithm>
 #include <cctype> // isdigit
 #include <cstdlib>
 #include <iostream>
@@ -75,27 +76,26 @@ namespace {
 		return true;
 	}
 
-	void PrintResult(
-		const PmergeMe::PmergeVec &pmerge_vec, const PmergeMe::PmergeVec &result_nums
-	) {
-		std::cout << "Before: ";
-		for (std::size_t i = 0; i < pmerge_vec.size(); i++) {
-			std::cout << pmerge_vec[i] << " ";
-		}
-		std::cout << std::endl;
+	std::vector<unsigned int> SortedVec(std::vector<unsigned int> vec) {
+		std::vector<unsigned int> tmp_vec = vec;
+		std::sort(tmp_vec.begin(), tmp_vec.end());
+		return tmp_vec;
+	}
 
-		std::cout << "After: ";
-		for (std::size_t i = 0; i < result_nums.size(); i++) {
-			std::cout << result_nums[i] << " ";
+	void PrintNums(const std::string &s, const std::vector<unsigned int> &nums) {
+		std::cout << s;
+		for (std::size_t i = 0; i < nums.size(); i++) {
+			std::cout << nums[i] << " ";
 		}
 		std::cout << std::endl;
 	}
 
-	bool MergeInsertSortWithVector(const PmergeMe::PmergeVec &pmerge_vec) {
-		const PmergeMe::PmergeVec result_nums =
-			PmergeMe::MergeInsertSort(pmerge_vec);
-		PrintResult(pmerge_vec, result_nums);
-		return true;
+	void PrintNumsBeforeAfter(
+		const std::vector<unsigned int> &vec_nums,
+		const std::vector<unsigned int> &sorted_nums
+	) {
+		PrintNums("Before: ", vec_nums);
+		PrintNums("After: ", sorted_nums);
 	}
 } // namespace
 
@@ -109,18 +109,20 @@ int main(int argc, char **argv) {
 	if (!ConvertValidIntVec((const char *const *)argv, vec_nums)) {
 		return EXIT_FAILURE;
 	}
+	std::vector<unsigned int> sorted_nums = SortedVec(vec_nums);
+	PrintNumsBeforeAfter(vec_nums, sorted_nums);
 
 	// todo: time start
-	if (!MergeInsertSortWithVector(vec_nums)) {
-		return EXIT_FAILURE;
-	}
+	const PmergeMe::PmergeVec result_nums = PmergeMe::MergeInsertSort(vec_nums);
+	(void)result_nums;
 	// todo: time stop
+	// AssertEq(result_nums, sorted_nums);
 
 	// convert vec_nums -> list<unsigned int> list_nums
 	// todo: time start
-	// if (!MergeInsertSortWithList(list_nums)) {
-	// 	return EXIT_FAILURE;
-	// }
+	// MergeInsertSortWithList(list_nums);
 	// todo: time stop
+	// AssertEq(result_nums, sorted_nums);
+
 	return EXIT_SUCCESS;
 }
