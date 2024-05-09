@@ -13,3 +13,13 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other) {
 }
 
 PmergeMe::~PmergeMe() {}
+
+// todo
+PmergeMe::PmergeVec PmergeMe::MergeInsertSort(const PmergeVec &pmerge_vec) {
+	return pmerge_vec;
+}
+
+// todo
+PmergeMe::PmergeList PmergeMe::MergeInsertSort(const PmergeList &pmerge_list) {
+	return pmerge_list;
+}
