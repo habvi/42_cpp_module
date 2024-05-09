@@ -100,6 +100,12 @@ namespace {
 		PrintNums("After: ", sorted_nums);
 	}
 
+	// iru...?
+	PmergeMe::PmergeVec ConvertToPmergeVec(const std::vector<unsigned int> &vec_nums
+	) {
+		return vec_nums;
+	}
+
 	PmergeMe::PmergeList
 	ConvertToPmergeList(const std::vector<unsigned int> &vec_nums) {
 		PmergeMe::PmergeList pmerge_list(vec_nums.begin(), vec_nums.end());
@@ -139,10 +145,11 @@ int main(int argc, char **argv) {
 	std::vector<unsigned int> sorted_nums = SortedVec(vec_nums);
 	PrintNumsBeforeAfter(vec_nums, sorted_nums);
 
+	const PmergeMe::PmergeVec pmerge_vec = ConvertToPmergeVec(vec_nums);
 	// todo: time start
-	const PmergeMe::PmergeVec result_nums = PmergeMe::MergeInsertSort(vec_nums);
+	const PmergeMe::PmergeVec result_nums1 = PmergeMe::MergeInsertSort(pmerge_vec);
 	// todo: time stop
-	AssertEq(sorted_nums, result_nums);
+	AssertEq(sorted_nums, result_nums1);
 
 	const PmergeMe::PmergeList pmerge_list = ConvertToPmergeList(vec_nums);
 	// todo: time start
