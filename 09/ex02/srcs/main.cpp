@@ -68,7 +68,7 @@ namespace {
 	bool ConvertValidIntVec(
 		const char *const *argv, std::vector<unsigned int> &vec_nums
 	) {
-		const std::vector<std::string> vec_strs = ToStrVec(&argv[1]);
+		const std::vector<std::string> vec_strs = ToStrVec(argv);
 		if (!ConvertToIntVec(vec_strs, vec_nums)) {
 			PrintError("invalid argument");
 			return false;
@@ -184,7 +184,7 @@ int main(int argc, char **argv) {
 	}
 
 	std::vector<unsigned int> vec_nums;
-	if (!ConvertValidIntVec((const char *const *)argv, vec_nums)) {
+	if (!ConvertValidIntVec((const char *const *)&argv[1], vec_nums)) {
 		return EXIT_FAILURE;
 	}
 	std::vector<unsigned int> sorted_nums = SortedVec(vec_nums);
