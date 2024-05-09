@@ -3,6 +3,7 @@
 #include <cctype> // isdigit
 #include <cstdlib>
 #include <iostream>
+#include <set>
 #include <sstream>
 #include <vector>
 
@@ -48,7 +49,14 @@ namespace {
 	}
 
 	bool IsDuplicateNums(const std::vector<unsigned int> &vec_nums) {
-		// todo
+		std::set<unsigned int> unique_nums;
+		for (std::size_t i = 0; i < vec_nums.size(); i++) {
+			const unsigned int num = vec_nums[i];
+			if (unique_nums.count(num) > 0) {
+				return true;
+			}
+			unique_nums.insert(num);
+		}
 		return false;
 	}
 
