@@ -4,6 +4,7 @@
 #include <cctype> // isdigit
 #include <cstdlib>
 #include <iostream>
+#include <list>
 #include <set>
 #include <sstream>
 #include <stdexcept> // logic_error
@@ -99,6 +100,12 @@ namespace {
 		PrintNums("After: ", sorted_nums);
 	}
 
+	PmergeMe::PmergeList
+	ConvertToPmergeList(const std::vector<unsigned int> &vec_nums) {
+		PmergeMe::PmergeList pmerge_list(vec_nums.begin(), vec_nums.end());
+		return pmerge_list;
+	}
+
 	template <typename T>
 	void
 	AssertEq(const std::vector<unsigned int> &sorted_nums, const T &result_nums) {
@@ -107,7 +114,8 @@ namespace {
 		if (sorted_nums.size() != result_nums.size()) {
 			throw std::logic_error(kErrMsgNotSorted);
 		}
-		typename T::const_iterator begin1 = sorted_nums.begin();
+		typename std::vector<unsigned int>::const_iterator begin1 =
+			sorted_nums.begin();
 		typename T::const_iterator begin2 = result_nums.begin();
 		for (; begin1 != sorted_nums.end(); ++begin1) {
 			if (*begin1 != *begin2) {
@@ -136,11 +144,11 @@ int main(int argc, char **argv) {
 	// todo: time stop
 	AssertEq(sorted_nums, result_nums);
 
-	// convert vec_nums -> list<unsigned int> list_nums
+	const PmergeMe::PmergeList pmerge_list = ConvertToPmergeList(vec_nums);
 	// todo: time start
-	// MergeInsertSortWithList(list_nums);
+	const PmergeMe::PmergeList result_nums2 = PmergeMe::MergeInsertSort(pmerge_list);
 	// todo: time stop
-	// AssertEq(sorted_nums, result_nums);
+	AssertEq(sorted_nums, result_nums2);
 
 	return EXIT_SUCCESS;
 }

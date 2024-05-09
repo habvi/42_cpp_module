@@ -24,5 +24,7 @@ PmergeMe::PmergeVec PmergeMe::MergeInsertSort(const PmergeVec &pmerge_vec) {
 
 // todo
 PmergeMe::PmergeList PmergeMe::MergeInsertSort(const PmergeList &pmerge_list) {
-	return pmerge_list;
+	PmergeMe::PmergeList tmp_list(pmerge_list);
+	tmp_list.sort();
+	return tmp_list;
 }
