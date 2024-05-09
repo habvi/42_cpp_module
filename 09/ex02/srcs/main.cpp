@@ -102,26 +102,6 @@ namespace {
 		PrintNums("After: ", sorted_nums);
 	}
 
-	PmergeMe::PmergeVec ConvertToPmergeVec(const char *const *argv) {
-		PmergeMe::PmergeVec pmerge_vec;
-		for (std::size_t i = 0; argv[i]; i++) {
-			unsigned int num;
-			ConvertStrToInt(std::string(argv[i]), num);
-			pmerge_vec.push_back(num);
-		}
-		return pmerge_vec;
-	}
-
-	PmergeMe::PmergeList ConvertToPmergeList(const char *const *argv) {
-		PmergeMe::PmergeList pmerge_list;
-		for (std::size_t i = 0; argv[i]; i++) {
-			unsigned int num;
-			ConvertStrToInt(std::string(argv[i]), num);
-			pmerge_list.push_back(num);
-		}
-		return pmerge_list;
-	}
-
 	template <typename T>
 	void
 	AssertEq(const std::vector<unsigned int> &sorted_nums, const T &result_nums) {
@@ -140,6 +120,18 @@ namespace {
 			++begin2;
 		}
 	}
+} // namespace
+
+namespace {
+	PmergeMe::PmergeVec ConvertToPmergeVec(const char *const *argv) {
+		PmergeMe::PmergeVec pmerge_vec;
+		for (std::size_t i = 0; argv[i]; i++) {
+			unsigned int num;
+			ConvertStrToInt(std::string(argv[i]), num);
+			pmerge_vec.push_back(num);
+		}
+		return pmerge_vec;
+	}
 
 	void MergeInsertSortWithVector(
 		const char *const *argv, const std::vector<unsigned int> &sorted_nums
@@ -156,6 +148,18 @@ namespace {
 				  << " elements with std::vector : " << (c_end - c_start) * 1.0
 				  << " us\n";
 		AssertEq(sorted_nums, result_nums);
+	}
+} // namespace
+
+namespace {
+	PmergeMe::PmergeList ConvertToPmergeList(const char *const *argv) {
+		PmergeMe::PmergeList pmerge_list;
+		for (std::size_t i = 0; argv[i]; i++) {
+			unsigned int num;
+			ConvertStrToInt(std::string(argv[i]), num);
+			pmerge_list.push_back(num);
+		}
+		return pmerge_list;
 	}
 
 	void MergeInsertSortWithList(
