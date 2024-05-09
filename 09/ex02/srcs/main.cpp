@@ -31,29 +31,48 @@ namespace {
 	}
 
 	// ok: 0 ~ UINT_MAX integer
-	bool ConvertToPmergeVec(
-		const std::vector<std::string> &pmerge_str, PmergeMe::PmergeVec &pmerge_vec
+	bool ConvertToIntVec(
+		const std::vector<std::string> &vec_strs, std::vector<unsigned int> &vec_nums
 	) {
-		for (std::size_t i = 0; i < pmerge_str.size(); i++) {
-			if (!pmerge_str[i].empty() && !MyIsDigit(pmerge_str[i][0])) {
+		for (std::size_t i = 0; i < vec_strs.size(); i++) {
+			if (!vec_strs[i].empty() && !MyIsDigit(vec_strs[i][0])) {
 				return false;
 			}
 			unsigned int num;
-			if (!ConvertStrToInt(pmerge_str[i], num)) {
+			if (!ConvertStrToInt(vec_strs[i], num)) {
 				return false;
 			}
-			pmerge_vec.push_back(num);
+			vec_nums.push_back(num);
+		}
+		return true;
+	}
+
+	bool IsDuplicateNums(const std::vector<unsigned int> &vec_nums) {
+		// todo
+		return false;
+	}
+
+	bool ConvertValidIntVec(
+		const char *const *argv, std::vector<unsigned int> &vec_nums
+	) {
+		const std::vector<std::string> vec_strs = ToStrVec(&argv[1]);
+		if (!ConvertToIntVec(vec_strs, vec_nums)) {
+			PrintError("invalid argument");
+			return false;
+		}
+		if (IsDuplicateNums(vec_nums)) {
+			PrintError("invalid argument");
+			return false;
 		}
 		return true;
 	}
 
 	void PrintResult(
-		const std::vector<std::string> pmerge_strs,
-		const PmergeMe::PmergeVec     &result_nums
+		const PmergeMe::PmergeVec &pmerge_vec, const PmergeMe::PmergeVec &result_nums
 	) {
 		std::cout << "Before: ";
-		for (std::size_t i = 0; i < pmerge_strs.size(); i++) {
-			std::cout << pmerge_strs[i] << " ";
+		for (std::size_t i = 0; i < pmerge_vec.size(); i++) {
+			std::cout << pmerge_vec[i] << " ";
 		}
 		std::cout << std::endl;
 
@@ -64,17 +83,10 @@ namespace {
 		std::cout << std::endl;
 	}
 
-	bool MergeInsertSortWithVector(const char *const *argv) {
-		const std::vector<std::string> pmerge_strs = ToStrVec(&argv[1]);
-		PmergeMe::PmergeVec            pmerge_vec;
-		if (!ConvertToPmergeVec(pmerge_strs, pmerge_vec)) {
-			PrintError("invalid argument");
-			return false;
-		}
-
+	bool MergeInsertSortWithVector(const PmergeMe::PmergeVec &pmerge_vec) {
 		const PmergeMe::PmergeVec result_nums =
 			PmergeMe::MergeInsertSort(pmerge_vec);
-		PrintResult(pmerge_strs, result_nums);
+		PrintResult(pmerge_vec, result_nums);
 		return true;
 	}
 } // namespace
@@ -85,10 +97,22 @@ int main(int argc, char **argv) {
 		return EXIT_FAILURE;
 	}
 
-	if (!MergeInsertSortWithVector((const char *const *)argv)) {
+	std::vector<unsigned int> vec_nums;
+	if (!ConvertValidIntVec((const char *const *)argv, vec_nums)) {
 		return EXIT_FAILURE;
 	}
-	// MergeInsertSortWithList();
 
+	// todo: time start
+	if (!MergeInsertSortWithVector(vec_nums)) {
+		return EXIT_FAILURE;
+	}
+	// todo: time stop
+
+	// convert vec_nums -> list<unsigned int> list_nums
+	// todo: time start
+	// if (!MergeInsertSortWithList(list_nums)) {
+	// 	return EXIT_FAILURE;
+	// }
+	// todo: time stop
 	return EXIT_SUCCESS;
 }
