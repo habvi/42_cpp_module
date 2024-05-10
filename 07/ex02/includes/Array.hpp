@@ -1,6 +1,8 @@
 #ifndef EX02_ARRAY_HPP
 #define EX02_ARRAY_HPP
 
+#include <cstddef>
+
 template <typename T>
 class Array {
   public:
@@ -10,9 +12,9 @@ class Array {
 	~Array();
 	Array &operator=(const Array &other);
 	// for read : [i]
-	const T &operator[](const unsigned int index) const;
+	const T &operator[](const std::size_t index) const;
 	// for write : [i] = x
-	T &operator[](const unsigned int index);
+	T &operator[](const std::size_t index);
 
   public:
 	// Following the instructions, not camelcase.
@@ -20,7 +22,7 @@ class Array {
 
   private:
 	T   *DupArray(const Array &other);
-	void ThrowIfIndexOutOfRange(const unsigned int index) const;
+	void ThrowIfIndexOutOfRange(const std::size_t index) const;
 
   private:
 	T           *array_;

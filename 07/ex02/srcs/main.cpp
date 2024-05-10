@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <limits.h>
 #include <string>
 
 namespace test {
@@ -258,6 +259,25 @@ namespace test {
 		}
 	}
 
+	void RunOriginalTest4() {
+		DisplayTitle(5, "int Array / index > UINT_MAX");
+
+		const unsigned int kArraySize = 5;
+
+		Array<int> numbers(kArraySize);
+		for (unsigned int i = 0; i < kArraySize; i++) {
+			const int value = rand() % 100;
+			numbers[i]      = value;
+		}
+		PrintArray("numbers", numbers);
+
+		try {
+			numbers[UINT_MAX + 100] = 0;
+		} catch (const std::exception &e) {
+			std::cerr << COLOR_RED << e.what() << COLOR_END << std::endl;
+		}
+	}
+
 } // namespace test
 
 // --------------------------------------------------------------------
@@ -268,6 +288,7 @@ int main() {
 	test::RunOriginalTest1();
 	test::RunOriginalTest2();
 	test::RunOriginalTest3();
+	test::RunOriginalTest4();
 
 	return EXIT_SUCCESS;
 }
