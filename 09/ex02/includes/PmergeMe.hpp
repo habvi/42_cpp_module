@@ -8,8 +8,8 @@ class PmergeMe {
   public:
 	typedef std::vector<unsigned int> PmergeVec;
 	typedef std::list<unsigned int>   PmergeList;
-	static PmergeVec                  MergeInsertSort(const PmergeVec &pmerge_vec);
-	static PmergeList                 MergeInsertSort(const PmergeList &pmerge_list);
+	static PmergeVec                  MergeInsertSort(const PmergeVec &nums);
+	static PmergeList                 MergeInsertSort(const PmergeList &nums);
 
   private:
 	PmergeMe();

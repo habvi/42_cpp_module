@@ -9,6 +9,7 @@ PmergeMe::PmergeMe(const PmergeMe &other) {
 
 PmergeMe &PmergeMe::operator=(const PmergeMe &other) {
 	if (this != &other) {
+		(void)other;
 	}
 	return *this;
 }
@@ -16,15 +17,15 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other) {
 PmergeMe::~PmergeMe() {}
 
 // todo
-PmergeMe::PmergeVec PmergeMe::MergeInsertSort(const PmergeVec &pmerge_vec) {
-	PmergeVec tmp_vec = pmerge_vec;
+PmergeMe::PmergeVec PmergeMe::MergeInsertSort(const PmergeVec &nums) {
+	PmergeVec tmp_vec = nums;
 	std::sort(tmp_vec.begin(), tmp_vec.end());
 	return tmp_vec;
 }
 
 // todo
-PmergeMe::PmergeList PmergeMe::MergeInsertSort(const PmergeList &pmerge_list) {
-	PmergeMe::PmergeList tmp_list(pmerge_list);
+PmergeMe::PmergeList PmergeMe::MergeInsertSort(const PmergeList &nums) {
+	PmergeMe::PmergeList tmp_list(nums);
 	tmp_list.sort();
 	return tmp_list;
 }
