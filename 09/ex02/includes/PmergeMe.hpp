@@ -24,6 +24,10 @@ class PmergeMe {
 	PmergeMe(const PmergeMe &other);
 	PmergeMe &operator=(const PmergeMe &other);
 	~PmergeMe();
+	// for 1st container
+	static std::vector<Num> MergeInsertSortWithVec(
+		const std::vector<NumPair> &num_pairs, std::size_t nums_size
+	);
 };
 
 #endif /* EX02_PMERGE_ME_HPP */
