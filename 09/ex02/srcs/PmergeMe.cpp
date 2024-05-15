@@ -60,6 +60,55 @@ namespace {
 		return large_half_pairs;
 	}
 
+	std::vector<PmergeMe::Num> MakeInsertSmallNums(
+		std::vector<PmergeMe::Num>           &sorted_nums,
+		const std::vector<PmergeMe::NumPair> &pre_num_pairs,
+		const std::vector<PmergeMe::NumPair> &num_pairs
+	) {
+		std::vector<PmergeMe::Num> insert_small_nums;
+
+		if (sorted_nums.size() == 1) {
+			insert_small_nums.push_back(pre_num_pairs[0].small);
+		} else {
+			for (std::size_t i = 0; i < sorted_nums.size(); i++) {
+				// recover large to small in O(1) & update the index
+				const std::size_t pre_index = sorted_nums[i].index;
+				sorted_nums[i].index        = pre_num_pairs[pre_index].large.index;
+				const PmergeMe::Num small   = pre_num_pairs[pre_index].small;
+				insert_small_nums.push_back(small);
+			}
+		}
+		if (num_pairs.size() > 1 && num_pairs.size() % 2 == 1) {
+			const PmergeMe::Num large = GetNum(
+				num_pairs[num_pairs.size() - 1].large.num, num_pairs.size() - 1
+			);
+			insert_small_nums.push_back(large);
+		}
+		return insert_small_nums;
+	}
+
+	std::vector<PmergeMe::Num> InsertSmallerNumsByGroup(
+		std::vector<PmergeMe::Num>       &sorted_nums,
+		const std::vector<PmergeMe::Num> &insert_small_nums
+	) {
+		(void)insert_small_nums;
+		return sorted_nums;
+	}
+
+	// binary search & insert smaller numbers
+	std::vector<PmergeMe::Num> &InsertSmallerNums(
+		std::vector<PmergeMe::Num>           &sorted_nums,
+		const std::vector<PmergeMe::NumPair> &pre_num_pairs,
+		const std::vector<PmergeMe::NumPair> &num_pairs
+	) {
+		const std::vector<PmergeMe::Num> insert_small_nums =
+			MakeInsertSmallNums(sorted_nums, pre_num_pairs, num_pairs);
+
+		sorted_nums = InsertSmallerNumsByGroup(sorted_nums, insert_small_nums);
+		return sorted_nums;
+	}
+
+	// ------------------------------------------------------------------------
 	std::vector<PmergeMe::NumPair> ConvertToPairs(const PmergeMe::PmergeVec &nums) {
 		std::vector<PmergeMe::NumPair> nums_pair;
 		for (std::size_t i = 0; i < nums.size(); i++) {
@@ -100,7 +149,7 @@ std::vector<PmergeMe::Num> PmergeMe::MergeInsertSortWithVec(
 	}
 
 	// insert
-	// sorted_nums = InsertSmallerNums(sorted_nums, large_half_pairs, num_pairs);
+	sorted_nums = InsertSmallerNums(sorted_nums, large_half_pairs, num_pairs);
 	return sorted_nums;
 }
 
