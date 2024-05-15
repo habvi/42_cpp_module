@@ -1,5 +1,4 @@
 #include "PmergeMe.hpp"
-#include <algorithm> // todo: rm (sort)
 #include <cmath>     // pow
 #include <limits>    // numeric_limits
 #include <stdexcept> // logic_error
@@ -90,6 +89,35 @@ namespace {
 		return insert_small_nums;
 	}
 
+	std::size_t BinarySearch(
+		const std::vector<PmergeMe::Num> &sorted_nums,
+		const PmergeMe::Num              &insert_num,
+		std::size_t                       left_idx,
+		std::size_t                       right_idx
+	) {
+		while (right_idx < left_idx) {
+			std::size_t middle = (left_idx + right_idx) / 2;
+			if (middle >= sorted_nums.size() || insert_num < sorted_nums[middle]) {
+				left_idx = middle;
+			} else {
+				right_idx = middle + 1;
+			}
+		}
+		return right_idx;
+	}
+
+	std::size_t InsertNumWithBinarySearch(
+		std::vector<PmergeMe::Num> &sorted_nums,
+		const PmergeMe::Num        &insert_num,
+		std::size_t                 large_group_last_index
+	) {
+		std::size_t pos =
+			BinarySearch(sorted_nums, insert_num, large_group_last_index, 0);
+
+		sorted_nums.insert(sorted_nums.begin() + pos, insert_num);
+		return pos;
+	}
+
 	// insert right to left in each group
 	std::vector<PmergeMe::Num> &InsertSmallerNumsWithEachGroup(
 		unsigned int                      group_size,
@@ -97,9 +125,20 @@ namespace {
 		std::vector<PmergeMe::Num>       &sorted_nums,
 		const std::vector<PmergeMe::Num> &insert_small_nums
 	) {
-		(void)group_size;
-		(void)total_group_size;
-		(void)insert_small_nums;
+		// 1 + : already inserted front
+		const unsigned int offset = 1 + total_group_size - group_size;
+		std::size_t        large_group_last_index = offset + total_group_size;
+
+		for (std::size_t i = 0; i < group_size; i++) {
+			const PmergeMe::Num insert_num = insert_small_nums[total_group_size - i];
+
+			std::size_t pos = InsertNumWithBinarySearch(
+				sorted_nums, insert_num, large_group_last_index
+			);
+			if (pos == large_group_last_index) {
+				large_group_last_index--;
+			}
+		}
 		return sorted_nums;
 	}
 
@@ -216,14 +255,9 @@ std::vector<PmergeMe::Num> PmergeMe::MergeInsertSortWithVec(
 }
 
 PmergeMe::PmergeVec PmergeMe::MergeInsertSort(const PmergeVec &nums) {
-	std::vector<NumPair> nums_pair  = ConvertToPairs(nums);
-	std::vector<Num> result_pairs   = MergeInsertSortWithVec(nums_pair, nums.size());
-	PmergeMe::PmergeVec sorted_nums = ConvertToVec(result_pairs);
-	// return ConvertToVec(result_pairs);
-
-	PmergeVec tmp_vec = nums;
-	std::sort(tmp_vec.begin(), tmp_vec.end());
-	return tmp_vec;
+	std::vector<NumPair> nums_pair = ConvertToPairs(nums);
+	std::vector<Num> result_pairs  = MergeInsertSortWithVec(nums_pair, nums.size());
+	return ConvertToVec(result_pairs);
 }
 
 // ----------------------------------------------------------------------------
