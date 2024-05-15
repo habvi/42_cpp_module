@@ -2,6 +2,7 @@
 #define EX02_PMERGE_ME_HPP
 
 #include <list>
+#include <ostream>
 #include <vector>
 
 class PmergeMe {
@@ -29,5 +30,10 @@ class PmergeMe {
 		const std::vector<NumPair> &num_pairs, std::size_t nums_size
 	);
 };
+
+std::ostream &operator<<(std::ostream &out, const PmergeMe::PmergeVec &nums);
+std::ostream &
+operator<<(std::ostream &out, const std::vector<PmergeMe::NumPair> &num_pairs);
+std::ostream &operator<<(std::ostream &out, const std::vector<PmergeMe::Num> &nums);
 
 #endif /* EX02_PMERGE_ME_HPP */

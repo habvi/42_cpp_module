@@ -268,3 +268,35 @@ PmergeMe::PmergeList PmergeMe::MergeInsertSort(const PmergeList &nums) {
 	tmp_list.sort();
 	return tmp_list;
 }
+
+// ----------------------------------------------------------------------------
+// debug
+// ----------------------------------------------------------------------------
+std::ostream &operator<<(std::ostream &out, const PmergeMe::PmergeVec &nums) {
+	typename PmergeMe::PmergeVec::const_iterator begin = nums.begin();
+	for (; begin != nums.end(); ++begin) {
+		out << *begin << " ";
+	}
+	return out;
+}
+
+std::ostream &
+operator<<(std::ostream &out, const std::vector<PmergeMe::NumPair> &num_pairs) {
+	typename std::vector<PmergeMe::NumPair>::const_iterator begin =
+		num_pairs.begin();
+	for (; begin != num_pairs.end(); ++begin) {
+		out << "{" << begin->large.num << "(" << begin->large.index << "), "
+			<< begin->small.num << "(" << begin->small.index << ")} ";
+	}
+	return out;
+}
+
+std::ostream &operator<<(std::ostream &out, const std::vector<PmergeMe::Num> &nums) {
+	typename std::vector<PmergeMe::Num>::const_iterator begin = nums.begin();
+	out << "[";
+	for (; begin != nums.end(); ++begin) {
+		out << begin->num << "(" << begin->index << "), ";
+	}
+	out << "]";
+	return out;
+}
