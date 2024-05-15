@@ -1,5 +1,8 @@
 #include "PmergeMe.hpp"
 #include <algorithm> // todo: rm (sort)
+#include <cmath>     // pow
+#include <limits>    // numeric_limits
+#include <stdexcept> // logic_error
 
 PmergeMe::PmergeMe() {}
 
@@ -87,11 +90,70 @@ namespace {
 		return insert_small_nums;
 	}
 
+	// insert right to left in each group
+	std::vector<PmergeMe::Num> &InsertSmallerNumsWithEachGroup(
+		unsigned int                      group_size,
+		unsigned int                      total_group_size,
+		std::vector<PmergeMe::Num>       &sorted_nums,
+		const std::vector<PmergeMe::Num> &insert_small_nums
+	) {
+		(void)group_size;
+		(void)total_group_size;
+		(void)insert_small_nums;
+		return sorted_nums;
+	}
+
+	// term | i-th num | total
+	//  0       0          0
+	//  1       2          2
+	//  2       2          4
+	//  3       6          10
+	//  4       10         20
+	//  5       22         42
+	//  6       42         84
+	//  7       86         170
+	//  8       170        340
+	//  9       342        682
+	//  10      682        1364
+	//  11      1366       2730
+	//  12      2730       5460
+	//           :
+	//  30   715827882  1431655764
+	unsigned int GetJacobsthalNum(unsigned int term) {
+		if (term == 0) {
+			return 0;
+		}
+		const double num = (std::pow(2, term) - std::pow(-1, term)) / 3 * 2;
+		if (num < std::numeric_limits<unsigned int>::min() ||
+			num > std::numeric_limits<unsigned int>::max()) {
+			throw std::logic_error("too large term");
+		}
+		return num;
+	}
+
 	std::vector<PmergeMe::Num> InsertSmallerNumsByGroup(
 		std::vector<PmergeMe::Num>       &sorted_nums,
 		const std::vector<PmergeMe::Num> &insert_small_nums
 	) {
-		(void)insert_small_nums;
+		// insert front
+		sorted_nums.insert(sorted_nums.begin(), insert_small_nums.front());
+
+		// insert front+1~
+		std::size_t  insert_small_nums_size = insert_small_nums.size() - 1;
+		unsigned int total_group_size       = 0;
+		for (std::size_t i = 1; total_group_size < insert_small_nums_size; i++) {
+			unsigned int group_size = GetJacobsthalNum(i);
+			total_group_size += group_size;
+			if (total_group_size > insert_small_nums_size) {
+				const unsigned int over_num =
+					total_group_size - insert_small_nums_size;
+				group_size -= over_num;
+				total_group_size -= over_num;
+			}
+			sorted_nums = InsertSmallerNumsWithEachGroup(
+				group_size, total_group_size, sorted_nums, insert_small_nums
+			);
+		}
 		return sorted_nums;
 	}
 
