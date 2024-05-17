@@ -262,12 +262,275 @@ PmergeMe::PmergeVec PmergeMe::MergeInsertSort(const PmergeVec &nums) {
 }
 
 // ----------------------------------------------------------------------------
-// todo : list
+// list
 // ----------------------------------------------------------------------------
+namespace sort_list {
+	bool operator<(const PmergeMe::LNum &num1, const PmergeMe::LNum &num2) {
+		return num1.num < num2.num;
+	}
+
+	PmergeMe::LNum GetNum(unsigned int num, const PmergeMe::ListItr &itr) {
+		PmergeMe::LNum num_itr;
+		num_itr.num = num;
+		num_itr.itr = itr;
+		return num_itr;
+	}
+
+	PmergeMe::LNumPair
+	GetNumPair(const PmergeMe::LNum &large, const PmergeMe::LNum &small) {
+		PmergeMe::LNumPair num_pair;
+		num_pair.large = large;
+		num_pair.small = small;
+		return num_pair;
+	}
+
+	// for same nums pair
+	PmergeMe::LNumPair GetNumPair(const PmergeMe::LNum &num) {
+		PmergeMe::LNum lnum = GetNum(num.num, num.itr);
+		return GetNumPair(lnum, lnum);
+	}
+
+	std::list<PmergeMe::LNumPair>::iterator
+	Next(std::list<PmergeMe::LNumPair>::iterator itr) {
+		return ++itr;
+	}
+
+	std::list<PmergeMe::LNum> MakeInsertSmallNums(
+		std::list<PmergeMe::LNumPair>       &sorted_nums,
+		const std::list<PmergeMe::LNumPair> &pre_num_pairs,
+		std::list<PmergeMe::LNumPair>       &num_pairs
+	) {
+		std::list<PmergeMe::LNum> insert_small_nums;
+
+		if (sorted_nums.size() == 1) {
+			insert_small_nums.push_back(pre_num_pairs.begin()->small);
+		} else {
+			PmergeMe::ListItr first = sorted_nums.begin();
+			for (; first != sorted_nums.end(); ++first) {
+				const PmergeMe::ListItr pre_itr = first->large.itr;
+				insert_small_nums.push_back(pre_itr->small);
+				// recover large to small in O(1) & update iterator
+				first->large.itr = pre_itr->large.itr;
+				first->small.itr = pre_itr->large.itr;
+			}
+		}
+		// for non-pair num
+		if (num_pairs.size() > 1 && num_pairs.size() % 2 == 1) {
+			const PmergeMe::ListItr itr = --num_pairs.end();
+			const PmergeMe::LNum    num = GetNum(itr->large.num, itr);
+			insert_small_nums.push_back(num);
+		}
+		return insert_small_nums;
+	}
+
+	std::list<PmergeMe::LNumPair>
+	MargeLargerPair(std::list<PmergeMe::LNumPair> &num_pairs) {
+		std::list<PmergeMe::LNumPair> large_half_pairs;
+
+		PmergeMe::ListItr first = num_pairs.begin();
+		for (std::size_t i = 0; i + 1 < num_pairs.size(); i += 2) {
+			PmergeMe::LNum     num1 = GetNum(first->large.num, first);
+			PmergeMe::ListItr  next = Next(first);
+			PmergeMe::LNum     num2 = GetNum(next->large.num, next);
+			PmergeMe::LNumPair num_pair;
+			if (num1 < num2) {
+				num_pair = GetNumPair(num2, num1);
+			} else {
+				num_pair = GetNumPair(num1, num2);
+			}
+			large_half_pairs.push_back(num_pair);
+			std::advance(first, 2);
+		}
+		return large_half_pairs;
+	}
+
+	PmergeMe::ListItr BinarySearch(
+		std::list<PmergeMe::LNumPair> &sorted_nums,
+		const PmergeMe::LNum          &insert_num,
+		std::size_t                    idx_left,
+		std::size_t                    idx_right,
+		PmergeMe::ListItr              itr_right
+	) {
+		PmergeMe::ListItr itr_left = sorted_nums.begin();
+
+		while (idx_left < idx_right) {
+			const std::size_t middle_idx = (idx_left + idx_right) / 2;
+			PmergeMe::ListItr itr_middle = itr_left;
+			std::advance(itr_middle, middle_idx - idx_left);
+
+			if (middle_idx >= sorted_nums.size() || insert_num < itr_middle->large) {
+				idx_right = middle_idx;
+				itr_right = itr_middle;
+			} else {
+				idx_left = middle_idx + 1;
+				itr_left = Next(itr_middle);
+			}
+		}
+		return itr_left;
+	}
+
+	PmergeMe::ListItr InsertNumWithBinarySearch(
+		std::list<PmergeMe::LNumPair> &sorted_nums,
+		const PmergeMe::LNum          &insert_num,
+		std::size_t                    idx_large_group_last,
+		PmergeMe::ListItr              itr_sorted_last
+	) {
+		PmergeMe::ListItr pos = BinarySearch(
+			sorted_nums, insert_num, 0, idx_large_group_last, itr_sorted_last
+		);
+		sorted_nums.insert(pos, GetNumPair(insert_num));
+		return pos;
+	}
+
+	// insert right to left in each group
+	std::list<PmergeMe::LNumPair> &InsertSmallerNumsWithEachGroup(
+		unsigned int                              group_size,
+		unsigned int                              total_group_size,
+		PmergeMe::ListItr                         itr_sorted_last,
+		std::list<PmergeMe::LNum>::const_iterator itr_insert_last,
+		std::list<PmergeMe::LNumPair>            &sorted_nums
+	) {
+		// 1 + : already inserted front
+		const unsigned int offset               = 1 + total_group_size - group_size;
+		std::size_t        idx_large_group_last = offset + total_group_size;
+
+		while (group_size) {
+			const PmergeMe::LNum    insert_num = *itr_insert_last;
+			const PmergeMe::ListItr pos        = InsertNumWithBinarySearch(
+                sorted_nums, insert_num, idx_large_group_last, itr_sorted_last
+            );
+			if (pos == itr_sorted_last) {
+				--idx_large_group_last;
+				--itr_sorted_last;
+			}
+			--itr_insert_last;
+			--group_size;
+		}
+		return sorted_nums;
+	}
+
+	void UpdateGroupSize(
+		unsigned int &group_size,
+		unsigned int &total_group_size,
+		std::size_t   insert_small_nums_size
+	) {
+		total_group_size += group_size;
+		if (total_group_size <= insert_small_nums_size) {
+			return;
+		}
+		const unsigned int over = total_group_size - insert_small_nums_size;
+		group_size -= over;
+		total_group_size -= over;
+	}
+
+	std::list<PmergeMe::LNumPair> InsertSmallerNumsByGroup(
+		std::list<PmergeMe::LNumPair>   &sorted_nums,
+		const std::list<PmergeMe::LNum> &insert_small_nums
+	) {
+		// insert front
+		sorted_nums.insert(
+			sorted_nums.begin(), GetNumPair(insert_small_nums.front())
+		);
+
+		// insert front+1~
+		std::size_t       insert_small_nums_size = insert_small_nums.size() - 1;
+		unsigned int      total_group_size       = 0;
+		PmergeMe::ListItr itr_sorted_last        = ++sorted_nums.begin();
+		std::list<PmergeMe::LNum>::const_iterator itr_insert_last =
+			insert_small_nums.begin();
+
+		for (std::size_t i = 1; total_group_size < insert_small_nums_size; i++) {
+			unsigned int group_size = GetJacobsthalNum(i);
+			UpdateGroupSize(group_size, total_group_size, insert_small_nums_size);
+			// after update group_size
+			std::advance(itr_sorted_last, group_size);
+			std::advance(itr_insert_last, group_size);
+			sorted_nums = InsertSmallerNumsWithEachGroup(
+				group_size,
+				total_group_size,
+				itr_sorted_last,
+				itr_insert_last,
+				sorted_nums
+			);
+		}
+		return sorted_nums;
+	}
+
+	// binary search & insert smaller numbers
+	std::list<PmergeMe::LNumPair> &InsertSmallerNums(
+		std::list<PmergeMe::LNumPair>       &sorted_nums,
+		const std::list<PmergeMe::LNumPair> &pre_num_pairs,
+		std::list<PmergeMe::LNumPair>       &num_pairs
+	) {
+		const std::list<PmergeMe::LNum> insert_small_nums =
+			MakeInsertSmallNums(sorted_nums, pre_num_pairs, num_pairs);
+
+		sorted_nums = InsertSmallerNumsByGroup(sorted_nums, insert_small_nums);
+		return sorted_nums;
+	}
+
+	std::list<PmergeMe::LNumPair> MergeInsertSortWithList(
+		std::list<PmergeMe::LNumPair> &num_pairs, std::size_t nums_size
+	) {
+		if (num_pairs.size() == 1) {
+			std::list<PmergeMe::LNumPair> result_vec;
+			result_vec.push_back(GetNumPair(num_pairs.begin()->large));
+			return result_vec;
+		}
+
+		// merge
+		std::list<PmergeMe::LNumPair> large_half_pairs = MargeLargerPair(num_pairs);
+
+		// recursive sort
+		std::list<PmergeMe::LNumPair> sorted_nums =
+			MergeInsertSortWithList(large_half_pairs, nums_size);
+		if (sorted_nums.size() == nums_size) {
+			return sorted_nums;
+		}
+
+		// insert
+		sorted_nums = InsertSmallerNums(sorted_nums, large_half_pairs, num_pairs);
+		return sorted_nums;
+	}
+
+	// ------------------------------------------------------------------------
+	std::list<PmergeMe::LNumPair> ConvertToPairs(const PmergeMe::PmergeList &nums) {
+		std::list<PmergeMe::LNumPair> num_pairs;
+
+		// set LNum.num
+		PmergeMe::PmergeList::const_iterator first = nums.begin();
+		for (; first != nums.end(); ++first) {
+			PmergeMe::LNum num;
+			num.num                     = *first;
+			PmergeMe::LNumPair num_pair = GetNumPair(num);
+			num_pairs.push_back(num_pair);
+		}
+		// set self iterator to LNum.itr
+		PmergeMe::ListItr pair_first = num_pairs.begin();
+		for (; pair_first != num_pairs.end(); ++pair_first) {
+			pair_first->small.itr = pair_first;
+			pair_first->large.itr = pair_first;
+		}
+		return num_pairs;
+	}
+
+	PmergeMe::PmergeList
+	ConvertToList(const std::list<PmergeMe::LNumPair> &result_pairs) {
+		PmergeMe::PmergeList result_vec;
+
+		std::list<PmergeMe::LNumPair>::const_iterator first = result_pairs.begin();
+		for (; first != result_pairs.end(); ++first) {
+			result_vec.push_back(first->large.num);
+		}
+		return result_vec;
+	}
+} // namespace sort_list
+
 PmergeMe::PmergeList PmergeMe::MergeInsertSort(const PmergeList &nums) {
-	PmergeMe::PmergeList tmp_list(nums);
-	tmp_list.sort();
-	return tmp_list;
+	std::list<LNumPair> nums_pair = sort_list::ConvertToPairs(nums);
+	std::list<LNumPair> result_pairs =
+		sort_list::MergeInsertSortWithList(nums_pair, nums.size());
+	return sort_list::ConvertToList(result_pairs);
 }
 
 // ----------------------------------------------------------------------------
