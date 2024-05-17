@@ -19,6 +19,39 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &other) {
 PmergeMe::~PmergeMe() {}
 
 namespace {
+	// term | i-th num | total
+	//  0       0          0
+	//  1       2          2
+	//  2       2          4
+	//  3       6          10
+	//  4       10         20
+	//  5       22         42
+	//  6       42         84
+	//  7       86         170
+	//  8       170        340
+	//  9       342        682
+	//  10      682        1364
+	//  11      1366       2730
+	//  12      2730       5460
+	//           :
+	//  30   715827882  1431655764
+	unsigned int GetJacobsthalNum(unsigned int term) {
+		if (term == 0) {
+			return 0;
+		}
+		const double num = (std::pow(2, term) - std::pow(-1, term)) / 3 * 2;
+		if (num < std::numeric_limits<unsigned int>::min() ||
+			num > std::numeric_limits<unsigned int>::max()) {
+			throw std::logic_error("too large term");
+		}
+		return num;
+	}
+} // namespace
+
+// ----------------------------------------------------------------------------
+// vector
+// ----------------------------------------------------------------------------
+namespace sort_vector {
 	bool operator<(const PmergeMe::Num &num1, const PmergeMe::Num &num2) {
 		return num1.num < num2.num;
 	}
@@ -38,12 +71,7 @@ namespace {
 		num_pair.small = GetNum(small.num, small.index);
 		return num_pair;
 	}
-} // namespace
 
-// ----------------------------------------------------------------------------
-// vector
-// ----------------------------------------------------------------------------
-namespace {
 	std::vector<PmergeMe::NumPair>
 	MargeLargerPair(const std::vector<PmergeMe::NumPair> &num_pairs) {
 		std::vector<PmergeMe::NumPair> large_half_pairs;
@@ -92,27 +120,27 @@ namespace {
 	std::size_t BinarySearch(
 		const std::vector<PmergeMe::Num> &sorted_nums,
 		const PmergeMe::Num              &insert_num,
-		std::size_t                       left_idx,
-		std::size_t                       right_idx
+		std::size_t                       idx_left,
+		std::size_t                       idx_right
 	) {
-		while (right_idx < left_idx) {
-			std::size_t middle = (left_idx + right_idx) / 2;
+		while (idx_right < idx_left) {
+			std::size_t middle = (idx_left + idx_right) / 2;
 			if (middle >= sorted_nums.size() || insert_num < sorted_nums[middle]) {
-				left_idx = middle;
+				idx_left = middle;
 			} else {
-				right_idx = middle + 1;
+				idx_right = middle + 1;
 			}
 		}
-		return right_idx;
+		return idx_right;
 	}
 
 	std::size_t InsertNumWithBinarySearch(
 		std::vector<PmergeMe::Num> &sorted_nums,
 		const PmergeMe::Num        &insert_num,
-		std::size_t                 large_group_last_index
+		std::size_t                 idx_large_group_last
 	) {
 		std::size_t pos =
-			BinarySearch(sorted_nums, insert_num, large_group_last_index, 0);
+			BinarySearch(sorted_nums, insert_num, idx_large_group_last, 0);
 
 		sorted_nums.insert(sorted_nums.begin() + pos, insert_num);
 		return pos;
@@ -126,48 +154,20 @@ namespace {
 		const std::vector<PmergeMe::Num> &insert_small_nums
 	) {
 		// 1 + : already inserted front
-		const unsigned int offset = 1 + total_group_size - group_size;
-		std::size_t        large_group_last_index = offset + total_group_size;
+		const unsigned int offset               = 1 + total_group_size - group_size;
+		std::size_t        idx_large_group_last = offset + total_group_size;
 
 		for (std::size_t i = 0; i < group_size; i++) {
 			const PmergeMe::Num insert_num = insert_small_nums[total_group_size - i];
 
 			std::size_t pos = InsertNumWithBinarySearch(
-				sorted_nums, insert_num, large_group_last_index
+				sorted_nums, insert_num, idx_large_group_last
 			);
-			if (pos == large_group_last_index) {
-				large_group_last_index--;
+			if (pos == idx_large_group_last) {
+				idx_large_group_last--;
 			}
 		}
 		return sorted_nums;
-	}
-
-	// term | i-th num | total
-	//  0       0          0
-	//  1       2          2
-	//  2       2          4
-	//  3       6          10
-	//  4       10         20
-	//  5       22         42
-	//  6       42         84
-	//  7       86         170
-	//  8       170        340
-	//  9       342        682
-	//  10      682        1364
-	//  11      1366       2730
-	//  12      2730       5460
-	//           :
-	//  30   715827882  1431655764
-	unsigned int GetJacobsthalNum(unsigned int term) {
-		if (term == 0) {
-			return 0;
-		}
-		const double num = (std::pow(2, term) - std::pow(-1, term)) / 3 * 2;
-		if (num < std::numeric_limits<unsigned int>::min() ||
-			num > std::numeric_limits<unsigned int>::max()) {
-			throw std::logic_error("too large term");
-		}
-		return num;
 	}
 
 	std::vector<PmergeMe::Num> InsertSmallerNumsByGroup(
@@ -209,6 +209,30 @@ namespace {
 		return sorted_nums;
 	}
 
+	std::vector<PmergeMe::Num> MergeInsertSortWithVec(
+		const std::vector<PmergeMe::NumPair> &num_pairs, std::size_t nums_size
+	) {
+		if (num_pairs.size() == 1) {
+			std::vector<PmergeMe::Num> result_vec;
+			result_vec.push_back(num_pairs[0].large);
+			return result_vec;
+		}
+
+		// merge
+		std::vector<PmergeMe::NumPair> large_half_pairs = MargeLargerPair(num_pairs);
+
+		// recursive sort
+		std::vector<PmergeMe::Num> sorted_nums =
+			MergeInsertSortWithVec(large_half_pairs, nums_size);
+		if (sorted_nums.size() == nums_size) {
+			return sorted_nums;
+		}
+
+		// insert
+		sorted_nums = InsertSmallerNums(sorted_nums, large_half_pairs, num_pairs);
+		return sorted_nums;
+	}
+
 	// ------------------------------------------------------------------------
 	std::vector<PmergeMe::NumPair> ConvertToPairs(const PmergeMe::PmergeVec &nums) {
 		std::vector<PmergeMe::NumPair> nums_pair;
@@ -228,36 +252,13 @@ namespace {
 		}
 		return result_vec;
 	}
-} // namespace
-
-std::vector<PmergeMe::Num> PmergeMe::MergeInsertSortWithVec(
-	const std::vector<PmergeMe::NumPair> &num_pairs, std::size_t nums_size
-) {
-	if (num_pairs.size() == 1) {
-		std::vector<PmergeMe::Num> result_vec;
-		result_vec.push_back(num_pairs[0].large);
-		return result_vec;
-	}
-
-	// merge
-	std::vector<NumPair> large_half_pairs = MargeLargerPair(num_pairs);
-
-	// recursive sort
-	std::vector<Num> sorted_nums =
-		MergeInsertSortWithVec(large_half_pairs, nums_size);
-	if (sorted_nums.size() == nums_size) {
-		return sorted_nums;
-	}
-
-	// insert
-	sorted_nums = InsertSmallerNums(sorted_nums, large_half_pairs, num_pairs);
-	return sorted_nums;
-}
+} // namespace sort_vector
 
 PmergeMe::PmergeVec PmergeMe::MergeInsertSort(const PmergeVec &nums) {
-	std::vector<NumPair> nums_pair = ConvertToPairs(nums);
-	std::vector<Num> result_pairs  = MergeInsertSortWithVec(nums_pair, nums.size());
-	return ConvertToVec(result_pairs);
+	std::vector<NumPair> nums_pair = sort_vector::ConvertToPairs(nums);
+	std::vector<Num>     result_pairs =
+		sort_vector::MergeInsertSortWithVec(nums_pair, nums.size());
+	return sort_vector::ConvertToVec(result_pairs);
 }
 
 // ----------------------------------------------------------------------------
