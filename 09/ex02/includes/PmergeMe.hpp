@@ -40,9 +40,15 @@ class PmergeMe {
 	~PmergeMe();
 };
 
+// for 1st container
 std::ostream &operator<<(std::ostream &out, const PmergeMe::PmergeVec &nums);
 std::ostream &
 operator<<(std::ostream &out, const std::vector<PmergeMe::NumPair> &num_pairs);
 std::ostream &operator<<(std::ostream &out, const std::vector<PmergeMe::Num> &nums);
+
+// for 2nd container
+std::ostream &operator<<(std::ostream &out, const std::list<PmergeMe::LNum> &nums);
+std::ostream &
+operator<<(std::ostream &out, const std::list<PmergeMe::LNumPair> &num_pairs);
 
 #endif /* EX02_PMERGE_ME_HPP */

@@ -572,3 +572,24 @@ std::ostream &operator<<(std::ostream &out, const std::vector<PmergeMe::Num> &nu
 	out << "]";
 	return out;
 }
+
+std::ostream &operator<<(std::ostream &out, const std::list<PmergeMe::LNum> &nums) {
+	typename std::list<PmergeMe::LNum>::const_iterator begin = nums.begin();
+	out << "{";
+	for (; begin != nums.end(); ++begin) {
+		out << begin->num << " ";
+	}
+	out << "}";
+	return out;
+}
+
+std::ostream &
+operator<<(std::ostream &out, const std::list<PmergeMe::LNumPair> &num_pairs) {
+	typename std::list<PmergeMe::LNumPair>::const_iterator begin = num_pairs.begin();
+	out << "{";
+	for (; begin != num_pairs.end(); ++begin) {
+		out << "(" << begin->large.num << " " << begin->small.num << "), ";
+	}
+	out << "}";
+	return out;
+}
