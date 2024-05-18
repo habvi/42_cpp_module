@@ -8,7 +8,7 @@ Clock::Clock() {
 Clock::~Clock() {
 	clock_gettime(CLOCK_REALTIME, &end_);
 	const double spent_time = (end_.tv_sec - start_.tv_sec) * 1000000 +
-							  (end_.tv_nsec - start_.tv_nsec) / 1000;
+							  (end_.tv_nsec - start_.tv_nsec) / 1000.0;
 	std::cout << spent_time << " us" << std::endl;
 }
 
