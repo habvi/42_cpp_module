@@ -80,7 +80,7 @@ namespace {
 		return true;
 	}
 
-	std::vector<unsigned int> SortedVec(std::vector<unsigned int> vec) {
+	std::vector<unsigned int> GetSortedNums(const std::vector<unsigned int> &vec) {
 		std::vector<unsigned int> tmp_vec = vec;
 		std::sort(tmp_vec.begin(), tmp_vec.end());
 		return tmp_vec;
@@ -184,7 +184,7 @@ int main(int argc, char **argv) {
 	if (!ConvertValidIntVec((const char *const *)&argv[1], vec_nums)) {
 		return EXIT_FAILURE;
 	}
-	std::vector<unsigned int> sorted_nums = SortedVec(vec_nums);
+	const std::vector<unsigned int> sorted_nums = GetSortedNums(vec_nums);
 	PrintNumsBeforeAfter(vec_nums, sorted_nums);
 
 	// 1st container
