@@ -170,6 +170,18 @@ namespace sort_vector {
 		return sorted_nums;
 	}
 
+	void ResizeExcessGroup(
+		unsigned int &group_size,
+		unsigned int &total_group_size,
+		std::size_t   insert_small_nums_size
+	) {
+		if (total_group_size > insert_small_nums_size) {
+			const unsigned int over_num = total_group_size - insert_small_nums_size;
+			group_size -= over_num;
+			total_group_size -= over_num;
+		}
+	}
+
 	std::vector<PmergeMe::Num> InsertSmallerNumsByGroup(
 		std::vector<PmergeMe::Num>       &sorted_nums,
 		const std::vector<PmergeMe::Num> &insert_small_nums
@@ -183,12 +195,8 @@ namespace sort_vector {
 		for (std::size_t i = 1; total_group_size < insert_small_nums_size; i++) {
 			unsigned int group_size = GetJacobsthalNum(i);
 			total_group_size += group_size;
-			if (total_group_size > insert_small_nums_size) {
-				const unsigned int over_num =
-					total_group_size - insert_small_nums_size;
-				group_size -= over_num;
-				total_group_size -= over_num;
-			}
+			ResizeExcessGroup(group_size, total_group_size, insert_small_nums_size);
+
 			sorted_nums = InsertSmallerNumsWithEachGroup(
 				group_size, total_group_size, sorted_nums, insert_small_nums
 			);
