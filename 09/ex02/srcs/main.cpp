@@ -123,6 +123,14 @@ namespace {
 } // namespace
 
 namespace {
+	void PrintForTime(int elem_size, const std::string &container) {
+		std::cout << std::fixed << std::setprecision(3)
+				  << "Time to process a range of " << elem_size << " elements with "
+				  << std ::setw(11) << std::left << container << " : ";
+	}
+} // namespace
+
+namespace {
 	PmergeMe::PmergeVec ConvertToPmergeVec(const char *const *argv) {
 		PmergeMe::PmergeVec pmerge_vec;
 		for (std::size_t i = 0; argv[i]; i++) {
@@ -135,10 +143,7 @@ namespace {
 
 	PmergeMe::PmergeVec
 	MergeInsertSortWithVector(int elem_size, const char *const *argv) {
-		static const std::string container = "std::vector";
-		std::cout << std::fixed << std::setprecision(2)
-				  << "Time to process a range of " << elem_size << " elements with "
-				  << container << " : ";
+		PrintForTime(elem_size, "std::vector");
 		Clock clock;
 
 		const PmergeMe::PmergeVec pmerge_vec = ConvertToPmergeVec(argv);
@@ -161,10 +166,7 @@ namespace {
 
 	PmergeMe::PmergeList
 	MergeInsertSortWithList(int elem_size, const char *const *argv) {
-		static const std::string container = "std::list";
-		std::cout << std::fixed << std::setprecision(2)
-				  << "Time to process a range of " << elem_size << " elements with "
-				  << container << " : ";
+		PrintForTime(elem_size, "std::list");
 		Clock clock;
 
 		const PmergeMe::PmergeList pmerge_list = ConvertToPmergeList(argv);
