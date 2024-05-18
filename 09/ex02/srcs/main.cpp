@@ -1,9 +1,9 @@
+#include "Clock.hpp"
 #include "PmergeMe.hpp"
 #include "color.hpp"
 #include <algorithm>
 #include <cctype> // isdigit
 #include <cstdlib>
-#include <ctime>
 #include <iomanip>
 #include <iostream>
 #include <list>
@@ -133,21 +133,18 @@ namespace {
 		return pmerge_vec;
 	}
 
-	void MergeInsertSortWithVector(
-		const char *const *argv, const std::vector<unsigned int> &sorted_nums
-	) {
-		std::clock_t c_start = std::clock();
+	PmergeMe::PmergeVec
+	MergeInsertSortWithVector(int elem_size, const char *const *argv) {
+		static const std::string container = "std::vector";
+		std::cout << std::fixed << std::setprecision(2)
+				  << "Time to process a range of " << elem_size << " elements with "
+				  << container << " : ";
+		Clock clock;
 
 		const PmergeMe::PmergeVec pmerge_vec = ConvertToPmergeVec(argv);
 		const PmergeMe::PmergeVec result_nums =
 			PmergeMe::MergeInsertSort(pmerge_vec);
-		std::clock_t c_end = std::clock();
-
-		std::cout << std::fixed << std::setprecision(2)
-				  << "Time to process a range of " << pmerge_vec.size()
-				  << " elements with std::vector : " << (c_end - c_start) * 1.0
-				  << " us\n";
-		AssertEq(sorted_nums, result_nums);
+		return result_nums;
 	}
 } // namespace
 
@@ -162,22 +159,18 @@ namespace {
 		return pmerge_list;
 	}
 
-	void MergeInsertSortWithList(
-		const char *const *argv, const std::vector<unsigned int> &sorted_nums
-	) {
-		std::clock_t c_start = std::clock();
+	PmergeMe::PmergeList
+	MergeInsertSortWithList(int elem_size, const char *const *argv) {
+		static const std::string container = "std::list";
+		std::cout << std::fixed << std::setprecision(2)
+				  << "Time to process a range of " << elem_size << " elements with "
+				  << container << " : ";
+		Clock clock;
 
 		const PmergeMe::PmergeList pmerge_list = ConvertToPmergeList(argv);
 		const PmergeMe::PmergeList result_nums =
 			PmergeMe::MergeInsertSort(pmerge_list);
-
-		std::clock_t c_end = std::clock();
-
-		std::cout << std::fixed << std::setprecision(2)
-				  << "Time to process a range of " << pmerge_list.size()
-				  << " elements with std::list   : " << (c_end - c_start) * 1.0
-				  << " us\n";
-		AssertEq(sorted_nums, result_nums);
+		return result_nums;
 	}
 } // namespace
 
@@ -194,8 +187,15 @@ int main(int argc, char **argv) {
 	std::vector<unsigned int> sorted_nums = SortedVec(vec_nums);
 	PrintNumsBeforeAfter(vec_nums, sorted_nums);
 
-	MergeInsertSortWithVector((const char *const *)&argv[1], sorted_nums);
-	MergeInsertSortWithList((const char *const *)&argv[1], sorted_nums);
+	// 1st container
+	const PmergeMe::PmergeVec result_vec =
+		MergeInsertSortWithVector(argc - 1, (const char *const *)&argv[1]);
+	AssertEq(sorted_nums, result_vec);
+
+	// 2nd container
+	const PmergeMe::PmergeList result_list =
+		MergeInsertSortWithList(argc - 1, (const char *const *)&argv[1]);
+	AssertEq(sorted_nums, result_list);
 
 	return EXIT_SUCCESS;
 }

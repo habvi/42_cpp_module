@@ -1,7 +1,8 @@
 NAME		:=	PmergeMe
 
 SRCS_DIR	:=	srcs
-SRCS		:=	main.cpp \
+SRCS		:=	Clock.cpp \
+				main.cpp \
 				PmergeMe.cpp
 
 OBJ_DIR		:=	objs
