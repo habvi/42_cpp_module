@@ -123,15 +123,16 @@ namespace sort_vector {
 		std::size_t                        idx_left,
 		std::size_t                        idx_right
 	) {
-		while (idx_right < idx_left) {
-			std::size_t middle = (idx_left + idx_right) / 2;
-			if (middle >= sorted_nums.size() || insert_num < sorted_nums[middle]) {
-				idx_left = middle;
+		while (idx_left < idx_right) {
+			std::size_t idx_middle = (idx_left + idx_right) / 2;
+			if (idx_middle >= sorted_nums.size() ||
+				insert_num < sorted_nums[idx_middle]) {
+				idx_right = idx_middle;
 			} else {
-				idx_right = middle + 1;
+				idx_left = idx_middle + 1;
 			}
 		}
-		return idx_right;
+		return idx_left;
 	}
 
 	std::size_t InsertNumWithBinarySearch(
@@ -140,7 +141,7 @@ namespace sort_vector {
 		std::size_t                  idx_large_group_last
 	) {
 		std::size_t pos =
-			BinarySearch(sorted_nums, insert_num, idx_large_group_last, 0);
+			BinarySearch(sorted_nums, insert_num, 0, idx_large_group_last);
 
 		sorted_nums.insert(sorted_nums.begin() + pos, insert_num);
 		return pos;
