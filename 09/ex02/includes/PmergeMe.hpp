@@ -9,27 +9,27 @@ class PmergeMe {
   public:
 	// for 1st container
 	typedef std::vector<unsigned int> PmergeVec;
-	typedef struct {
+	struct Num {
 		unsigned int num;
 		std::size_t  index;
-	} Num;
-	typedef struct {
+	};
+	struct NumPair {
 		Num small;
 		Num large;
-	} NumPair;
+	};
 	static PmergeVec MergeInsertSort(const PmergeVec &nums);
 
 	// for 2nd container
 	typedef std::list<unsigned int> PmergeList;
 	struct LNumPair;
-	typedef struct LNum {
+	struct LNum {
 		unsigned int                  num;
 		std::list<LNumPair>::iterator itr;
-	} LNum;
-	typedef struct LNumPair {
+	};
+	struct LNumPair {
 		LNum small;
 		LNum large;
-	} LNumPair;
+	};
 	typedef std::list<LNumPair>::iterator ListItr;
 	static PmergeList                     MergeInsertSort(const PmergeList &nums);
 
