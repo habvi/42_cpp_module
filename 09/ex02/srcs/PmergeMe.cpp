@@ -364,15 +364,15 @@ namespace sort_list {
 		PmergeMe::ListItr itr_left = sorted_nums.begin();
 
 		while (idx_left < idx_right) {
-			const std::size_t middle_idx = (idx_left + idx_right) / 2;
+			const std::size_t idx_middle = (idx_left + idx_right) / 2;
 			PmergeMe::ListItr itr_middle = itr_left;
-			std::advance(itr_middle, middle_idx - idx_left);
+			std::advance(itr_middle, idx_middle - idx_left);
 
-			if (middle_idx >= sorted_nums.size() || insert_num < itr_middle->large) {
-				idx_right = middle_idx;
+			if (idx_middle >= sorted_nums.size() || insert_num < itr_middle->large) {
+				idx_right = idx_middle;
 				itr_right = itr_middle;
 			} else {
-				idx_left = middle_idx + 1;
+				idx_left = idx_middle + 1;
 				itr_left = Next(itr_middle);
 			}
 		}
