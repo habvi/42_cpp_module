@@ -66,20 +66,21 @@ namespace {
 	}
 
 	bool IsOverflowMul(const int num1, const int num2) {
+		if (num1 == 0 || num2 == 0) {
+			return false;
+		}
 		if (num1 > 0 && num2 > 0) {
 			if (num1 > kIntMax / num2) {
 				return true;
 			}
-		} else if (num1 < 0 && num2 < 0) {
-			if (num1 != -1 && num2 < kIntMax / num1) {
-				return true;
-			}
+		}
+		if (num1 < 0 && num2 < 0) {
+			return num1 < kIntMax / num2;
+		}
+		if (num1 > 0) {
+			return num2 < kIntMin / num1;
 		} else {
-			if (num1 > 0) {
-				return num2 < kIntMin / num1;
-			} else {
-				return num1 < kIntMin / num2;
-			}
+			return num1 < kIntMin / num2;
 		}
 		return false;
 	}
