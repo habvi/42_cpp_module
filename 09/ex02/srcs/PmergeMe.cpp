@@ -548,7 +548,7 @@ PmergeMe::PmergeList PmergeMe::MergeInsertSort(const PmergeList &nums) {
 // debug
 // ----------------------------------------------------------------------------
 std::ostream &operator<<(std::ostream &out, const PmergeMe::PmergeVec &nums) {
-	typename PmergeMe::PmergeVec::const_iterator begin = nums.begin();
+	PmergeMe::PmergeVec::const_iterator begin = nums.begin();
 	for (; begin != nums.end(); ++begin) {
 		out << *begin << " ";
 	}
@@ -557,8 +557,7 @@ std::ostream &operator<<(std::ostream &out, const PmergeMe::PmergeVec &nums) {
 
 std::ostream &
 operator<<(std::ostream &out, const std::vector<PmergeMe::VNumPair> &num_pairs) {
-	typename std::vector<PmergeMe::VNumPair>::const_iterator begin =
-		num_pairs.begin();
+	std::vector<PmergeMe::VNumPair>::const_iterator begin = num_pairs.begin();
 	for (; begin != num_pairs.end(); ++begin) {
 		out << "{" << begin->large.num << "(" << begin->large.index << "), "
 			<< begin->small.num << "(" << begin->small.index << ")} ";
@@ -568,7 +567,7 @@ operator<<(std::ostream &out, const std::vector<PmergeMe::VNumPair> &num_pairs) 
 
 std::ostream &
 operator<<(std::ostream &out, const std::vector<PmergeMe::VNum> &nums) {
-	typename std::vector<PmergeMe::VNum>::const_iterator begin = nums.begin();
+	std::vector<PmergeMe::VNum>::const_iterator begin = nums.begin();
 	out << "[";
 	for (; begin != nums.end(); ++begin) {
 		out << begin->num << "(" << begin->index << "), ";
@@ -578,7 +577,7 @@ operator<<(std::ostream &out, const std::vector<PmergeMe::VNum> &nums) {
 }
 
 std::ostream &operator<<(std::ostream &out, const std::list<PmergeMe::LNum> &nums) {
-	typename std::list<PmergeMe::LNum>::const_iterator begin = nums.begin();
+	std::list<PmergeMe::LNum>::const_iterator begin = nums.begin();
 	out << "{";
 	for (; begin != nums.end(); ++begin) {
 		out << begin->num << " ";
@@ -589,7 +588,7 @@ std::ostream &operator<<(std::ostream &out, const std::list<PmergeMe::LNum> &num
 
 std::ostream &
 operator<<(std::ostream &out, const std::list<PmergeMe::LNumPair> &num_pairs) {
-	typename std::list<PmergeMe::LNumPair>::const_iterator begin = num_pairs.begin();
+	std::list<PmergeMe::LNumPair>::const_iterator begin = num_pairs.begin();
 	out << "{";
 	for (; begin != num_pairs.end(); ++begin) {
 		out << "(" << begin->large.num << " " << begin->small.num << "), ";
