@@ -9,13 +9,13 @@ class PmergeMe {
   public:
 	// for 1st container
 	typedef std::vector<unsigned int> PmergeVec;
-	struct Num {
+	struct VNum {
 		unsigned int num;
 		std::size_t  index;
 	};
-	struct NumPair {
-		Num small;
-		Num large;
+	struct VNumPair {
+		VNum small;
+		VNum large;
 	};
 	static PmergeVec MergeInsertSort(const PmergeVec &nums);
 
@@ -42,9 +42,9 @@ class PmergeMe {
 
 // for 1st container
 std::ostream &operator<<(std::ostream &out, const PmergeMe::PmergeVec &nums);
+std::ostream &operator<<(std::ostream &out, const std::vector<PmergeMe::VNum> &nums);
 std::ostream &
-operator<<(std::ostream &out, const std::vector<PmergeMe::NumPair> &num_pairs);
-std::ostream &operator<<(std::ostream &out, const std::vector<PmergeMe::Num> &nums);
+operator<<(std::ostream &out, const std::vector<PmergeMe::VNumPair> &num_pairs);
 
 // for 2nd container
 std::ostream &operator<<(std::ostream &out, const std::list<PmergeMe::LNum> &nums);

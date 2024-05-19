@@ -52,34 +52,34 @@ namespace {
 // vector
 // ----------------------------------------------------------------------------
 namespace sort_vector {
-	bool operator<(const PmergeMe::Num &num1, const PmergeMe::Num &num2) {
+	bool operator<(const PmergeMe::VNum &num1, const PmergeMe::VNum &num2) {
 		return num1.num < num2.num;
 	}
 
 	// todo: constructor?
-	PmergeMe::Num GetNum(unsigned int num, std::size_t index) {
-		PmergeMe::Num num_idx;
+	PmergeMe::VNum GetNum(unsigned int num, std::size_t index) {
+		PmergeMe::VNum num_idx;
 		num_idx.num   = num;
 		num_idx.index = index;
 		return num_idx;
 	}
 
-	PmergeMe::NumPair
-	GetNumPair(const PmergeMe::Num &large, const PmergeMe::Num &small) {
-		PmergeMe::NumPair num_pair;
+	PmergeMe::VNumPair
+	GetNumPair(const PmergeMe::VNum &large, const PmergeMe::VNum &small) {
+		PmergeMe::VNumPair num_pair;
 		num_pair.large = GetNum(large.num, large.index);
 		num_pair.small = GetNum(small.num, small.index);
 		return num_pair;
 	}
 
-	std::vector<PmergeMe::NumPair>
-	MargeLargerPair(const std::vector<PmergeMe::NumPair> &num_pairs) {
-		std::vector<PmergeMe::NumPair> large_half_pairs;
+	std::vector<PmergeMe::VNumPair>
+	MargeLargerPair(const std::vector<PmergeMe::VNumPair> &num_pairs) {
+		std::vector<PmergeMe::VNumPair> large_half_pairs;
 
 		for (std::size_t i = 0; i + 1 < num_pairs.size(); i += 2) {
-			const PmergeMe::Num num1 = GetNum(num_pairs[i].large.num, i);
-			const PmergeMe::Num num2 = GetNum(num_pairs[i + 1].large.num, i + 1);
-			PmergeMe::NumPair   num_pair;
+			const PmergeMe::VNum num1 = GetNum(num_pairs[i].large.num, i);
+			const PmergeMe::VNum num2 = GetNum(num_pairs[i + 1].large.num, i + 1);
+			PmergeMe::VNumPair   num_pair;
 			if (num1 < num2) {
 				num_pair = GetNumPair(num2, num1);
 			} else {
@@ -90,12 +90,12 @@ namespace sort_vector {
 		return large_half_pairs;
 	}
 
-	std::vector<PmergeMe::Num> MakeInsertSmallNums(
-		std::vector<PmergeMe::Num>           &sorted_nums,
-		const std::vector<PmergeMe::NumPair> &pre_num_pairs,
-		const std::vector<PmergeMe::NumPair> &num_pairs
+	std::vector<PmergeMe::VNum> MakeInsertSmallNums(
+		std::vector<PmergeMe::VNum>           &sorted_nums,
+		const std::vector<PmergeMe::VNumPair> &pre_num_pairs,
+		const std::vector<PmergeMe::VNumPair> &num_pairs
 	) {
-		std::vector<PmergeMe::Num> insert_small_nums;
+		std::vector<PmergeMe::VNum> insert_small_nums;
 
 		if (sorted_nums.size() == 1) {
 			insert_small_nums.push_back(pre_num_pairs[0].small);
@@ -104,12 +104,12 @@ namespace sort_vector {
 				// recover large to small in O(1) & update the index
 				const std::size_t pre_index = sorted_nums[i].index;
 				sorted_nums[i].index        = pre_num_pairs[pre_index].large.index;
-				const PmergeMe::Num small   = pre_num_pairs[pre_index].small;
+				const PmergeMe::VNum small  = pre_num_pairs[pre_index].small;
 				insert_small_nums.push_back(small);
 			}
 		}
 		if (num_pairs.size() > 1 && num_pairs.size() % 2 == 1) {
-			const PmergeMe::Num large = GetNum(
+			const PmergeMe::VNum large = GetNum(
 				num_pairs[num_pairs.size() - 1].large.num, num_pairs.size() - 1
 			);
 			insert_small_nums.push_back(large);
@@ -118,10 +118,10 @@ namespace sort_vector {
 	}
 
 	std::size_t BinarySearch(
-		const std::vector<PmergeMe::Num> &sorted_nums,
-		const PmergeMe::Num              &insert_num,
-		std::size_t                       idx_left,
-		std::size_t                       idx_right
+		const std::vector<PmergeMe::VNum> &sorted_nums,
+		const PmergeMe::VNum              &insert_num,
+		std::size_t                        idx_left,
+		std::size_t                        idx_right
 	) {
 		while (idx_right < idx_left) {
 			std::size_t middle = (idx_left + idx_right) / 2;
@@ -135,9 +135,9 @@ namespace sort_vector {
 	}
 
 	std::size_t InsertNumWithBinarySearch(
-		std::vector<PmergeMe::Num> &sorted_nums,
-		const PmergeMe::Num        &insert_num,
-		std::size_t                 idx_large_group_last
+		std::vector<PmergeMe::VNum> &sorted_nums,
+		const PmergeMe::VNum        &insert_num,
+		std::size_t                  idx_large_group_last
 	) {
 		std::size_t pos =
 			BinarySearch(sorted_nums, insert_num, idx_large_group_last, 0);
@@ -147,18 +147,19 @@ namespace sort_vector {
 	}
 
 	// insert right to left in each group
-	std::vector<PmergeMe::Num> &InsertSmallerNumsWithEachGroup(
-		unsigned int                      group_size,
-		unsigned int                      total_group_size,
-		std::vector<PmergeMe::Num>       &sorted_nums,
-		const std::vector<PmergeMe::Num> &insert_small_nums
+	std::vector<PmergeMe::VNum> &InsertSmallerNumsWithEachGroup(
+		unsigned int                       group_size,
+		unsigned int                       total_group_size,
+		std::vector<PmergeMe::VNum>       &sorted_nums,
+		const std::vector<PmergeMe::VNum> &insert_small_nums
 	) {
 		// 1 + : already inserted front
 		const unsigned int offset               = 1 + total_group_size - group_size;
 		std::size_t        idx_large_group_last = offset + total_group_size;
 
 		for (std::size_t i = 0; i < group_size; i++) {
-			const PmergeMe::Num insert_num = insert_small_nums[total_group_size - i];
+			const PmergeMe::VNum insert_num =
+				insert_small_nums[total_group_size - i];
 
 			std::size_t pos = InsertNumWithBinarySearch(
 				sorted_nums, insert_num, idx_large_group_last
@@ -182,9 +183,9 @@ namespace sort_vector {
 		}
 	}
 
-	std::vector<PmergeMe::Num> InsertSmallerNumsByGroup(
-		std::vector<PmergeMe::Num>       &sorted_nums,
-		const std::vector<PmergeMe::Num> &insert_small_nums
+	std::vector<PmergeMe::VNum> InsertSmallerNumsByGroup(
+		std::vector<PmergeMe::VNum>       &sorted_nums,
+		const std::vector<PmergeMe::VNum> &insert_small_nums
 	) {
 		// insert front
 		sorted_nums.insert(sorted_nums.begin(), insert_small_nums.front());
@@ -205,32 +206,33 @@ namespace sort_vector {
 	}
 
 	// binary search & insert smaller numbers
-	std::vector<PmergeMe::Num> &InsertSmallerNums(
-		std::vector<PmergeMe::Num>           &sorted_nums,
-		const std::vector<PmergeMe::NumPair> &pre_num_pairs,
-		const std::vector<PmergeMe::NumPair> &num_pairs
+	std::vector<PmergeMe::VNum> &InsertSmallerNums(
+		std::vector<PmergeMe::VNum>           &sorted_nums,
+		const std::vector<PmergeMe::VNumPair> &pre_num_pairs,
+		const std::vector<PmergeMe::VNumPair> &num_pairs
 	) {
-		const std::vector<PmergeMe::Num> insert_small_nums =
+		const std::vector<PmergeMe::VNum> insert_small_nums =
 			MakeInsertSmallNums(sorted_nums, pre_num_pairs, num_pairs);
 
 		sorted_nums = InsertSmallerNumsByGroup(sorted_nums, insert_small_nums);
 		return sorted_nums;
 	}
 
-	std::vector<PmergeMe::Num> MergeInsertSortWithVec(
-		const std::vector<PmergeMe::NumPair> &num_pairs, std::size_t nums_size
+	std::vector<PmergeMe::VNum> MergeInsertSortWithVec(
+		const std::vector<PmergeMe::VNumPair> &num_pairs, std::size_t nums_size
 	) {
 		if (num_pairs.size() == 1) {
-			std::vector<PmergeMe::Num> result_vec;
+			std::vector<PmergeMe::VNum> result_vec;
 			result_vec.push_back(num_pairs[0].large);
 			return result_vec;
 		}
 
 		// merge
-		std::vector<PmergeMe::NumPair> large_half_pairs = MargeLargerPair(num_pairs);
+		std::vector<PmergeMe::VNumPair> large_half_pairs =
+			MargeLargerPair(num_pairs);
 
 		// recursive sort
-		std::vector<PmergeMe::Num> sorted_nums =
+		std::vector<PmergeMe::VNum> sorted_nums =
 			MergeInsertSortWithVec(large_half_pairs, nums_size);
 		if (sorted_nums.size() == nums_size) {
 			return sorted_nums;
@@ -242,17 +244,17 @@ namespace sort_vector {
 	}
 
 	// ------------------------------------------------------------------------
-	std::vector<PmergeMe::NumPair> ConvertToPairs(const PmergeMe::PmergeVec &nums) {
-		std::vector<PmergeMe::NumPair> nums_pair;
+	std::vector<PmergeMe::VNumPair> ConvertToPairs(const PmergeMe::PmergeVec &nums) {
+		std::vector<PmergeMe::VNumPair> nums_pair;
 		for (std::size_t i = 0; i < nums.size(); i++) {
-			const PmergeMe::Num     num      = GetNum(nums[i], i);
-			const PmergeMe::NumPair num_pair = GetNumPair(num, num);
+			const PmergeMe::VNum     num      = GetNum(nums[i], i);
+			const PmergeMe::VNumPair num_pair = GetNumPair(num, num);
 			nums_pair.push_back(num_pair);
 		}
 		return nums_pair;
 	}
 
-	PmergeMe::PmergeVec ConvertToVec(const std::vector<PmergeMe::Num> &result_pairs
+	PmergeMe::PmergeVec ConvertToVec(const std::vector<PmergeMe::VNum> &result_pairs
 	) {
 		PmergeMe::PmergeVec result_vec;
 		for (std::size_t i = 0; i < result_pairs.size(); i++) {
@@ -263,8 +265,8 @@ namespace sort_vector {
 } // namespace sort_vector
 
 PmergeMe::PmergeVec PmergeMe::MergeInsertSort(const PmergeVec &nums) {
-	std::vector<NumPair> nums_pair = sort_vector::ConvertToPairs(nums);
-	std::vector<Num>     result_pairs =
+	std::vector<VNumPair> nums_pair = sort_vector::ConvertToPairs(nums);
+	std::vector<VNum>     result_pairs =
 		sort_vector::MergeInsertSortWithVec(nums_pair, nums.size());
 	return sort_vector::ConvertToVec(result_pairs);
 }
@@ -553,8 +555,8 @@ std::ostream &operator<<(std::ostream &out, const PmergeMe::PmergeVec &nums) {
 }
 
 std::ostream &
-operator<<(std::ostream &out, const std::vector<PmergeMe::NumPair> &num_pairs) {
-	typename std::vector<PmergeMe::NumPair>::const_iterator begin =
+operator<<(std::ostream &out, const std::vector<PmergeMe::VNumPair> &num_pairs) {
+	typename std::vector<PmergeMe::VNumPair>::const_iterator begin =
 		num_pairs.begin();
 	for (; begin != num_pairs.end(); ++begin) {
 		out << "{" << begin->large.num << "(" << begin->large.index << "), "
@@ -563,8 +565,9 @@ operator<<(std::ostream &out, const std::vector<PmergeMe::NumPair> &num_pairs) {
 	return out;
 }
 
-std::ostream &operator<<(std::ostream &out, const std::vector<PmergeMe::Num> &nums) {
-	typename std::vector<PmergeMe::Num>::const_iterator begin = nums.begin();
+std::ostream &
+operator<<(std::ostream &out, const std::vector<PmergeMe::VNum> &nums) {
+	typename std::vector<PmergeMe::VNum>::const_iterator begin = nums.begin();
 	out << "[";
 	for (; begin != nums.end(); ++begin) {
 		out << begin->num << "(" << begin->index << "), ";
