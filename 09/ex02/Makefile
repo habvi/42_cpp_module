@@ -40,7 +40,10 @@ fclean: clean
 re: fclean all
 
 #--------------------------------------------
-ARGS	:= $(shell python3 -c "import random; n = 3000; print(' '.join(map(str, random.sample(range(0, 2147483648), n))))")
+# ex) make run N=10 MAX=100
+N		:= 3000
+MAX		:= 2147483648
+ARGS	:= $(shell python3 -c "import random; n = $(N); print(' '.join(map(str, random.sample(range(0, $(MAX)), n))))")
 
 # ex) make run ARGS="1 2 3 4 5 6"
 .PHONY	: run
