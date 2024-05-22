@@ -38,7 +38,7 @@ BitcoinExchange::ExchangeRateOverflowException::ExchangeRateOverflowException()
 	: std::overflow_error("overflow exchange rate.") {}
 
 namespace {
-	int ConvertToInt(const std::string &str, int &num) {
+	bool ConvertToInt(const std::string &str, int &num) {
 		std::stringstream ss(str);
 		ss >> num;
 		return ss.eof() && !ss.fail();
