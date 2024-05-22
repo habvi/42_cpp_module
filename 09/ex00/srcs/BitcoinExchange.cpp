@@ -38,22 +38,27 @@ BitcoinExchange::ExchangeRateOverflowException::ExchangeRateOverflowException()
 	: std::overflow_error("overflow exchange rate.") {}
 
 namespace {
-	bool ConvertToInt(const std::string &str, int &num) {
+	bool ConvertToUint(const std::string &str, unsigned int &num) {
 		std::stringstream ss(str);
-		ss >> num;
+		int               tmp;
+		ss >> tmp;
+		if (tmp < 0) {
+			return false;
+		}
+		num = static_cast<unsigned int>(tmp);
 		return ss.eof() && !ss.fail();
 	}
 
 	bool IsValidYear(const int year) {
-		return year >= 0 && year <= 9999;
+		return year >= 1 && year <= 9999;
 	}
 
 	bool IsValidMonth(const int month) {
-		return month > 0 && month <= 12;
+		return month >= 1 && month <= 12;
 	}
 
 	bool IsValidDay(const int month, const int day) {
-		if (day <= 0) {
+		if (day == 0) {
 			return false;
 		}
 		static const int short_month[5] = {2, 4, 6, 9, 11};
@@ -78,11 +83,11 @@ namespace {
 		const std::string &month_str,
 		const std::string &day_str
 	) {
-		int year;
-		int month;
-		int day;
-		if (!ConvertToInt(year_str, year) || !ConvertToInt(month_str, month) ||
-			!ConvertToInt(day_str, day)) {
+		unsigned int year;
+		unsigned int month;
+		unsigned int day;
+		if (!ConvertToUint(year_str, year) || !ConvertToUint(month_str, month) ||
+			!ConvertToUint(day_str, day)) {
 			return false;
 		}
 		if (!IsValidYear(year) || !IsValidMonth(month) || !IsValidDay(month, day)) {
