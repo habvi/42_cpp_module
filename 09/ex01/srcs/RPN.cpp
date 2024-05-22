@@ -70,9 +70,7 @@ namespace {
 			return false;
 		}
 		if (num1 > 0 && num2 > 0) {
-			if (num1 > kIntMax / num2) {
-				return true;
-			}
+			return num1 > kIntMax / num2;
 		}
 		if (num1 < 0 && num2 < 0) {
 			return num1 < kIntMax / num2;
