@@ -11,13 +11,8 @@ static double ConvertStrToDouble(const std::string &str, bool &err) {
 	char *str_end;
 	errno            = 0;
 	const double num = std::strtod(str.c_str(), &str_end);
-	if (errno == ERANGE) {
+	if (errno == ERANGE || str == str_end || *str_end != '\0') {
 		err = true;
-		return -1;
-	}
-	if (str == str_end || *str_end != '\0') {
-		err = true;
-		return -1;
 	}
 	return num;
 }
