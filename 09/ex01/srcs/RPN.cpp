@@ -30,14 +30,6 @@ namespace {
 		return std::isdigit(static_cast<unsigned char>(c));
 	}
 
-	int ConvertToInt(const char c) {
-		std::stringstream ss;
-		ss << c;
-		int num;
-		ss >> num;
-		return num;
-	}
-
 	// stack.size() >= 1
 	int PopBack(std::stack<int> &s) {
 		const int tmp_num = s.top();
@@ -145,7 +137,7 @@ int RPN::Calculate(const std::string &rpn_str) {
 	for (std::size_t i = 0; i < rpn_str.size(); i++) {
 		const char ch = rpn_str[i];
 		if (MyIsDigit(ch)) {
-			num_stack.push(ConvertToInt(ch));
+			num_stack.push(ch - '0');
 		} else if (IsOperations(ch)) {
 			if (num_stack.size() < 2) {
 				throw std::invalid_argument(kErrMsgInvalidArgument);
