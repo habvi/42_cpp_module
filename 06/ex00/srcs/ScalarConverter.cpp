@@ -5,9 +5,8 @@
 #include <iomanip> // fixed
 #include <iostream>
 
-const std::string  ScalarConverter::kMessageImpossible     = "impossible";
-const std::string  ScalarConverter::kMessageNonDisplayable = "Non displayable";
-std::ostringstream ScalarConverter::oss_;
+const std::string ScalarConverter::kMessageImpossible     = "impossible";
+const std::string ScalarConverter::kMessageNonDisplayable = "Non displayable";
 
 // ----------------------------------------------------------------------------
 ScalarConverter::ScalarConverter() {}
@@ -75,13 +74,13 @@ bool ScalarConverter::IsFloatRange(const T &scalar) {
 
 // ----------------------------------------------------------------------------
 void ScalarConverter::SetImpossible() {
-	oss_ << COLOR_PINK << kMessageImpossible << COLOR_END << std::endl;
+	std::cout << COLOR_PINK << kMessageImpossible << COLOR_END << std::endl;
 }
 
 // float || double
 template <typename T>
 void ScalarConverter::SetFixed(const T &t) {
-	oss_ << std::fixed << std::setprecision(kPrecision) << t;
+	std::cout << std::fixed << std::setprecision(kPrecision) << t;
 }
 
 template <typename T>
@@ -92,9 +91,9 @@ void ScalarConverter::SetToChar(const Type type, const T &scalar) {
 	}
 	const char c = static_cast<char>(scalar);
 	if (std::isprint(c)) {
-		oss_ << "'" << c << "'" << std::endl;
+		std::cout << "'" << c << "'" << std::endl;
 	} else {
-		oss_ << COLOR_BLUE << kMessageNonDisplayable << COLOR_END << std::endl;
+		std::cout << COLOR_BLUE << kMessageNonDisplayable << COLOR_END << std::endl;
 	}
 }
 
@@ -104,7 +103,7 @@ void ScalarConverter::SetToInteger(const Type type, const T &scalar) {
 		SetImpossible();
 		return;
 	}
-	oss_ << static_cast<int>(scalar) << std::endl;
+	std::cout << static_cast<int>(scalar) << std::endl;
 }
 
 template <typename T>
@@ -115,14 +114,14 @@ void ScalarConverter::SetToFloat(const Type type, const T &scalar) {
 		return;
 	}
 	SetFixed(static_cast<float>(scalar));
-	oss_ << "f" << std::endl;
+	std::cout << "f" << std::endl;
 }
 
 template <typename T>
 void ScalarConverter::SetToDouble(const Type type, const T &scalar) {
 	(void)type;
 	SetFixed(static_cast<double>(scalar));
-	oss_ << std::endl;
+	std::cout << std::endl;
 }
 
 // ----------------------------------------------------------------------------
@@ -138,14 +137,12 @@ void ScalarConverter::DisplayAll(const Type type, const T scalar) {
 	const unsigned int size = sizeof(types) / sizeof(*types);
 
 	for (unsigned int i = 0; i < size; i++) {
-		oss_ << types[i].first << ": ";
+		std::cout << types[i].first << ": ";
 		if (type == kTypeInvalid) {
 			SetImpossible();
 		} else {
 			types[i].second(type, scalar);
 		}
-		std::cout << oss_.str();
-		oss_.str("");
 	}
 }
 

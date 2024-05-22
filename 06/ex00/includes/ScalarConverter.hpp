@@ -3,7 +3,6 @@
 
 #include "utils.hpp"
 #include <limits>
-#include <sstream> // ostringstream
 #include <string>
 
 class ScalarConverter {
@@ -63,8 +62,6 @@ class ScalarConverter {
 	static const std::string kMessageImpossible;
 	static const std::string kMessageNonDisplayable;
 	static const int         kPrecision = 1;
-	/* variables */
-	static std::ostringstream oss_;
 };
 
 #endif /* EX00_SCALAR_CONVERTER_HPP */
