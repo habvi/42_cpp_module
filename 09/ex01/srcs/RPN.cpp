@@ -138,7 +138,7 @@ bool RPN::IsValidStr(const std::string &str) {
 // 1 5
 // 1 5 -
 // -4
-int RPN::Calcurate(const std::string &rpn_str) {
+int RPN::Calculate(const std::string &rpn_str) {
 	if (!IsValidStr(rpn_str)) {
 		throw std::invalid_argument(kErrMsgInvalidArgument);
 	}

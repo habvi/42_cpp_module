@@ -74,14 +74,14 @@ namespace {
 	}
 
 	bool IsValidDate(
-		const std::string &yaer_str,
+		const std::string &year_str,
 		const std::string &month_str,
 		const std::string &day_str
 	) {
 		int year;
 		int month;
 		int day;
-		if (!ConvertToInt(yaer_str, year) || !ConvertToInt(month_str, month) ||
+		if (!ConvertToInt(year_str, year) || !ConvertToInt(month_str, month) ||
 			!ConvertToInt(day_str, day)) {
 			return false;
 		}
