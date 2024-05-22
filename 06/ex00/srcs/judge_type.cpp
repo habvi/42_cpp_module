@@ -11,13 +11,8 @@ static double ConvertStrToDouble(const std::string &str, bool &err) {
 	char *str_end;
 	errno            = 0;
 	const double num = std::strtod(str.c_str(), &str_end);
-	if (errno == ERANGE) {
+	if (errno == ERANGE || str == str_end || *str_end != '\0') {
 		err = true;
-		return -1;
-	}
-	if (str == str_end || *str_end != '\0') {
-		err = true;
-		return -1;
 	}
 	return num;
 }
@@ -26,11 +21,11 @@ static double ConvertStrToDouble(const std::string &str, bool &err) {
 // char
 // ----------------------------------------------------------------------------
 // 'a' (3bytes)
-bool ScalarConverter::IsTypeChar() {
-	if (src_.size() != 3) {
+bool ScalarConverter::IsTypeChar(const std::string &src) {
+	if (src.size() != 3) {
 		return false;
 	}
-	return src_[0] == '\'' && src_[2] == '\'';
+	return src[0] == '\'' && src[2] == '\'';
 }
 
 // ----------------------------------------------------------------------------
@@ -50,18 +45,18 @@ bool ScalarConverter::IsIntegerRangeForFloat(const float &num) {
 
 // ok : INT_MIN～INT_MAX
 // ng : out_of_range / 12.3f / 12.3 / "  123" / inf / nan
-bool ScalarConverter::IsTypeInteger() {
+bool ScalarConverter::IsTypeInteger(const std::string &src) {
 	size_t head = 0;
-	if (src_[head] == '-' || src_[head] == '+') {
+	if (src[head] == '-' || src[head] == '+') {
 		head++;
 	}
-	for (size_t i = head; i < src_.size(); i++) {
-		if (!std::isdigit(src_[i])) {
+	for (size_t i = head; i < src.size(); i++) {
+		if (!std::isdigit(src[i])) {
 			return false;
 		}
 	}
 	bool         err;
-	const double num = ConvertStrToDouble(src_, err);
+	const double num = ConvertStrToDouble(src, err);
 	if (err) {
 		return false;
 	}
@@ -73,13 +68,12 @@ bool ScalarConverter::IsTypeInteger() {
 // ----------------------------------------------------------------------------
 // ok : -FLT_MAX～FLT_MAX / inff / -INFF / nanf / -NAnf
 // ng : out_of_range / 12.3(no f) / "  123f" / inf / nan
-bool ScalarConverter::IsTypeFloat() {
-	std::string::size_type pos_f = src_.rfind("f");
-	std::string::size_type pos_F = src_.rfind("F");
-	if (!(pos_f != std::string::npos || pos_F != std::string::npos)) {
+bool ScalarConverter::IsTypeFloat(const std::string &src) {
+	const std::string::size_type pos_f = src.rfind("f");
+	if (pos_f == std::string::npos) {
 		return false;
 	}
-	const std::string except_tail_f = src_.substr(0, src_.size() - 1);
+	const std::string except_tail_f = src.substr(0, src.size() - 1);
 	if (!IsTypeDouble(except_tail_f)) {
 		return false;
 	}
@@ -94,7 +88,7 @@ bool ScalarConverter::IsTypeFloat() {
 // ----------------------------------------------------------------------------
 // double
 // ----------------------------------------------------------------------------
-static bool IsInfinityOrNanStr(const std::string &s) {
+static bool IsInfinityOrNanStr(const std::string &src) {
 	static const std::string infs[] = {
 		"-inf",
 		"+inf",
@@ -103,7 +97,7 @@ static bool IsInfinityOrNanStr(const std::string &s) {
 	const size_t size = sizeof(infs) / sizeof(*infs);
 
 	for (size_t i = 0; i < size; i++) {
-		if (s == infs[i]) {
+		if (src == infs[i]) {
 			return true;
 		}
 	}
@@ -112,20 +106,20 @@ static bool IsInfinityOrNanStr(const std::string &s) {
 
 // ok : -DBL_MAX～DBL_MAX / inf / nan
 // ng : out_of_range / 12.3f / "  123" / inff / nanf
-bool ScalarConverter::IsTypeDouble(const std::string &str) {
-	if (IsInfinityOrNanStr(str)) {
+bool ScalarConverter::IsTypeDouble(const std::string &src) {
+	if (IsInfinityOrNanStr(src)) {
 		return true;
 	}
 	size_t head = 0;
-	if (str[head] == '-' || str[head] == '+') {
+	if (src[head] == '-' || src[head] == '+') {
 		head++;
 	}
-	for (size_t i = head; i < str.size(); i++) {
-		if (!(std::isdigit(str[i]) || str[i] == '.')) {
+	for (size_t i = head; i < src.size(); i++) {
+		if (!(std::isdigit(src[i]) || src[i] == '.')) {
 			return false;
 		}
 	}
 	bool err;
-	ConvertStrToDouble(str, err);
+	ConvertStrToDouble(src, err);
 	return err == false;
 }
