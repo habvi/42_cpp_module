@@ -5,11 +5,9 @@
 #include <iomanip> // fixed
 #include <iostream>
 
-const std::string     ScalarConverter::kMessageImpossible     = "impossible";
-const std::string     ScalarConverter::kMessageNonDisplayable = "Non displayable";
-std::string           ScalarConverter::src_;
-ScalarConverter::Type ScalarConverter::type_;
-std::ostringstream    ScalarConverter::oss_;
+const std::string  ScalarConverter::kMessageImpossible     = "impossible";
+const std::string  ScalarConverter::kMessageNonDisplayable = "Non displayable";
+std::ostringstream ScalarConverter::oss_;
 
 // ----------------------------------------------------------------------------
 ScalarConverter::ScalarConverter() {}
@@ -26,17 +24,17 @@ ScalarConverter &ScalarConverter::operator=(const ScalarConverter &c) {
 ScalarConverter::~ScalarConverter() {}
 
 // ----------------------------------------------------------------------------
-void ScalarConverter::SetType() {
-	if (IsTypeChar()) {
-		type_ = kTypeChar;
-	} else if (IsTypeInteger()) {
-		type_ = kTypeInt;
-	} else if (IsTypeFloat()) {
-		type_ = kTypeFloat;
-	} else if (IsTypeDouble(src_)) {
-		type_ = kTypeDouble;
+ScalarConverter::Type ScalarConverter::SetType(const std::string &src) {
+	if (IsTypeChar(src)) {
+		return kTypeChar;
+	} else if (IsTypeInteger(src)) {
+		return kTypeInt;
+	} else if (IsTypeFloat(src)) {
+		return kTypeFloat;
+	} else if (IsTypeDouble(src)) {
+		return kTypeDouble;
 	} else {
-		type_ = kTypeInvalid;
+		return kTypeInvalid;
 	}
 }
 
@@ -48,19 +46,19 @@ bool ScalarConverter::IsValidRange(const double &num) {
 }
 
 template <typename T>
-bool ScalarConverter::IsCharRange(const T &scalar) {
-	if (!IsIntegerRange(scalar)) {
+bool ScalarConverter::IsCharRange(const Type type, const T &scalar) {
+	if (!IsIntegerRange(type, scalar)) {
 		return false;
 	}
 	return IsValidRange<char>(scalar);
 }
 
 template <typename T>
-bool ScalarConverter::IsIntegerRange(const T &scalar) {
-	if (type_ == kTypeFloat && !IsIntegerRangeForFloat(scalar)) {
+bool ScalarConverter::IsIntegerRange(const Type type, const T &scalar) {
+	if (type == kTypeFloat && !IsIntegerRangeForFloat(scalar)) {
 		return false;
 	}
-	if (type_ == kTypeDouble && !IsValidRange<int>(scalar)) {
+	if (type == kTypeDouble && !IsValidRange<int>(scalar)) {
 		return false;
 	}
 	return true;
@@ -87,8 +85,8 @@ void ScalarConverter::SetFixed(const T &t) {
 }
 
 template <typename T>
-void ScalarConverter::SetToChar(const T &scalar) {
-	if (!IsCharRange(scalar)) {
+void ScalarConverter::SetToChar(const Type type, const T &scalar) {
+	if (!IsCharRange(type, scalar)) {
 		SetImpossible();
 		return;
 	}
@@ -101,8 +99,8 @@ void ScalarConverter::SetToChar(const T &scalar) {
 }
 
 template <typename T>
-void ScalarConverter::SetToInteger(const T &scalar) {
-	if (!IsIntegerRange(scalar)) {
+void ScalarConverter::SetToInteger(const Type type, const T &scalar) {
+	if (!IsIntegerRange(type, scalar)) {
 		SetImpossible();
 		return;
 	}
@@ -110,7 +108,8 @@ void ScalarConverter::SetToInteger(const T &scalar) {
 }
 
 template <typename T>
-void ScalarConverter::SetToFloat(const T &scalar) {
+void ScalarConverter::SetToFloat(const Type type, const T &scalar) {
+	(void)type;
 	if (!IsFloatRange(scalar)) {
 		SetImpossible();
 		return;
@@ -120,15 +119,16 @@ void ScalarConverter::SetToFloat(const T &scalar) {
 }
 
 template <typename T>
-void ScalarConverter::SetToDouble(const T &scalar) {
+void ScalarConverter::SetToDouble(const Type type, const T &scalar) {
+	(void)type;
 	SetFixed(static_cast<double>(scalar));
 	oss_ << std::endl;
 }
 
 // ----------------------------------------------------------------------------
 template <typename T>
-void ScalarConverter::DisplayAll(const T scalar) {
-	typedef void (*SetConvertFunc)(const T &);
+void ScalarConverter::DisplayAll(const Type type, const T scalar) {
+	typedef void (*SetConvertFunc)(const Type type, const T &);
 	static const std::pair<const std::string, SetConvertFunc> types[] = {
 		std::make_pair("char", &SetToChar<T>),
 		std::make_pair("int", &SetToInteger<T>),
@@ -139,10 +139,10 @@ void ScalarConverter::DisplayAll(const T scalar) {
 
 	for (unsigned int i = 0; i < size; i++) {
 		oss_ << types[i].first << ": ";
-		if (type_ == kTypeInvalid) {
+		if (type == kTypeInvalid) {
 			SetImpossible();
 		} else {
-			types[i].second(scalar);
+			types[i].second(type, scalar);
 		}
 		std::cout << oss_.str();
 		oss_.str("");
@@ -167,25 +167,24 @@ static double ConvertToDouble(const std::string &str) {
 	return static_cast<double>(std::strtod(str.c_str(), NULL));
 }
 
-void ScalarConverter::convert(const std::string &str) {
-	src_ = str;
-	SetType();
+void ScalarConverter::convert(const std::string &src) {
+	const Type type = SetType(src);
 
-	switch (type_) {
+	switch (type) {
 	case kTypeChar:
-		DisplayAll(ConvertToChar(src_));
+		DisplayAll(type, ConvertToChar(src));
 		break;
 	case kTypeInt:
-		DisplayAll(ConvertToInteger(src_));
+		DisplayAll(type, ConvertToInteger(src));
 		break;
 	case kTypeFloat:
-		DisplayAll(ConvertToFloat(src_));
+		DisplayAll(type, ConvertToFloat(src));
 		break;
 	case kTypeDouble:
-		DisplayAll(ConvertToDouble(src_));
+		DisplayAll(type, ConvertToDouble(src));
 		break;
 	case kTypeInvalid:
-		DisplayAll(0); // unused argument
+		DisplayAll(type, 0); // unused argument
 		break;
 	default:
 		break;
