@@ -85,7 +85,7 @@ namespace {
 		return false;
 	}
 
-	int EvalArithmeticOperation(const int num1, const char op, const int num2) {
+	int EvalArithmeticOperation(const int num1, const int num2, const char op) {
 		static const std::string kErrMsgOverflowArgument = "overflow argument";
 
 		if (op == '+') {
@@ -154,7 +154,7 @@ int RPN::Calculate(const std::string &rpn_str) {
 			}
 			const int num2 = PopBack(num_stack);
 			const int num1 = PopBack(num_stack);
-			num_stack.push(EvalArithmeticOperation(num1, ch, num2));
+			num_stack.push(EvalArithmeticOperation(num1, num2, ch));
 		}
 	}
 	if (num_stack.size() != 1) {
