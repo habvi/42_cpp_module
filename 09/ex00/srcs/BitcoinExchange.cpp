@@ -142,17 +142,9 @@ double BitcoinExchange::Exchange(const std::string &date, const double value) {
 	}
 
 	BitcoinRates::const_iterator itr = btc_rates_.lower_bound(date);
-	if (itr->first == date) {
-		const double rate = itr->second;
-		if (IsOverflow(rate, value)) {
-			throw ExchangeRateOverflowException();
-		}
-		return rate * value;
-	}
-	if (itr == btc_rates_.begin()) {
+	if (itr == btc_rates_.end()) {
 		throw PastDateNotFoundException();
 	}
-	--itr;
 	const double rate = itr->second;
 	if (IsOverflow(rate, value)) {
 		throw ExchangeRateOverflowException();
