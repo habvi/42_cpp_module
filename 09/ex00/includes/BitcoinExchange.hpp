@@ -7,7 +7,7 @@
 
 class BitcoinExchange {
   public:
-	typedef std::map<std::string, double> BitcoinRates;
+	typedef std::map<std::string, double, std::greater<std::string> > BitcoinRates;
 
   public:
 	BitcoinExchange();

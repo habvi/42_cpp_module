@@ -22,7 +22,7 @@ namespace test {
 	void Test(bool is_ok, const int expected, const std::string &str) {
 		std::cout << "args   : [" << str << "]" << std::endl;
 		try {
-			const int result_num = RPN::Calcurate(str);
+			const int result_num = RPN::Calculate(str);
 			if (result_num == expected && is_ok) {
 				std::cout << "result : " << result_num << COLOR_GREEN << " [OK]"
 						  << COLOR_END << std::endl;
@@ -148,7 +148,7 @@ int main(int argc, char **argv) {
 
 	const std::string rpn_str(argv[1]);
 	try {
-		const int result_num = RPN::Calcurate(rpn_str);
+		const int result_num = RPN::Calculate(rpn_str);
 		std::cout << result_num << std::endl;
 	} catch (const std::exception &e) {
 		PrintError("Error");

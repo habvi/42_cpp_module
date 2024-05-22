@@ -5,7 +5,7 @@
 
 class RPN {
   public:
-	static int Calcurate(const std::string &rpn_str);
+	static int Calculate(const std::string &rpn_str);
 
   private:
 	RPN();

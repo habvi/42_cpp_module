@@ -30,14 +30,6 @@ namespace {
 		return std::isdigit(static_cast<unsigned char>(c));
 	}
 
-	int ConvertToInt(const char c) {
-		std::stringstream ss;
-		ss << c;
-		int num;
-		ss >> num;
-		return num;
-	}
-
 	// stack.size() >= 1
 	int PopBack(std::stack<int> &s) {
 		const int tmp_num = s.top();
@@ -70,9 +62,7 @@ namespace {
 			return false;
 		}
 		if (num1 > 0 && num2 > 0) {
-			if (num1 > kIntMax / num2) {
-				return true;
-			}
+			return num1 > kIntMax / num2;
 		}
 		if (num1 < 0 && num2 < 0) {
 			return num1 < kIntMax / num2;
@@ -85,7 +75,7 @@ namespace {
 		return false;
 	}
 
-	int EvalArithmeticOperation(const int num1, const char op, const int num2) {
+	int EvalArithmeticOperation(const int num1, const int num2, const char op) {
 		static const std::string kErrMsgOverflowArgument = "overflow argument";
 
 		if (op == '+') {
@@ -138,7 +128,7 @@ bool RPN::IsValidStr(const std::string &str) {
 // 1 5
 // 1 5 -
 // -4
-int RPN::Calcurate(const std::string &rpn_str) {
+int RPN::Calculate(const std::string &rpn_str) {
 	if (!IsValidStr(rpn_str)) {
 		throw std::invalid_argument(kErrMsgInvalidArgument);
 	}
@@ -147,14 +137,14 @@ int RPN::Calcurate(const std::string &rpn_str) {
 	for (std::size_t i = 0; i < rpn_str.size(); i++) {
 		const char ch = rpn_str[i];
 		if (MyIsDigit(ch)) {
-			num_stack.push(ConvertToInt(ch));
+			num_stack.push(ch - '0');
 		} else if (IsOperations(ch)) {
 			if (num_stack.size() < 2) {
 				throw std::invalid_argument(kErrMsgInvalidArgument);
 			}
 			const int num2 = PopBack(num_stack);
 			const int num1 = PopBack(num_stack);
-			num_stack.push(EvalArithmeticOperation(num1, ch, num2));
+			num_stack.push(EvalArithmeticOperation(num1, num2, ch));
 		}
 	}
 	if (num_stack.size() != 1) {
