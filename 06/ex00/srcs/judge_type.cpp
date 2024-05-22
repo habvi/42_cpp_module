@@ -69,9 +69,8 @@ bool ScalarConverter::IsTypeInteger(const std::string &src) {
 // ok : -FLT_MAX～FLT_MAX / inff / -INFF / nanf / -NAnf
 // ng : out_of_range / 12.3(no f) / "  123f" / inf / nan
 bool ScalarConverter::IsTypeFloat(const std::string &src) {
-	std::string::size_type pos_f = src.rfind("f");
-	std::string::size_type pos_F = src.rfind("F");
-	if (!(pos_f != std::string::npos || pos_F != std::string::npos)) {
+	const std::string::size_type pos_f = src.rfind("f");
+	if (pos_f == std::string::npos) {
 		return false;
 	}
 	const std::string except_tail_f = src.substr(0, src.size() - 1);
