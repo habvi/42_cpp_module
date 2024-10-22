@@ -29,9 +29,9 @@ template <typename T>
 static void JudgeIsEqual(
 	const std::string &message,
 	T                 &target,
-	const unsigned int expected_hit_points,
-	const unsigned int expected_energy_points,
-	const unsigned int expected_attack_damage
+	unsigned int       expected_hit_points,
+	unsigned int       expected_energy_points,
+	unsigned int       expected_attack_damage
 ) {
 	std::cout << message << ": ";
 	if (target.GetHitPoints() == expected_hit_points &&
@@ -57,7 +57,7 @@ static bool IsAttackableAtoB(const T &attacker, const U &defender) {
 
 template <typename T, typename U>
 static void AttackAtoB(
-	T &attacker, U &defender, const std::string &target, const unsigned int damages
+	T &attacker, U &defender, const std::string &target, unsigned int damages
 ) {
 	if (IsAttackableAtoB(attacker, defender)) {
 		attacker.SetAttackDamage(damages);
@@ -75,7 +75,7 @@ static bool IsRepaireable(const T &trap) {
 }
 
 template <typename T>
-static void Repaire(T &trap, const unsigned int points) {
+static void Repaire(T &trap, unsigned int points) {
 	if (IsRepaireable(trap)) {
 		trap.beRepaired(points);
 	} else {

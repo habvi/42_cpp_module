@@ -18,7 +18,7 @@ class ClapTrap {
 
   public:
 	void AttackToDefender(
-		ClapTrap &defender, const std::string &target, const unsigned int damages
+		ClapTrap &defender, const std::string &target, unsigned int damages
 	);
 	void PutStatus() const;
 	bool IsActionPossible() const;
@@ -29,12 +29,12 @@ class ClapTrap {
 	unsigned int       GetHitPoints() const;
 	unsigned int       GetEnergyPoints() const;
 	unsigned int       GetAttackDamage() const;
-	void               SetAttackDamage(const unsigned int damages);
+	void               SetAttackDamage(unsigned int damages);
 
   protected:
 	ClapTrap();
-	void SetHitPoints(const unsigned int hit_points);
-	void SetEnergyPoints(const unsigned int energy_points);
+	void SetHitPoints(unsigned int hit_points);
+	void SetEnergyPoints(unsigned int energy_points);
 
   private:
 	std::string  name_;

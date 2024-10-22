@@ -107,7 +107,7 @@ void ClapTrap::beRepaired(unsigned int amount) {
 
 // able to specify the attack_damage
 void ClapTrap::AttackToDefender(
-	ClapTrap &defender, const std::string &target, const unsigned int damages
+	ClapTrap &defender, const std::string &target, unsigned int damages
 ) {
 	if (!IsActionPossible() || !defender.IsActionPossible()) {
 		std::cerr << COLOR_RED NAME_CLAPTRAP " " << name_ << " failed to attack to "
@@ -136,15 +136,15 @@ unsigned int ClapTrap::GetAttackDamage() const {
 	return attack_damage_;
 }
 
-void ClapTrap::SetHitPoints(const unsigned int hit_points) {
+void ClapTrap::SetHitPoints(unsigned int hit_points) {
 	hit_points_ = hit_points;
 }
 
-void ClapTrap::SetEnergyPoints(const unsigned int energy_points) {
+void ClapTrap::SetEnergyPoints(unsigned int energy_points) {
 	energy_points_ = energy_points;
 }
 
-void ClapTrap::SetAttackDamage(const unsigned int damages) {
+void ClapTrap::SetAttackDamage(unsigned int damages) {
 	attack_damage_ = damages;
 }
 
