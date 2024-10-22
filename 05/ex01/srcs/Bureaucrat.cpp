@@ -5,8 +5,7 @@
 
 Bureaucrat::Bureaucrat() : grade_(kLowestGrade) {}
 
-Bureaucrat::Bureaucrat(const std::string &name, const unsigned int grade)
-	: name_(name) {
+Bureaucrat::Bureaucrat(const std::string &name, unsigned int grade) : name_(name) {
 	ThrowGradeException(grade);
 	grade_ = grade;
 }
@@ -62,7 +61,7 @@ void Bureaucrat::signForm(Form &form) const {
 	}
 }
 
-void Bureaucrat::ThrowGradeException(const unsigned int grade) const {
+void Bureaucrat::ThrowGradeException(unsigned int grade) const {
 	if (grade < kHighestGrade) {
 		throw Bureaucrat::GradeTooHighException();
 	} else if (grade > kLowestGrade) {

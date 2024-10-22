@@ -10,8 +10,8 @@ class Form {
   public:
 	Form(
 		const std::string &name,
-		const unsigned int grade_for_sign,
-		const unsigned int grade_for_execute
+		unsigned int       grade_for_sign,
+		unsigned int       grade_for_execute
 	);
 	Form(const Form &f);
 	~Form();
@@ -31,7 +31,7 @@ class Form {
 	Form();
 
   private:
-	void ThrowGradeException(const unsigned int grade) const;
+	void ThrowGradeException(unsigned int grade) const;
 	void GradeTooHighException() const;
 	void GradeTooLowException() const;
 

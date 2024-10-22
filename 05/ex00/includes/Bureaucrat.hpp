@@ -7,7 +7,7 @@
 
 class Bureaucrat {
   public:
-	Bureaucrat(const std::string &name, const unsigned int grade);
+	Bureaucrat(const std::string &name, unsigned int grade);
 	Bureaucrat(const Bureaucrat &b);
 	~Bureaucrat();
 	Bureaucrat &operator=(const Bureaucrat &b);
@@ -37,7 +37,7 @@ class Bureaucrat {
 	Bureaucrat();
 
   private:
-	void ThrowGradeException(const unsigned int grade) const;
+	void ThrowGradeException(unsigned int grade) const;
 
   private:
 	static const unsigned int kHighestGrade = 1;

@@ -8,8 +8,8 @@ AForm::AForm()
 
 AForm::AForm(
 	const std::string &name,
-	const unsigned int grade_for_sign,
-	const unsigned int grade_for_execute
+	unsigned int       grade_for_sign,
+	unsigned int       grade_for_execute
 )
 	: name_(name),
 	  is_signed_(false),
@@ -67,7 +67,7 @@ void AForm::execute(Bureaucrat const &executor) const {
 	ExecuteEachForm(executor);
 }
 
-void AForm::ThrowGradeException(const unsigned int grade) const {
+void AForm::ThrowGradeException(unsigned int grade) const {
 	if (grade < Bureaucrat::GetHighestGrade()) {
 		AForm::GradeTooHighException();
 	} else if (grade > Bureaucrat::GetLowestGrade()) {
@@ -90,7 +90,7 @@ std::ostream &operator<<(std::ostream &out, const AForm &f) {
 	out << "AForm: " COLOR_BLUE << f.GetName() << "("
 		<< (f.GetIsSigned() ? "signed" : "not signed")
 		<< ")," COLOR_END " grade for sign is " COLOR_BLUE << f.GetGradeForSign()
-		<< COLOR_END ", "
-		<< "grade for execute is " COLOR_BLUE << f.GetGradeForExecute() << COLOR_END;
+		<< COLOR_END ", " << "grade for execute is " COLOR_BLUE
+		<< f.GetGradeForExecute() << COLOR_END;
 	return out;
 }

@@ -18,7 +18,7 @@ static void DisplayTitle(const std::string &title) {
 static bool IsEqualNameAndGrade(
 	const Bureaucrat  &target,
 	const std::string &expected_name,
-	const unsigned int expected_grade
+	unsigned int       expected_grade
 ) {
 	return target.getName() == expected_name && target.getGrade() == expected_grade;
 }
@@ -26,7 +26,7 @@ static bool IsEqualNameAndGrade(
 static void JudgeResult(
 	const Bureaucrat  &target,
 	const std::string &expected_name,
-	const unsigned int expected_grade
+	unsigned int       expected_grade
 ) {
 	if (IsEqualNameAndGrade(target, expected_name, expected_grade)) {
 		std::cout << COLOR_GREEN "[OK]" << COLOR_END << std::endl;

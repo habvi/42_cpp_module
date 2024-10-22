@@ -11,8 +11,7 @@
 #define ALICE "Alice"
 #define BOB   "Bob"
 
-static void
-DisplayTitle(const unsigned int testcase_number, const std::string &title) {
+static void DisplayTitle(unsigned int testcase_number, const std::string &title) {
 	std::cout << "\n\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 	std::cout << "┃ test " << testcase_number << ": " << title << std::endl;
 	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
@@ -25,7 +24,7 @@ static void Line() {
 static bool IsEqualNameAndGrade(
 	const Bureaucrat  &target,
 	const std::string &expected_name,
-	const unsigned int expected_grade
+	unsigned int       expected_grade
 ) {
 	return target.getName() == expected_name && target.getGrade() == expected_grade;
 }
@@ -33,7 +32,7 @@ static bool IsEqualNameAndGrade(
 static void JudgeResult(
 	const Bureaucrat  &target,
 	const std::string &expected_name,
-	const unsigned int expected_grade
+	unsigned int       expected_grade
 ) {
 	if (IsEqualNameAndGrade(target, expected_name, expected_grade)) {
 		std::cout << COLOR_GREEN "[OK]" << COLOR_END << std::endl;
@@ -334,7 +333,7 @@ static void ExecuteAFormWithNoSign(AForm *form) {
 	}
 }
 
-static void ExecuteAFormWithSign(AForm *form, const unsigned int executor_grade) {
+static void ExecuteAFormWithSign(AForm *form, unsigned int executor_grade) {
 	Bureaucrat bob(BOB, executor_grade);
 
 	// add sign
