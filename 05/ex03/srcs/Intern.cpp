@@ -41,9 +41,9 @@ static CreateFormFunc GetCreateFormFunction(const std::string &form_name) {
 		std::make_pair(kRobotomyRequestFormName, &CreateRobotomyRequestForm),
 		std::make_pair(kShrubberyCreationFormName, &CreateShrubberyCreationForm)
 	};
-	const size_t size = sizeof(forms) / sizeof(forms[0]);
+	const std::size_t size = sizeof(forms) / sizeof(forms[0]);
 
-	for (size_t i = 0; i < size; i++) {
+	for (std::size_t i = 0; i < size; i++) {
 		if (forms[i].first == form_name) {
 			return forms[i].second;
 		}
