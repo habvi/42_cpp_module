@@ -2,18 +2,18 @@
 #include <cstdlib>
 #include <iostream>
 
-static void DisplayTitle(const std::string &title, const int num_of_zombies) {
+static void DisplayTitle(const std::string &title, int num_of_zombies) {
 	std::cout << "┃ test: " << title << num_of_zombies << std::endl;
 	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 }
 
-static void AnnounceEachZombies(const Zombie *zombies, const int n) {
+static void AnnounceEachZombies(const Zombie *zombies, int n) {
 	for (int i = 0; i < n; i++) {
 		zombies[i].announce();
 	}
 }
 
-static void RunTest(const int num_of_zombies) {
+static void RunTest(int num_of_zombies) {
 	DisplayTitle("number of zombies = ", num_of_zombies);
 
 	Zombie *zombies = zombieHorde(num_of_zombies, "abcd");

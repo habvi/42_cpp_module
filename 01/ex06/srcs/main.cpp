@@ -14,7 +14,7 @@ static void PutUsage() {
 	std::cerr << "Usage:\n" << kMessage << std::endl;
 }
 
-static bool IsValidArgs(const int argc) {
+static bool IsValidArgs(int argc) {
 	return argc == 2;
 }
 

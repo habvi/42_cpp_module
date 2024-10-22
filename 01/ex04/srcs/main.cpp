@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-static bool IsValidArgc(const int argc) {
+static bool IsValidArgc(int argc) {
 	return argc == 4;
 }
 
