@@ -12,8 +12,8 @@ class Brain {
 
   public:
 	unsigned int       GetNumOfIdeas() const;
-	const std::string &GetIthIdea(const unsigned int index) const;
-	void               SetIthIdea(const unsigned int index, const std::string &idea);
+	const std::string &GetIthIdea(unsigned int index) const;
+	void               SetIthIdea(unsigned int index, const std::string &idea);
 
   private:
 	void CopyIdeas(const Brain &b);

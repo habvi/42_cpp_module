@@ -19,7 +19,7 @@ class MateriaSource : public IMateriaSource {
 
   public:
 	unsigned int getNumOfSrcs() const;
-	AMateria    *getIthAMateria(const unsigned int index) const;
+	AMateria    *getIthAMateria(unsigned int index) const;
 
   private:
 	void copyMateriaSrcs(const MateriaSource &m);

@@ -22,12 +22,12 @@ class Character : public ICharacter {
   public:
 	std::string const &getName() const;
 	unsigned int       getLimitSlotNum() const;
-	AMateria          *getIthAMateria(const unsigned int index) const;
+	AMateria          *getIthAMateria(unsigned int index) const;
 
   private:
 	void initMaterias();
 	void copyMaterias(const Character &c);
-	bool isValidIndex(const int index) const;
+	bool isValidIndex(int index) const;
 
   private:
 	std::string               name_;

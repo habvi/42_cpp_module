@@ -36,14 +36,14 @@ unsigned int Brain::GetNumOfIdeas() const {
 	return kNumOfIdea;
 }
 
-const std::string &Brain::GetIthIdea(const unsigned int index) const {
+const std::string &Brain::GetIthIdea(unsigned int index) const {
 	if (index >= kNumOfIdea) {
 		throw std::out_of_range(COLOR_RED "Error: index out of range" COLOR_END);
 	}
 	return ideas[index];
 }
 
-void Brain::SetIthIdea(const unsigned int index, const std::string &idea) {
+void Brain::SetIthIdea(unsigned int index, const std::string &idea) {
 	if (index >= kNumOfIdea) {
 		throw std::out_of_range(COLOR_RED "Error: index out of range" COLOR_END);
 	}

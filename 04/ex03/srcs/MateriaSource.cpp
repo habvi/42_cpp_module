@@ -72,7 +72,7 @@ unsigned int MateriaSource::getNumOfSrcs() const {
 	return num_of_srcs_;
 }
 
-AMateria *MateriaSource::getIthAMateria(const unsigned int index) const {
+AMateria *MateriaSource::getIthAMateria(unsigned int index) const {
 	if (index >= num_of_srcs_) {
 		return NULL;
 	}

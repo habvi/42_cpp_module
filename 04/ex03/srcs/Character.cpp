@@ -68,7 +68,7 @@ void Character::equip(AMateria *a) {
 	}
 }
 
-bool Character::isValidIndex(const int index) const {
+bool Character::isValidIndex(int index) const {
 	return index >= 0 && static_cast<unsigned int>(index) < kLimitSlotNum;
 }
 
@@ -97,7 +97,7 @@ unsigned int Character::getLimitSlotNum() const {
 	return kLimitSlotNum;
 }
 
-AMateria *Character::getIthAMateria(const unsigned int index) const {
+AMateria *Character::getIthAMateria(unsigned int index) const {
 	if (!isValidIndex(index)) {
 		return NULL;
 	}
