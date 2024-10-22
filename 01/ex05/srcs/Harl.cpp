@@ -19,9 +19,9 @@ void Harl::complain(std::string level) {
 		std::make_pair(WARNING, &Harl::warning),
 		std::make_pair(ERROR, &Harl::error)
 	};
-	size_t size = sizeof(complains) / sizeof(complains[0]);
+	const std::size_t size = sizeof(complains) / sizeof(complains[0]);
 
-	for (size_t i = 0; i < size; i++) {
+	for (std::size_t i = 0; i < size; i++) {
 		if (complains[i].first == level) {
 			(this->*(complains[i].second))();
 			return;

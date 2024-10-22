@@ -31,7 +31,7 @@ void FileReplace::WriteReplacedToNewfile(const std::string &content, File &file)
 	const {
 	std::string::size_type head       = 0;
 	std::string::size_type pos        = 0;
-	const size_t           src_length = src_.length();
+	const std::size_t      src_length = src_.length();
 
 	if (src_ == replaced_) {
 		file.WriteToOutfile(content);
