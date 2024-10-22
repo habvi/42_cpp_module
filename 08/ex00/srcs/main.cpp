@@ -14,14 +14,14 @@ namespace test {
 	} Result;
 
 	// -------------------------------------------------------------------------
-	void DisplayTitle(const unsigned int testcase_number, const std::string &title) {
+	void DisplayTitle(unsigned int testcase_number, const std::string &title) {
 		std::cout << "\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 		std::cout << "┃ test " << testcase_number << ": " << title << std::endl;
 		std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 	}
 
 	template <typename T>
-	void PrintInfo(const std::string &name, const T &container, const int &value) {
+	void PrintInfo(const std::string &name, const T &container, int value) {
 		std::cout << name << " : {";
 
 		typename T::const_iterator itr;
@@ -48,9 +48,8 @@ namespace test {
 
 	// -------------------------------------------------------------------------
 	template <typename T>
-	void RunEasyfind(
-		const std::string &name, T &container, const int &value, Result expected
-	) {
+	void
+	RunEasyfind(const std::string &name, T &container, int value, Result expected) {
 		PrintInfo(name, container, value);
 
 		typename T::iterator itr = easyfind(container, value);
@@ -67,10 +66,7 @@ namespace test {
 
 	template <typename T>
 	void RunEasyfind(
-		const std::string &name,
-		const T           &container,
-		const int         &value,
-		Result             expected
+		const std::string &name, const T &container, int value, Result expected
 	) {
 		PrintInfo(name, container, value);
 

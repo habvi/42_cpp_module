@@ -13,7 +13,7 @@ namespace test {
 	} Result;
 
 	// -------------------------------------------------------------------------
-	void DisplayTitle(const unsigned int testcase_number, const std::string &title) {
+	void DisplayTitle(unsigned int testcase_number, const std::string &title) {
 		std::cout << "\n\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 				  << std::endl;
 		std::cout << "┃ test " << testcase_number << ": " << title << std::endl;
@@ -35,7 +35,7 @@ namespace test {
 	}
 
 	template <typename T>
-	void JudgeResult(const int num, const T &expected, const T &result) {
+	void JudgeResult(int num, const T &expected, const T &result) {
 		if (expected == result) {
 			if (expected == SUCCESS) {
 				std::cout << COLOR_GREEN "[add " << num << " : OK]" COLOR_END
@@ -50,7 +50,7 @@ namespace test {
 	}
 
 	// -------------------------------------------------------------------------
-	void AddNumber(Span &span, const int num, Result expected) {
+	void AddNumber(Span &span, int num, Result expected) {
 		try {
 			span.addNumber(num);
 			JudgeResult(num, expected, SUCCESS);

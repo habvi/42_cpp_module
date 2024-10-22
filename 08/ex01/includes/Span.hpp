@@ -10,18 +10,18 @@ class Span {
 	typedef std::pair<Elems::const_iterator, bool> InsertResult;
 
   public:
-	Span(const unsigned int n);
+	Span(unsigned int n);
 	Span(const Span &other);
 	Span &operator=(const Span &other);
 	~Span();
 
   public:
 	// Following the instructions, not camelcase.
-	void         addNumber(const int number);
+	void         addNumber(int number);
 	unsigned int shortestSpan() const;
 	unsigned int longestSpan() const;
 	// original functions
-	void Insert(const int start, const int end);
+	void Insert(int start, int end);
 	template <typename T>
 	void Insert(typename T::const_iterator first, typename T::const_iterator last);
 	std::ostream &Print(std::ostream &out) const;

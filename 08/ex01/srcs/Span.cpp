@@ -8,7 +8,7 @@ const std::string Span::kErrMsgFullCapacity  = "Capacity is full";
 
 Span::Span() : capacity_(0), size_(0), shortest_span_(UINT_MAX), longest_span_(0) {}
 
-Span::Span(const unsigned int n)
+Span::Span(unsigned int n)
 	: capacity_(n), size_(0), shortest_span_(UINT_MAX), longest_span_(0) {}
 
 Span::Span(const Span &other)
@@ -32,7 +32,7 @@ Span &Span::operator=(const Span &other) {
 Span::~Span() {}
 
 // ---------------------------------------------------
-void Span::addNumber(const int number) {
+void Span::addNumber(int number) {
 	if (size_ >= capacity_) {
 		throw std::logic_error(kErrMsgFullCapacity);
 	}
@@ -58,7 +58,7 @@ unsigned int Span::longestSpan() const {
 
 // addNumber: start ~ (end - 1)
 // if start >= end, nothing happend.
-void Span::Insert(const int start, const int end) {
+void Span::Insert(int start, int end) {
 	for (int i = start; i < end; i++) {
 		addNumber(i);
 	}
