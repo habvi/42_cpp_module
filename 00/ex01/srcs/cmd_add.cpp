@@ -28,9 +28,9 @@ static t_result input_data(t_contact_dto &data) {
 		{PHONE_NUMBER, data.phone_number},
 		{DARKEST_SECRET, data.darkest_secret}
 	};
-	const size_t size = sizeof(fields) / sizeof(fields[0]);
+	const std::size_t size = sizeof(fields) / sizeof(fields[0]);
 
-	for (size_t i = 0; i < size; i++) {
+	for (std::size_t i = 0; i < size; i++) {
 		t_result result = input_each_data(fields[i].title, fields[i].dst);
 		if (result == INPUT_EOF || result == FAILURE) {
 			return result;

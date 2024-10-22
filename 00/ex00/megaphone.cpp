@@ -7,7 +7,7 @@ class Megaphone {
 	// default constructor
 	Megaphone();
 	// constructor with argument
-	Megaphone(size_t size, const std::string *voice);
+	Megaphone(std::size_t size, const std::string *voice);
 	// copy constructor
 	Megaphone(const Megaphone &m);
 	// destructor
@@ -24,7 +24,7 @@ class Megaphone {
 	void destroy_voice_();
 
   private:
-	size_t       size_;
+	std::size_t  size_;
 	std::string *voice_;
 };
 
@@ -34,7 +34,7 @@ Megaphone::Megaphone() {
 	// std::cerr << "(call default constructor)" << std::endl;
 }
 
-Megaphone::Megaphone(size_t size, const std::string *voice) {
+Megaphone::Megaphone(std::size_t size, const std::string *voice) {
 	size_ = size;
 	copy_voice_(voice);
 	convert_voice_to_uppercase_();
@@ -76,7 +76,7 @@ void Megaphone::print_voice() {
 	if (voice_ == NULL) {
 		return;
 	}
-	for (size_t i = 0; i < size_; i++) {
+	for (std::size_t i = 0; i < size_; i++) {
 		std::cout << voice_[i] << " ";
 	}
 	std::cout << std::endl;
@@ -84,14 +84,14 @@ void Megaphone::print_voice() {
 
 void Megaphone::copy_voice_(const std::string *src) {
 	voice_ = new std::string[size_];
-	for (size_t i = 0; i < size_; i++) {
+	for (std::size_t i = 0; i < size_; i++) {
 		voice_[i] = src[i];
 	}
 }
 
 void Megaphone::convert_voice_to_uppercase_() {
-	for (size_t i = 0; i < size_; i++) {
-		for (size_t j = 0; j < voice_[i].size(); j++) {
+	for (std::size_t i = 0; i < size_; i++) {
+		for (std::size_t j = 0; j < voice_[i].size(); j++) {
 			voice_[i][j] = std::toupper(voice_[i][j]);
 		}
 	}
@@ -102,9 +102,9 @@ void Megaphone::destroy_voice_() {
 	voice_ = NULL;
 }
 
-static std::string *convert_args(size_t size, const char **argv) {
+static std::string *convert_args(std::size_t size, const char **argv) {
 	std::string *voice = new std::string[size];
-	for (size_t i = 0; i < size; i++) {
+	for (std::size_t i = 0; i < size; i++) {
 		voice[i] = argv[i];
 	}
 	return voice;

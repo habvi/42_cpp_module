@@ -12,7 +12,7 @@ Phonebook::~Phonebook() {}
 
 static const std::string
 truncate_str(const std::string &s, unsigned int max_length) {
-	const size_t length = s.size();
+	const std::size_t length = s.size();
 
 	if (length <= max_length) {
 		return s;
@@ -86,7 +86,7 @@ void Phonebook::display_all() const {
 	Contact contact;
 
 	display_table_header();
-	for (size_t index = 0; index < LIMIT_REGISTER_COUNT; index++) {
+	for (std::size_t index = 0; index < LIMIT_REGISTER_COUNT; index++) {
 		contact = phonebook_[index];
 		if (is_not_registered(contact)) {
 			break;
