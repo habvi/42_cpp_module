@@ -21,7 +21,7 @@ namespace test {
 	void PrintArray(const std::string &title, const T &array) {
 		std::cout << title << " = {";
 		const unsigned int size = array.size();
-		for (size_t i = 0; i < size; i++) {
+		for (std::size_t i = 0; i < size; i++) {
 			std::cout << array[i];
 			if (i != size - 1) {
 				std::cout << ", ";
@@ -33,7 +33,7 @@ namespace test {
 	template <typename T>
 	void PrintArray(const std::string &title, const T &array, unsigned int size) {
 		std::cout << title << " = {";
-		for (size_t i = 0; i < size; i++) {
+		for (std::size_t i = 0; i < size; i++) {
 			std::cout << array[i];
 			if (i != size - 1) {
 				std::cout << ", ";
