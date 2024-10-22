@@ -46,11 +46,11 @@ bool ScalarConverter::IsIntegerRangeForFloat(float num) {
 // ok : INT_MIN～INT_MAX
 // ng : out_of_range / 12.3f / 12.3 / "  123" / inf / nan
 bool ScalarConverter::IsTypeInteger(const std::string &src) {
-	size_t head = 0;
+	std::size_t head = 0;
 	if (src[head] == '-' || src[head] == '+') {
 		head++;
 	}
-	for (size_t i = head; i < src.size(); i++) {
+	for (std::size_t i = head; i < src.size(); i++) {
 		if (!std::isdigit(src[i])) {
 			return false;
 		}
@@ -94,9 +94,9 @@ static bool IsInfinityOrNanStr(const std::string &src) {
 		"+inf",
 		"nan",
 	};
-	const size_t size = sizeof(infs) / sizeof(*infs);
+	const std::size_t size = sizeof(infs) / sizeof(*infs);
 
-	for (size_t i = 0; i < size; i++) {
+	for (std::size_t i = 0; i < size; i++) {
 		if (src == infs[i]) {
 			return true;
 		}
@@ -110,11 +110,11 @@ bool ScalarConverter::IsTypeDouble(const std::string &src) {
 	if (IsInfinityOrNanStr(src)) {
 		return true;
 	}
-	size_t head = 0;
+	std::size_t head = 0;
 	if (src[head] == '-' || src[head] == '+') {
 		head++;
 	}
-	for (size_t i = head; i < src.size(); i++) {
+	for (std::size_t i = head; i < src.size(); i++) {
 		if (!(std::isdigit(src[i]) || src[i] == '.')) {
 			return false;
 		}
