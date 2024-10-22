@@ -10,7 +10,7 @@ Fixed::Fixed() : fixed_point_number_value_(0) {
 }
 
 // Int constructor
-Fixed::Fixed(const int number)
+Fixed::Fixed(int number)
 	: fixed_point_number_value_(number << kNumOfFractionalBits_) {
 #ifndef NO_DEBUG
 	std::cout << "Int constructor called" << std::endl;
@@ -18,7 +18,7 @@ Fixed::Fixed(const int number)
 }
 
 // Float constructor
-Fixed::Fixed(const float number)
+Fixed::Fixed(float number)
 	: fixed_point_number_value_(
 		  static_cast<int>(roundf(number * (1 << kNumOfFractionalBits_)))
 	  ) {

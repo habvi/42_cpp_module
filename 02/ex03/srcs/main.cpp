@@ -19,7 +19,7 @@ static void Line() {
 	std::cout << "--------------------------------" << std::endl;
 }
 
-static void JudgeIsEqual(const bool result, const bool is_inside) {
+static void JudgeIsEqual(bool result, bool is_inside) {
 	std::cout << (result == is_inside ? COLOR_GREEN "OK" : COLOR_RED "NG")
 			  << COLOR_END << std::endl;
 }
@@ -29,7 +29,7 @@ static void RunBsp(
 	const Point &b,
 	const Point &c,
 	const Point &point,
-	const bool   is_inside
+	bool         is_inside
 ) {
 	std::cout << "a    : (x, y)=(" << a.getX() << ", " << a.getY() << ")"
 			  << std::endl;

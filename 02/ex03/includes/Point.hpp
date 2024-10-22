@@ -6,7 +6,7 @@
 class Point {
   public:
 	Point();
-	Point(const float floating_point_num_1, const float floating_point_num_2);
+	Point(float floating_point_num_1, float floating_point_num_2);
 	Point(const Point &p);
 	Point &operator=(const Point &p);
 	~Point();
@@ -21,6 +21,7 @@ class Point {
 	const Fixed y;
 };
 
+// Following the instructions, not use a const reference.
 bool bsp(Point const a, Point const b, Point const c, Point const point);
 
 #endif /* POINT_H */

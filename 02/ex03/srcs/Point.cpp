@@ -5,7 +5,7 @@
 Point::Point() : x(0), y(0) {}
 
 // constructor
-Point::Point(const float floating_point_num_1, const float floating_point_num_2)
+Point::Point(float floating_point_num_1, float floating_point_num_2)
 	: x(floating_point_num_1), y(floating_point_num_2) {}
 
 // copy constructor
