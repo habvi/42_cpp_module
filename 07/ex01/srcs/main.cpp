@@ -5,8 +5,7 @@
 
 namespace test {
 	template <typename T>
-	void
-	PutArray(const std::string &title, const T &array, const size_t array_size) {
+	void PutArray(const std::string &title, const T &array, size_t array_size) {
 		std::cout << title << " = {";
 		for (size_t i = 0; i < array_size; i++) {
 			std::cout << array[i];

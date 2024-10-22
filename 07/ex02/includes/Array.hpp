@@ -7,14 +7,14 @@ template <typename T>
 class Array {
   public:
 	Array();
-	Array(const unsigned int n);
+	Array(unsigned int n);
 	Array(const Array &other);
 	~Array();
 	Array &operator=(const Array &other);
 	// for read : [i]
-	const T &operator[](const std::size_t index) const;
+	const T &operator[](std::size_t index) const;
 	// for write : [i] = x
-	T &operator[](const std::size_t index);
+	T &operator[](std::size_t index);
 
   public:
 	// Following the instructions, not camelcase.
@@ -22,7 +22,7 @@ class Array {
 
   private:
 	T   *DupArray(const Array &other);
-	void ThrowIfIndexOutOfRange(const std::size_t index) const;
+	void ThrowIfIndexOutOfRange(std::size_t index) const;
 
   private:
 	T           *array_;

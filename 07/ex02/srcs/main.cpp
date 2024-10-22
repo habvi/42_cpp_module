@@ -7,7 +7,7 @@
 #include <string>
 
 namespace test {
-	void DisplayTitle(const unsigned int testcase_number, const std::string &title) {
+	void DisplayTitle(unsigned int testcase_number, const std::string &title) {
 		std::cout << "\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 		std::cout << "┃ test " << testcase_number << ": " << title << std::endl;
 		std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
@@ -31,8 +31,7 @@ namespace test {
 	}
 
 	template <typename T>
-	void
-	PrintArray(const std::string &title, const T &array, const unsigned int size) {
+	void PrintArray(const std::string &title, const T &array, unsigned int size) {
 		std::cout << title << " = {";
 		for (size_t i = 0; i < size; i++) {
 			std::cout << array[i];
@@ -63,7 +62,7 @@ namespace test {
 	}
 
 	template <typename T>
-	void JudgeIsSameArray(const Array<T> &a, const T *b, const unsigned int b_size) {
+	void JudgeIsSameArray(const Array<T> &a, const T *b, unsigned int b_size) {
 		if (a.size() != b_size) {
 			std::cerr << COLOR_RED "Error: Not the same array" COLOR_END
 					  << std::endl;

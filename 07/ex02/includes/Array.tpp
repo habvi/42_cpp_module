@@ -4,7 +4,7 @@ template <typename T>
 Array<T>::Array() : array_(new T[0]()), size_(0) {}
 
 template <typename T>
-Array<T>::Array(const unsigned int n) : array_(new T[n]()), size_(n) {}
+Array<T>::Array(unsigned int n) : array_(new T[n]()), size_(n) {}
 
 template <typename T>
 Array<T>::Array(const Array &other) {
@@ -29,13 +29,13 @@ Array<T> &Array<T>::operator=(const Array &other) {
 }
 
 template <typename T>
-const T &Array<T>::operator[](const std::size_t index) const {
+const T &Array<T>::operator[](std::size_t index) const {
 	ThrowIfIndexOutOfRange(index);
 	return array_[index];
 }
 
 template <typename T>
-T &Array<T>::operator[](const std::size_t index) {
+T &Array<T>::operator[](std::size_t index) {
 	ThrowIfIndexOutOfRange(index);
 	return array_[index];
 }
@@ -57,7 +57,7 @@ T *Array<T>::DupArray(const Array &other) {
 }
 
 template <typename T>
-void Array<T>::ThrowIfIndexOutOfRange(const std::size_t index) const {
+void Array<T>::ThrowIfIndexOutOfRange(std::size_t index) const {
 	if (index >= size_) {
 		throw std::out_of_range("index out of bounds");
 	}
