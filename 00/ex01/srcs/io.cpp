@@ -29,14 +29,13 @@ static bool convert_to_integer(const std::string &dst, int &num) {
 }
 
 // input string -> string &dst
-t_result
-input_left_align(const std::string &title, std::string &dst, const int width) {
+t_result input_left_align(const std::string &title, std::string &dst, int width) {
 	std::cout << std::setw(width) << std::left << title << ": ";
 	return input_line(dst);
 }
 
 // input string -> int &dst
-t_result input_left_align(const std::string &title, int &dst, const int width) {
+t_result input_left_align(const std::string &title, int &dst, int width) {
 	std::cout << std::setw(width) << std::left << GREEN + title << ": " END;
 
 	std::string tmp_dst;
@@ -51,9 +50,7 @@ t_result input_left_align(const std::string &title, int &dst, const int width) {
 	return SUCCESS;
 }
 
-void output_left_align(
-	const std::string &title, const std::string &s, const int width
-) {
+void output_left_align(const std::string &title, const std::string &s, int width) {
 	std::cout << std::setw(width) << std::left << title << ": " << s << std::endl;
 }
 

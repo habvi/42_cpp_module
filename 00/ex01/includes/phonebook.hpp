@@ -18,8 +18,8 @@ class Phonebook {
   public:
 	void save_contact(const Contact &contact);
 	void display_all() const;
-	void display_contact_detail_by_index(const unsigned int index_of_contact) const;
-	bool is_valid_index(const unsigned int index) const;
+	void display_contact_detail_by_index(unsigned int index_of_contact) const;
+	bool is_valid_index(unsigned int index) const;
 
   private:
 	Contact phonebook_[LIMIT_REGISTER_COUNT];

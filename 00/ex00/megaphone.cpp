@@ -7,7 +7,7 @@ class Megaphone {
 	// default constructor
 	Megaphone();
 	// constructor with argument
-	Megaphone(const size_t size, const std::string *voice);
+	Megaphone(size_t size, const std::string *voice);
 	// copy constructor
 	Megaphone(const Megaphone &m);
 	// destructor
@@ -34,7 +34,7 @@ Megaphone::Megaphone() {
 	// std::cerr << "(call default constructor)" << std::endl;
 }
 
-Megaphone::Megaphone(const size_t size, const std::string *voice) {
+Megaphone::Megaphone(size_t size, const std::string *voice) {
 	size_ = size;
 	copy_voice_(voice);
 	convert_voice_to_uppercase_();
@@ -102,7 +102,7 @@ void Megaphone::destroy_voice_() {
 	voice_ = NULL;
 }
 
-static std::string *convert_args(const size_t size, const char **argv) {
+static std::string *convert_args(size_t size, const char **argv) {
 	std::string *voice = new std::string[size];
 	for (size_t i = 0; i < size; i++) {
 		voice[i] = argv[i];

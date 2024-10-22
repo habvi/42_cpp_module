@@ -11,7 +11,7 @@ Phonebook::Phonebook() {}
 Phonebook::~Phonebook() {}
 
 static const std::string
-truncate_str(const std::string &s, const unsigned int max_length) {
+truncate_str(const std::string &s, unsigned int max_length) {
 	const size_t length = s.size();
 
 	if (length <= max_length) {
@@ -23,13 +23,13 @@ truncate_str(const std::string &s, const unsigned int max_length) {
 	}
 }
 
-static void display_specific_width(const std::string &s, const int column_width) {
+static void display_specific_width(const std::string &s, int column_width) {
 	const std::string truncated_str = truncate_str(s, column_width);
 
 	std::cout << SEPARATOR << std::setw(column_width) << std::right << truncated_str;
 }
 
-static void display_specific_width(const unsigned int num, const int column_width) {
+static void display_specific_width(unsigned int num, int column_width) {
 	std::cout << SEPARATOR << std::setw(column_width) << std::right << num;
 }
 
@@ -52,7 +52,7 @@ static void display_table_end() {
 	std::cout << "└──────────┴──────────┴──────────┴──────────┘" << std::endl;
 }
 
-static void display_table_row(const unsigned int index, const Contact &contact) {
+static void display_table_row(unsigned int index, const Contact &contact) {
 	static const int column_width = COLUMN_WIDTH;
 
 	display_specific_width(index, column_width);
@@ -62,8 +62,7 @@ static void display_table_row(const unsigned int index, const Contact &contact) 
 	std::cout << SEPARATOR << std::endl;
 }
 
-static void
-display_specific_contact_(const unsigned int index, const Contact &contact) {
+static void display_specific_contact_(unsigned int index, const Contact &contact) {
 	display_table_header();
 	display_table_middle();
 	display_table_row(index, contact);
@@ -98,14 +97,14 @@ void Phonebook::display_all() const {
 	display_table_end();
 }
 
-bool Phonebook::is_valid_index(const unsigned int index) const {
+bool Phonebook::is_valid_index(unsigned int index) const {
 	const Contact &contact = phonebook_[index];
 
 	return !(index >= LIMIT_REGISTER_COUNT || is_not_registered(contact));
 }
 
 // allow only registered contact index.
-void Phonebook::display_contact_detail_by_index(const unsigned int index) const {
+void Phonebook::display_contact_detail_by_index(unsigned int index) const {
 	const Contact &contact = phonebook_[index];
 
 	if (!is_valid_index(index)) {

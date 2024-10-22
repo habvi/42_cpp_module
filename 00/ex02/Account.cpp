@@ -21,7 +21,7 @@ int Account::_totalAmount        = 0;
 int Account::_totalNbDeposits    = 0;
 int Account::_totalNbWithdrawals = 0;
 
-static void putLogWithNoEndl(const t_info *info, const size_t size) {
+static void putLogWithNoEndl(const t_info *info, size_t size) {
 	for (size_t i = 0; i < size; i++) {
 		std::cout << info[i].name << ":" << info[i].value;
 		if (i != size - 1) {
@@ -30,18 +30,17 @@ static void putLogWithNoEndl(const t_info *info, const size_t size) {
 	}
 }
 
-static void putLog(const t_info *info, const size_t size) {
+static void putLog(const t_info *info, size_t size) {
 	putLogWithNoEndl(info, size);
 	std::cout << std::endl;
 }
 
-static void
-putLog(const t_info *info, const size_t size, const std::string &message) {
+static void putLog(const t_info *info, size_t size, const std::string &message) {
 	putLogWithNoEndl(info, size);
 	std::cout << message << std::endl;
 }
 
-static void putLogForCreate(const int accountIndex, const int amount) {
+static void putLogForCreate(int accountIndex, int amount) {
 	const t_info info[] = {{"index", accountIndex}, {"amount", amount}};
 
 	putLog(info, sizeof(info) / sizeof(info[0]), ";" MSG_CREATED);
@@ -74,7 +73,7 @@ Account::Account(int initial_deposit) {
 	_totalAmount += _amount;
 }
 
-static void putLogForClose(const int accountIndex, const int amount) {
+static void putLogForClose(int accountIndex, int amount) {
 	const t_info info[] = {{"index", accountIndex}, {"amount", amount}};
 
 	putLog(info, sizeof(info) / sizeof(info[0]), ";" MSG_CLOSED);
@@ -113,11 +112,7 @@ void Account::displayAccountsInfos(void) {
 }
 
 static void putLogForDeposit(
-	const int accountIndex,
-	const int preAmount,
-	const int deposit,
-	const int amount,
-	const int nbDeposits
+	int accountIndex, int preAmount, int deposit, int amount, int nbDeposits
 ) {
 	const t_info info[] = {
 		{"index", accountIndex},
@@ -146,18 +141,14 @@ void Account::makeDeposit(int deposit) {
 	putLogForDeposit(_accountIndex, preAmount, deposit, _amount, _nbDeposits);
 }
 
-static void putLogForErrorWithdrawal(const int accountIndex, const int preAmount) {
+static void putLogForErrorWithdrawal(int accountIndex, int preAmount) {
 	const t_info info[] = {{"index", accountIndex}, {"p_amount", preAmount}};
 
 	putLog(info, sizeof(info) / sizeof(info[0]), ";withdrawal:" MSG_REFUSED);
 }
 
 static void putLogForWithdrawals(
-	const int accountIndex,
-	const int preAmount,
-	const int withdrawal,
-	const int amount,
-	const int nbWithdrawals
+	int accountIndex, int preAmount, int withdrawal, int amount, int nbWithdrawals
 ) {
 	const t_info info[] = {
 		{"index", accountIndex},
