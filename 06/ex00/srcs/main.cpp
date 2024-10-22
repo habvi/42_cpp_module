@@ -2,8 +2,7 @@
 #include <cstdlib>
 #include <iostream>
 
-static void
-DisplayTitle(const unsigned int testcase_number, const std::string &title) {
+static void DisplayTitle(unsigned int testcase_number, const std::string &title) {
 	std::cout << "\n\n┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;
 	std::cout << "┃ test " << testcase_number << ": " << title << std::endl;
 	std::cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" << std::endl;

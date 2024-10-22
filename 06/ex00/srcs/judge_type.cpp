@@ -31,7 +31,7 @@ bool ScalarConverter::IsTypeChar(const std::string &src) {
 // ----------------------------------------------------------------------------
 // integer
 // ----------------------------------------------------------------------------
-bool ScalarConverter::IsIntegerRangeForFloat(const float &num) {
+bool ScalarConverter::IsIntegerRangeForFloat(float num) {
 	if (IsInfinityOrNan(num)) {
 		return false;
 	}

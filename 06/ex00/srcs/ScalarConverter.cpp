@@ -39,13 +39,13 @@ ScalarConverter::Type ScalarConverter::SetType(const std::string &src) {
 
 // ----------------------------------------------------------------------------
 template <typename T>
-bool ScalarConverter::IsValidRange(const double &num) {
+bool ScalarConverter::IsValidRange(double num) {
 	return std::numeric_limits<T>::min() <= num &&
 		   num <= std::numeric_limits<T>::max();
 }
 
 template <typename T>
-bool ScalarConverter::IsCharRange(const Type type, const T &scalar) {
+bool ScalarConverter::IsCharRange(Type type, const T &scalar) {
 	if (!IsIntegerRange(type, scalar)) {
 		return false;
 	}
@@ -53,7 +53,7 @@ bool ScalarConverter::IsCharRange(const Type type, const T &scalar) {
 }
 
 template <typename T>
-bool ScalarConverter::IsIntegerRange(const Type type, const T &scalar) {
+bool ScalarConverter::IsIntegerRange(Type type, const T &scalar) {
 	if (type == kTypeFloat && !IsIntegerRangeForFloat(scalar)) {
 		return false;
 	}
@@ -84,7 +84,7 @@ void ScalarConverter::SetFixed(const T &t) {
 }
 
 template <typename T>
-void ScalarConverter::SetToChar(const Type type, const T &scalar) {
+void ScalarConverter::SetToChar(Type type, const T &scalar) {
 	if (!IsCharRange(type, scalar)) {
 		SetImpossible();
 		return;
@@ -98,7 +98,7 @@ void ScalarConverter::SetToChar(const Type type, const T &scalar) {
 }
 
 template <typename T>
-void ScalarConverter::SetToInteger(const Type type, const T &scalar) {
+void ScalarConverter::SetToInteger(Type type, const T &scalar) {
 	if (!IsIntegerRange(type, scalar)) {
 		SetImpossible();
 		return;
@@ -107,7 +107,7 @@ void ScalarConverter::SetToInteger(const Type type, const T &scalar) {
 }
 
 template <typename T>
-void ScalarConverter::SetToFloat(const Type type, const T &scalar) {
+void ScalarConverter::SetToFloat(Type type, const T &scalar) {
 	(void)type;
 	if (!IsFloatRange(scalar)) {
 		SetImpossible();
@@ -118,7 +118,7 @@ void ScalarConverter::SetToFloat(const Type type, const T &scalar) {
 }
 
 template <typename T>
-void ScalarConverter::SetToDouble(const Type type, const T &scalar) {
+void ScalarConverter::SetToDouble(Type type, const T &scalar) {
 	(void)type;
 	SetFixed(static_cast<double>(scalar));
 	std::cout << std::endl;
@@ -126,9 +126,9 @@ void ScalarConverter::SetToDouble(const Type type, const T &scalar) {
 
 // ----------------------------------------------------------------------------
 template <typename T>
-void ScalarConverter::DisplayAll(const Type type, const T scalar) {
-	typedef void (*SetConvertFunc)(const Type type, const T &);
-	static const std::pair<const std::string, SetConvertFunc> types[] = {
+void ScalarConverter::DisplayAll(Type type, const T scalar) {
+	typedef void (*SetConvertFunc)(Type type, const T &);
+	static const std::pair<std::string, SetConvertFunc> types[] = {
 		std::make_pair("char", &SetToChar<T>),
 		std::make_pair("int", &SetToInteger<T>),
 		std::make_pair("float", &SetToFloat<T>),

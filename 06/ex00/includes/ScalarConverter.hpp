@@ -28,34 +28,34 @@ class ScalarConverter {
 	/* judge type */
 	static bool IsTypeChar(const std::string &src);
 	static bool IsTypeInteger(const std::string &src);
-	static bool IsIntegerRangeForFloat(const float &num);
+	static bool IsIntegerRangeForFloat(float num);
 	static bool IsTypeFloat(const std::string &src);
 	static bool IsTypeDouble(const std::string &src);
 	template <typename T>
-	static bool IsValidRange(const double &num);
+	static bool IsValidRange(double num);
 	template <typename T>
-	static bool IsCharRange(const Type type, const T &scalar);
+	static bool IsCharRange(Type type, const T &scalar);
 	template <typename T>
-	static bool IsIntegerRange(const Type type, const T &scalar);
+	static bool IsIntegerRange(Type type, const T &scalar);
 	template <typename T>
 	static bool IsFloatRange(const T &num);
 
 	/* display */
 	template <typename T>
-	static void DisplayAll(const Type type, const T scalar);
+	static void DisplayAll(Type type, const T scalar);
 
 	/* set convert to each type */
 	static void SetImpossible();
 	template <typename T>
 	static void SetFixed(const T &t);
 	template <typename T>
-	static void SetToChar(const Type type, const T &num);
+	static void SetToChar(Type type, const T &num);
 	template <typename T>
-	static void SetToInteger(const Type type, const T &num);
+	static void SetToInteger(Type type, const T &num);
 	template <typename T>
-	static void SetToFloat(const Type type, const T &num);
+	static void SetToFloat(Type type, const T &num);
 	template <typename T>
-	static void SetToDouble(const Type type, const T &num);
+	static void SetToDouble(Type type, const T &num);
 
   private:
 	/* constant */
